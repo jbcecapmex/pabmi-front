@@ -102,7 +102,7 @@ export const NewDialog = (props: NewDialogProps) => {
             <Button
               onClick={() => props.handleNewDialogClose()}
               sx={{color: "#616161",fontFamily: "Roboto, sans-serif",width: "50%",backgroundColor: "#3988DA",border: "1px solid #3988DA",
-                        borderRadius: "0",borderTopRightRadius: "5px",borderBottomRightRadius: "5px",}}variant="contained"
+                        borderRadius: "0",borderTopRightRadius: "5px",borderBottomRightRadius: "5px",}} variant="contained"
             >
               <Typography
                 sx={{
@@ -117,7 +117,7 @@ export const NewDialog = (props: NewDialogProps) => {
       </DialogTitle>
       <DialogContent dividers>
         {/* campo de descripcion */}
-        <Grid container spacing={2}>
+        <Grid container spacing={2} paddingLeft={2}>
           <TextField
             autoFocus
             margin="dense"
