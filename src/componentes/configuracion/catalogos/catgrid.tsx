@@ -233,15 +233,18 @@ export default function CatGrid({
                   <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", paddingBottom:"2%", paddingRight:"1%"}}>
                     <Button
                       onClick={(event) => handleNewBtnClick(event)}
-                      sx={{color: "#616161",width: "50%",backgroundColor: "#226599",border: "1px solid #3988DA",borderRadius: "0",borderTopLeftRadius: "5px",borderBottomLeftRadius: "5px",}} variant="contained"
+                      // sx={{color: "#616161",width: "50%",backgroundColor: "#226599",border: "1px solid #3988DA",borderRadius: "0",borderTopLeftRadius: "5px",borderBottomLeftRadius: "5px",}} 
+                      variant="contained"
                         startIcon={<AddIcon sx={{color:"#FFFFFF"}} /> }>
                       <Typography
                         sx={{color: "#FFFFFF",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}}>
                         Agregar
                       </Typography>
                     </Button>
-                    <Button onClick={() => regresa()} sx={{color: "#616161",fontFamily: "Roboto, sans-serif",width: "50%",backgroundColor: "#3988DA",border: "1px solid #3988DA",
-                        borderRadius: "0",borderTopRightRadius: "5px",borderBottomRightRadius: "5px",}}variant="contained">
+                    <Button onClick={() => regresa()} 
+                    // sx={{color: "#616161",fontFamily: "Roboto, sans-serif",width: "50%",backgroundColor: "#3988DA",border: "1px solid #3988DA", borderRadius: "0",borderTopRightRadius: "5px",borderBottomRightRadius: "5px",}}
+                        color="secondary"
+                        variant="contained">
                       <Typography
                         sx={{color: "#ffffff",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}}>
                         Cancelar

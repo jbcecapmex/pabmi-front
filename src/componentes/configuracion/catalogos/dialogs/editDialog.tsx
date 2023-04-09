@@ -104,21 +104,26 @@ export const EditDialog = (props: EditDialogProps) => {
 					<Grid sx={{display: "flex",alignItems: "right",justifyContent: "right",}}>
 					<Button
 						onClick={() => handleUpdateBtn()}
-						sx={{color: "#616161",width: "50%",backgroundColor: "#226599",border: "1px solid #3988DA",borderRadius: "0",borderTopLeftRadius: "5px",borderBottomLeftRadius: "5px",}} variant="contained"
+						// sx={{color: "#616161",width: "50%" ,border: "1px solid #3988DA",borderRadius: "0",borderTopLeftRadius: "5px",borderBottomLeftRadius: "5px",}} 
+						color="primary"
+						variant="contained"
 					>
 						<Typography
-						sx={{color: "#ffffff",fontFamily: "Roboto, sans-serif",fontSize: "100%",}}>
+						sx={{color: "#FFFFFF",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}}
+						>
 						Guardar
-						</Typography>
+						 </Typography>
+						
 					</Button>
 					<Button
 						onClick={() => props.handleEditDialogClose()}
-						sx={{color: "#616161",fontFamily: "Roboto, sans-serif",width: "50%",backgroundColor: "#3988DA",border: "1px solid #3988DA",
-								borderRadius: "0",borderTopRightRadius: "5px",borderBottomRightRadius: "5px",}}variant="contained"
+						// sx={{color: "#616161",fontFamily: "Roboto, sans-serif",width: "50%",backgroundColor: "#3988DA",border: "1px solid #3988DA",
+						// 		borderRadius: "0",borderTopRightRadius: "5px",borderBottomRightRadius: "5px",}}
+						color="secondary"
+						variant="contained"
 					>
 						<Typography
-						sx={{
-							color: "#ffffff",fontFamily: "Roboto, sans-serif",fontSize: "100%",}}>
+						sx={{color: "#FFFFFF",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}}>
 						Cancelar
 						</Typography>
 					</Button>
