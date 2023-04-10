@@ -92,7 +92,7 @@ export const NewDialog = (props: NewDialogProps) => {
           <Grid sx={{display: "flex",alignItems: "right",justifyContent: "right",}}>
             <Button
               onClick={() => handleStoreBtn()}
-              // sx={{color: "#616161",width: "50%",backgroundColor: "#226599",border: "1px solid #3988DA",borderRadius: "0",borderTopLeftRadius: "5px",borderBottomLeftRadius: "5px",}} 
+              sx={{margin:"1%"}} 
               variant="contained"
             >
               <Typography sx={{color: "#FFFFFF",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}} >
@@ -101,8 +101,7 @@ export const NewDialog = (props: NewDialogProps) => {
             </Button>
             <Button
               onClick={() => props.handleNewDialogClose()}
-              // sx={{color: "#616161",fontFamily: "Roboto, sans-serif",width: "50%",backgroundColor: "#3988DA",border: "1px solid #3988DA",
-              //           borderRadius: "0",borderTopRightRadius: "5px",borderBottomRightRadius: "5px",}} 
+              sx={{margin:"1%"}}
               color="secondary"
               variant="contained"
             >
