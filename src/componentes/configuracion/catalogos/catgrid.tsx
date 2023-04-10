@@ -17,6 +17,7 @@ import {
   Link,
   Tooltip,
   Typography,
+  TextField
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import MUIXDataGrid from "../../Grid/MUIXDataGrid";
@@ -199,7 +200,7 @@ export default function CatGrid({
 
   return (
     <Grid container sx={{ fontFamily: "MontserratSemiBold" }}>
-      <Grid item xs={12}>
+      <Grid item xs={12} paddingLeft={3}>
         {/* este componente es para armar la ruta que se muestra arriba y poder navegar hacia atras */}
         {/* ejemplo inicio/configuracion/catalogos/marca */}
         <Breadcrumbs aria-label="breadcrumb">
@@ -218,10 +219,41 @@ export default function CatGrid({
           <Typography color="text.primary">Catálogo de {titulo} </Typography>
         </Breadcrumbs>
       </Grid>
+      
+      {/* El grid donde esta los TextField */}
+      <Grid container justifyContent={"center"} item xs={12}>
+      <Grid item xs={12} md={12} mt={2} padding={3}>
+      <Box
+         component="form"
+         sx={{
+          display: 'flow',
+           "& > :not(style)": { m: 1, width: "60ch" }, 
+         }}
+         noValidate
+         autoComplete="off">
+      <TextField  id="outlined-basic" label="Nombre" variant="outlined" />
+      <TextField id="outlined-basic" label="Descripción" variant="outlined" />
+      </Box>
+      <Box
+         component="form"
+         sx={{
+           "& > :not(style)": { m: 1, width: "25ch" }, 
+           display: 'flow',
+         }}
+         noValidate
+         autoComplete="off">
+      <TextField id="outlined-basic" label="Icono" variant="outlined" />
+      <TextField id="outlined-basic" label="Nivel" variant="outlined" />
+      </Box>  
+      <Box paddingTop={2} paddingLeft={1}>
+      <Button sx={{fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}} size="small" variant="contained"  color="primary" > Guardar </Button>
+      </Box>
+      </Grid>
+      </Grid>
 
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
       {/* <Grid item xs={12}> */}
-        <Grid container justifyContent={"center"} item xs={12}>
+        <Grid container justifyContent={"center"} item xs={12} paddingLeft={3}>
           <Grid item xs={12} md={12} mt={2}>
             {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
             <Card sx={{ p: 1, boxShadow: 4 }}>
@@ -233,9 +265,9 @@ export default function CatGrid({
                   <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", paddingBottom:"2%", paddingRight:"1%"}}>
                     <Button
                       onClick={(event) => handleNewBtnClick(event)}
-                      // sx={{color: "#616161",width: "50%",backgroundColor: "#226599",border: "1px solid #3988DA",borderRadius: "0",borderTopLeftRadius: "5px",borderBottomLeftRadius: "5px",}} 
                       variant="contained"
-                        startIcon={<AddIcon sx={{color:"#FFFFFF"}} /> }>
+                      sx={{margin:"1%"}}
+                      startIcon={<AddIcon sx={{color:"#FFFFFF"}} /> }>
                       <Typography
                         sx={{color: "#FFFFFF",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}}>
                         Agregar
@@ -244,6 +276,7 @@ export default function CatGrid({
                     <Button onClick={() => regresa()} 
                     // sx={{color: "#616161",fontFamily: "Roboto, sans-serif",width: "50%",backgroundColor: "#3988DA",border: "1px solid #3988DA", borderRadius: "0",borderTopRightRadius: "5px",borderBottomRightRadius: "5px",}}
                         color="secondary"
+                        sx={{margin:"1%"}}
                         variant="contained">
                       <Typography
                         sx={{color: "#ffffff",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}}>
