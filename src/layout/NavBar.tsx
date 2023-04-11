@@ -69,7 +69,7 @@ function NavBar(props: { children?: any; window?: any }) {
             >
               <i className="fa-solid fa-bars" />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography  component="div" sx={{ flexGrow: 1, fontFamily: "MontserratRegular, sans-serif",fontSize: "130%" }}>
               Plataforma de Administración de Bienes Muebles e Inmuebles
             </Typography>
             {/* menu de mensajes */}
