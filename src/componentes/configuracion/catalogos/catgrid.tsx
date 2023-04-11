@@ -90,25 +90,33 @@ export default function CatGrid({
     {
       field: "Nombre",
       headerName: "Nombre",
-      width: 400,
+      width: 360,
       hideable: false,
       headerAlign: "center",
     },
     // Tercer columna donde se mostrara el path
     {
-      field: "Path",
-      headerName: "Path",
-      width: 350,
+      field: "Descripcion",
+      headerName: "Descripción",
+      width: 400,
       hideable: false,
       headerAlign: "center",
     },
     // cuarta columna donde se mostrara si esta activo o no
     {
-      field: "estatusLabel",
-      headerName: "Estatus",
-      width: 100,
+      field: "Icono",
+      headerName: "Icono",
+      width: 84,
       headerAlign: "center",
     },
+    // quinta columna donde se mostrara si esta activo o no
+    {
+      field: "Nivel",
+      headerName: "Nivel",
+      width: 84,
+      headerAlign: "center",
+    },
+    
   ];
   const [rows, setRows] = useState([]);
 
