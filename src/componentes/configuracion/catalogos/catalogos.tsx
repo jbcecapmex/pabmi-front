@@ -250,8 +250,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(8, "Menus");
-                            setShowCatGrid(true);
+                            navigate("/configuracion/menu");
                           }}
                         >
                          MENUS
