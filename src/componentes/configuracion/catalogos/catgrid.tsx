@@ -227,37 +227,7 @@ export default function CatGrid({
           <Typography color="text.primary">Catálogo de {titulo} </Typography>
         </Breadcrumbs>
       </Grid>
-      
-      {/* El grid donde esta los TextField */}
-      <Grid container justifyContent={"center"} item xs={12}>
-      <Grid item xs={12} md={12} mt={2} padding={3}>
-      <Box
-         component="form"
-         sx={{
-          display: 'flow',
-           "& > :not(style)": { m: 1, width: "60ch" }, 
-         }}
-         noValidate
-         autoComplete="off">
-      <TextField  id="outlined-basic" label="Nombre" variant="outlined" />
-      <TextField id="outlined-basic" label="Descripción" variant="outlined" />
-      </Box>
-      <Box
-         component="form"
-         sx={{
-           "& > :not(style)": { m: 1, width: "25ch" }, 
-           display: 'flow',
-         }}
-         noValidate
-         autoComplete="off">
-      <TextField id="outlined-basic" label="Icono" variant="outlined" />
-      <TextField id="outlined-basic" label="Nivel" variant="outlined" />
-      </Box>  
-      <Box paddingTop={2} paddingLeft={1}>
-      <Button sx={{fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}} size="small" variant="contained"  color="primary" > Guardar </Button>
-      </Box>
-      </Grid>
-      </Grid>
+
 
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
       {/* <Grid item xs={12}> */}
