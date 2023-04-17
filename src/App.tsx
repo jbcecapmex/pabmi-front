@@ -17,9 +17,11 @@ import Bajas from './componentes/muebles/bajas';
 import Adjudicaciones from './componentes/muebles/adjudicaciones';
 import ListaMuebles from './componentes/muebles/listamuebles';
 import Catalogos from './componentes/configuracion/catalogos/catalogos';
+import Menuc from './componentes/configuracion/catalogos/menuc';
 import TicketsDashboard from './componentes/tickets/ticketsdashboard';
 import Opcion1 from './componentes/muebles/vehiculos/opcion1'
 import NavBar from './layout/NavBar';
+
 import UsuariosGrid from './componentes/configuracion/usuarios/usuariosgrid';
 
 function App() {
@@ -71,6 +73,7 @@ function App() {
           <Route path="/muebles/bajas" element={<Bajas/>}/>
           <Route path="/muebles/adjudicaciones" element={<Adjudicaciones/>}/>
           <Route path="/configuracion/catalogos" element={<Catalogos />} />
+          <Route path="/configuracion/menu" element={<Menuc/>} />
           <Route path="/tickets/ticketsdashboard" element={<TicketsDashboard />} />
 
           <Route path="/vehiculos/opcion1" element={<Opcion1/>} />
