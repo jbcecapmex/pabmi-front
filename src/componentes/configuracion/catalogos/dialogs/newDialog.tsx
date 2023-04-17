@@ -92,21 +92,21 @@ export const NewDialog = (props: NewDialogProps) => {
           <Grid sx={{display: "flex",alignItems: "right",justifyContent: "right",}}>
             <Button
               onClick={() => handleStoreBtn()}
-              sx={{margin:"1%"}} 
-              variant="contained"
+              sx={{color: "#616161",width: "50%",backgroundColor: "#226599",border: "1px solid #3988DA",borderRadius: "0",borderTopLeftRadius: "5px",borderBottomLeftRadius: "5px",}} variant="contained"
             >
-              <Typography sx={{color: "#FFFFFF",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}} >
+              <Typography
+                sx={{color: "#ffffff",fontFamily: "Roboto, sans-serif",fontSize: "100%",}}>
                 Guardar
               </Typography>
             </Button>
             <Button
               onClick={() => props.handleNewDialogClose()}
-              sx={{margin:"1%"}}
-              color="secondary"
-              variant="contained"
+              sx={{color: "#616161",fontFamily: "Roboto, sans-serif",width: "50%",backgroundColor: "#3988DA",border: "1px solid #3988DA",
+                        borderRadius: "0",borderTopRightRadius: "5px",borderBottomRightRadius: "5px",}}variant="contained"
             >
               <Typography
-                sx={{color: "#FFFFFF",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}}>
+                sx={{
+                  color: "#ffffff",fontFamily: "Roboto, sans-serif",fontSize: "100%",}}>
                 Cancelar
               </Typography>
             </Button>
@@ -117,7 +117,7 @@ export const NewDialog = (props: NewDialogProps) => {
       </DialogTitle>
       <DialogContent dividers>
         {/* campo de descripcion */}
-        <Grid container spacing={2} paddingLeft={2}>
+        <Grid container spacing={2}>
           <TextField
             autoFocus
             margin="dense"

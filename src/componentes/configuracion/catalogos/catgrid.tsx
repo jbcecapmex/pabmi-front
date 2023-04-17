@@ -21,8 +21,8 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import MUIXDataGrid from "../../Grid/MUIXDataGrid";
-import { EditDialog } from "./dialogs/editDialog";
-import { NewDialog } from "./dialogs/newDialog";
+import { EditDialog } from "./Dialogs/EditDialog";
+import { NewDialog } from "./Dialogs/NewDialog";
 
 import { Snackbar, Alert, AlertProps, AlertTitle } from "@mui/material";
 
@@ -212,7 +212,7 @@ export default function CatGrid({
         {/* este componente es para armar la ruta que se muestra arriba y poder navegar hacia atras */}
         {/* ejemplo inicio/configuracion/catalogos/marca */}
         <Breadcrumbs aria-label="breadcrumb">
-          <Link underline="hover" color="inherit" href="/inicio">
+          <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
           </Link>
           <Link underline="hover" color="inherit" href="/configuracion/catalogos">
@@ -231,33 +231,29 @@ export default function CatGrid({
 
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
       {/* <Grid item xs={12}> */}
-        <Grid container justifyContent={"center"} item xs={12} paddingLeft={3}>
-          <Grid item xs={12} md={12} mt={2}>
+        <Grid container justifyContent={"center"} item xs={12}>
+          <Grid item xs={12} md={10} mt={2}>
             {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
-            <Card sx={{ p: 1, boxShadow: 4 }}>
-              <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
-              <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}> Catálogo de {titulo} </Typography>              
+            <Card sx={{ p: 1, boxShadow: 8 }}>
+              <CardHeader sx={{ position: "absolute", fontFamily: "MontserratBold" }} />
+              <Typography  variant="h4">Catálogo de {titulo}</Typography>              
               <CardContent>
                 {/* aqui es el cardcontent que es el contenido del card,y ponemos primero un box y estamos dibujando el boton para agregar un nuevo registro */}
                 <Box display="flex" justifyContent="flex-end">
-                  <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", paddingBottom:"2%", paddingRight:"1%"}}>
+                  <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right",}}>
                     <Button
                       onClick={(event) => handleNewBtnClick(event)}
-                      variant="contained"
-                      sx={{margin:"1%"}}
-                      startIcon={<AddIcon sx={{color:"#FFFFFF"}} /> }>
+                      sx={{color: "#616161",width: "50%",backgroundColor: "#226599",border: "1px solid #3988DA",borderRadius: "0",borderTopLeftRadius: "5px",borderBottomLeftRadius: "5px",}} variant="contained"
+                        startIcon={<AddIcon sx={{color:"#FFFFFF"}} /> }>
                       <Typography
-                        sx={{color: "#FFFFFF",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}}>
+                        sx={{color: "#FFFFFF",fontFamily: "Roboto, sans-serif",fontSize: "100%",}}>
                         Agregar
                       </Typography>
                     </Button>
-                    <Button onClick={() => regresa()} 
-                    // sx={{color: "#616161",fontFamily: "Roboto, sans-serif",width: "50%",backgroundColor: "#3988DA",border: "1px solid #3988DA", borderRadius: "0",borderTopRightRadius: "5px",borderBottomRightRadius: "5px",}}
-                        color="secondary"
-                        sx={{margin:"1%"}}
-                        variant="contained">
+                    <Button onClick={() => regresa()} sx={{color: "#616161",fontFamily: "Roboto, sans-serif",width: "50%",backgroundColor: "#3988DA",border: "1px solid #3988DA",
+                        borderRadius: "0",borderTopRightRadius: "5px",borderBottomRightRadius: "5px",}}variant="contained">
                       <Typography
-                        sx={{color: "#ffffff",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}}>
+                        sx={{color: "#ffffff",fontFamily: "Roboto, sans-serif",fontSize: "100%",}}>
                         Cancelar
                       </Typography>
                     </Button>
