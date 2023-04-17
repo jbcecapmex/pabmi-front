@@ -7,56 +7,22 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 // import "./Fonts.css";
 
-import Inicio from './componentes/Inicio/FondoInicial';
-import MueblesAlmacen from './componentes/Muebles/Almacen/Altas';
-import MueblesAdjudicaciones from './componentes/Muebles/Almacen/Adjudicaciones';
-import MueblesArrendamientos from './componentes/Muebles/Almacen/Arrendamientos';
-import MueblesBajas from './componentes/Muebles/Almacen/Bajas';
-import MueblesComodato from './componentes/Muebles/Almacen/Comodato';
-import MueblesDonaciones from './componentes/Muebles/Almacen/Donaciones';
-import MueblesInventarios from './componentes/Muebles/Almacen/Inventarios';
-import MueblesTransferencias from './componentes/Muebles/Almacen/Transferencias';
-import MueblesResguardos from './componentes/Muebles/Almacen/Resguardos';
-
-import VehiculosAltas from './componentes/Muebles/Vehiculos/Altas';
-import VehiculosBajas from './componentes/Muebles/Vehiculos/Bajas';
-import VehiculosVentas from './componentes/Muebles/Vehiculos/Ventas';
-import VehiculosComodato from './componentes/Muebles/Vehiculos/Comodato';
-import VehiculosModificaciones from './componentes/Muebles/Vehiculos/Modificaciones';
-import VehiculosTransferencias from './componentes/Muebles/Vehiculos/Transferencias';
-import VehiculosSeguros from './componentes/Muebles/Vehiculos/Seguros';
-
-import InmueblesAltas from './componentes/Inmuebles/Altas';
-import InmueblesBajas from './componentes/Inmuebles/Bajas';
-import InmueblesPermutas from './componentes/Inmuebles/Permutas';
-import InmueblesModificaciones from './componentes/Inmuebles/Modificaciones';
-import InmueblesLevantamientosTopograficos from './componentes/Inmuebles/LevantamientosTopograficos';
-import InmueblesArrendamientos from './componentes/Inmuebles/Arrendamientos';
-import InmueblesComodato from './componentes/Inmuebles/Comodato';
-import InmueblesGeneracionTarjetas from './componentes/Inmuebles/GeneracionTarjetas';
-
-
-import TicketsAltas from './componentes/Tickets/Altas';
-import TicketsModificaciones from './componentes/Tickets/Modificaciones';
-
-import DashboardsReportesDashboards from './componentes/DashboardsReportes/Dashboards/Dashboards';
-import DashboardsReportesReportes from './componentes/DashboardsReportes/Reportes/Reportes';
-
-import AdministracionAyuda from './componentes/Administracion/Ayuda';
-import AdministracionBackups from './componentes/Administracion/Backups';
-import AdministracionCronJobs from './componentes/Administracion/CronJobs';
-import AdministracionNotificaciones from './componentes/Administracion/Notificaciones';
-import AdministracionSemaforizacion from './componentes/Administracion/Semaforizacion';
-import AdministracionValoresGlobales from './componentes/Administracion/ValoresGlobales';
-import AdministracionValoresSistema from './componentes/Administracion/ValoresSistema';
-
-
-import ConfiguracionCatalogos from './componentes/Configuracion/Catalogos/Catalogos';
-import ConfiguracionUsuarios from './componentes/Configuracion/Usuarios/Usuarios';
-import ConfiguracionRoles from './componentes/Configuracion/Roles/Roles';
-
+import Inicio from './componentes/Inicio/fondoinicial';
+import Almacen from './componentes/muebles/almacen';
+import Comprobantes from './componentes/muebles/comprobantes';
+import Articulos from './componentes/muebles/articulos';
+import Resguardos from './componentes/muebles/resguardos';
+import Transferencias from './componentes/muebles/transferencias';
+import Bajas from './componentes/muebles/bajas';
+import Adjudicaciones from './componentes/muebles/adjudicaciones';
+import ListaMuebles from './componentes/muebles/listamuebles';
+import Catalogos from './componentes/configuracion/catalogos/catalogos';
+import Menuc from './componentes/configuracion/catalogos/menuc';
+import TicketsDashboard from './componentes/tickets/ticketsdashboard';
+import Opcion1 from './componentes/muebles/vehiculos/opcion1'
 import NavBar from './layout/NavBar';
 
+import UsuariosGrid from './componentes/configuracion/usuarios/usuariosgrid';
 
 function App() {
 
@@ -98,6 +64,17 @@ function App() {
       <NavBar>
         <Routes>
           <Route index path="/" element={<Inicio/>}/>
+          <Route path="/muebles/listamuebles" element={<ListaMuebles/>} />
+          <Route path="/muebles/almacen" element={<Almacen/>} />
+          <Route path="/muebles/comprobantes" element={<Comprobantes/>}/>
+          <Route path="/muebles/articulos" element={<Articulos/>}/>
+          <Route path="/muebles/resguardos" element={<Resguardos/>}/>
+          <Route path="/muebles/transferencias" element={<Transferencias/>}/>
+          <Route path="/muebles/bajas" element={<Bajas/>}/>
+          <Route path="/muebles/adjudicaciones" element={<Adjudicaciones/>}/>
+          <Route path="/configuracion/catalogos" element={<Catalogos />} />
+          <Route path="/configuracion/menu" element={<Menuc/>} />
+          <Route path="/tickets/ticketsdashboard" element={<TicketsDashboard />} />
 
           <Route path="/Muebles/Almacen/Altas" element={<MueblesAlmacen/>} />
           <Route path="/Muebles/Almacen/Adjudicaciones" element={<MueblesAdjudicaciones/>}/>
