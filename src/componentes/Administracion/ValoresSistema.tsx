@@ -5,7 +5,7 @@ export default function Principal() {
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
-        resguardos
+        Valores del Sistema
       </Box>
     </Box>
   );

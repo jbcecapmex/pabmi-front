@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {TicketsInterface} from "../../tickets/ticketsdashboard";
+import {TicketsInterface} from "../../Tickets/TicketsDashboard";
 
 export interface EditDialogTicketProps {
 	EditDialogTicketOpen: boolean;

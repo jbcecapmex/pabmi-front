@@ -5,7 +5,7 @@ export default function Opcion1() {
     return (
       <Box>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-          iuewhfijdswkjfkjnb
+          Modificaciones  de Vehiculos
         </Box>
       </Box>
     );

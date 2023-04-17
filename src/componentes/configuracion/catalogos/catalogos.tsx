@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import React from "react";
-import CatGrid from "./catgrid";
+import CatGrid from "./CatGrid";
 
 // definicio de como se comporta al pasar y seleccionar un boton de la pantalla
 const MenuSX = {
@@ -100,10 +100,10 @@ const Catalogos = () => {
           <Grid sx={{}} item xs={12}>
             {/* arma ruta de donde esta ubicado */}
             <Breadcrumbs aria-label="breadcrumb">
-              <Link underline="hover" color="inherit" href="/home">
+              <Link underline="hover" color="inherit" href="/Home">
                 Inicio
               </Link>
-              <Link underline="hover" color="inherit" href="/configuracion">
+              <Link underline="hover" color="inherit" href="/Configuracion">
                 Configuración
               </Link>
               <Typography color="text.primary">Catálogos</Typography>
@@ -243,21 +243,6 @@ const Catalogos = () => {
                           TIPO DE CLASIFICACIÓN
                         </Button>
                       </Grid>
-
-                      <Grid item xs={12} md={6} lg={4}>
-                        <Button
-                          sx={ButtonSX}
-                          variant="text"
-                          fullWidth
-                          onClick={() => {
-                            changeScreen(8, "Menus");
-                            setShowCatGrid(true);
-                          }}
-                        >
-                         MENUS
-                        </Button>
-                      </Grid>
-
                     </Grid>
                   </TabPanel>
 
@@ -271,7 +256,7 @@ const Catalogos = () => {
                           fullWidth
                           onClick={() => {
                             setCatSelected(1);
-                            changeScreen(9, "Secretarias");
+                            changeScreen(8, "Secretarias");
                             setShowCatGrid(true);
                           }}
                         >
@@ -284,7 +269,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(10, "Dependencias");
+                            changeScreen(9, "Dependencias");
                             setShowCatGrid(true);
                           }}
                         >
@@ -297,7 +282,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(11, "Presentación Muebles");
+                            changeScreen(10, "Presentación Muebles");
                             setShowCatGrid(true);
                           }}
                         >
@@ -310,7 +295,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(12, "Tipos de Activo");
+                            changeScreen(11, "Tipos de Activo");
                             setShowCatGrid(true);
                           }}
                         >
@@ -323,7 +308,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(13, "Lineas");
+                            changeScreen(12, "Lineas");
                             setShowCatGrid(true);
                           }}
                         >
@@ -336,7 +321,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(14, "Tipos de Comprobantes");
+                            changeScreen(13, "Tipos de Comprobantes");
                             setShowCatGrid(true);
                           }}
                         >
@@ -349,7 +334,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(15, "Activo");
+                            changeScreen(14, "Activo");
                             setShowCatGrid(true);
                           }}
                         >
@@ -362,7 +347,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(16, "Tipos de Adquisición");
+                            changeScreen(15, "Tipos de Adquisición");
                             setShowCatGrid(true);
                           }}
                         >
@@ -375,7 +360,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(17, "Motivos de Baja");
+                            changeScreen(16, "Motivos de Baja");
                             setShowCatGrid(true);
                           }}
                         >
@@ -388,7 +373,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(18, "Marca");
+                            changeScreen(17, "Marca");
                             setShowCatGrid(true);
                           }}
                         >
@@ -401,7 +386,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(19, "Modelos");
+                            changeScreen(18, "Modelos");
                             setShowCatGrid(true);
                           }}
                         >
@@ -420,7 +405,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(20, "Tipos de Vialidad");
+                            changeScreen(19, "Tipos de Vialidad");
                             setShowCatGrid(true);
                           }}
                         >
@@ -433,7 +418,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(21, "Tipos de Asentamiento");
+                            changeScreen(20, "Tipos de Asentamiento");
                             setShowCatGrid(true);
                           }}
                         >
@@ -446,7 +431,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(22, "Entidad Federativa");
+                            changeScreen(21, "Entidad Federativa");
                             setShowCatGrid(true);
                           }}
                         >
@@ -459,7 +444,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(23, "Naturaleza del Inmueble");
+                            changeScreen(22, "Naturaleza del Inmueble");
                             setShowCatGrid(true);
                           }}
                         >
@@ -473,7 +458,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(24, "Carácter del Monumento");
+                            changeScreen(23, "Carácter del Monumento");
                             setShowCatGrid(true);
                           }}
                         >
@@ -486,7 +471,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(25, "Tipos de Inmueble");
+                            changeScreen(24, "Tipos de Inmueble");
                             setShowCatGrid(true);
                           }}
                         >
@@ -499,7 +484,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(26, "Proveedor de Avalúo");
+                            changeScreen(25, "Proveedor de Avalúo");
                             setShowCatGrid(true);
                           }}
                         >
@@ -512,7 +497,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(27, "Operación que da Origen");
+                            changeScreen(26, "Operación que da Origen");
                             setShowCatGrid(true);
                           }}
                         >
@@ -525,7 +510,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(28, "Título");
+                            changeScreen(27, "Título");
                             setShowCatGrid(true);
                           }}
                         >
@@ -538,7 +523,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(29, "Situación del Inmueble");
+                            changeScreen(28, "Situación del Inmueble");
                             setShowCatGrid(true);
                           }}
                         >
@@ -551,7 +536,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(30, "Modificación del Título");
+                            changeScreen(29, "Modificación del Título");
                             setShowCatGrid(true);
                           }}
                         >
@@ -564,7 +549,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(31, "Tipos de Instrumento");
+                            changeScreen(30, "Tipos de Instrumento");
                             setShowCatGrid(true);
                           }}
                         >
@@ -577,7 +562,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(32, "Tipos de Contraparte");
+                            changeScreen(31, "Tipos de Contraparte");
                             setShowCatGrid(true);
                           }}
                         >
@@ -590,7 +575,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(33, "Estatus de Instrumentos");
+                            changeScreen(32, "Estatus de Instrumentos");
                             setShowCatGrid(true);
                           }}
                         >
@@ -603,7 +588,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(34, "Solicitado Por");
+                            changeScreen(33, "Solicitado Por");
                             setShowCatGrid(true);
                           }}
                         >
@@ -616,7 +601,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(35, "Motivos de Alta");
+                            changeScreen(34, "Motivos de Alta");
                             setShowCatGrid(true);
                           }}
                         >
@@ -629,7 +614,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(36, "Motivos de Baja");
+                            changeScreen(35, "Motivos de Baja");
                             setShowCatGrid(true);
                           }}
                         >
@@ -642,7 +627,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(37, "Motivos de Modificación");
+                            changeScreen(36, "Motivos de Modificación");
                             setShowCatGrid(true);
                           }}
                         >
@@ -655,7 +640,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(38, "Uso Temporal");
+                            changeScreen(37, "Uso Temporal");
                             setShowCatGrid(true);
                           }}
                         >

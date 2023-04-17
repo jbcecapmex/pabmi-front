@@ -5,7 +5,7 @@ export default function Principal() {
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
-        transferencias
+        Bajas para Almacén
       </Box>
     </Box>
   );

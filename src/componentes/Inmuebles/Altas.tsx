@@ -5,7 +5,7 @@ export default function Principal() {
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
-        almacen
+        Listado de altas para Inmueblesssss
       </Box>
     </Box>
   );
