@@ -164,6 +164,7 @@ export default function CatGrid({
   const handleDeleteBtnClick = (event: any, cellValues: any) => {
     console.log(cellValues.row.Id);
   };
+
   // aqui es el consumo del endpoint para obtener el listado de app de la base de datos
   const getAllApps = () => {
     axios({
@@ -175,6 +176,7 @@ export default function CatGrid({
         //Authorization: token ,
       },
     })
+    
       // aqui se recibe lo del endpoint en response
       .then(function (response) {
         const rows = response.data.data.map((row: any) => {

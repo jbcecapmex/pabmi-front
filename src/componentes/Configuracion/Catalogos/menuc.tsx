@@ -1,9 +1,174 @@
 import React from 'react';
-import { Card, CardHeader , Grid, Breadcrumbs, Link, Typography, Box, TextField, CardContent, Button } from '@mui/material';
+import { Card, CardHeader , Grid, Breadcrumbs, Tooltip, Link, IconButton, Typography, Box, TextField, CardContent, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import MUIXDataGrid from "../../Grid/MUIXDataGrid";
+import { blue } from '@mui/material/colors';
+
+export interface SecretariaInterface {
+  uuid: string;
+  descripcion: string;
+  estado: boolean;
+  estatusLabel: string;
+}
  
 
 export default function Menuc() { 
+
+  const navigate = useNavigate();
+  const columns = [
+    {
+      field: "acciones",
+      headerName: "",
+      width: 90,
+      headerAlign: "center",
+      hideable: false,
+      renderCell: (cellValues: any) => {
+        return (
+          <Box>
+           <Tooltip title={"Editar " + cellValues.row.Nombre}>
+           <IconButton color="primary" 
+          //  onClick={(event) => {handleEditBtnClick(event, cellValues);}}
+           >
+                <EditIcon />
+              </IconButton>
+           </Tooltip>
+           <Tooltip title={"Eliminar" + cellValues.row.Nombre}>
+              <IconButton color="error"
+              //  onClick={(event) => {handleDeleteBtnClick(event, cellValues);}}
+               >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        );
+      },
+    },
+     // segunda columna donde se mostrara el nombre
+     {
+      field: "Nombre",
+      headerName: "Nombre",
+      width: 360,
+      hideable: false,
+      headerAlign: "center",
+    },
+    // Tercer columna donde se mostrara el path
+    {
+      field: "Descripcion",
+      headerName: "Descripción",
+      width: 400,
+      hideable: false,
+      headerAlign: "center",
+    },
+    // cuarta columna donde se mostrara si esta activo o no
+    {
+      field: "Icono",
+      headerName: "Icono",
+      width: 84,
+      headerAlign: "center",
+    },
+    // quinta columna donde se mostrara si esta activo o no
+    {
+      field: "Nivel",
+      headerName: "Nivel",
+      width: 84,
+      headerAlign: "center",
+    },
+  ];
+
+  const [rows, setRows] = useState([]);
+
+    // Set New App dialog vars and functions
+    const [newDialogOpen, setNewDialogOpen] = useState(false);
+    const handleNewDialogOpen = () => setNewDialogOpen(true);
+    const handleNewDialogClose = (changed: boolean) => {
+      if (changed === true) {
+        // Toast.fire({
+        // 	icon: "success",
+        // 	title: "Aplicación Creada Exitosamente",
+        // 	//background: '#2e7d32',
+        // 	//color: '#fff',
+        // });
+        // getAllApps();
+      }
+      setNewDialogOpen(false);
+    };
+    const handleNewBtnClick = (event: any) => {
+      handleNewDialogOpen();
+    };
+
+      // Set Edit App Dialog vars and functions
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [editDialogAgr, setEditDialogAgr] = useState<SecretariaInterface>();
+  const handleEditDialogOpen = () => setEditDialogOpen(true);
+  const handleEditDialogClose = (changed: boolean) => {
+    if (changed === true) {
+      // Toast.fire({
+      //     icon: "success",
+      //     title: "Aplicación actualizada exitosamente",
+      // 	//background: '#2e7d32',
+      // 	//color: '#fff',
+      // });
+      // getAllApps();
+    }
+    setEditDialogOpen(false);
+  };
+  const handleEditBtnClick = (event: any, cellValues: any) => {
+    setEditDialogAgr(cellValues);
+    handleEditDialogOpen();
+  };
+
+   // Handle delete 
+   const handleDeleteBtnClick = (event: any, cellValues: any) => {
+    console.log(cellValues.row.Id);
+  };
+
+  const getAllApps = () => {
+   axios ({
+    method: "get",
+    url: process.env.REACT_APP_APPLICATION_BACK+"/api/apps",
+    headers: {
+      "Content-Type": "application/json",
+      // Authorization: localStorage.getItem("jwtToken") || "",
+      //Authorization: token ,
+    },
+   })
+
+   // aqui se recibe lo del endpoint en response
+   .then(function (response) {
+    const rows = response.data.data.map((row: any) => {
+      const Id = row.Id;
+      const Nombre = row.Nombre;
+      const Path = row.Path;
+      const EstaActivo = row.EstaActivo;
+      const estatusLabel = row.EstaActivo ? "Activo" : "Inactivo";
+      const rowTemp = { estatusLabel: estatusLabel, ...row };
+      return rowTemp;
+    });
+    setRows(rows);
+    })
+    .catch(function (error) {
+      // Swal.fire({
+      // 	icon: "error",
+      // 	title: "Mensaje",
+      // 	text:
+      // 		"(" +
+      // 		error.response.status +
+      // 		") " +
+      // 		error.response.data.message,
+      // }).then((r) => navigate("/config"));
+    });
+  };
+
+   // esto es solo para que se ejecute la rutina de obtieneaplicaciones cuando cargue la pagina
+   useEffect(() => {
+    getAllApps();
+  }, []);
+
   return (
     <Grid container sx={{ fontFamily: "MontserratSemiBold" }}>
       <Grid item xs={12} paddingLeft={3}>
@@ -28,7 +193,7 @@ export default function Menuc() {
       <Box
       component="form"
       sx={{
-        '& > :not(style)': { m: 1, width: '41%' }, 
+        '& > :not(style)': { m: 1.3, width: '41%' }, 
       }}
       noValidate
       autoComplete="off"
@@ -74,8 +239,13 @@ export default function Menuc() {
        variant="outlined" />
 
     </Box>
+
+    <Box  maxWidth="85%"  paddingTop={3} paddingBottom={3} display="flex" justifyContent="end" >
+      <Button variant="contained"> Guardar </Button>
+    </Box>
       </Grid>
       </Grid>
+
       <Grid container justifyContent={"center"} item xs={10} paddingLeft={3} paddingTop={5}>
       <Grid item xs={12} md={12} mt={2}>
       <Card sx={{ p: 1, boxShadow: 4 }}>
@@ -108,7 +278,11 @@ export default function Menuc() {
                   </Grid>
       </Box>
 
-      
+      <MUIXDataGrid
+      id={(row: any) => row.Id}
+      columns={columns}
+      rows={rows}
+      /> 
 
       </CardContent>
       </Card>
