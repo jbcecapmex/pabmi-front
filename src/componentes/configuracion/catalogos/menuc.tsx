@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MUIXDataGrid from "../../Grid/MUIXDataGrid";
+import { blue } from '@mui/material/colors';
 
 export interface SecretariaInterface {
   uuid: string;
@@ -192,7 +193,7 @@ export default function Menuc() {
       <Box
       component="form"
       sx={{
-        '& > :not(style)': { m: 1, width: '41%' }, 
+        '& > :not(style)': { m: 1.3, width: '41%' }, 
       }}
       noValidate
       autoComplete="off"
@@ -238,8 +239,13 @@ export default function Menuc() {
        variant="outlined" />
 
     </Box>
+
+    <Box  maxWidth="85%"  paddingTop={3} paddingBottom={3} display="flex" justifyContent="end" >
+      <Button variant="contained"> Guardar </Button>
+    </Box>
       </Grid>
       </Grid>
+
       <Grid container justifyContent={"center"} item xs={10} paddingLeft={3} paddingTop={5}>
       <Grid item xs={12} md={12} mt={2}>
       <Card sx={{ p: 1, boxShadow: 4 }}>
