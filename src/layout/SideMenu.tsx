@@ -118,7 +118,7 @@ export default function NestedList() {
                 {openSegundo ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
 
-              {element?.submenu && (
+              {/* {element?.submenu && (
                 <Collapse
                   in={openSegundo === element.id}
                   timeout="auto"
@@ -182,7 +182,7 @@ export default function NestedList() {
                     })}
                   </List>
                 </Collapse>
-              )}
+              )} */}
             </div>
           );
         })}

@@ -155,6 +155,7 @@ function NavBar(props: { children?: any; window?: any }) {
             <SideMenu />
           </Drawer>
         {/* fondo de pantalla del centro */}
+        
         <Box component="main" sx={{ flexGrow: 1,p: 5, width:'76vw',top:'7vh', position:'absolute',left:'18vw', }}>
           {/* <Toolbar /> */}
           {props.children}
