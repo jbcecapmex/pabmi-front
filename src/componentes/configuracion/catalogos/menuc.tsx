@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import MUIXDataGrid from "../../Grid/MUIXDataGrid";
 
 export interface SecretariaInterface {
   uuid: string;
@@ -129,10 +130,43 @@ export default function Menuc() {
    axios ({
     method: "get",
     url: process.env.REACT_APP_APPLICATION_BACK+"/api/apps",
-
+    headers: {
+      "Content-Type": "application/json",
+      // Authorization: localStorage.getItem("jwtToken") || "",
+      //Authorization: token ,
+    },
    })
-  }
 
+   // aqui se recibe lo del endpoint en response
+   .then(function (response) {
+    const rows = response.data.data.map((row: any) => {
+      const Id = row.Id;
+      const Nombre = row.Nombre;
+      const Path = row.Path;
+      const EstaActivo = row.EstaActivo;
+      const estatusLabel = row.EstaActivo ? "Activo" : "Inactivo";
+      const rowTemp = { estatusLabel: estatusLabel, ...row };
+      return rowTemp;
+    });
+    setRows(rows);
+    })
+    .catch(function (error) {
+      // Swal.fire({
+      // 	icon: "error",
+      // 	title: "Mensaje",
+      // 	text:
+      // 		"(" +
+      // 		error.response.status +
+      // 		") " +
+      // 		error.response.data.message,
+      // }).then((r) => navigate("/config"));
+    });
+  };
+
+   // esto es solo para que se ejecute la rutina de obtieneaplicaciones cuando cargue la pagina
+   useEffect(() => {
+    getAllApps();
+  }, []);
 
   return (
     <Grid container sx={{ fontFamily: "MontserratSemiBold" }}>
@@ -238,7 +272,11 @@ export default function Menuc() {
                   </Grid>
       </Box>
 
-      
+      <MUIXDataGrid
+      id={(row: any) => row.Id}
+      columns={columns}
+      rows={rows}
+      /> 
 
       </CardContent>
       </Card>
