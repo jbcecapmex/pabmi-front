@@ -11,8 +11,8 @@ import Bajo from "../../assets/svg/Bajo.png";
 import Media from "../../assets/svg/Media.png";
 import Alta from "../../assets/svg/Alta.png";
 
-import { EditDialogTicket } from "./Dialog/EditTicket";
-import { NewDialogTicket } from "./Dialog/NewTicket";
+import { EditDialogTicket } from "../Tickets/Dialog/EditTicket";
+import { NewDialogTicket } from "../Tickets/Dialog/NewTicket";
 // import { bgcolor } from "@mui/system";
 
 // estructura que se va a llenar con la informacion que regresa el endpoint
