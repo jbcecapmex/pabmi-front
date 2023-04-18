@@ -29,6 +29,7 @@ import {
   ShowChart,
   SsidChart,
   StarBorderOutlined,
+  Search,
   SyncAlt,
   Place,
   Apps,
@@ -133,12 +134,13 @@ export const Icons = (icon: string) => {
     case "Place":
       return <Place />
     case "AddBox":
-      return <AddBox />
+      return <AddBox style={{ color: '#1E8FD4',fontSize:"large",  width: '35px', height: '35px' }}/>
     case "Description":
       return <Description />
     case "QueryStats":
       return <QueryStats />
-
+    case "Search":
+      return <Search />
 
     case "Error":
       return <Error style={{ color: 'red' }} />

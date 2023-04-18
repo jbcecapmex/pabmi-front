@@ -1,11 +1,22 @@
-import React from "react";
+import * as React from "react";
 import { Typography, Box, Divider } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import { Padding } from "@mui/icons-material";
+import { Block, Padding } from "@mui/icons-material";
 import { Icons } from "../../../layout/Icons";
 import Button from '@mui/material/Button';
-
+import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import InputBase from '@mui/material/InputBase';
+import Grid from '@mui/material/Grid';
+
+import dayjs from 'dayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
+
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -73,15 +84,19 @@ const rows = [
 
 
 export default function Principal() {
+  const [valueDesde, setValueDesde] = React.useState(dayjs(new Date()));
+  const handleChangeDesde = (newValue:any) => {
+    setValueDesde(newValue);
+  };
+
+  const [valueHasta, setValueHasta] = React.useState(dayjs(new Date()));
+  const handleChangeHasta = (newValue:any) => {
+    setValueHasta(newValue);
+  };
   return (
-    <Box>
-
-       <TextField fullWidth label="fullWidth" id="fullWidth" />
-
-  
-
-      <Box sx={{ display: "flex", justifyContent: "justify" }}>
-      <Typography
+    <Grid container spacing={1}>
+    <Grid item xs={12}>
+    <Typography
         variant="h5"
         component="div"
         sx={{
@@ -92,11 +107,79 @@ export default function Principal() {
         }}
       >
         Listado de altas para Almacen
-
       </Typography>
-      </Box>
-      <Box sx={{ display: "flex", justifyContent: "justify" }}>
-      <Typography
+      <Box sx={{height:'30px',width:'100%',display:'block'}}></Box>
+    </Grid>
+    <Grid item xs={6}>
+    <InputBase placeholder="Buscar" sx={{width: '400px',height:'45px',border:1,borderRadius:3,borderColor:"#cdcdcd",paddingLeft:'10PX'}}
+            id="filled-adornment-weight" 
+            startAdornment={<InputAdornment position="start">{Icons("Search")}</InputAdornment>}
+            aria-describedby="filled-weight-helper-text"
+            inputProps={{
+              'aria-label': 'weight',
+            }}
+          />
+    </Grid>
+    <Grid item xs={6}>
+    
+          <Typography
+        variant="subtitle1"
+        component="div"
+        sx={{
+          fontWeight: "normal",
+          display: "flex",
+          justifyContent: "left"
+        }}
+      >
+        Busqueda por rango de fechas
+      </Typography>
+      
+        <Box sx={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+        <Typography
+        variant="subtitle1"
+        component="div"
+        sx={{
+          fontWeight: "normal",
+          justifyContent: "center"
+        }}
+      >
+        Desde
+        </Typography>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DesktopDatePicker
+              label=""
+              inputFormat="DD/MM/YYYY"
+              value={valueDesde}
+              onChange={handleChangeDesde}
+              renderInput={(params) => <TextField
+              sx={{"& .MuiInputBase-input": {height: "10px"},marginLeft:'10px',marginRight:'10px'}} {...params}
+               />}
+            />
+            </LocalizationProvider>
+            <Typography
+        variant="subtitle1"
+        component="div"
+        sx={{
+          fontWeight: "normal",
+          justifyContent: "center",
+          marginLeft:"10px"
+        }}
+      >
+            Hasta
+            </Typography>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DesktopDatePicker 
+              label=""
+              inputFormat="DD/MM/YYYY"
+              value={valueHasta}
+              onChange={handleChangeHasta}
+              renderInput={(params) => <TextField sx={{"& .MuiInputBase-input": {height: "10px"},marginLeft:'10px'}}{...params} />}
+            />
+            </LocalizationProvider>
+        </Box>
+    </Grid>
+    <Grid item sx={{height:'auto'}}xs={12}>
+    <Typography
         variant="body1"
         component="div"
         sx={{
@@ -104,8 +187,8 @@ export default function Principal() {
           fontWeight: "normal",
           display: "flex",
           justifyContent: "justify",
-          marginBottom: "30px",
-          marginTop:"30px",
+          marginBottom: "20px",
+          marginTop:"10px",
           paddingLeft:"20px",
           paddingRight:"20px"
 
@@ -113,20 +196,47 @@ export default function Principal() {
       >
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.
       </Typography>
-      </Box>
-      <Box>
+    </Grid>
+    <Grid item xs={4}>
+   
+    </Grid>
+    <Grid item xs={4}>
+   
+   </Grid>
+    <Grid item xs={4}>
+      <Box sx={{display:'flex',justifyContent: 'right',width:'100%',height:'auto', alignItems:'center'}}>
+      {Icons("AddBox")}     
+      <Typography
+        variant="body1"
+        component="div"
+        sx={{
+          fontWeight: "bold",
+          display: "inline",
+          justifyContent: "center",
+          marginBottom: "5px",
+          marginTop:"5px",
+          paddingLeft:"10px",
+          paddingRight:"10px"
 
-      <div style={{ height: 700, width: '100%' }}>
-      <DataGrid
+        }}
+        >
+          NUEVO
+      </Typography>
+      </Box>
+    </Grid>
+    
+
+    <Grid item xs={12}>
+    <div style={{ height: 700, width: '100%' }}>
+    <DataGrid
         rows={rows}
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[5]}
         checkboxSelection
       />
-      </div>
-      
-      </Box>
-    </Box>
+    </div>
+    </Grid>
+    </Grid>
   );
 }
