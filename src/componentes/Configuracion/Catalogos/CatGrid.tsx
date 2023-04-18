@@ -17,6 +17,7 @@ import {
   Link,
   Tooltip,
   Typography,
+  TextField
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import MUIXDataGrid from "../../Grid/MUIXDataGrid";
@@ -89,25 +90,33 @@ export default function CatGrid({
     {
       field: "Nombre",
       headerName: "Nombre",
-      width: 400,
+      width: 360,
       hideable: false,
       headerAlign: "center",
     },
     // Tercer columna donde se mostrara el path
     {
-      field: "Path",
-      headerName: "Path",
-      width: 350,
+      field: "Descripcion",
+      headerName: "Descripción",
+      width: 400,
       hideable: false,
       headerAlign: "center",
     },
     // cuarta columna donde se mostrara si esta activo o no
     {
-      field: "estatusLabel",
-      headerName: "Estatus",
-      width: 100,
+      field: "Icono",
+      headerName: "Icono",
+      width: 84,
       headerAlign: "center",
     },
+    // quinta columna donde se mostrara si esta activo o no
+    {
+      field: "Nivel",
+      headerName: "Nivel",
+      width: 84,
+      headerAlign: "center",
+    },
+    
   ];
   const [rows, setRows] = useState([]);
 
@@ -155,6 +164,7 @@ export default function CatGrid({
   const handleDeleteBtnClick = (event: any, cellValues: any) => {
     console.log(cellValues.row.Id);
   };
+
   // aqui es el consumo del endpoint para obtener el listado de app de la base de datos
   const getAllApps = () => {
     axios({
@@ -166,6 +176,7 @@ export default function CatGrid({
         //Authorization: token ,
       },
     })
+    
       // aqui se recibe lo del endpoint en response
       .then(function (response) {
         const rows = response.data.data.map((row: any) => {
@@ -199,7 +210,7 @@ export default function CatGrid({
 
   return (
     <Grid container sx={{ fontFamily: "MontserratSemiBold" }}>
-      <Grid item xs={12}>
+      <Grid item xs={12} paddingLeft={3}>
         {/* este componente es para armar la ruta que se muestra arriba y poder navegar hacia atras */}
         {/* ejemplo inicio/configuracion/catalogos/marca */}
         <Breadcrumbs aria-label="breadcrumb">
@@ -218,6 +229,7 @@ export default function CatGrid({
           <Typography color="text.primary">Catálogo de {titulo} </Typography>
         </Breadcrumbs>
       </Grid>
+
 
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
       {/* <Grid item xs={12}> */}
