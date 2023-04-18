@@ -1,9 +1,139 @@
 import React from 'react';
-import { Card, CardHeader , Grid, Breadcrumbs, Link, Typography, Box, TextField, CardContent, Button } from '@mui/material';
+import { Card, CardHeader , Grid, Breadcrumbs, Tooltip, Link, IconButton, Typography, Box, TextField, CardContent, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+export interface SecretariaInterface {
+  uuid: string;
+  descripcion: string;
+  estado: boolean;
+  estatusLabel: string;
+}
  
 
 export default function Menuc() { 
+
+  const navigate = useNavigate();
+  const columns = [
+    {
+      field: "acciones",
+      headerName: "",
+      width: 90,
+      headerAlign: "center",
+      hideable: false,
+      renderCell: (cellValues: any) => {
+        return (
+          <Box>
+           <Tooltip title={"Editar " + cellValues.row.Nombre}>
+           <IconButton color="primary" 
+          //  onClick={(event) => {handleEditBtnClick(event, cellValues);}}
+           >
+                <EditIcon />
+              </IconButton>
+           </Tooltip>
+           <Tooltip title={"Eliminar" + cellValues.row.Nombre}>
+              <IconButton color="error"
+              //  onClick={(event) => {handleDeleteBtnClick(event, cellValues);}}
+               >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        );
+      },
+    },
+     // segunda columna donde se mostrara el nombre
+     {
+      field: "Nombre",
+      headerName: "Nombre",
+      width: 360,
+      hideable: false,
+      headerAlign: "center",
+    },
+    // Tercer columna donde se mostrara el path
+    {
+      field: "Descripcion",
+      headerName: "Descripción",
+      width: 400,
+      hideable: false,
+      headerAlign: "center",
+    },
+    // cuarta columna donde se mostrara si esta activo o no
+    {
+      field: "Icono",
+      headerName: "Icono",
+      width: 84,
+      headerAlign: "center",
+    },
+    // quinta columna donde se mostrara si esta activo o no
+    {
+      field: "Nivel",
+      headerName: "Nivel",
+      width: 84,
+      headerAlign: "center",
+    },
+  ];
+
+  const [rows, setRows] = useState([]);
+
+    // Set New App dialog vars and functions
+    const [newDialogOpen, setNewDialogOpen] = useState(false);
+    const handleNewDialogOpen = () => setNewDialogOpen(true);
+    const handleNewDialogClose = (changed: boolean) => {
+      if (changed === true) {
+        // Toast.fire({
+        // 	icon: "success",
+        // 	title: "Aplicación Creada Exitosamente",
+        // 	//background: '#2e7d32',
+        // 	//color: '#fff',
+        // });
+        // getAllApps();
+      }
+      setNewDialogOpen(false);
+    };
+    const handleNewBtnClick = (event: any) => {
+      handleNewDialogOpen();
+    };
+
+      // Set Edit App Dialog vars and functions
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [editDialogAgr, setEditDialogAgr] = useState<SecretariaInterface>();
+  const handleEditDialogOpen = () => setEditDialogOpen(true);
+  const handleEditDialogClose = (changed: boolean) => {
+    if (changed === true) {
+      // Toast.fire({
+      //     icon: "success",
+      //     title: "Aplicación actualizada exitosamente",
+      // 	//background: '#2e7d32',
+      // 	//color: '#fff',
+      // });
+      // getAllApps();
+    }
+    setEditDialogOpen(false);
+  };
+  const handleEditBtnClick = (event: any, cellValues: any) => {
+    setEditDialogAgr(cellValues);
+    handleEditDialogOpen();
+  };
+
+   // Handle delete 
+   const handleDeleteBtnClick = (event: any, cellValues: any) => {
+    console.log(cellValues.row.Id);
+  };
+
+  const getAllApps = () => {
+   axios ({
+    method: "get",
+    url: process.env.REACT_APP_APPLICATION_BACK+"/api/apps",
+
+   })
+  }
+
+
   return (
     <Grid container sx={{ fontFamily: "MontserratSemiBold" }}>
       <Grid item xs={12} paddingLeft={3}>
