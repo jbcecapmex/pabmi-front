@@ -54,7 +54,9 @@ import AdministracionValoresSistema from './componentes/Administracion/ValoresSi
 import ConfiguracionCatalogos from './componentes/Configuracion/Catalogos/Catalogos';
 import ConfiguracionUsuarios from './componentes/Configuracion/Usuarios/Usuarios';
 import ConfiguracionRoles from './componentes/Configuracion/Roles/Roles';
+import Menuc from './componentes/Configuracion/Catalogos/menuc';
 import NavBar from './layout/NavBar';
+
 
 function App() {
 
@@ -144,6 +146,7 @@ function App() {
           <Route path="/Configuracion/Catalogos/Catalogos" element={<ConfiguracionCatalogos />} />
           <Route path="/Configuracion/Usuarios/Usuarios" element={<ConfiguracionUsuarios />} />
           <Route path="/Configuracion/Roles/Roles" element={<ConfiguracionRoles />} />
+          <Route path="/Configuracion/Catalogos/Menu" element={<Menuc/>} />
 
 
         </Routes>
