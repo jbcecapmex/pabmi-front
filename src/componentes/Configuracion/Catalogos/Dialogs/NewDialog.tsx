@@ -90,10 +90,10 @@ export const NewDialog = (props: NewDialogProps) => {
         {/* <ButtonGroup variant="outlined" aria-label="outlined button group">
         </ButtonGroup> */}
         <Box sx={{position: "absolute", right: 8, top: 8,}}>
-          <Grid sx={{display: "flex",alignItems: "right",justifyContent: "right",}}>
+          <Grid sx={{display: "flex",alignItems: "right",justifyContent: "right", padding:"2%"}}>
             <Button
               onClick={() => handleStoreBtn()}
-              sx={{color: "#616161",width: "50%",backgroundColor: "#226599",border: "1px solid #3988DA",borderRadius: "0",borderTopLeftRadius: "5px",borderBottomLeftRadius: "5px",}} variant="contained"
+              sx={{ width: "50%", borderRadius: "0",borderTopLeftRadius: "5px",borderBottomLeftRadius: "5px",}} variant="contained"
             >
               <Typography
                 sx={{color: "#ffffff",fontFamily: "Roboto, sans-serif",fontSize: "100%",}}>
@@ -102,8 +102,8 @@ export const NewDialog = (props: NewDialogProps) => {
             </Button>
             <Button
               onClick={() => props.handleNewDialogClose()}
-              sx={{color: "#616161",fontFamily: "Roboto, sans-serif",width: "50%",backgroundColor: "#3988DA",border: "1px solid #3988DA",
-                        borderRadius: "0",borderTopRightRadius: "5px",borderBottomRightRadius: "5px",}}variant="contained"
+              sx={{color: "#616161",fontFamily: "Roboto, sans-serif",width: "50%", 
+                        borderRadius: "0",borderTopRightRadius: "5px",borderBottomRightRadius: "5px",}} color="secondary" variant="contained"
             >
               <Typography
                 sx={{
