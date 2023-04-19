@@ -243,18 +243,17 @@ export default function CatGrid({
               <CardContent>
                 {/* aqui es el cardcontent que es el contenido del card,y ponemos primero un box y estamos dibujando el boton para agregar un nuevo registro */}
                 <Box display="flex" justifyContent="flex-end">
-                  <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", p:3 }}>
+                  <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", p:3}}>
                     <Button
                       onClick={(event) => handleNewBtnClick(event)}
-                      sx={{ width: "50%",border: "1px solid #3988DA",borderRadius: "0",borderTopLeftRadius: "5px",borderBottomLeftRadius: "5px",}} variant="contained"
+                      sx={{ width: "50%", borderTopLeftRadius: "5px",borderBottomLeftRadius: "5px"   }} variant="contained"
                         startIcon={<AddIcon sx={{color:"#FFFFFF"}} /> }>
                       <Typography
                         sx={{color: "#FFFFFF",fontFamily: "Roboto, sans-serif",fontSize: "100%",}}>
                         Agregar
                       </Typography>
                     </Button>
-                    <Button onClick={() => regresa()} sx={{ fontFamily: "Roboto, sans-serif",width: "50%", border: "1px solid #3988DA",
-                        borderRadius: "0",borderTopRightRadius: "5px",borderBottomRightRadius: "5px",}}variant="contained">
+                    <Button onClick={() => regresa()} sx={{ fontFamily: "Roboto, sans-serif",width: "50%", borderTopRightRadius: "5px",borderBottomRightRadius: "5px",}}  color="secondary" variant="contained">
                       <Typography
                         sx={{color: "#ffffff",fontFamily: "Roboto, sans-serif",fontSize: "100%",}}>
                         Cancelar
