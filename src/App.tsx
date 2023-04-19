@@ -62,12 +62,12 @@ function App() {
   const params = new URLSearchParams(window.location.search);
   const jt = params.get("jwt") || null;
   const rf = params.get("rf") || null;
-  const IdApp = params.get("IdApp");  
+  const IdApp = params.get("IdApp");
   // console.log(jt);
   // console.log(rf);
   // console.log(IdApp);
 
-    useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (jt !== null) {
       sessionValid().then((r) => {
         if ((r as boolean) === false) {
@@ -88,54 +88,54 @@ function App() {
         }
       });
     }
-  }, [IdApp,jt]);
+  }, [IdApp, jt]);
 
 
   return (
     <BrowserRouter>
       <NavBar>
-      <Routes>
-          <Route index path="/" element={<Inicio/>}/>
+        <Routes>
+          <Route index path="/" element={<Inicio />} />
 
-          <Route path="/Muebles/Almacen/Altas" element={<MueblesAlmacen/>} />
-          <Route path="/Muebles/Almacen/Adjudicaciones" element={<MueblesAdjudicaciones/>}/>
-          <Route path="/Muebles/Almacen/Arrendamientos" element={<MueblesArrendamientos/>}/>
-          <Route path="/Muebles/Almacen/Bajas" element={<MueblesBajas/>}/>
-          <Route path="/Muebles/Almacen/Comodato" element={<MueblesComodato/>}/>
-          <Route path="/Muebles/Almacen/Donaciones" element={<MueblesDonaciones/>}/>
-          <Route path="/Muebles/Almacen/Inventarios" element={<MueblesInventarios/>}/>
-          <Route path="/Muebles/Almacen/resguardos" element={<MueblesResguardos/>}/>
-          <Route path="/Muebles/Almacen/Transferencias" element={<MueblesTransferencias/>}/>
+          <Route path="/Muebles/Almacen/Altas" element={<MueblesAlmacen />} />
+          <Route path="/Muebles/Almacen/Adjudicaciones" element={<MueblesAdjudicaciones />} />
+          <Route path="/Muebles/Almacen/Arrendamientos" element={<MueblesArrendamientos />} />
+          <Route path="/Muebles/Almacen/Bajas" element={<MueblesBajas />} />
+          <Route path="/Muebles/Almacen/Comodato" element={<MueblesComodato />} />
+          <Route path="/Muebles/Almacen/Donaciones" element={<MueblesDonaciones />} />
+          <Route path="/Muebles/Almacen/Inventarios" element={<MueblesInventarios />} />
+          <Route path="/Muebles/Almacen/resguardos" element={<MueblesResguardos />} />
+          <Route path="/Muebles/Almacen/Transferencias" element={<MueblesTransferencias />} />
 
-          <Route path="/Muebles/Vehiculos/Altas" element={<VehiculosAltas/>} />
-          <Route path="/Muebles/Vehiculos/Bajas" element={<VehiculosBajas/>} />
-          <Route path="/Muebles/Vehiculos/Ventas" element={<VehiculosVentas/>} />
-          <Route path="/Muebles/Vehiculos/Comodato" element={<VehiculosComodato/>} />
-          <Route path="/Muebles/Vehiculos/Modificaciones" element={<VehiculosModificaciones/>} />
-          <Route path="/Muebles/Vehiculos/Transferencias" element={<VehiculosTransferencias/>} />
-          <Route path="/Muebles/Vehiculos/Seguros" element={<VehiculosSeguros/>} />
+          <Route path="/Muebles/Vehiculos/Altas" element={<VehiculosAltas />} />
+          <Route path="/Muebles/Vehiculos/Bajas" element={<VehiculosBajas />} />
+          <Route path="/Muebles/Vehiculos/Ventas" element={<VehiculosVentas />} />
+          <Route path="/Muebles/Vehiculos/Comodato" element={<VehiculosComodato />} />
+          <Route path="/Muebles/Vehiculos/Modificaciones" element={<VehiculosModificaciones />} />
+          <Route path="/Muebles/Vehiculos/Transferencias" element={<VehiculosTransferencias />} />
+          <Route path="/Muebles/Vehiculos/Seguros" element={<VehiculosSeguros />} />
 
-          
 
-          <Route path="/DashboardsReportes/Dashboards/Dashboards" element={<DashboardsReportesDashboards/>} />
-          <Route path="/DashboardsReportes/Reportes/Reportes" element={<DashboardsReportesReportes/>} />
 
-          <Route path="/Administracion/Ayuda" element={<AdministracionAyuda/>} />
-          <Route path="/Administracion/Backups" element={<AdministracionBackups/>} />
-          <Route path="/Administracion/CronJobs" element={<AdministracionCronJobs/>} />
-          <Route path="/Administracion/Notificaciones" element={<AdministracionNotificaciones/>} />
-          <Route path="/Administracion/Semaforizacion" element={<AdministracionSemaforizacion/>} />
-          <Route path="/Administracion/ValoresGlobales" element={<AdministracionValoresGlobales/>} />
-          <Route path="/Administracion/ValoresSistema" element={<AdministracionValoresSistema/>} />
+          <Route path="/DashboardsReportes/Dashboards/Dashboards" element={<DashboardsReportesDashboards />} />
+          <Route path="/DashboardsReportes/Reportes/Reportes" element={<DashboardsReportesReportes />} />
 
-          <Route path="/Inmuebles/Altas" element={<InmueblesAltas/>} />
-          <Route path="/Inmuebles/Bajas" element={<InmueblesBajas/>} />
-          <Route path="/Inmuebles/Permutas" element={<InmueblesPermutas/>} />
-          <Route path="/Inmuebles/Modificaciones" element={<InmueblesModificaciones/>} />
-          <Route path="/Inmuebles/LevantamientosTopograficos" element={<InmueblesLevantamientosTopograficos/>} />
-          <Route path="/Inmuebles/Arrendamientos" element={<InmueblesArrendamientos/>} />
-          <Route path="/Inmuebles/Comodato" element={<InmueblesComodato/>} />
-          <Route path="/Inmuebles/GeneracionTarjetas" element={<InmueblesGeneracionTarjetas/>} />
+          <Route path="/Administracion/Ayuda" element={<AdministracionAyuda />} />
+          <Route path="/Administracion/Backups" element={<AdministracionBackups />} />
+          <Route path="/Administracion/CronJobs" element={<AdministracionCronJobs />} />
+          <Route path="/Administracion/Notificaciones" element={<AdministracionNotificaciones />} />
+          <Route path="/Administracion/Semaforizacion" element={<AdministracionSemaforizacion />} />
+          <Route path="/Administracion/ValoresGlobales" element={<AdministracionValoresGlobales />} />
+          <Route path="/Administracion/ValoresSistema" element={<AdministracionValoresSistema />} />
+
+          <Route path="/Inmuebles/Altas" element={<InmueblesAltas />} />
+          <Route path="/Inmuebles/Bajas" element={<InmueblesBajas />} />
+          <Route path="/Inmuebles/Permutas" element={<InmueblesPermutas />} />
+          <Route path="/Inmuebles/Modificaciones" element={<InmueblesModificaciones />} />
+          <Route path="/Inmuebles/LevantamientosTopograficos" element={<InmueblesLevantamientosTopograficos />} />
+          <Route path="/Inmuebles/Arrendamientos" element={<InmueblesArrendamientos />} />
+          <Route path="/Inmuebles/Comodato" element={<InmueblesComodato />} />
+          <Route path="/Inmuebles/GeneracionTarjetas" element={<InmueblesGeneracionTarjetas />} />
 
           <Route path="/Tickets/Altas" element={<TicketsAltas />} />
           <Route path="/Tickets/Modificaciones" element={<TicketsModificaciones />} />

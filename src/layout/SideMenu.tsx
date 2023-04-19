@@ -1,4 +1,5 @@
-import * as React from "react";
+import React from "react";
+import { useEffect, useState } from "react";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -30,17 +31,17 @@ const MenuSX = {
 
 export default function NestedList() {
   // Muebles
-  const [openSegundo, setOpenSegundo] = React.useState(0); // esta es una variable de estado
+  const [openSegundo, setOpenSegundo] = useState(0); // esta es una variable de estado
   const handleOpenCollapse = (id: number) => {
     setOpenSegundo(id);
   };
 
-  const [openTercer, setOpenTercer] = React.useState(0);
+  const [openTercer, setOpenTercer] = useState(0);
   const handleOpenCollapseTercer = (id: number) => {
     setOpenTercer(id);
   };
 
-  const [itemSelected, setItemSelected] = React.useState(0);
+  const [itemSelected, setItemSelected] = useState(0);
   const navigate = useNavigate();
 
   return (
@@ -100,6 +101,7 @@ export default function NestedList() {
         {menu.map((element: any, nombre) => {
           return (
             <div key={nombre}>
+              {console.log('element',element)}
               <ListItemButton
                 onClick={() => {
                   if (openSegundo !== element.id) {
@@ -118,71 +120,72 @@ export default function NestedList() {
                 {openSegundo ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
 
-              {/* {element?.submenu && (
-                <Collapse
-                  in={openSegundo === element.id}
-                  timeout="auto"
-                  unmountOnExit
-                >
-                  <List component="div" disablePadding>
-                    {element.submenu.map((subel: any, index: number) => {
-                      return (
-                        <div key={subel.nombre}>
-                          <ListItemButton
-                            onClick={() => {
-                              setItemSelected(subel.id);
-                              handleOpenCollapseTercer(subel.id);
-                              navigate(subel.ruta);
-                            }}
-                            divider
-                            selected={itemSelected === subel.id ? true : false}
-                          >
-                            <ListItemIcon sx={{ pl: 4 }}>
-                              {Icons(subel.icon)}
-                            </ListItemIcon>
-                            <ListItemText primary={subel.nombre} />
-                            {openTercer ? <ExpandLess /> : <ExpandMore />}
-                          </ListItemButton>
-
-                          {subel?.submenuTercerNivel && (
-                            <Collapse
-                              in={openTercer === subel.id}
-                              timeout="auto"
-                              unmountOnExit
+              {
+                element?.submenu &&
+                  <Collapse
+                    in={openSegundo === element.id}
+                    timeout="auto"
+                    unmountOnExit
+                  >
+                    <List component="div" disablePadding>
+                      {element.submenu.map((subel: any, index: number) => {
+                        return (
+                          <div key={subel.nombre}>
+                            <ListItemButton
+                              onClick={() => {
+                                setItemSelected(subel.id);
+                                handleOpenCollapseTercer(subel.id);
+                                navigate(subel.ruta);
+                              }}
+                              divider
+                              selected={itemSelected === subel.id ? true : false}
                             >
-                              <List component="div" disablePadding>
-                                {subel?.submenuTercerNivel.map(
-                                  (tercer: any) => {
-                                    return (
-                                      <ListItemButton
-                                        onClick={() => {
-                                          setItemSelected(tercer.id);
-                                          navigate(tercer.ruta);
-                                        }}
-                                        divider
-                                        selected={
-                                          itemSelected === tercer.id
-                                            ? true
-                                            : false
-                                        }
-                                      >
-                                        <ListItemIcon sx={{ pl: 8 }}>
-                                          {Icons(tercer.icon)}
-                                        </ListItemIcon>
-                                        <ListItemText primary={tercer.nombre} />
-                                      </ListItemButton>
-                                    );
-                                  }
-                                )}
-                              </List>
-                            </Collapse>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </List>
-                </Collapse>
-              )} */}
+                              <ListItemIcon sx={{ pl: 4 }}>
+                                {Icons(subel.icon)}
+                              </ListItemIcon>
+                              <ListItemText primary={subel.nombre} />
+                              {openTercer ? <ExpandLess /> : <ExpandMore />}
+                            </ListItemButton>
+
+                            {subel?.submenuTercerNivel && (
+                              <Collapse
+                                in={openTercer === subel.id}
+                                timeout="auto"
+                                unmountOnExit
+                              >
+                                <List component="div" disablePadding>
+                                  {subel?.submenuTercerNivel.map(
+                                    (tercer: any) => {
+                                      return (
+                                        <ListItemButton
+                                          onClick={() => {
+                                            setItemSelected(tercer.id);
+                                            navigate(tercer.ruta);
+                                          }}
+                                          divider
+                                          selected={
+                                            itemSelected === tercer.id
+                                              ? true
+                                              : false
+                                          }
+                                        >
+                                          <ListItemIcon sx={{ pl: 8 }}>
+                                            {Icons(tercer.icon)}
+                                          </ListItemIcon>
+                                          <ListItemText primary={tercer.nombre} />
+                                        </ListItemButton>
+                                      );
+                                    }
+                                  )}
+                                </List>
+                              </Collapse>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </List>
+                  </Collapse>
+              }
             </div>
           );
         })}
