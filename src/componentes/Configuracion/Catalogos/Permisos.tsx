@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MUIXDataGrid from "../../Grid/MUIXDataGrid";
-import { blue } from '@mui/material/colors';
+ 
 
 export interface SecretariaInterface {
   uuid: string;
