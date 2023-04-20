@@ -249,7 +249,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="./src/componentes/Catalogos/menuc.tsx"
+                          href="/Configuracion/Catalogos/Menu"
                         >
                           Menu
                         </Button>
