@@ -1,12 +1,10 @@
 import React from "react";
-import { Button, Box } from "@mui/material";
+import { Button, Box, Grid } from "@mui/material";
 
 export default function Principal() {
   return (
-    <Box>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-       Roles
-      </Box>
-    </Box>
+    <Grid container>
+Roles
+    </Grid>
   );
 }
