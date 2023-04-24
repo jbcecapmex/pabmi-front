@@ -210,7 +210,7 @@ export default function CatGrid({
   }, []);
 
   return (
-    <Grid container sx={{ fontFamily: "MontserratSemiBold" }}>
+    <Grid container>
       <Grid item xs={12} paddingLeft={3}>
         {/* este componente es para armar la ruta que se muestra arriba y poder navegar hacia atras */}
         {/* ejemplo inicio/configuracion/catalogos/marca */}
