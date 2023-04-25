@@ -17,7 +17,7 @@ export interface SecretariaInterface {
 }
  
 
-export default function Menuc() { 
+export default function PermisosC() { 
 
   const navigate = useNavigate();
   const columns = [
@@ -52,7 +52,7 @@ export default function Menuc() {
      {
       field: "Nombre",
       headerName: "Nombre",
-      width: 360,
+      width: 130,
       hideable: false,
       headerAlign: "center",
     },
@@ -60,22 +60,34 @@ export default function Menuc() {
     {
       field: "Descripcion",
       headerName: "Descripción",
-      width: 400,
+      width: 130,
       hideable: false,
       headerAlign: "center",
     },
     // cuarta columna donde se mostrara si esta activo o no
     {
-      field: "Icono",
-      headerName: "Icono",
-      width: 84,
+      field: "CreadoPor",
+      headerName: "Creado por",
+      width: 130,
       headerAlign: "center",
     },
     // quinta columna donde se mostrara si esta activo o no
     {
-      field: "Nivel",
-      headerName: "Nivel",
-      width: 84,
+      field: "ModificadoPor",
+      headerName: "Modificado por",
+      width: 130,
+      headerAlign: "center",
+    },
+    {
+      field: "EliminadoPor",
+      headerName: "Eliminado por",
+      width: 130,
+      headerAlign: "center",
+    },
+    {
+      field: "Acciones",
+      headerName: "Acciones",
+      width: 130,
       headerAlign: "center",
     },
   ];
@@ -193,6 +205,21 @@ export default function Menuc() {
       <Box
       component="form"
       sx={{
+        '& > :not(style)': { m: 1.3, width: '10%' }, 
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <TextField
+       id="Cve" 
+       label="cve"
+       variant="outlined" />
+
+    </Box>
+
+    <Box
+      component="form"
+      sx={{
         '& > :not(style)': { m: 1.3, width: '41%' }, 
       }}
       noValidate
@@ -209,36 +236,33 @@ export default function Menuc() {
        variant="outlined" />
 
     </Box>
+
     <Box
       component="form"
       sx={{
-        '& > :not(style)': { m: 1, width: '20%' },
+        '& > :not(style)': { m: 1, width: '27%' },
       }}
       noValidate
       autoComplete="off"
     >
      
       <TextField
-       id="icono" 
-       label="Icono"
+       id="CreadoPor" 
+       label="Creado por"
        variant="outlined" />
 
       <TextField
-       id="path" 
-       label="path"
-       variant="outlined" />
-
-      <TextField
-       id="nivel" 
-       label="nivel" 
+       id="ModificadoPor" 
+       label="Modificado por" 
        variant="outlined" />
        
        <TextField
-       id="ordenamiento" 
-       label="Ordenamiento"
+       id="Eliminadopor" 
+       label="Eliminado por"
        variant="outlined" />
 
     </Box>
+
 
     <Box  maxWidth="85%"  paddingTop={3} paddingBottom={3} display="flex" justifyContent="end" >
       <Button variant="contained"> Guardar </Button>

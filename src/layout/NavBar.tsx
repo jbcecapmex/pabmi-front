@@ -69,7 +69,7 @@ function NavBar(props: { children?: any; window?: any }) {
               <i className="fa-solid fa-bars" />
             </IconButton>
             <Typography  component="div" sx={{ flexGrow: 1, fontFamily: "MontserratRegular, sans-serif",fontSize: "130%" }}>
-              Plataforma de Administración de Bienes Muebles e Inmuebles
+              Plataforma de Administración de Bienes Muebles e Inmuebles 
             </Typography>
             {/* menu de mensajes */}
             <div>
@@ -156,7 +156,7 @@ function NavBar(props: { children?: any; window?: any }) {
           </Drawer>
         {/* fondo de pantalla del centro */}
         
-        <Box component="main" sx={{ flexGrow: 1,p: 5, width:'76vw',top:'7vh', position:'absolute',left:'18vw', }}>
+        <Box component="main" sx={{ flexGrow: 1,paddingTop:2, paddingBottom:4, paddingLeft:4, width:'76vw',top:'7vh', position:'absolute',left:'18vw', }}>
           {/* <Toolbar /> */}
           {props.children}
         </Box>

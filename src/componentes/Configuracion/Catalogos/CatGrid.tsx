@@ -210,8 +210,8 @@ export default function CatGrid({
   }, []);
 
   return (
-    <Grid container sx={{ fontFamily: "MontserratSemiBold" }}>
-      <Grid item xs={12} paddingLeft={3}>
+    <Grid container >
+      <Grid item xs={12} paddingLeft={1}>
         {/* este componente es para armar la ruta que se muestra arriba y poder navegar hacia atras */}
         {/* ejemplo inicio/configuracion/catalogos/marca */}
         <Breadcrumbs aria-label="breadcrumb">
@@ -234,27 +234,26 @@ export default function CatGrid({
 
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
       {/* <Grid item xs={12}> */}
-        <Grid container justifyContent={"center"} item xs={12}>
-          <Grid item xs={12} md={10} mt={2}>
+        <Grid container justifyContent={"center"} item xs={12} >
+          <Grid item xs={12} md={12} mt={2}  >
             {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
-            <Card sx={{ p: 1, boxShadow: 8 }}>
+            <Card sx={{ p: 3, boxShadow: 8 }}>
               <CardHeader sx={{ position: "absolute", fontFamily: "MontserratBold" }} />
               <Typography  variant="h4">Catálogo de {titulo}</Typography>              
               <CardContent>
                 {/* aqui es el cardcontent que es el contenido del card,y ponemos primero un box y estamos dibujando el boton para agregar un nuevo registro */}
                 <Box display="flex" justifyContent="flex-end">
-                  <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right",}}>
+                  <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", p:3}}>
                     <Button
                       onClick={(event) => handleNewBtnClick(event)}
-                      sx={{color: "#616161",width: "50%",backgroundColor: "#226599",border: "1px solid #3988DA",borderRadius: "0",borderTopLeftRadius: "5px",borderBottomLeftRadius: "5px",}} variant="contained"
+                      sx={{ width: "50%", borderTopLeftRadius: "5px",borderBottomLeftRadius: "5px"   }} variant="contained"
                         startIcon={<AddIcon sx={{color:"#FFFFFF"}} /> }>
                       <Typography
                         sx={{color: "#FFFFFF",fontFamily: "Roboto, sans-serif",fontSize: "100%",}}>
                         Agregar
                       </Typography>
                     </Button>
-                    <Button onClick={() => regresa()} sx={{color: "#616161",fontFamily: "Roboto, sans-serif",width: "50%",backgroundColor: "#3988DA",border: "1px solid #3988DA",
-                        borderRadius: "0",borderTopRightRadius: "5px",borderBottomRightRadius: "5px",}}variant="contained">
+                    <Button onClick={() => regresa()} sx={{ fontFamily: "Roboto, sans-serif",width: "50%", borderTopRightRadius: "5px",borderBottomRightRadius: "5px",}}  color="secondary" variant="contained">
                       <Typography
                         sx={{color: "#ffffff",fontFamily: "Roboto, sans-serif",fontSize: "100%",}}>
                         Cancelar
