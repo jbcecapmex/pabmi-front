@@ -284,12 +284,6 @@ export const menu = [
                "nombre":"Usuarios",
                "ruta":"/Configuracion/Usuarios/Usuarios",
                "icon":"Person"
-            },
-            {
-               "id":703,
-               "nombre":"Roles",
-               "ruta":"/Configuracion/Roles/Roles",
-               "icon":"People"
             }
           ]
        }
