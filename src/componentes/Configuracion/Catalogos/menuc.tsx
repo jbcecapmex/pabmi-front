@@ -153,7 +153,7 @@ export default function Menuc() {
           <Link underline="hover" color="inherit">
             titulo
           </Link>
-          <Typography color="text.primary"> Catálogo de Menus </Typography>
+          <Typography color="text.primary"> Catálogo de Menu </Typography>
         </Breadcrumbs>
       </Grid> 
 
@@ -161,7 +161,7 @@ export default function Menuc() {
       <Grid item xs={12} md={12} mt={2}>
       <Card sx={{ p: 1, boxShadow: 4 }}>
       <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
-      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}> Catálogo de Menus</Typography>  
+      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}> Catálogo de Menu</Typography>  
       <CardContent>
       <Box display="flex" justifyContent="flex-end">
       <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", paddingBottom:"2%", paddingRight:"1%"}}>
@@ -207,7 +207,7 @@ export default function Menuc() {
         <Box sx={style}>
           
         <Box> 
-        <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Menus</Typography>  
+        <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Menu</Typography>  
         </Box>
         
           <Box    
