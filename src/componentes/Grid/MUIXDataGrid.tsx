@@ -31,7 +31,6 @@ export default function MUIXDataGrid(props: any) {
           rows={props.rows}
           rowsPerPageOptions={[10, 25, 50, 100]}
           pageSize={10}
-          sx={{ fontFamily: "MontserratMedium" }}
           getRowId={props.id}
           components={{
             Toolbar: GridToolbar,
