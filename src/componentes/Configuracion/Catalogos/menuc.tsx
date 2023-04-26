@@ -6,16 +6,22 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import MUIXDataGrid from "../../Grid/MUIXDataGrid";
+import MUIXDataGrid from '../../Grid/MUIXDataGrid';
+import Modal from '@mui/material/Modal';
  
 
-export interface SecretariaInterface {
-  uuid: string;
-  descripcion: string;
-  estado: boolean;
-  estatusLabel: string;
-}
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: "50%",
+  bgcolor: 'background.paper',
+  boxShadow: 5,
+  p: 2,
+};
  
+
 
 export default function Menuc() { 
 
@@ -82,50 +88,6 @@ export default function Menuc() {
 
   const [rows, setRows] = useState([]);
 
-    // Set New App dialog vars and functions
-    const [newDialogOpen, setNewDialogOpen] = useState(false);
-    const handleNewDialogOpen = () => setNewDialogOpen(true);
-    const handleNewDialogClose = (changed: boolean) => {
-      if (changed === true) {
-        // Toast.fire({
-        // 	icon: "success",
-        // 	title: "Aplicación Creada Exitosamente",
-        // 	//background: '#2e7d32',
-        // 	//color: '#fff',
-        // });
-        // getAllApps();
-      }
-      setNewDialogOpen(false);
-    };
-    const handleNewBtnClick = (event: any) => {
-      handleNewDialogOpen();
-    };
-
-      // Set Edit App Dialog vars and functions
-  const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const [editDialogAgr, setEditDialogAgr] = useState<SecretariaInterface>();
-  const handleEditDialogOpen = () => setEditDialogOpen(true);
-  const handleEditDialogClose = (changed: boolean) => {
-    if (changed === true) {
-      // Toast.fire({
-      //     icon: "success",
-      //     title: "Aplicación actualizada exitosamente",
-      // 	//background: '#2e7d32',
-      // 	//color: '#fff',
-      // });
-      // getAllApps();
-    }
-    setEditDialogOpen(false);
-  };
-  const handleEditBtnClick = (event: any, cellValues: any) => {
-    setEditDialogAgr(cellValues);
-    handleEditDialogOpen();
-  };
-
-   // Handle delete 
-   const handleDeleteBtnClick = (event: any, cellValues: any) => {
-    console.log(cellValues.row.Id);
-  };
 
   const getAllApps = () => {
    axios ({
@@ -169,6 +131,12 @@ export default function Menuc() {
     getAllApps();
   }, []);
 
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+ 
+
   return (
     <Grid container sx={{ fontFamily: "MontserratSemiBold" }}>
       <Grid item xs={12} paddingLeft={3}>
@@ -185,34 +153,85 @@ export default function Menuc() {
           <Link underline="hover" color="inherit">
             titulo
           </Link>
-          <Typography color="text.primary">Catálogo de titulo </Typography>
+          <Typography color="text.primary"> Catálogo de Menus </Typography>
         </Breadcrumbs>
       </Grid> 
-      <Grid container justifyContent={"center"} item xs={12} paddingLeft={3}>
-      <Grid item xs={12} paddingRight={3} paddingTop={5}>
-      <Box
+
+      <Grid container justifyContent={"center"} item xs={10} paddingLeft={3} paddingTop={5}>
+      <Grid item xs={12} md={12} mt={2}>
+      <Card sx={{ p: 1, boxShadow: 4 }}>
+      <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
+      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}> Catálogo de Menus</Typography>  
+      <CardContent>
+      <Box display="flex" justifyContent="flex-end">
+      <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", paddingBottom:"2%", paddingRight:"1%"}}>
+                    <Button
+                      // onClick={(event) => handleNewBtnClick(event)}
+                      onClick={handleOpen}
+                      variant="contained"
+                      sx={{margin:"1%"}}
+                      startIcon={<AddIcon sx={{color:"#FFFFFF"}} /> }>
+                      <Typography
+                        sx={{color: "#FFFFFF",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}}>
+                        Agregar
+                      </Typography>
+                    </Button>
+                    <Button 
+                       onClick={() => navigate(-1)}
+                        color="secondary"
+                        sx={{margin:"1%"}}
+                        variant="contained">
+                      <Typography
+                        sx={{color: "#ffffff",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}}>
+                        Cancelar
+                      </Typography>
+                    </Button>
+                  </Grid>
+      </Box>
+
+      <MUIXDataGrid
+      id={(row: any) => row.Id}
+      columns={columns}
+      rows={rows}
+      /> 
+
+
+
+      <Grid >
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          
+        <Box> 
+        <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Menus</Typography>  
+        </Box>
+        
+          <Box    
+          component="form"
+          sx={{
+          '& > :not(style)': { m: 1.3, width: '47%' },   }}
+          noValidate
+          autoComplete="off">
+
+          <TextField
+            id="nombre" 
+            label="Nombre"
+            variant="outlined" />
+
+            <TextField
+            id="descripcion" 
+            label="Descripción"
+            variant="outlined" />
+
+          </Box>
+          <Box
       component="form"
       sx={{
-        '& > :not(style)': { m: 1.3, width: '41%' }, 
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <TextField
-       id="nombre" 
-       label="Nombre"
-       variant="outlined" />
-
-      <TextField
-       id="descripcion" 
-       label="Descripción"
-       variant="outlined" />
-
-    </Box>
-    <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: '20%' },
+        '& > :not(style)': { m: 1, width: '22.7%' },
       }}
       noValidate
       autoComplete="off"
@@ -239,55 +258,24 @@ export default function Menuc() {
        variant="outlined" />
 
     </Box>
-
-    <Box  maxWidth="85%"  paddingTop={3} paddingBottom={3} display="flex" justifyContent="end" >
-      <Button variant="contained"> Guardar </Button>
+    <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
+      <Button variant="contained" sx={{margin:"1%"}} > Guardar </Button>
+      <Button  
+      onClick={handleClose}
+      variant="contained" 
+      color="secondary"
+      sx={{margin:"1%"}}>  Cancelar </Button>
     </Box>
-      </Grid>
-      </Grid>
+        </Box>
+      </Modal>
+       </Grid>
 
-      <Grid container justifyContent={"center"} item xs={10} paddingLeft={3} paddingTop={5}>
-      <Grid item xs={12} md={12} mt={2}>
-      <Card sx={{ p: 1, boxShadow: 4 }}>
-      <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
-      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}> Catálogo de titulo </Typography>  
-      <CardContent>
-      <Box display="flex" justifyContent="flex-end">
-      <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", paddingBottom:"2%", paddingRight:"1%"}}>
-                    <Button
-                      // onClick={(event) => handleNewBtnClick(event)}
-                      variant="contained"
-                      sx={{margin:"1%"}}
-                      startIcon={<AddIcon sx={{color:"#FFFFFF"}} /> }>
-                      <Typography
-                        sx={{color: "#FFFFFF",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}}>
-                        Agregar
-                      </Typography>
-                    </Button>
-                    <Button 
-                    // onClick={() => regresa()} 
-                    // sx={{color: "#616161",fontFamily: "Roboto, sans-serif",width: "50%",backgroundColor: "#3988DA",border: "1px solid #3988DA", borderRadius: "0",borderTopRightRadius: "5px",borderBottomRightRadius: "5px",}}
-                        color="secondary"
-                        sx={{margin:"1%"}}
-                        variant="contained">
-                      <Typography
-                        sx={{color: "#ffffff",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}}>
-                        Cancelar
-                      </Typography>
-                    </Button>
-                  </Grid>
-      </Box>
-
-      <MUIXDataGrid
-      id={(row: any) => row.Id}
-      columns={columns}
-      rows={rows}
-      /> 
 
       </CardContent>
       </Card>
       </Grid>
       </Grid>
+
     </Grid>
   );
 }
