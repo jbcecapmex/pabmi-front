@@ -156,7 +156,8 @@ function NavBar(props: { children?: any; window?: any }) {
           </Drawer>
         {/* fondo de pantalla del centro */}
         
-        <Box component="main" sx={{ flexGrow: 1,paddingTop:2, paddingBottom:4, paddingLeft:4, width:'76vw',top:'7vh', position:'absolute',left:'18vw', }}>
+        <Box component="main"
+         sx={{ flexGrow: 1, paddingTop:2, paddingBottom:4, paddingLeft:4, width:'76vw',top:'7vh', position:'absolute',left:'18vw', }}>
           {/* <Toolbar /> */}
           {props.children}
         </Box>

@@ -183,7 +183,7 @@ function NavBar(props: { children?: any; window?: any }) {
           component="main"
           sx={{
             flexGrow: 1,
-            p: 5,
+            paddingTop:2, paddingBottom:4, paddingLeft:4,
             width: { sm: `calc(100% - ${drawerWidth}px)` },
           }}
         >
