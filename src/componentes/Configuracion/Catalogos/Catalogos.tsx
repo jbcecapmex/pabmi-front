@@ -235,10 +235,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(7, "Tipo de Clasificación");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/TipodeClasificacion"
                         >
                           TIPO DE CLASIFICACIÓN
                         </Button>
