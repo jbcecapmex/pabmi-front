@@ -161,6 +161,21 @@ const Usuarios = () => {
                           USUARIOS
                         </Button>
                       </Grid>
+
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          onClick={() => {
+                            changeScreen(1, "Empleados");
+                            setShowCatGrid(true);
+                          }}
+                        >
+                          TIPO DE USUARIOS
+                        </Button>
+                      </Grid>
+
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}

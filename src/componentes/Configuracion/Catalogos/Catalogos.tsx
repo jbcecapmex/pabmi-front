@@ -197,11 +197,11 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(4, "Direcciones Generales");
+                            changeScreen(4, "Secretarias");
                             setShowCatGrid(true);
                           }}
                         >
-                          DIRECCIONES GENERALES
+                          SECRETARIAS
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
@@ -210,11 +210,11 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(5, "Departamentos");
+                            changeScreen(5, "Dependencias");
                             setShowCatGrid(true);
                           }}
                         >
-                          DEPARTAMENTOS
+                          DEPENDENCIAS
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
@@ -223,13 +223,55 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(6, "Departamentos / Areas");
+                            changeScreen(6, "Tipos de Dependencias");
                             setShowCatGrid(true);
                           }}
                         >
-                          DEPARTAMENTOS / AREA
+                          TIPO DE DEPENDENCIAS
                         </Button>
                       </Grid>
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          onClick={() => {
+                            changeScreen(6, "Tipos de Dependencias");
+                            setShowCatGrid(true);
+                          }}
+                        >
+                          ENTIDADES FEDERATIVAS
+                        </Button>
+                      </Grid>
+
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          onClick={() => {
+                            changeScreen(6, "Tipos de Dependencias");
+                            setShowCatGrid(true);
+                          }}
+                        >
+                          MUNICIPIOS
+                        </Button>
+                      </Grid>
+
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          onClick={() => {
+                            changeScreen(6, "Tipos de Dependencias");
+                            setShowCatGrid(true);
+                          }}
+                        >
+                          PUESTOS
+                        </Button>
+                      </Grid>
+
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
