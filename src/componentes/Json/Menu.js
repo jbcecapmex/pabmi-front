@@ -283,7 +283,7 @@ export const menu = [
                "id":702,
                "nombre":"Usuarios",
                "ruta":"/Configuracion/Usuarios/Usuarios",
-               "icon":"Person"
+               "icon":"People"
             }
           ]
        }
