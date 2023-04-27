@@ -87,7 +87,7 @@ const Catalogos = () => {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ width: "100%", height: "100%", padding:"2%" }}>
+    <Box sx={{ width: "100%", height: "100%", paddingBottom:"2%", paddingLeft:"2%"}}>
       {showCatGrid ? (
         // manda llamar la pantalla donde esta el grid de los catalogos
         <CatGrid
@@ -277,10 +277,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(7, "Tipo de Clasificación");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/TipodeClasificacion"
                         >
                           TIPO DE CLASIFICACIÓN
                         </Button>
