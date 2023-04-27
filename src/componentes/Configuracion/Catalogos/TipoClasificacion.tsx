@@ -23,7 +23,7 @@ const style = {
  
 
 
-export default function Menuc() { 
+export default function TipoClasificacion() { 
 
   const navigate = useNavigate();
   const columns = [
@@ -70,20 +70,7 @@ export default function Menuc() {
       hideable: false,
       headerAlign: "center",
     },
-    // cuarta columna donde se mostrara si esta activo o no
-    {
-      field: "Icono",
-      headerName: "Icono",
-      width: 84,
-      headerAlign: "center",
-    },
-    // quinta columna donde se mostrara si esta activo o no
-    {
-      field: "Nivel",
-      headerName: "Nivel",
-      width: 84,
-      headerAlign: "center",
-    },
+
   ];
 
   const [rows, setRows] = useState([]);
@@ -153,7 +140,7 @@ export default function Menuc() {
           <Link underline="hover" color="inherit">
             titulo
           </Link>
-          <Typography color="text.primary"> Catálogo de Menu </Typography>
+          <Typography color="text.primary"> Catálogo de Tipo de Clasificación </Typography>
         </Breadcrumbs>
       </Grid> 
 
@@ -161,7 +148,7 @@ export default function Menuc() {
       <Grid item xs={12} md={12} mt={2}>
       <Card sx={{ p: 1, boxShadow: 4 }}>
       <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
-      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}> Catálogo de Menu</Typography>  
+      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>  Catálogo de Tipo de Clasificación </Typography>  
       <CardContent>
       <Box display="flex" justifyContent="flex-end">
       <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", paddingBottom:"2%", paddingRight:"1%"}}>
@@ -204,18 +191,34 @@ export default function Menuc() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={style} display="flow">
           
         <Box> 
-        <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Menu</Typography>  
+        <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Tipo de Clasificación </Typography>  
         </Box>
-        
+
+		<Box    
+          component="form"
+          sx={{
+          '& > :not(style)': { m: 1.3, width: '15%' },   }}
+          noValidate
+          autoComplete="off"
+		  display="flex">
+
+          <TextField
+            id="cve" 
+            label="cve"
+            variant="outlined" />
+
+          </Box>
+
           <Box    
           component="form"
           sx={{
-          '& > :not(style)': { m: 1.3, width: '47%' },   }}
+          '& > :not(style)': { m: 1.3, width: '50%' },   }}
           noValidate
-          autoComplete="off">
+          autoComplete="off"
+		  display="flex">
 
           <TextField
             id="nombre" 
@@ -228,36 +231,7 @@ export default function Menuc() {
             variant="outlined" />
 
           </Box>
-          <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: '22.7%' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-     
-      <TextField
-       id="icono" 
-       label="Icono"
-       variant="outlined" />
-
-      <TextField
-       id="path" 
-       label="path"
-       variant="outlined" />
-
-      <TextField
-       id="nivel" 
-       label="nivel" 
-       variant="outlined" />
-       
-       <TextField
-       id="ordenamiento" 
-       label="Ordenamiento"
-       variant="outlined" />
-
-    </Box>
+      
     <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
       <Button variant="contained" sx={{margin:"1%"}} > Guardar </Button>
       <Button  
