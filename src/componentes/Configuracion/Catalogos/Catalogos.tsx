@@ -197,11 +197,11 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(4, "Secretarias");
+                            changeScreen(4, "Secretarías");
                             setShowCatGrid(true);
                           }}
                         >
-                          SECRETARIAS
+                          SECRETARÍAS
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
@@ -236,7 +236,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(6, "Tipos de Dependencias");
+                            changeScreen(6, "Entidades Federativas");
                             setShowCatGrid(true);
                           }}
                         >
@@ -250,7 +250,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(6, "Tipos de Dependencias");
+                            changeScreen(6, "Municipios");
                             setShowCatGrid(true);
                           }}
                         >
@@ -264,7 +264,7 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(6, "Tipos de Dependencias");
+                            changeScreen(6, "Puestos");
                             setShowCatGrid(true);
                           }}
                         >
@@ -293,7 +293,7 @@ const Catalogos = () => {
                           fullWidth
                           href="/Configuracion/Catalogos/Menu"
                         >
-                          Menu
+                          MENU
                         </Button>
                       </Grid>
 
@@ -314,11 +314,11 @@ const Catalogos = () => {
                           fullWidth
                           onClick={() => {
                             setCatSelected(1);
-                            changeScreen(8, "Secretarias");
+                            changeScreen(8, "Secretarías");
                             setShowCatGrid(true);
                           }}
                         >
-                          SECRETARIAS
+                          SECRETARÍAS
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>

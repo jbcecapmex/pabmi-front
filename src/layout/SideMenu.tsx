@@ -144,7 +144,7 @@ export default function NestedList() {
                                 {Icons(subel.icon)}
                               </ListItemIcon>
                               <ListItemText primary={subel.nombre} />
-                              {openTercer ? <ExpandLess /> : <ExpandMore />}
+                              {openTercer ? <ExpandLess /> : <ExpandMore />} {/* Hay que poner una regla para que no siempre aparesca el signo hacia abajo cuando ya no tiene mas sub menus */}
                             </ListItemButton>
 
                             {subel?.submenuTercerNivel && (
