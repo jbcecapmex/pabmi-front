@@ -54,10 +54,12 @@ import AdministracionValoresSistema from './componentes/Administracion/ValoresSi
 import ConfiguracionCatalogos from './componentes/Configuracion/Catalogos/Catalogos';
 import ConfiguracionUsuarios from './componentes/Configuracion/Usuarios/Usuarios';
 import ConfiguracionRoles from './componentes/Configuracion/Roles/Roles';
-import Menuc from './componentes/Configuracion/Catalogos/menuc';
+import DomiciliosC from './componentes/Configuracion/Catalogos/DomiciliosC';
+import Menuc from './componentes/Configuracion/Catalogos/MenuC';
 import PermisosC from './componentes/Configuracion/Catalogos/Permisos';
 import TipoClasificacion from './componentes/Configuracion/Catalogos/TipoClasificacion';
 import NavBar from './layout/NavBar';
+import EmpleadosC from './componentes/Configuracion/Catalogos/EmpleadosC';
 
 
 function App() {
@@ -146,6 +148,8 @@ function App() {
 
 
           <Route path="/Configuracion/Catalogos/Catalogos" element={<ConfiguracionCatalogos />} />
+          <Route path="/Configuracion/Catalogos/Empleados" element={<EmpleadosC />} />
+          <Route path="/Configuracion/Catalogos/Domicilios" element={<DomiciliosC />} />
           <Route path="/Configuracion/Usuarios/Usuarios" element={<ConfiguracionUsuarios />} />
           <Route path="/Configuracion/Roles/Roles" element={<ConfiguracionRoles />} />
           <Route path="/Configuracion/Catalogos/Menu" element={<Menuc/>} />
