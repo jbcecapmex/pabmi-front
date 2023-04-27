@@ -56,34 +56,13 @@ export default function DomiciliosC() {
     },
      // segunda columna donde se mostrara el nombre
      {
-      field: "Nombre",
-      headerName: "Nombre",
+      field: "domicilios",
+      headerName: "Domicilios",
       width: 360,
       hideable: false,
       headerAlign: "center",
     },
-    // Tercer columna donde se mostrara el path
-    {
-      field: "Descripcion",
-      headerName: "Descripción",
-      width: 400,
-      hideable: false,
-      headerAlign: "center",
-    },
-    // cuarta columna donde se mostrara si esta activo o no
-    {
-      field: "Icono",
-      headerName: "Icono",
-      width: 84,
-      headerAlign: "center",
-    },
-    // quinta columna donde se mostrara si esta activo o no
-    {
-      field: "Nivel",
-      headerName: "Nivel",
-      width: 84,
-      headerAlign: "center",
-    },
+   
   ];
 
   const [rows, setRows] = useState([]);
