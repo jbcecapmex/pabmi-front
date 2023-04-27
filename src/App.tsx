@@ -151,6 +151,7 @@ function App() {
           <Route path="/Configuracion/Catalogos/Menu" element={<Menuc/>} />
           <Route path="/Configuracion/Catalogos/Permisos" element={<PermisosC/>} />
           <Route path="/Configuracion/Catalogos/TipodeClasificacion" element={<TipoClasificacion/>} />
+          <Route path="/Configuracion/Usuarios/Menu" element={<Menuc/>} />
 
 
         </Routes>

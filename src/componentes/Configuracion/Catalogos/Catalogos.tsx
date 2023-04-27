@@ -283,21 +283,6 @@ const Catalogos = () => {
                         </Button>
                       </Grid>
 
-                      <Grid item xs={12} md={6} lg={4}>
-                        <Button
-                          sx={ButtonSX}
-                          variant="text"
-                          fullWidth
-                          href="/Configuracion/Catalogos/Menu"
-                        >
-                          Menu
-                        </Button>
-                      </Grid>
-
-                      <Grid item xs={12} md={6} lg={4}>
-
-                      </Grid>
-
                     </Grid>
                   </TabPanel>
 
