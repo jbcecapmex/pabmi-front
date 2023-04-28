@@ -144,21 +144,21 @@ export default function Menuc() {
           <Link underline="hover" color="inherit" href="/inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
+          <Link underline="hover" color="inherit" href="Configuracion/Usuarios/Usuarios">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
-            Catálogos
+          <Link underline="hover" color="inherit" href="Configuracion/Usuarios/Usuarios">
+          Usuarios
           </Link>
           <Link underline="hover" color="inherit">
-            titulo
+          Menus
           </Link>
           <Typography color="text.primary"> Catálogo de Menus </Typography>
         </Breadcrumbs>
       </Grid> 
 
-      <Grid container justifyContent={"center"} item xs={10} paddingLeft={3} paddingTop={5}>
-      <Grid item xs={12} md={12} mt={2}>
+      <Grid container justifyContent={"center"} item xs={12} paddingLeft={2} paddingTop={2}>
+      <Grid item xs={12} md={12}  >
       <Card sx={{ p: 1, boxShadow: 4 }}>
       <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
       <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}> Catálogo de Menus </Typography>  

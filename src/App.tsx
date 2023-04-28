@@ -63,6 +63,7 @@ import EmpleadosC from './componentes/Configuracion/Catalogos/EmpleadosC';
 import UsuariosC from './componentes/Configuracion/Catalogos/UsuariosC';
 import TipoUsuariosC from './componentes/Configuracion/Catalogos/TipoUsuariosC';
 import PerfilesC from './componentes/Configuracion/Catalogos/PerfilesC';
+import RolesC from './componentes/Configuracion/Catalogos/RolesC';
 
 function App() {
 
@@ -161,6 +162,7 @@ function App() {
           <Route path="/Configuracion/Usuarios/Usuario" element={<UsuariosC/>} />
           <Route path="/Configuracion/Usuarios/TipodeUsuarios" element={<TipoUsuariosC/>}/>
           <Route path="/Configuracion/Usuarios/Perfiles" element={<PerfilesC/>}/>
+          <Route path="/Configuracion/Usuarios/Roles" element={<RolesC/>}/>
 
 
         </Routes>

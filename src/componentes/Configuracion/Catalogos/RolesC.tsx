@@ -6,9 +6,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import MUIXDataGrid from "../../Grid/MUIXDataGrid";
+import MUIXDataGrid from '../../Grid/MUIXDataGrid';
 import Modal from '@mui/material/Modal';
  
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -21,7 +22,8 @@ const style = {
 };
  
 
-export default function PermisosC() { 
+
+export default function RolesC() { 
 
   const navigate = useNavigate();
   const columns = [
@@ -56,7 +58,7 @@ export default function PermisosC() {
      {
       field: "Nombre",
       headerName: "Nombre",
-      width: 130,
+      width: 360,
       hideable: false,
       headerAlign: "center",
     },
@@ -64,39 +66,15 @@ export default function PermisosC() {
     {
       field: "Descripcion",
       headerName: "Descripción",
-      width: 130,
+      width: 400,
       hideable: false,
       headerAlign: "center",
     },
-    // cuarta columna donde se mostrara si esta activo o no
-    {
-      field: "CreadoPor",
-      headerName: "Creado por",
-      width: 130,
-      headerAlign: "center",
-    },
-    // quinta columna donde se mostrara si esta activo o no
-    {
-      field: "ModificadoPor",
-      headerName: "Modificado por",
-      width: 130,
-      headerAlign: "center",
-    },
-    {
-      field: "EliminadoPor",
-      headerName: "Eliminado por",
-      width: 130,
-      headerAlign: "center",
-    },
-    {
-      field: "Acciones",
-      headerName: "Acciones",
-      width: 130,
-      headerAlign: "center",
-    },
+
   ];
 
   const [rows, setRows] = useState([]);
+
 
   const getAllApps = () => {
    axios ({
@@ -144,6 +122,8 @@ export default function PermisosC() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+ 
+
   return (
     <Grid container sx={{ fontFamily: "MontserratSemiBold" }}>
       <Grid item xs={12} paddingLeft={3}>
@@ -151,28 +131,29 @@ export default function PermisosC() {
           <Link underline="hover" color="inherit" href="/inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/">
+          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/">
+          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
           Usuarios
           </Link>
           <Link underline="hover" color="inherit">
-          Permisos
+          Roles
           </Link>
-          <Typography color="text.primary">Catálogo de Permisos</Typography>
+          <Typography color="text.primary"> Catálogo de Roles </Typography>
         </Breadcrumbs>
       </Grid> 
 
       <Grid container justifyContent={"center"} item xs={12} paddingLeft={2} paddingTop={2}>
-      <Grid item xs={12} md={12} >
+      <Grid item xs={12} md={12}>
       <Card sx={{ p: 1, boxShadow: 4 }}>
       <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
-      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}> Catálogo de Permisos </Typography>  
+      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>  Catálogo de Roles </Typography>  
       <CardContent>
       <Box display="flex" justifyContent="flex-end">
       <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", paddingBottom:"2%", paddingRight:"1%"}}>
                     <Button
+                      // onClick={(event) => handleNewBtnClick(event)}
                       onClick={handleOpen}
                       variant="contained"
                       sx={{margin:"1%"}}
@@ -183,7 +164,7 @@ export default function PermisosC() {
                       </Typography>
                     </Button>
                     <Button 
-                        onClick={() => navigate(-1)}
+                       onClick={() => navigate(-1)}
                         color="secondary"
                         sx={{margin:"1%"}}
                         variant="contained">
@@ -201,102 +182,77 @@ export default function PermisosC() {
       rows={rows}
       /> 
 
+
+
       <Grid >
       <Modal
-       open={open}
-       onClose={handleClose}
-       aria-labelledby="modal-modal-title"
-       aria-describedby="modal-modal-description">
-
-        <Box sx={style}>
-
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style} display="flow">
+          
         <Box> 
-        <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Permisos </Typography>  
+        <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Roles </Typography>  
         </Box>
 
-        <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1.3, width: '10%' }, 
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <TextField
-       id="Cve" 
-       label="cve"
-       variant="outlined" 
-       size="small" />
+		<Box    
+          component="form"
+          sx={{
+          '& > :not(style)': { m: 1.3, width: '15%' },   }}
+          noValidate
+          autoComplete="off"
+		  display="flex">
 
-    </Box>
+          <TextField
+            id="cve" 
+            label="cve"
+            variant="outlined" 
+            size="small" />
 
-    <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1.3, width: '41%' }, 
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <TextField
-       id="nombre" 
-       label="Nombre"
-       variant="outlined"
-       size="small"  />
+          </Box>
 
-      <TextField
-       id="descripcion" 
-       label="Descripción"
-       variant="outlined"
-       size="small"  />
+          <Box    
+          component="form"
+          sx={{
+          '& > :not(style)': { m: 1.3, width: '50%' },   }}
+          noValidate
+          autoComplete="off"
+		  display="flex">
 
-    </Box>
+          <TextField
+            id="nombre" 
+            label="Nombre"
+            variant="outlined" 
+            size="small" />
 
-    <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: '27%' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-     
-      <TextField
-       id="CreadoPor" 
-       label="Creado por"
-       variant="outlined"
-       size="small"  />
+            <TextField
+            id="descripcion" 
+            label="Descripción"
+            variant="outlined" 
+            size="small" />
 
-      <TextField
-       id="ModificadoPor" 
-       label="Modificado por" 
-       variant="outlined"
-       size="small"  />
-       
-       <TextField
-       id="Eliminadopor" 
-       label="Eliminado por"
-       variant="outlined" 
-       size="small" />
-
-    </Box>
-    
+          </Box>
+      
     <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
-    <Button variant="contained" sx={{margin:"1%"}} > Guardar </Button>
-    <Button  
-    onClick={handleClose}
-    variant="contained" 
-    color="secondary"
-    sx={{margin:"1%"}}>  Cancelar </Button>
-     </Box>
+      <Button variant="contained" sx={{margin:"1%"}} > Guardar </Button>
+      <Button  
+      onClick={handleClose}
+      variant="contained" 
+      color="secondary"
+      sx={{margin:"1%"}}>  Cancelar </Button>
     </Box>
+        </Box>
       </Modal>
-      </Grid>
+       </Grid>
+
 
       </CardContent>
       </Card>
       </Grid>
       </Grid>
+
     </Grid>
   );
 }

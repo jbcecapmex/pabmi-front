@@ -185,10 +185,7 @@ const Usuarios = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(3, "Edificios");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Usuarios/Roles"
                         >
                           ROLES
                         </Button>
