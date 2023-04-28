@@ -56,6 +56,11 @@ import ConfiguracionUsuarios from './componentes/Configuracion/Usuarios/Usuarios
 import ConfiguracionRoles from './componentes/Configuracion/Roles/Roles';
 import Menuc from './componentes/Configuracion/Catalogos/menuc';
 import Secretarias from './componentes/Configuracion/Catalogos/Secretarias';
+import Dependencias from './componentes/Configuracion/Catalogos/Dependencias';
+import TipoDependencias from './componentes/Configuracion/Catalogos/TipoDependencias';
+import EntidadesFederativas from './componentes/Configuracion/Catalogos/EntidadesFederativas';
+import Municipios from './componentes/Configuracion/Catalogos/Municipios';
+import Puestos from './componentes/Configuracion/Catalogos/Puestos';
 import PermisosC from './componentes/Configuracion/Catalogos/Permisos';
 import TipoClasificacion from './componentes/Configuracion/Catalogos/TipoClasificacion';
 import NavBar from './layout/NavBar';
@@ -152,6 +157,11 @@ function App() {
           <Route path="/Configuracion/Catalogos/Menu" element={<Menuc/>} />
           <Route path="/Configuracion/Catalogos/Permisos" element={<PermisosC/>} />
           <Route path="/Configuracion/Catalogos/Secretarias" element={<Secretarias/>} />
+          <Route path="/Configuracion/Catalogos/Dependencias" element={<Dependencias/>} />
+          <Route path="/Configuracion/Catalogos/TipoDependencias" element={<TipoDependencias/>} />
+          <Route path="/Configuracion/Catalogos/EntidadesFederativas" element={<EntidadesFederativas/>} />
+          <Route path="/Configuracion/Catalogos/Municipios" element={<Municipios/>} />
+          <Route path="/Configuracion/Catalogos/Puestos" element={<Puestos/>} />
           <Route path="/Configuracion/Catalogos/TipodeClasificacion" element={<TipoClasificacion/>} />
 
 
