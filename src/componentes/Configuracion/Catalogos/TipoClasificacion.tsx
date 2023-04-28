@@ -208,7 +208,8 @@ export default function TipoClasificacion() {
           <TextField
             id="cve" 
             label="cve"
-            variant="outlined" />
+            variant="outlined" 
+            size="small" />
 
           </Box>
 
@@ -223,12 +224,14 @@ export default function TipoClasificacion() {
           <TextField
             id="nombre" 
             label="Nombre"
-            variant="outlined" />
+            variant="outlined"
+            size="small"  />
 
             <TextField
             id="descripcion" 
             label="Descripción"
-            variant="outlined" />
+            variant="outlined" 
+            size="small" />
 
           </Box>
       

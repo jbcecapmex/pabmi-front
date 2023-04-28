@@ -60,7 +60,8 @@ import PermisosC from './componentes/Configuracion/Catalogos/Permisos';
 import TipoClasificacion from './componentes/Configuracion/Catalogos/TipoClasificacion';
 import NavBar from './layout/NavBar';
 import EmpleadosC from './componentes/Configuracion/Catalogos/EmpleadosC';
-
+import UsuariosC from './componentes/Configuracion/Catalogos/UsuariosC';
+import TipoUsuariosC from './componentes/Configuracion/Catalogos/TipoUsuariosC';
 
 function App() {
 
@@ -156,6 +157,8 @@ function App() {
           <Route path="/Configuracion/Catalogos/Permisos" element={<PermisosC/>} />
           <Route path="/Configuracion/Catalogos/TipodeClasificacion" element={<TipoClasificacion/>} />
           <Route path="/Configuracion/Usuarios/Menu" element={<Menuc/>} />
+          <Route path="/Configuracion/Usuarios/Usuario" element={<UsuariosC/>} />
+          <Route path="/Configuracion/Usuarios/TipodeUsuarios" element={<TipoUsuariosC/>}/>
 
 
         </Routes>

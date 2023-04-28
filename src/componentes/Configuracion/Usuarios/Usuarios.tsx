@@ -153,10 +153,7 @@ const Usuarios = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(1, "Empleados");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Usuarios/Usuario"
                         >
                           USUARIOS
                         </Button>
@@ -167,10 +164,7 @@ const Usuarios = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(1, "Empleados");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Usuarios/TipodeUsuarios"
                         >
                           TIPO DE USUARIOS
                         </Button>

@@ -214,7 +214,8 @@ export default function EmpleadosC() {
           <TextField
             id="cve" 
             label="cve"
-            variant="outlined" />
+            variant="outlined"
+            size="small"  />
 
           </Box>
 
@@ -230,17 +231,20 @@ export default function EmpleadosC() {
       <TextField
        id="nombre" 
        label="Nombre"
-       variant="outlined" />
+       variant="outlined"
+       size="small"  />
 
       <TextField
        id="apellidopaterno" 
        label="Apellido Paterno"
-       variant="outlined" />
+       variant="outlined" 
+       size="small" />
 
       <TextField
        id="apellidomaterno" 
        label="Apellido Materno" 
-       variant="outlined" />
+       variant="outlined"
+       size="small"  />
        
     </Box>
     <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >

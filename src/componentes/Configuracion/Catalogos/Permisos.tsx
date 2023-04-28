@@ -225,7 +225,8 @@ export default function PermisosC() {
       <TextField
        id="Cve" 
        label="cve"
-       variant="outlined" />
+       variant="outlined" 
+       size="small" />
 
     </Box>
 
@@ -240,12 +241,14 @@ export default function PermisosC() {
       <TextField
        id="nombre" 
        label="Nombre"
-       variant="outlined" />
+       variant="outlined"
+       size="small"  />
 
       <TextField
        id="descripcion" 
        label="Descripción"
-       variant="outlined" />
+       variant="outlined"
+       size="small"  />
 
     </Box>
 
@@ -261,17 +264,20 @@ export default function PermisosC() {
       <TextField
        id="CreadoPor" 
        label="Creado por"
-       variant="outlined" />
+       variant="outlined"
+       size="small"  />
 
       <TextField
        id="ModificadoPor" 
        label="Modificado por" 
-       variant="outlined" />
+       variant="outlined"
+       size="small"  />
        
        <TextField
        id="Eliminadopor" 
        label="Eliminado por"
-       variant="outlined" />
+       variant="outlined" 
+       size="small" />
 
     </Box>
     
