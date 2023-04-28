@@ -275,7 +275,7 @@ export const menu = [
           "submenu":[
             {
                "id":701,
-               "nombre":"Catalogo",
+               "nombre":"Catalogos",
                "ruta":"/Configuracion/Catalogos/Catalogos",
                "icon":"Abc"
             },

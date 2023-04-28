@@ -25,11 +25,7 @@ const style = {
  
 
 
-export default function Secretarias() { 
-  const [Titular, setTitular] = React.useState('');
-  const handleChange = (event: SelectChangeEvent) => {
-    setTitular(event.target.value as string);
-  };
+export default function Puestos() { 
 
   const navigate = useNavigate();
   const columns = [
@@ -143,7 +139,7 @@ export default function Secretarias() {
           <Link underline="hover" color="inherit" href="/configuracion/catalogos">
             Catálogos
           </Link>
-          <Typography color="text.primary"> Catálogo de Secretarías </Typography>
+          <Typography color="text.primary"> Catálogo de Puestos </Typography>
         </Breadcrumbs>
       </Grid> 
 
@@ -151,7 +147,7 @@ export default function Secretarias() {
       <Grid item xs={12} md={12} mt={2}>
       <Card sx={{ p: 1, boxShadow: 4,width:'100%'}}> {/* Hay que poner wl width en 100%% o buscar la forma de que abwsrque todo esl */}
       <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
-      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>  Catálogo de Secretarias </Typography>  
+      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>  Catálogo de Puestos</Typography>  
       <CardContent>
       <Box display="flex" justifyContent="flex-end">
       <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", paddingBottom:"2%", paddingRight:"1%"}}>
@@ -203,7 +199,7 @@ export default function Secretarias() {
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <Box> 
-                <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Secretarías </Typography>  
+                <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Puestos</Typography>  
               </Box>
 		        </Grid>
 
@@ -233,8 +229,8 @@ export default function Secretarias() {
               autoComplete="off"
 		          display="flex">
                 <TextField
-                id="nombreSecretaria" 
-                label="Nombre de la Secretaría"
+                id="puesto" 
+                label="Nombre del Puesto"
                 size="small"
                 variant="outlined" />
                 </Box>
@@ -257,53 +253,10 @@ export default function Secretarias() {
                 </Box>
             </Grid>
 
-            <Grid item xs={6}>
-            <Box    
-              component="form"
-              sx={{
-              '& > :not(style)': { m: 1.3, width: '80%' },   }}
-              noValidate
-              autoComplete="off"
-		          display="flex">
-            <TextField
-                id="direccion" 
-                label="Dirección"
-                size="small"
-                variant="outlined" />
-                </Box>
-            </Grid>
-
-            <Grid item xs={6}>
-            <Box    
-              component="form"
-              sx={{
-              '& > :not(style)': { m: 1.3, width: '80%' },   }}
-              noValidate
-              autoComplete="off"
-		          display="flex">
-
-              <Select
-              labelId="Titular"
-              id="titular"
-              value={Titular}
-              label="Titular"
-              size="small"
-              displayEmpty
-              onChange={handleChange}
-            >
-                <MenuItem value="">
-                  Seleccione un Titular de la Secretaría
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </Box>
 
 
 
 
-            </Grid>
             <Grid item xs={12}>
             <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
               <Button variant="contained"  sx={{margin:"1%"}} > Guardar </Button>

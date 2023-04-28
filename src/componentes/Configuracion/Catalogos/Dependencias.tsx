@@ -25,11 +25,30 @@ const style = {
  
 
 
-export default function Secretarias() { 
-  const [Titular, setTitular] = React.useState('');
-  const handleChange = (event: SelectChangeEvent) => {
-    setTitular(event.target.value as string);
+export default function Dependencias() { 
+
+  const [TitularDependencia, setTitularDependencia] = React.useState('');
+  const [TipoDependencia, setTipoDependencia] = React.useState('');
+  const [Secretaria, setSecretaria] = React.useState('');
+  
+  
+  
+
+  const handleChangeTitularDependencia = (event: SelectChangeEvent) => {
+    setTitularDependencia(event.target.value as string);
   };
+
+  const handleChangeTipoDependencia = (event: SelectChangeEvent) => {
+    setTipoDependencia(event.target.value as string);
+  };
+
+  const handleChangeSecretaria = (event: SelectChangeEvent) => {
+    setSecretaria(event.target.value as string);
+  };
+
+
+
+
 
   const navigate = useNavigate();
   const columns = [
@@ -143,7 +162,7 @@ export default function Secretarias() {
           <Link underline="hover" color="inherit" href="/configuracion/catalogos">
             Catálogos
           </Link>
-          <Typography color="text.primary"> Catálogo de Secretarías </Typography>
+          <Typography color="text.primary"> Catálogo de Dependencias </Typography>
         </Breadcrumbs>
       </Grid> 
 
@@ -151,7 +170,7 @@ export default function Secretarias() {
       <Grid item xs={12} md={12} mt={2}>
       <Card sx={{ p: 1, boxShadow: 4,width:'100%'}}> {/* Hay que poner wl width en 100%% o buscar la forma de que abwsrque todo esl */}
       <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
-      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>  Catálogo de Secretarias </Typography>  
+      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>  Catálogo de Dependencias </Typography>  
       <CardContent>
       <Box display="flex" justifyContent="flex-end">
       <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", paddingBottom:"2%", paddingRight:"1%"}}>
@@ -203,7 +222,7 @@ export default function Secretarias() {
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <Box> 
-                <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Secretarías </Typography>  
+                <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Dependencias </Typography>  
               </Box>
 		        </Grid>
 
@@ -233,7 +252,7 @@ export default function Secretarias() {
               autoComplete="off"
 		          display="flex">
                 <TextField
-                id="nombreSecretaria" 
+                id="nombre" 
                 label="Nombre de la Secretaría"
                 size="small"
                 variant="outlined" />
@@ -273,6 +292,56 @@ export default function Secretarias() {
                 </Box>
             </Grid>
 
+
+            <Grid item xs={6}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '80%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+
+<Select
+              labelId="TipoDependencia"
+              id="tipoDependencia"
+              value={TipoDependencia}
+              label="Tipo de Dependencia"
+              size="small"
+              displayEmpty
+              onChange={handleChangeTipoDependencia}
+            >
+                <MenuItem value="">
+                  Seleccione un Tipo de Dependencia
+                </MenuItem>
+                <MenuItem value={1}>Secretaría</MenuItem>
+                <MenuItem value={2}>Sub Secretaría</MenuItem>
+                <MenuItem value={3}>Coordinación</MenuItem>
+                <MenuItem value={4}>Dirección</MenuItem>
+                <MenuItem value={5}>Unidad</MenuItem>
+                <MenuItem value={6}>Oficina</MenuItem>
+                <MenuItem value={7}>Representación</MenuItem>
+                <MenuItem value={8}>Instituto</MenuItem>
+                <MenuItem value={9}>Organo</MenuItem>
+                <MenuItem value={10}>Procuraduría</MenuItem>
+                <MenuItem value={11}>Oficialía</MenuItem>
+                <MenuItem value={12}>Centro</MenuItem>
+                <MenuItem value={13}>Jefatura</MenuItem>
+                <MenuItem value={14}>Servicios</MenuItem>
+                <MenuItem value={15}>División</MenuItem>
+                <MenuItem value={16}>Agencia</MenuItem>
+                <MenuItem value={17}>Escuela</MenuItem>
+                <MenuItem value={18}>Consejo</MenuItem>
+                <MenuItem value={19}>De los cuerpos Policiales</MenuItem>
+                <MenuItem value={20}>Comisiones</MenuItem>
+                <MenuItem value={21}>Secretaría Técnica</MenuItem>
+                <MenuItem value={22}>Sub Contraloría</MenuItem>
+                <MenuItem value={23}>Junta</MenuItem>
+                <MenuItem value={24}>Tribunal</MenuItem>
+              </Select>
+            </Box>
+            </Grid>
+            
             <Grid item xs={6}>
             <Box    
               component="form"
@@ -285,25 +354,54 @@ export default function Secretarias() {
               <Select
               labelId="Titular"
               id="titular"
-              value={Titular}
+              value={TitularDependencia}
               label="Titular"
               size="small"
               displayEmpty
-              onChange={handleChange}
+              onChange={handleChangeTitularDependencia}
             >
                 <MenuItem value="">
-                  Seleccione un Titular de la Secretaría
+                  Seleccione un Titular de la Dependencia
                 </MenuItem>
                 <MenuItem value={10}>Ten</MenuItem>
                 <MenuItem value={20}>Twenty</MenuItem>
                 <MenuItem value={30}>Thirty</MenuItem>
               </Select>
             </Box>
-
-
-
-
             </Grid>
+
+
+            <Grid item xs={6}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '80%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+              <Select
+              labelId="Secretaria"
+              id="secretaria"
+              value={Secretaria}
+              label="Secretaría"
+              size="small"
+              displayEmpty
+              onChange={handleChangeSecretaria}
+            >
+                <MenuItem value="">
+                  Seleccione una Secretaría
+                </MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+
+            </Box>
+            </Grid>
+
+
+
+
             <Grid item xs={12}>
             <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
               <Button variant="contained"  sx={{margin:"1%"}} > Guardar </Button>
