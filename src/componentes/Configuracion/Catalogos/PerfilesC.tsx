@@ -144,9 +144,9 @@ export default function PerfilesC() {
         </Breadcrumbs>
       </Grid> 
 
-      <Grid container justifyContent={"center"} item xs={10} paddingLeft={3} paddingTop={5}>
-      <Grid item xs={12} md={12} mt={2}>
-      <Card sx={{ p: 1, boxShadow: 4 }}>
+      <Grid container justifyContent={"center"} item xs={12} paddingLeft={2} paddingTop={2}>
+      <Grid item xs={12} md={12} >
+      <Card sx={{ p: 1, boxShadow: 4, width:'100%'}}>
       <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
       <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>  Catálogo de Perfiles </Typography>  
       <CardContent>
