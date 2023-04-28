@@ -23,7 +23,7 @@ const style = {
  
 
 
-export default function TipoClasificacion() { 
+export default function TipoUsuariosC() { 
 
   const navigate = useNavigate();
   const columns = [
@@ -135,20 +135,20 @@ export default function TipoClasificacion() {
             Configuración
           </Link>
           <Link underline="hover" color="inherit" href="/configuracion/catalogos">
-            Catálogos
+          Usuarios
           </Link>
           <Link underline="hover" color="inherit">
-            titulo
+          Tipo de Usuarios
           </Link>
-          <Typography color="text.primary"> Catálogo de Tipo de Clasificación </Typography>
+          <Typography color="text.primary"> Catálogo de Tipo de Usuarios </Typography>
         </Breadcrumbs>
       </Grid> 
 
       <Grid container justifyContent={"center"} item xs={12} paddingLeft={2} paddingTop={2}>
-      <Grid item xs={12} md={12}  >
+      <Grid item xs={12} md={12}>
       <Card sx={{ p: 1, boxShadow: 4 }}>
       <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
-      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>  Catálogo de Tipo de Clasificación </Typography>  
+      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>  Catálogo de Tipo de Usuarios  </Typography>  
       <CardContent>
       <Box display="flex" justifyContent="flex-end">
       <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", paddingBottom:"2%", paddingRight:"1%"}}>
@@ -194,7 +194,7 @@ export default function TipoClasificacion() {
         <Box sx={style} display="flow">
           
         <Box> 
-        <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Tipo de Clasificación </Typography>  
+        <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Tipo de Usuarios  </Typography>  
         </Box>
 
 		<Box    
@@ -224,8 +224,8 @@ export default function TipoClasificacion() {
           <TextField
             id="nombre" 
             label="Nombre"
-            variant="outlined"
-            size="small"  />
+            variant="outlined" 
+            size="small" />
 
             <TextField
             id="descripcion" 

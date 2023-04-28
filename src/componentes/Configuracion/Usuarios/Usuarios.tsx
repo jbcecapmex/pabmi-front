@@ -153,10 +153,7 @@ const Usuarios = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(1, "Empleados");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Usuarios/Usuario"
                         >
                           USUARIOS
                         </Button>
@@ -167,10 +164,7 @@ const Usuarios = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(1, "Empleados");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Usuarios/TipodeUsuarios"
                         >
                           TIPO DE USUARIOS
                         </Button>
@@ -181,10 +175,7 @@ const Usuarios = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(2, "Domicilios");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Usuarios/Perfiles"
                         >
                           PERFILES
                         </Button>
@@ -194,10 +185,7 @@ const Usuarios = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(3, "Edificios");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Usuarios/Roles"
                         >
                           ROLES
                         </Button>
@@ -207,10 +195,7 @@ const Usuarios = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(4, "Direcciones Generales");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Usuarios/Menu"
                         >
                           MENUS
                         </Button>

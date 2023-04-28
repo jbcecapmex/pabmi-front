@@ -54,6 +54,18 @@ import AdministracionValoresSistema from './componentes/Administracion/ValoresSi
 import ConfiguracionCatalogos from './componentes/Configuracion/Catalogos/Catalogos';
 import ConfiguracionUsuarios from './componentes/Configuracion/Usuarios/Usuarios';
 import ConfiguracionRoles from './componentes/Configuracion/Roles/Roles';
+
+import DomiciliosC from './componentes/Configuracion/Catalogos/DomiciliosC';
+import Menuc from './componentes/Configuracion/Catalogos/MenuC';
+import PermisosC from './componentes/Configuracion/Catalogos/Permisos';
+import TipoClasificacion from './componentes/Configuracion/Catalogos/TipoClasificacion';
+import NavBar from './layout/NavBar';
+import EmpleadosC from './componentes/Configuracion/Catalogos/EmpleadosC';
+import UsuariosC from './componentes/Configuracion/Catalogos/UsuariosC';
+import TipoUsuariosC from './componentes/Configuracion/Catalogos/TipoUsuariosC';
+import PerfilesC from './componentes/Configuracion/Catalogos/PerfilesC';
+import RolesC from './componentes/Configuracion/Catalogos/RolesC';
+
 import Menuc from './componentes/Configuracion/Catalogos/menuc';
 import Secretarias from './componentes/Configuracion/Catalogos/Secretarias';
 import Dependencias from './componentes/Configuracion/Catalogos/Dependencias';
@@ -66,6 +78,7 @@ import TipoClasificacion from './componentes/Configuracion/Catalogos/TipoClasifi
 import NavBar from './layout/NavBar';
 import {getUserDetails} from './services/Validation';
 import moment from 'moment';
+
 
 
 function App() {
@@ -153,6 +166,8 @@ function App() {
 
 
           <Route path="/Configuracion/Catalogos/Catalogos" element={<ConfiguracionCatalogos />} />
+          <Route path="/Configuracion/Catalogos/Empleados" element={<EmpleadosC />} />
+          <Route path="/Configuracion/Catalogos/Domicilios" element={<DomiciliosC />} />
           <Route path="/Configuracion/Usuarios/Usuarios" element={<ConfiguracionUsuarios />} />
           <Route path="/Configuracion/Roles/Roles" element={<ConfiguracionRoles />} />
           <Route path="/Configuracion/Catalogos/Menu" element={<Menuc/>} />
@@ -164,6 +179,11 @@ function App() {
           <Route path="/Configuracion/Catalogos/Municipios" element={<Municipios/>} />
           <Route path="/Configuracion/Catalogos/Puestos" element={<Puestos/>} />
           <Route path="/Configuracion/Catalogos/TipodeClasificacion" element={<TipoClasificacion/>} />
+          <Route path="/Configuracion/Usuarios/Menu" element={<Menuc/>} />
+          <Route path="/Configuracion/Usuarios/Usuario" element={<UsuariosC/>} />
+          <Route path="/Configuracion/Usuarios/TipodeUsuarios" element={<TipoUsuariosC/>}/>
+          <Route path="/Configuracion/Usuarios/Perfiles" element={<PerfilesC/>}/>
+          <Route path="/Configuracion/Usuarios/Roles" element={<RolesC/>}/>
 
 
         </Routes>

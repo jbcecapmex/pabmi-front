@@ -157,10 +157,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(1, "Empleados");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/Empleados"
                         >
                           EMPLEADOS
                         </Button>
@@ -170,10 +167,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(2, "Domicilios");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/Domicilios"
                         >
                           DOMICILIOS
                         </Button>
@@ -265,6 +259,7 @@ const Catalogos = () => {
                         </Button>
                       </Grid>
 
+
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
@@ -279,6 +274,7 @@ const Catalogos = () => {
                       <Grid item xs={12} md={6} lg={4}>
 
                       </Grid>
+
 
                     </Grid>
                   </TabPanel>

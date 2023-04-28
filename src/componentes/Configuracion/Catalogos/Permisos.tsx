@@ -151,21 +151,21 @@ export default function PermisosC() {
           <Link underline="hover" color="inherit" href="/inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
+          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
-            Catálogos
+          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/">
+          Usuarios
           </Link>
           <Link underline="hover" color="inherit">
-            titulo
+          Permisos
           </Link>
           <Typography color="text.primary">Catálogo de Permisos</Typography>
         </Breadcrumbs>
       </Grid> 
 
-      <Grid container justifyContent={"center"} item xs={10} paddingLeft={3} paddingTop={5}>
-      <Grid item xs={12} md={12} mt={2}>
+      <Grid container justifyContent={"center"} item xs={12} paddingLeft={2} paddingTop={2}>
+      <Grid item xs={12} md={12} >
       <Card sx={{ p: 1, boxShadow: 4 }}>
       <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
       <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}> Catálogo de Permisos </Typography>  
@@ -225,7 +225,8 @@ export default function PermisosC() {
       <TextField
        id="Cve" 
        label="cve"
-       variant="outlined" />
+       variant="outlined" 
+       size="small" />
 
     </Box>
 
@@ -240,12 +241,14 @@ export default function PermisosC() {
       <TextField
        id="nombre" 
        label="Nombre"
-       variant="outlined" />
+       variant="outlined"
+       size="small"  />
 
       <TextField
        id="descripcion" 
        label="Descripción"
-       variant="outlined" />
+       variant="outlined"
+       size="small"  />
 
     </Box>
 
@@ -261,17 +264,20 @@ export default function PermisosC() {
       <TextField
        id="CreadoPor" 
        label="Creado por"
-       variant="outlined" />
+       variant="outlined"
+       size="small"  />
 
       <TextField
        id="ModificadoPor" 
        label="Modificado por" 
-       variant="outlined" />
+       variant="outlined"
+       size="small"  />
        
        <TextField
        id="Eliminadopor" 
        label="Eliminado por"
-       variant="outlined" />
+       variant="outlined" 
+       size="small" />
 
     </Box>
     

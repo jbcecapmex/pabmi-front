@@ -23,7 +23,7 @@ const style = {
  
 
 
-export default function TipoClasificacion() { 
+export default function DomiciliosC() { 
 
   const navigate = useNavigate();
   const columns = [
@@ -56,21 +56,13 @@ export default function TipoClasificacion() {
     },
      // segunda columna donde se mostrara el nombre
      {
-      field: "Nombre",
-      headerName: "Nombre",
+      field: "domicilios",
+      headerName: "Domicilios",
       width: 360,
       hideable: false,
       headerAlign: "center",
     },
-    // Tercer columna donde se mostrara el path
-    {
-      field: "Descripcion",
-      headerName: "Descripción",
-      width: 400,
-      hideable: false,
-      headerAlign: "center",
-    },
-
+   
   ];
 
   const [rows, setRows] = useState([]);
@@ -138,9 +130,9 @@ export default function TipoClasificacion() {
             Catálogos
           </Link>
           <Link underline="hover" color="inherit">
-            titulo
+          Domicilios
           </Link>
-          <Typography color="text.primary"> Catálogo de Tipo de Clasificación </Typography>
+          <Typography color="text.primary"> Catálogo de Domicilios </Typography>
         </Breadcrumbs>
       </Grid> 
 
@@ -148,7 +140,7 @@ export default function TipoClasificacion() {
       <Grid item xs={12} md={12}  >
       <Card sx={{ p: 1, boxShadow: 4 }}>
       <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
-      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>  Catálogo de Tipo de Clasificación </Typography>  
+      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}> Catálogo de Domicilios </Typography>  
       <CardContent>
       <Box display="flex" justifyContent="flex-end">
       <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", paddingBottom:"2%", paddingRight:"1%"}}>
@@ -191,50 +183,27 @@ export default function TipoClasificacion() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} display="flow">
+        <Box sx={style}>
           
         <Box> 
-        <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Tipo de Clasificación </Typography>  
+        <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Domicilios </Typography>  
         </Box>
-
-		<Box    
-          component="form"
-          sx={{
-          '& > :not(style)': { m: 1.3, width: '15%' },   }}
-          noValidate
-          autoComplete="off"
-		  display="flex">
-
-          <TextField
-            id="cve" 
-            label="cve"
-            variant="outlined" 
-            size="small" />
-
-          </Box>
-
+        
           <Box    
           component="form"
           sx={{
-          '& > :not(style)': { m: 1.3, width: '50%' },   }}
+          '& > :not(style)': { m: 1.3, width: '47%' },   }}
           noValidate
-          autoComplete="off"
-		  display="flex">
+          autoComplete="off">
 
           <TextField
-            id="nombre" 
-            label="Nombre"
+            id="domicilios" 
+            label="Domicilios"
             variant="outlined"
-            size="small"  />
-
-            <TextField
-            id="descripcion" 
-            label="Descripción"
-            variant="outlined" 
             size="small" />
 
           </Box>
-      
+        
     <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
       <Button variant="contained" sx={{margin:"1%"}} > Guardar </Button>
       <Button  

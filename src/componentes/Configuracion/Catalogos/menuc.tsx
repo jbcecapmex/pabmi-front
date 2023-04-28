@@ -144,24 +144,24 @@ export default function Menuc() {
           <Link underline="hover" color="inherit" href="/inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
+          <Link underline="hover" color="inherit" href="Configuracion/Usuarios/Usuarios">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
-            Catálogos
+          <Link underline="hover" color="inherit" href="Configuracion/Usuarios/Usuarios">
+          Usuarios
           </Link>
           <Link underline="hover" color="inherit">
-            titulo
+          Menus
           </Link>
-          <Typography color="text.primary"> Catálogo de Menu </Typography>
+          <Typography color="text.primary"> Catálogo de Menus </Typography>
         </Breadcrumbs>
       </Grid> 
 
-      <Grid container justifyContent={"center"} item xs={10} paddingLeft={3} paddingTop={5}>
-      <Grid item xs={12} md={12} mt={2}>
+      <Grid container justifyContent={"center"} item xs={12} paddingLeft={2} paddingTop={2}>
+      <Grid item xs={12} md={12}  >
       <Card sx={{ p: 1, boxShadow: 4 }}>
       <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
-      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}> Catálogo de Menu</Typography>  
+      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}> Catálogo de Menus </Typography>  
       <CardContent>
       <Box display="flex" justifyContent="flex-end">
       <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", paddingBottom:"2%", paddingRight:"1%"}}>
@@ -207,7 +207,7 @@ export default function Menuc() {
         <Box sx={style}>
           
         <Box> 
-        <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Menu</Typography>  
+        <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Menus </Typography>  
         </Box>
         
           <Box    
@@ -220,12 +220,14 @@ export default function Menuc() {
           <TextField
             id="nombre" 
             label="Nombre"
-            variant="outlined" />
+            variant="outlined" 
+            size="small" />
 
             <TextField
             id="descripcion" 
             label="Descripción"
-            variant="outlined" />
+            variant="outlined" 
+            size="small" />
 
           </Box>
           <Box
@@ -240,22 +242,26 @@ export default function Menuc() {
       <TextField
        id="icono" 
        label="Icono"
-       variant="outlined" />
+       variant="outlined" 
+       size="small" />
 
       <TextField
        id="path" 
        label="path"
-       variant="outlined" />
+       variant="outlined" 
+       size="small" />
 
       <TextField
        id="nivel" 
        label="nivel" 
-       variant="outlined" />
+       variant="outlined" 
+       size="small" />
        
        <TextField
        id="ordenamiento" 
        label="Ordenamiento"
-       variant="outlined" />
+       variant="outlined" 
+       size="small" />
 
     </Box>
     <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
