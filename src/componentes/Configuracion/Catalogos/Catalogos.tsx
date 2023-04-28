@@ -192,14 +192,11 @@ const Catalogos = () => {
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
-                        <Button
+                      <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(4, "Secretarías");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/Secretarias"
                         >
                           SECRETARÍAS
                         </Button>
