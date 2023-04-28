@@ -138,6 +138,7 @@ export const EditDialog = (props: EditDialogProps) => {
 							id="nombre"
 							label="Nombre"
 							type="text"
+							size="small" 
 							fullWidth
 							variant="standard"
 							value={Nombre}
@@ -152,6 +153,7 @@ export const EditDialog = (props: EditDialogProps) => {
 							id="path"
 							label="Path"
 							type="text"
+							size="small" 
 							fullWidth
 							variant="standard"
 							value={Path}

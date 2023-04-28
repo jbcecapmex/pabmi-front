@@ -220,12 +220,14 @@ export default function Menuc() {
           <TextField
             id="nombre" 
             label="Nombre"
-            variant="outlined" />
+            variant="outlined" 
+            size="small" />
 
             <TextField
             id="descripcion" 
             label="Descripción"
-            variant="outlined" />
+            variant="outlined" 
+            size="small" />
 
           </Box>
           <Box
@@ -240,22 +242,26 @@ export default function Menuc() {
       <TextField
        id="icono" 
        label="Icono"
-       variant="outlined" />
+       variant="outlined" 
+       size="small" />
 
       <TextField
        id="path" 
        label="path"
-       variant="outlined" />
+       variant="outlined" 
+       size="small" />
 
       <TextField
        id="nivel" 
        label="nivel" 
-       variant="outlined" />
+       variant="outlined" 
+       size="small" />
        
        <TextField
        id="ordenamiento" 
        label="Ordenamiento"
-       variant="outlined" />
+       variant="outlined" 
+       size="small" />
 
     </Box>
     <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >

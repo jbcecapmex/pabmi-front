@@ -127,6 +127,7 @@ export const NewDialog = (props: NewDialogProps) => {
             type="text"
             fullWidth
             variant="standard"
+            size="small" 
             value={descripcion}
             required
             onChange={(v) => setDescripcion(v.target.value)}
