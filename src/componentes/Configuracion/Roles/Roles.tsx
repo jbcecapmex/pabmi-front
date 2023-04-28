@@ -134,7 +134,6 @@ export default function Principal() {
 
     // Handle delete 
     const handleDeleteBtnClick = (event: any, cellValues: any) => {
-      console.log(cellValues.row.Id);
     };
 
 

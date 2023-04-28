@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLayoutEffect } from "react";
-import { continueSession, sessionValid } from "./services/Validation";
+import { continueSession, logoutapp } from "./services/Validation";
 // import { useNavigate } from "react-router-dom";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -64,42 +64,43 @@ import Puestos from './componentes/Configuracion/Catalogos/Puestos';
 import PermisosC from './componentes/Configuracion/Catalogos/Permisos';
 import TipoClasificacion from './componentes/Configuracion/Catalogos/TipoClasificacion';
 import NavBar from './layout/NavBar';
+import {getUserDetails} from './services/Validation';
+import moment from 'moment';
 
 
 function App() {
 
   // const navigate = useNavigate();
   const params = new URLSearchParams(window.location.search);
-  const jt = params.get("jwt") || null;
-  const rf = params.get("rf") || null;
+  const jwtToken = params.get("jwt") || null;
+  const refreshToken = params.get("rf") || null;
   const IdApp = params.get("IdApp");
-  // console.log(jt);
-  // console.log(rf);
-  // console.log(IdApp);
 
   useLayoutEffect(() => {
-    if (jt !== null) {
-      sessionValid().then((r) => {
-        if ((r as boolean) === false) {
-          window.location.assign(process.env.REACT_APP_APPLICATION_LOGIN!);
-        } else if ((r as boolean) === true) {
-          setTimeout(() => {
-            localStorage.setItem("IdApp", IdApp as string);
-            // navigate("../home");
-          }, 2000);
-        }
-      });
-    } else {
-      continueSession().then((r) => {
-        if ((r as boolean) === false) {
-          window.location.assign(process.env.REACT_APP_APPLICATION_LOGIN!);
-        } else {
-          // navigate("../home");
-        }
-      });
+    if (jwtToken !== null) {
+      localStorage.setItem("jwtToken", jwtToken!);
+      localStorage.setItem("refreshToken", refreshToken!);
+      localStorage.setItem("IdApp", IdApp!);
+      continueSession()
     }
-  }, [IdApp, jt]);
+    continueSession()
+  }, [IdApp, jwtToken]);
 
+  const validarSession = () => {
+    setInterval(() => {
+      continueSession()
+    }, 54321);
+  };
+
+  useLayoutEffect(() => {
+    continueSession();
+    if(localStorage.getItem("LastActivity")){
+      localStorage.setItem("LastActivity", moment().format('YYYY-MM-DDTHH:mm:ss'));
+    }else{
+      localStorage.setItem("LastActivity", moment().format('YYYY-MM-DDTHH:mm:ss'));
+      validarSession();
+    }
+  }, []);
 
   return (
     <BrowserRouter>
