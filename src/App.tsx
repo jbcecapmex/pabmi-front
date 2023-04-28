@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLayoutEffect } from "react";
-import { continueSession, sessionValid } from "./services/Validation";
+import { continueSession, logoutapp } from "./services/Validation";
 // import { useNavigate } from "react-router-dom";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -54,6 +54,7 @@ import AdministracionValoresSistema from './componentes/Administracion/ValoresSi
 import ConfiguracionCatalogos from './componentes/Configuracion/Catalogos/Catalogos';
 import ConfiguracionUsuarios from './componentes/Configuracion/Usuarios/Usuarios';
 import ConfiguracionRoles from './componentes/Configuracion/Roles/Roles';
+
 import DomiciliosC from './componentes/Configuracion/Catalogos/DomiciliosC';
 import Menuc from './componentes/Configuracion/Catalogos/MenuC';
 import PermisosC from './componentes/Configuracion/Catalogos/Permisos';
@@ -65,40 +66,54 @@ import TipoUsuariosC from './componentes/Configuracion/Catalogos/TipoUsuariosC';
 import PerfilesC from './componentes/Configuracion/Catalogos/PerfilesC';
 import RolesC from './componentes/Configuracion/Catalogos/RolesC';
 
+import Menuc from './componentes/Configuracion/Catalogos/menuc';
+import Secretarias from './componentes/Configuracion/Catalogos/Secretarias';
+import Dependencias from './componentes/Configuracion/Catalogos/Dependencias';
+import TipoDependencias from './componentes/Configuracion/Catalogos/TipoDependencias';
+import EntidadesFederativas from './componentes/Configuracion/Catalogos/EntidadesFederativas';
+import Municipios from './componentes/Configuracion/Catalogos/Municipios';
+import Puestos from './componentes/Configuracion/Catalogos/Puestos';
+import PermisosC from './componentes/Configuracion/Catalogos/Permisos';
+import TipoClasificacion from './componentes/Configuracion/Catalogos/TipoClasificacion';
+import NavBar from './layout/NavBar';
+import {getUserDetails} from './services/Validation';
+import moment from 'moment';
+
+
+
 function App() {
 
   // const navigate = useNavigate();
   const params = new URLSearchParams(window.location.search);
-  const jt = params.get("jwt") || null;
-  const rf = params.get("rf") || null;
+  const jwtToken = params.get("jwt") || null;
+  const refreshToken = params.get("rf") || null;
   const IdApp = params.get("IdApp");
-  // console.log(jt);
-  // console.log(rf);
-  // console.log(IdApp);
 
   useLayoutEffect(() => {
-    if (jt !== null) {
-      sessionValid().then((r) => {
-        if ((r as boolean) === false) {
-          window.location.assign(process.env.REACT_APP_APPLICATION_LOGIN!);
-        } else if ((r as boolean) === true) {
-          setTimeout(() => {
-            localStorage.setItem("IdApp", IdApp as string);
-            // navigate("../home");
-          }, 2000);
-        }
-      });
-    } else {
-      continueSession().then((r) => {
-        if ((r as boolean) === false) {
-          window.location.assign(process.env.REACT_APP_APPLICATION_LOGIN!);
-        } else {
-          // navigate("../home");
-        }
-      });
+    if (jwtToken !== null) {
+      localStorage.setItem("jwtToken", jwtToken!);
+      localStorage.setItem("refreshToken", refreshToken!);
+      localStorage.setItem("IdApp", IdApp!);
+      continueSession()
     }
-  }, [IdApp, jt]);
+    continueSession()
+  }, [IdApp, jwtToken]);
 
+  const validarSession = () => {
+    setInterval(() => {
+      continueSession()
+    }, 54321);
+  };
+
+  useLayoutEffect(() => {
+    continueSession();
+    if(localStorage.getItem("LastActivity")){
+      localStorage.setItem("LastActivity", moment().format('YYYY-MM-DDTHH:mm:ss'));
+    }else{
+      localStorage.setItem("LastActivity", moment().format('YYYY-MM-DDTHH:mm:ss'));
+      validarSession();
+    }
+  }, []);
 
   return (
     <BrowserRouter>
@@ -157,6 +172,12 @@ function App() {
           <Route path="/Configuracion/Roles/Roles" element={<ConfiguracionRoles />} />
           <Route path="/Configuracion/Catalogos/Menu" element={<Menuc/>} />
           <Route path="/Configuracion/Catalogos/Permisos" element={<PermisosC/>} />
+          <Route path="/Configuracion/Catalogos/Secretarias" element={<Secretarias/>} />
+          <Route path="/Configuracion/Catalogos/Dependencias" element={<Dependencias/>} />
+          <Route path="/Configuracion/Catalogos/TipoDependencias" element={<TipoDependencias/>} />
+          <Route path="/Configuracion/Catalogos/EntidadesFederativas" element={<EntidadesFederativas/>} />
+          <Route path="/Configuracion/Catalogos/Municipios" element={<Municipios/>} />
+          <Route path="/Configuracion/Catalogos/Puestos" element={<Puestos/>} />
           <Route path="/Configuracion/Catalogos/TipodeClasificacion" element={<TipoClasificacion/>} />
           <Route path="/Configuracion/Usuarios/Menu" element={<Menuc/>} />
           <Route path="/Configuracion/Usuarios/Usuario" element={<UsuariosC/>} />

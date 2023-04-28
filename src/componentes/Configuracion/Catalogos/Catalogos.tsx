@@ -186,81 +186,63 @@ const Catalogos = () => {
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
-                        <Button
+                      <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(4, "Secretarias");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/Secretarias"
                         >
-                          SECRETARIAS
+                          SECRETARÍAS
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
-                        <Button
+                      <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(5, "Dependencias");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/Dependencias"
                         >
                           DEPENDENCIAS
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
-                        <Button
+                      <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(6, "Tipos de Dependencias");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/TipoDependencias"
                         >
                           TIPO DE DEPENDENCIAS
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
-                        <Button
+                      <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(6, "Tipos de Dependencias");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/EntidadesFederativas"
                         >
                           ENTIDADES FEDERATIVAS
                         </Button>
                       </Grid>
 
                       <Grid item xs={12} md={6} lg={4}>
-                        <Button
+                      <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(6, "Tipos de Dependencias");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/Municipios"
                         >
                           MUNICIPIOS
                         </Button>
                       </Grid>
 
                       <Grid item xs={12} md={6} lg={4}>
-                        <Button
+                      <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(6, "Tipos de Dependencias");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/Puestos"
                         >
                           PUESTOS
                         </Button>
@@ -277,6 +259,23 @@ const Catalogos = () => {
                         </Button>
                       </Grid>
 
+
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/Menu"
+                        >
+                          MENU
+                        </Button>
+                      </Grid>
+
+                      <Grid item xs={12} md={6} lg={4}>
+
+                      </Grid>
+
+
                     </Grid>
                   </TabPanel>
 
@@ -290,11 +289,11 @@ const Catalogos = () => {
                           fullWidth
                           onClick={() => {
                             setCatSelected(1);
-                            changeScreen(8, "Secretarias");
+                            changeScreen(8, "Secretarías");
                             setShowCatGrid(true);
                           }}
                         >
-                          SECRETARIAS
+                          SECRETARÍAS
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>

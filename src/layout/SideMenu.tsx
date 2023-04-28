@@ -15,6 +15,7 @@ import palacio from "../assets/svg/palacio.svg";
 import { useNavigate } from "react-router-dom";
 import { menu } from "../componentes/Json/Menu";
 import Button from '@mui/material/Button';
+import { logoutapp } from "../services/Validation";
 const MenuSX = {
   color: "#212121",
   // selected and (selected + hover) states
@@ -42,7 +43,35 @@ export default function NestedList() {
   };
 
   const [itemSelected, setItemSelected] = useState(0);
+  const [nombreUsuario, setNombreUsuario] = useState("");
+  const [rolUsuario, setRolUsuario] = useState("");
   const navigate = useNavigate();
+
+  const AvatarUsuario = (nombre: string) => {
+    var iniciales = "";
+    if(!nombre){
+      return iniciales;
+    }
+    if(nombre.length>1){
+      var nombres: Array<string>= nombre.split(" ");
+      iniciales = nombres[0].charAt(0)+nombres[1].charAt(0);
+    } else {
+      iniciales = nombre[0].charAt(0)+nombre[0].charAt(1);
+    }
+    return iniciales.toUpperCase();
+  }
+
+  useEffect(() => {
+    if(!localStorage.getItem("NombreUsuario")){
+      setTimeout(() => {
+        setNombreUsuario(localStorage.getItem("NombreUsuario")!) 
+        setRolUsuario(localStorage.getItem("RolUsuario")!) 
+      }, 1000);
+    } else {
+      setNombreUsuario(localStorage.getItem("NombreUsuario")!) 
+      setRolUsuario(localStorage.getItem("RolUsuario")!) 
+    }
+  }, [])
 
   return (
     // box del sidemenu
@@ -53,7 +82,9 @@ export default function NestedList() {
       </Box>
       {/* box del avatar */}
       <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Avatar sx={{ fontSize: 34, bgcolor: red[300], p: 3 }}>RU</Avatar>
+        <Avatar sx={{ fontSize: 34, bgcolor: red[300], p: 3 }}>
+          {AvatarUsuario(nombreUsuario!)}
+        </Avatar>
       </Box>
       {/* nombre */}
       <Typography
@@ -66,7 +97,7 @@ export default function NestedList() {
           justifyContent: "center",
         }}
       >
-        Usuario
+        {nombreUsuario!}
       </Typography>
       {/* Puesto */}
       <Typography
@@ -79,7 +110,7 @@ export default function NestedList() {
           justifyContent: "center",
         }}
       >
-        Rol del Usuario
+        {rolUsuario}
       </Typography>
 
       <Divider />
@@ -101,7 +132,6 @@ export default function NestedList() {
         {menu.map((element: any, nombre) => {
           return (
             <div key={nombre}>
-              {console.log('element',element)}
               <ListItemButton
                 onClick={() => {
                   if (openSegundo !== element.id) {
@@ -144,7 +174,7 @@ export default function NestedList() {
                                 {Icons(subel.icon)}
                               </ListItemIcon>
                               <ListItemText primary={subel.nombre} />
-                              {openTercer ? <ExpandLess /> : <ExpandMore />}
+                              {openTercer ? <ExpandLess /> : <ExpandMore />} {/* Hay que poner una regla para que no siempre aparesca el signo hacia abajo cuando ya no tiene mas sub menus */}
                             </ListItemButton>
 
                             {subel?.submenuTercerNivel && (
@@ -193,8 +223,7 @@ export default function NestedList() {
         {/** Este fragmento de código es del botón de Salir que siempre estara en cualquier menu */}
         <ListItemButton
           onClick={() => {
-            localStorage.clear();
-            window.location.assign(process.env.REACT_APP_APPLICATION_LOGIN!);
+            logoutapp();
           }}
           divider
         >

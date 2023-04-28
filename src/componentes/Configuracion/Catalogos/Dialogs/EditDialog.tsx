@@ -69,7 +69,6 @@ export const EditDialog = (props: EditDialogProps) => {
 					props.handleEditDialogClose(true);
 				})
 				.catch(function (error) {
-					console.log(error);
 					// Swal.fire({
 					// 	icon: "error",
 					// 	title: "Mensaje",
