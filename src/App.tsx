@@ -66,16 +66,12 @@ import TipoUsuariosC from './componentes/Configuracion/Catalogos/TipoUsuariosC';
 import PerfilesC from './componentes/Configuracion/Catalogos/PerfilesC';
 import RolesC from './componentes/Configuracion/Catalogos/RolesC';
 
-import Menuc from './componentes/Configuracion/Catalogos/menuc';
 import Secretarias from './componentes/Configuracion/Catalogos/Secretarias';
 import Dependencias from './componentes/Configuracion/Catalogos/Dependencias';
 import TipoDependencias from './componentes/Configuracion/Catalogos/TipoDependencias';
 import EntidadesFederativas from './componentes/Configuracion/Catalogos/EntidadesFederativas';
 import Municipios from './componentes/Configuracion/Catalogos/Municipios';
 import Puestos from './componentes/Configuracion/Catalogos/Puestos';
-import PermisosC from './componentes/Configuracion/Catalogos/Permisos';
-import TipoClasificacion from './componentes/Configuracion/Catalogos/TipoClasificacion';
-import NavBar from './layout/NavBar';
 import {getUserDetails} from './services/Validation';
 import moment from 'moment';
 
