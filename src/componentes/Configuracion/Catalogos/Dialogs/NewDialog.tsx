@@ -61,7 +61,6 @@ export const NewDialog = (props: NewDialogProps) => {
           props.handleNewDialogClose(true);
         })
         .catch(function (error) {
-          console.log(error);
           // Swal.fire({
           // 	icon: "error",
           // 	title: "Mensaje",
