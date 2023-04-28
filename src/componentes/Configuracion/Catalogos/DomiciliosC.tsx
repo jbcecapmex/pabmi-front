@@ -130,7 +130,7 @@ export default function DomiciliosC() {
             Catálogos
           </Link>
           <Link underline="hover" color="inherit">
-            titulo
+          Domicilios
           </Link>
           <Typography color="text.primary"> Catálogo de Domicilios </Typography>
         </Breadcrumbs>

@@ -145,7 +145,7 @@ export default function EmpleadosC() {
             Catálogos
           </Link>
           <Link underline="hover" color="inherit">
-            titulo
+          Empleados
           </Link>
           <Typography color="text.primary"> Catálogo de Empleados </Typography>
         </Breadcrumbs>

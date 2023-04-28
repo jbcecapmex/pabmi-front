@@ -135,10 +135,10 @@ export default function TipoUsuariosC() {
             Configuración
           </Link>
           <Link underline="hover" color="inherit" href="/configuracion/catalogos">
-            Catálogos
+          Usuarios
           </Link>
           <Link underline="hover" color="inherit">
-            titulo
+          Tipo de Usuarios
           </Link>
           <Typography color="text.primary"> Catálogo de Tipo de Usuarios </Typography>
         </Breadcrumbs>
