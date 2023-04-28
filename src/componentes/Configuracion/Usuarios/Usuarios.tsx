@@ -175,10 +175,7 @@ const Usuarios = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(2, "Domicilios");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Usuarios/Perfiles"
                         >
                           PERFILES
                         </Button>
