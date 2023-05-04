@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MUIXDataGrid from '../../Grid/MUIXDataGrid';
 import Modal from '@mui/material/Modal';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
  
 
 const style = {
@@ -24,6 +27,11 @@ const style = {
 
 
 export default function UsuariosC() { 
+
+  const [Titular, setTitular] = React.useState('');
+  const handleChange = (event: SelectChangeEvent) => {
+    setTitular(event.target.value as string);
+  };
 
   const navigate = useNavigate();
   const columns = [
@@ -195,83 +203,155 @@ export default function UsuariosC() {
       rows={rows}
       /> 
 
-
-
       <Grid >
+
       <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          
-        <Box> 
-        <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Usuarios</Typography>  
-        </Box>
-        
-        <Box    
-          component="form"
-          sx={{
-          '& > :not(style)': { m: 1.3, width: '20%' },   }}
-          noValidate
-          autoComplete="off">
+          open={open}
+          onClose={handleClose}
+         aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style} display="flow">
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Box> 
+                <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Usuarios </Typography>  
+              </Box>
+		        </Grid>
 
-          <TextField
-            id="uuidticentral" 
-            label="Ticentral"
-            variant="outlined" 
-            size="small" />
+            <Grid item xs={12}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '25%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+
+                <TextField
+                id="uuidticentral" 
+                label="Central"
+                size="small"
+                variant="outlined" />
+            </Box>
+            </Grid>
+
+            <Grid item xs={6}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '90%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+                <TextField
+                id="nombrecorto" 
+                label="Nombre Corto"
+                size="small"
+                variant="outlined" />
+                </Box>
+            </Grid>
+
+            <Grid item xs={6}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '90%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+
+              <Select
+              labelId="Titular"
+              id="titular"
+              value={Titular}
+              label="Titular"
+              size="small"
+              displayEmpty
+              onChange={handleChange}
+            >
+                <MenuItem value="">
+                Dependencia
+                </MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </Box>
+            </Grid>
+
+            <Grid item xs={6}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '90%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+
+              <Select
+              labelId="Titular"
+              id="titular"
+              value={Titular}
+              label="Titular"
+              size="small"
+              displayEmpty
+              onChange={handleChange}
+            >
+                <MenuItem value="">
+                Puesto
+                </MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </Box>
+            </Grid>
+            
+            <Grid item xs={6}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '90%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+
+              <Select
+              labelId="Titular"
+              id="titular"
+              value={Titular}
+              label="Titular"
+              size="small"
+              displayEmpty
+              onChange={handleChange}
+            >
+                <MenuItem value="">
+                Tipo de Usuario
+                </MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </Box>
+            </Grid>
+
+            <Grid item xs={12}>
+            <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
+              <Button variant="contained"  sx={{margin:"1%"}} > Guardar </Button>
+              <Button  
+                onClick={handleClose}
+                variant="contained" 
+                color="secondary"
+                sx={{margin:"1%"}}>  Cancelar </Button>
+            </Box>
+            </Grid>
+
+            </Grid>
 
           </Box>
+        </Modal>
 
-          <Box    
-          component="form"
-          sx={{
-          '& > :not(style)': { m: 1.3, width: '47%' },   }}
-          noValidate
-          autoComplete="off">
-
-          <TextField
-            id="nombrecorto" 
-            label="Nombre Corto"
-            variant="outlined" 
-            size="small" />
-
-            <TextField
-            id="uuiddependencia" 
-            label="Dependencia"
-            variant="outlined" 
-            size="small" />
-
-          </Box>
-          <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: '47%' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-     
-      <TextField
-       id="puesto" 
-       label="Puesto"
-       variant="outlined" 
-       size="small" />
-
-
-    </Box>
-    <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
-      <Button variant="contained" sx={{margin:"1%"}} > Guardar </Button>
-      <Button  
-      onClick={handleClose}
-      variant="contained" 
-      color="secondary"
-      sx={{margin:"1%"}}>  Cancelar </Button>
-    </Box>
-        </Box>
-      </Modal>
        </Grid>
 
 
