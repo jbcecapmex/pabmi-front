@@ -102,16 +102,29 @@ export default function UsuariosC() {
     },
     // cuarta columna donde se mostrara si esta activo o no
     {
-      field: "Icono",
-      headerName: "Icono",
-      width: 84,
+      field: "Puesto",
+      headerName: "Puesto",
+      width: 400,
       headerAlign: "center",
     },
     // quinta columna donde se mostrara si esta activo o no
     {
-      field: "Nivel",
-      headerName: "Nivel",
-      width: 84,
+      field: "TipodeUsuario",
+      headerName: "Tipo de Usuario",
+      width: 400,
+      headerAlign: "center",
+    },
+
+    {
+      field: "Perfil",
+      headerName: "Perfil",
+      width: 400,
+      headerAlign: "center",
+    },
+    {
+      field: "Rol",
+      headerName: "Rol",
+      width: 400,
       headerAlign: "center",
     },
   ];

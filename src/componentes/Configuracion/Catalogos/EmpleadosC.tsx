@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MUIXDataGrid from '../../Grid/MUIXDataGrid';
 import Modal from '@mui/material/Modal';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
  
 
 const style = {
@@ -24,6 +27,11 @@ const style = {
 
 
 export default function EmpleadosC() { 
+
+  const [Dependencia, setDependencia] = React.useState('');
+  const handleChange7 = (event: SelectChangeEvent) => {
+    setDependencia(event.target.value as string);
+  };
 
   const navigate = useNavigate();
   const columns = [
@@ -74,6 +82,20 @@ export default function EmpleadosC() {
     {
       field: "apellidomaterno",
       headerName: "Apellido Materno",
+      width: 260,
+      headerAlign: "center",
+    },
+
+    {
+      field: "correo",
+      headerName: "Correo",
+      width: 260,
+      headerAlign: "center",
+    },
+
+    {
+      field: "Dependencia",
+      headerName: "Dependencia",
       width: 260,
       headerAlign: "center",
     },
@@ -222,7 +244,7 @@ export default function EmpleadosC() {
           <Box
       component="form"
       sx={{
-        '& > :not(style)': { m: 1, width: '31%' },
+        '& > :not(style)': { m: 1, width: '47%' },
       }}
       noValidate
       autoComplete="off"
@@ -240,13 +262,61 @@ export default function EmpleadosC() {
        variant="outlined" 
        size="small" />
 
+    </Box>
+
+    <Box
+      component="form"
+      sx={{
+        '& > :not(style)': { m: 1, width: '47%' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+
       <TextField
        id="apellidomaterno" 
        label="Apellido Materno" 
        variant="outlined"
        size="small"  />
+
+      <TextField
+       id="correo" 
+       label="correo"
+       variant="outlined"
+       size="small"  />
        
     </Box>
+
+
+    <Grid item xs={6}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '94%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+
+              <Select
+              labelId="Dependencia"
+              id="Dependencia"
+              value={Dependencia}
+              label="Dependencia"
+              size="small"
+              displayEmpty
+              onChange={handleChange7}
+            >
+                <MenuItem value="">
+                Dependencia
+                </MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </Box>
+            </Grid>
+
+
     <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
       <Button variant="contained" sx={{margin:"1%"}} > Guardar </Button>
       <Button  
