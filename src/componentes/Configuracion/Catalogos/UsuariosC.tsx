@@ -28,10 +28,32 @@ const style = {
 
 export default function UsuariosC() { 
 
-  const [Titular, setTitular] = React.useState('');
-  const handleChange = (event: SelectChangeEvent) => {
-    setTitular(event.target.value as string);
+  const [Dependencia, setDependencia] = React.useState('');
+  const handleChange1 = (event: SelectChangeEvent) => {
+    setDependencia(event.target.value as string);
   };
+
+  const [Puesto, setPuesto] = React.useState('');
+  const handleChange3 = (event: SelectChangeEvent) => {
+    setPuesto(event.target.value as string);
+  };
+
+  const [Tipousuario, setTipousuario] = React.useState('');
+  const handleChange4 = (event: SelectChangeEvent) => {
+    setTipousuario (event.target.value as string);
+  };
+
+  
+  const [Perfil, setPerfil] = React.useState('');
+  const handleChange5 = (event: SelectChangeEvent) => {
+    setPerfil (event.target.value as string);
+  };
+
+  const [Rol, setRol] = React.useState('');
+  const handleChange6 = (event: SelectChangeEvent) => {
+    setRol(event.target.value as string);
+  };
+
 
   const navigate = useNavigate();
   const columns = [
@@ -240,7 +262,7 @@ export default function UsuariosC() {
             <Box    
               component="form"
               sx={{
-              '& > :not(style)': { m: 1.3, width: '90%' },   }}
+              '& > :not(style)': { m: 1.3, width: '95%' },   }}
               noValidate
               autoComplete="off"
 		          display="flex">
@@ -256,26 +278,27 @@ export default function UsuariosC() {
             <Box    
               component="form"
               sx={{
-              '& > :not(style)': { m: 1.3, width: '90%' },   }}
+              '& > :not(style)': { m: 1.3, width: '95%' },   }}
               noValidate
               autoComplete="off"
 		          display="flex">
 
               <Select
-              labelId="Titular"
-              id="titular"
-              value={Titular}
-              label="Titular"
+              labelId="uuiddependencia"
+              id="Dependencia"
+              value={Dependencia}
+              label="Dependencia"
               size="small"
               displayEmpty
-              onChange={handleChange}
+              onChange={handleChange1}
             >
-                <MenuItem value="">
+              
+                <MenuItem value="" >
                 Dependencia
                 </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value={10}> Secretería General de Gobierno </MenuItem>
+                <MenuItem value={20}> Secretaría del Trabajo  </MenuItem>
+                <MenuItem value={30}> Secretaría de Administración  </MenuItem>
               </Select>
             </Box>
             </Grid>
@@ -284,26 +307,26 @@ export default function UsuariosC() {
             <Box    
               component="form"
               sx={{
-              '& > :not(style)': { m: 1.3, width: '90%' },   }}
+              '& > :not(style)': { m: 1.3, width: '95%' },   }}
               noValidate
               autoComplete="off"
 		          display="flex">
 
               <Select
-              labelId="Titular"
-              id="titular"
-              value={Titular}
-              label="Titular"
+              labelId="Puesto"
+              id="Puesto"
+              value={Puesto}
+              label="Puesto"
               size="small"
               displayEmpty
-              onChange={handleChange}
+              onChange={handleChange3}
             >
                 <MenuItem value="">
                 Puesto
                 </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value={10}>Desarrollador</MenuItem>
+                <MenuItem value={20}> Administración </MenuItem>
+                <MenuItem value={30}> Seguridad </MenuItem>
               </Select>
             </Box>
             </Grid>
@@ -312,29 +335,86 @@ export default function UsuariosC() {
             <Box    
               component="form"
               sx={{
-              '& > :not(style)': { m: 1.3, width: '90%' },   }}
+              '& > :not(style)': { m: 1.3, width: '95%' },   }}
               noValidate
               autoComplete="off"
 		          display="flex">
 
               <Select
-              labelId="Titular"
-              id="titular"
-              value={Titular}
-              label="Titular"
+              labelId="Tipousuario"
+              id="Tipousuario"
+              value={Tipousuario}
+              label="Tipousuario"
               size="small"
               displayEmpty
-              onChange={handleChange}
+              onChange={handleChange4}
             >
                 <MenuItem value="">
                 Tipo de Usuario
                 </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value={10}>Administracion </MenuItem>
+                <MenuItem value={20}> Analista </MenuItem>
+                <MenuItem value={30}> Desarrollo </MenuItem>
               </Select>
             </Box>
             </Grid>
+
+            <Grid item xs={6}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '95%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+
+              <Select
+              labelId="Perfil"
+              id="Perfil"
+              value={Perfil}
+              label="Perfil"
+              size="small"
+              displayEmpty
+              onChange={handleChange5}
+            >
+                <MenuItem value="">
+                Perfil
+                </MenuItem>
+                <MenuItem value={10}>Perfil </MenuItem>
+                <MenuItem value={20}>Perfil</MenuItem>
+                <MenuItem value={30}>Perfil</MenuItem>
+              </Select>
+            </Box>
+            </Grid>
+
+            <Grid item xs={6}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '95%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+
+              <Select
+              labelId="Rol"
+              id="Rol"
+              value={Rol}
+              label="Rol"
+              size="small"
+              displayEmpty
+              onChange={handleChange6}
+            >
+                <MenuItem value="">
+                 Rol
+                </MenuItem>
+                <MenuItem value={10}>Rol</MenuItem>
+                <MenuItem value={20}>Rol</MenuItem>
+                <MenuItem value={30}>Rol</MenuItem>
+              </Select>
+            </Box>
+            </Grid>
+
 
             <Grid item xs={12}>
             <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
