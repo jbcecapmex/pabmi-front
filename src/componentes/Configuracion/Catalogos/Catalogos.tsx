@@ -112,7 +112,7 @@ const Catalogos = () => {
 
           {/* grid que contiene el recuadro donde estan los catalogos */}
           <Grid container xs={12} justifyContent={"center"}>
-            <Grid item xs={12} md={10} mt={2}>
+            <Grid item xs={12} md={12} mt={2}>
               <Card sx={{ p: 1, boxShadow: 8 }}>
                 <CardHeader
                   title="Catálogos"
@@ -162,7 +162,7 @@ const Catalogos = () => {
                           EMPLEADOS
                         </Button>
                       </Grid>
-                      <Grid item xs={12} md={6} lg={4}>
+                      {/* <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
                           variant="text"
@@ -171,7 +171,7 @@ const Catalogos = () => {
                         >
                           DOMICILIOS
                         </Button>
-                      </Grid>
+                      </Grid> */}
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
@@ -260,7 +260,7 @@ const Catalogos = () => {
                       </Grid>
 
 
-                      <Grid item xs={12} md={6} lg={4}>
+                      {/* <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
                           variant="text"
@@ -269,7 +269,7 @@ const Catalogos = () => {
                         >
                           MENU
                         </Button>
-                      </Grid>
+                      </Grid> */}
 
                       <Grid item xs={12} md={6} lg={4}>
 

@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MUIXDataGrid from '../../Grid/MUIXDataGrid';
 import Modal from '@mui/material/Modal';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
  
 
 const style = {
@@ -24,6 +27,33 @@ const style = {
 
 
 export default function UsuariosC() { 
+
+  const [Dependencia, setDependencia] = React.useState('');
+  const handleChange1 = (event: SelectChangeEvent) => {
+    setDependencia(event.target.value as string);
+  };
+
+  const [Puesto, setPuesto] = React.useState('');
+  const handleChange3 = (event: SelectChangeEvent) => {
+    setPuesto(event.target.value as string);
+  };
+
+  const [Tipousuario, setTipousuario] = React.useState('');
+  const handleChange4 = (event: SelectChangeEvent) => {
+    setTipousuario (event.target.value as string);
+  };
+
+  
+  const [Perfil, setPerfil] = React.useState('');
+  const handleChange5 = (event: SelectChangeEvent) => {
+    setPerfil (event.target.value as string);
+  };
+
+  const [Rol, setRol] = React.useState('');
+  const handleChange6 = (event: SelectChangeEvent) => {
+    setRol(event.target.value as string);
+  };
+
 
   const navigate = useNavigate();
   const columns = [
@@ -72,16 +102,29 @@ export default function UsuariosC() {
     },
     // cuarta columna donde se mostrara si esta activo o no
     {
-      field: "Icono",
-      headerName: "Icono",
-      width: 84,
+      field: "Puesto",
+      headerName: "Puesto",
+      width: 400,
       headerAlign: "center",
     },
     // quinta columna donde se mostrara si esta activo o no
     {
-      field: "Nivel",
-      headerName: "Nivel",
-      width: 84,
+      field: "TipodeUsuario",
+      headerName: "Tipo de Usuario",
+      width: 400,
+      headerAlign: "center",
+    },
+
+    {
+      field: "Perfil",
+      headerName: "Perfil",
+      width: 400,
+      headerAlign: "center",
+    },
+    {
+      field: "Rol",
+      headerName: "Rol",
+      width: 400,
       headerAlign: "center",
     },
   ];
@@ -195,83 +238,213 @@ export default function UsuariosC() {
       rows={rows}
       /> 
 
-
-
       <Grid >
+
       <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          
-        <Box> 
-        <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Usuarios</Typography>  
-        </Box>
-        
-        <Box    
-          component="form"
-          sx={{
-          '& > :not(style)': { m: 1.3, width: '20%' },   }}
-          noValidate
-          autoComplete="off">
+          open={open}
+          onClose={handleClose}
+         aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style} display="flow">
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Box> 
+                <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Usuarios </Typography>  
+              </Box>
+		        </Grid>
 
-          <TextField
-            id="uuidticentral" 
-            label="Ticentral"
-            variant="outlined" 
-            size="small" />
+            <Grid item xs={12}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '25%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+
+                <TextField
+                id="uuidticentral" 
+                label="Central"
+                size="small"
+                variant="outlined" />
+            </Box>
+            </Grid>
+
+            <Grid item xs={6}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '95%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+                <TextField
+                id="nombrecorto" 
+                label="Nombre Corto"
+                size="small"
+                variant="outlined" />
+                </Box>
+            </Grid>
+
+            <Grid item xs={6}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '95%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+
+              <Select
+              labelId="uuiddependencia"
+              id="Dependencia"
+              value={Dependencia}
+              label="Dependencia"
+              size="small"
+              displayEmpty
+              onChange={handleChange1}
+            >
+              
+                <MenuItem value="" >
+                Dependencia
+                </MenuItem>
+                <MenuItem value={10}> Secretería General de Gobierno </MenuItem>
+                <MenuItem value={20}> Secretaría del Trabajo  </MenuItem>
+                <MenuItem value={30}> Secretaría de Administración  </MenuItem>
+              </Select>
+            </Box>
+            </Grid>
+
+            <Grid item xs={6}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '95%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+
+              <Select
+              labelId="Puesto"
+              id="Puesto"
+              value={Puesto}
+              label="Puesto"
+              size="small"
+              displayEmpty
+              onChange={handleChange3}
+            >
+                <MenuItem value="">
+                Puesto
+                </MenuItem>
+                <MenuItem value={10}>Desarrollador</MenuItem>
+                <MenuItem value={20}> Administración </MenuItem>
+                <MenuItem value={30}> Seguridad </MenuItem>
+              </Select>
+            </Box>
+            </Grid>
+            
+            <Grid item xs={6}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '95%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+
+              <Select
+              labelId="Tipousuario"
+              id="Tipousuario"
+              value={Tipousuario}
+              label="Tipousuario"
+              size="small"
+              displayEmpty
+              onChange={handleChange4}
+            >
+                <MenuItem value="">
+                Tipo de Usuario
+                </MenuItem>
+                <MenuItem value={10}>Administracion </MenuItem>
+                <MenuItem value={20}> Analista </MenuItem>
+                <MenuItem value={30}> Desarrollo </MenuItem>
+              </Select>
+            </Box>
+            </Grid>
+
+            <Grid item xs={6}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '95%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+
+              <Select
+              labelId="Perfil"
+              id="Perfil"
+              value={Perfil}
+              label="Perfil"
+              size="small"
+              displayEmpty
+              onChange={handleChange5}
+            >
+                <MenuItem value="">
+                Perfil
+                </MenuItem>
+                <MenuItem value={10}>Perfil </MenuItem>
+                <MenuItem value={20}>Perfil</MenuItem>
+                <MenuItem value={30}>Perfil</MenuItem>
+              </Select>
+            </Box>
+            </Grid>
+
+            <Grid item xs={6}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '95%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+
+              <Select
+              labelId="Rol"
+              id="Rol"
+              value={Rol}
+              label="Rol"
+              size="small"
+              displayEmpty
+              onChange={handleChange6}
+            >
+                <MenuItem value="">
+                 Rol
+                </MenuItem>
+                <MenuItem value={10}>Rol</MenuItem>
+                <MenuItem value={20}>Rol</MenuItem>
+                <MenuItem value={30}>Rol</MenuItem>
+              </Select>
+            </Box>
+            </Grid>
+
+
+            <Grid item xs={12}>
+            <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
+              <Button variant="contained"  sx={{margin:"1%"}} > Guardar </Button>
+              <Button  
+                onClick={handleClose}
+                variant="contained" 
+                color="secondary"
+                sx={{margin:"1%"}}>  Cancelar </Button>
+            </Box>
+            </Grid>
+
+            </Grid>
 
           </Box>
+        </Modal>
 
-          <Box    
-          component="form"
-          sx={{
-          '& > :not(style)': { m: 1.3, width: '47%' },   }}
-          noValidate
-          autoComplete="off">
-
-          <TextField
-            id="nombrecorto" 
-            label="Nombre Corto"
-            variant="outlined" 
-            size="small" />
-
-            <TextField
-            id="uuiddependencia" 
-            label="Dependencia"
-            variant="outlined" 
-            size="small" />
-
-          </Box>
-          <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: '47%' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-     
-      <TextField
-       id="puesto" 
-       label="Puesto"
-       variant="outlined" 
-       size="small" />
-
-
-    </Box>
-    <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
-      <Button variant="contained" sx={{margin:"1%"}} > Guardar </Button>
-      <Button  
-      onClick={handleClose}
-      variant="contained" 
-      color="secondary"
-      sx={{margin:"1%"}}>  Cancelar </Button>
-    </Box>
-        </Box>
-      </Modal>
        </Grid>
 
 
