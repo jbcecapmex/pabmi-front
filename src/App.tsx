@@ -175,7 +175,7 @@ function App() {
           <Route path="/Configuracion/Catalogos/Municipios" element={<Municipios/>} />
           <Route path="/Configuracion/Catalogos/Puestos" element={<Puestos/>} />
           <Route path="/Configuracion/Catalogos/TipodeClasificacion" element={<TipoClasificacion/>} />
-          <Route path="/Configuracion/Usuarios/Menu" element={<Menuc/>} />
+          <Route path="/Configuracion/Usuarios/MenuC" element={<Menuc/>} />
           <Route path="/Configuracion/Usuarios/Usuario" element={<UsuariosC/>} />
           <Route path="/Configuracion/Usuarios/TipodeUsuarios" element={<TipoUsuariosC/>}/>
           <Route path="/Configuracion/Usuarios/Perfiles" element={<PerfilesC/>}/>
