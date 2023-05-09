@@ -178,12 +178,21 @@ export default function Dependencias() {
                       // onClick={(event) => handleNewBtnClick(event)}
                       onClick={handleOpen}
                       variant="contained"
-                      sx={{margin:"1%"}}
-                      startIcon={<AddIcon sx={{color:"#FFFFFF"}} /> }>
+                      sx={
+                        {margin:"1%", 
+                        color:"#FFFFFF", 
+                      }} >
                       <Typography
-                        sx={{color: "#FFFFFF",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}}>
+                        sx={{
+                          color: "#FFFFFF",
+                          "&:hover":{
+                            color:"#15212f",
+                            },
+                          fontFamily: "MontserratRegular, sans-serif",
+                          fontSize: "100%",}}>
                         Agregar
                       </Typography>
+
                     </Button>
                     <Button 
                        onClick={() => navigate(-1)}
