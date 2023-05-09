@@ -57,7 +57,8 @@ import {
   QueryStats,
   Error,
   DoDisturbOn,
-  CheckCircle
+  CheckCircle,
+  UploadFile
 } from "@mui/icons-material";
 
 
@@ -141,6 +142,9 @@ export const Icons = (icon: string) => {
       return <QueryStats />
     case "Search":
       return <Search />
+    case "UploadFile":
+      return <UploadFile />
+
 
     case "Error":
       return <Error style={{ color: 'red' }} />

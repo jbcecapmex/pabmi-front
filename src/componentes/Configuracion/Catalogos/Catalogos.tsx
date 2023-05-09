@@ -171,6 +171,10 @@ const Catalogos = () => {
                         >
                           DOMICILIOS
                         </Button>
+<<<<<<< HEAD
+                      </Grid>
+
+=======
                       </Grid> */}
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
@@ -185,6 +189,7 @@ const Catalogos = () => {
                           EDIFICIOS
                         </Button>
                       </Grid>
+>>>>>>> 23346d15fb049bb721c70062b1dccafbd38007ff
                       <Grid item xs={12} md={6} lg={4}>
                       <Button
                           sx={ButtonSX}
@@ -259,9 +264,14 @@ const Catalogos = () => {
                         </Button>
                       </Grid>
 
+<<<<<<< HEAD
+                      <Grid item xs={12} md={6} lg={4}>
+                      <Button
+=======
 
                       {/* <Grid item xs={12} md={6} lg={4}>
                         <Button
+>>>>>>> 23346d15fb049bb721c70062b1dccafbd38007ff
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
@@ -269,6 +279,9 @@ const Catalogos = () => {
                         >
                           MENU
                         </Button>
+<<<<<<< HEAD
+                      </Grid>
+=======
                       </Grid> */}
 
                       <Grid item xs={12} md={6} lg={4}>
@@ -276,39 +289,13 @@ const Catalogos = () => {
                       </Grid>
 
 
+>>>>>>> 23346d15fb049bb721c70062b1dccafbd38007ff
                     </Grid>
                   </TabPanel>
 
                   {/* panel de muebles */}
                   <TabPanel value={panelValue} index={1}>
                     <Grid sx={MenuSX} container spacing={2}>
-                      <Grid item xs={12} md={6} lg={4}>
-                        <Button
-                          sx={ButtonSX}
-                          variant="text"
-                          fullWidth
-                          onClick={() => {
-                            setCatSelected(1);
-                            changeScreen(8, "Secretarías");
-                            setShowCatGrid(true);
-                          }}
-                        >
-                          SECRETARÍAS
-                        </Button>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={4}>
-                        <Button
-                          sx={ButtonSX}
-                          variant="text"
-                          fullWidth
-                          onClick={() => {
-                            changeScreen(9, "Dependencias");
-                            setShowCatGrid(true);
-                          }}
-                        >
-                          DEPENDENCIAS
-                        </Button>
-                      </Grid>
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
@@ -432,6 +419,21 @@ const Catalogos = () => {
                   {/* panel de inmuebles */}
                   <TabPanel value={panelValue} index={2}>
                     <Grid sx={MenuSX} container spacing={2}>
+                    <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          onClick={() => {
+                            changeScreen(3, "Edificios");
+                            setShowCatGrid(true);
+                          }}
+                        >
+                          EDIFICIOS
+                        </Button>
+                      </Grid>
+
+
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
@@ -680,6 +682,7 @@ const Catalogos = () => {
                           USO TEMPORAL
                         </Button>
                       </Grid>
+
                     </Grid>
                   </TabPanel>
                 </CardContent>
