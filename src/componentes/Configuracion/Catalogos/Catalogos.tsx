@@ -112,7 +112,7 @@ const Catalogos = () => {
 
           {/* grid que contiene el recuadro donde estan los catalogos */}
           <Grid container xs={12} justifyContent={"center"}>
-            <Grid item xs={12} md={10} mt={2}>
+            <Grid item xs={12} md={12} mt={2}>
               <Card sx={{ p: 1, boxShadow: 8 }}>
                 <CardHeader
                   title="Catálogos"
@@ -162,7 +162,7 @@ const Catalogos = () => {
                           EMPLEADOS
                         </Button>
                       </Grid>
-                      <Grid item xs={12} md={6} lg={4}>
+                      {/* <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
                           variant="text"
@@ -171,8 +171,25 @@ const Catalogos = () => {
                         >
                           DOMICILIOS
                         </Button>
+<<<<<<< HEAD
                       </Grid>
 
+=======
+                      </Grid> */}
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          onClick={() => {
+                            changeScreen(3, "Edificios");
+                            setShowCatGrid(true);
+                          }}
+                        >
+                          EDIFICIOS
+                        </Button>
+                      </Grid>
+>>>>>>> 23346d15fb049bb721c70062b1dccafbd38007ff
                       <Grid item xs={12} md={6} lg={4}>
                       <Button
                           sx={ButtonSX}
@@ -247,8 +264,14 @@ const Catalogos = () => {
                         </Button>
                       </Grid>
 
+<<<<<<< HEAD
                       <Grid item xs={12} md={6} lg={4}>
                       <Button
+=======
+
+                      {/* <Grid item xs={12} md={6} lg={4}>
+                        <Button
+>>>>>>> 23346d15fb049bb721c70062b1dccafbd38007ff
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
@@ -256,7 +279,17 @@ const Catalogos = () => {
                         >
                           MENU
                         </Button>
+<<<<<<< HEAD
                       </Grid>
+=======
+                      </Grid> */}
+
+                      <Grid item xs={12} md={6} lg={4}>
+
+                      </Grid>
+
+
+>>>>>>> 23346d15fb049bb721c70062b1dccafbd38007ff
                     </Grid>
                   </TabPanel>
 

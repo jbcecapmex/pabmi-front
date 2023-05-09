@@ -299,11 +299,8 @@ export default function Secretarias() {
                 <MenuItem value={30}>Thirty</MenuItem>
               </Select>
             </Box>
-
-
-
-
             </Grid>
+            
             <Grid item xs={12}>
             <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
               <Button variant="contained"  sx={{margin:"1%"}} > Guardar </Button>
