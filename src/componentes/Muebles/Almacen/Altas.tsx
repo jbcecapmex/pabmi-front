@@ -15,6 +15,26 @@ import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import Modal from '@mui/material/Modal';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: "50%",
+  bgcolor: 'background.paper',
+  boxShadow: 5,
+  p: 2,
+};
+
+export default function Principal() {
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+
+
+
 
 
 
@@ -23,13 +43,13 @@ const columns: GridColDef[] = [
   { field: 'factura', headerName: 'Factura', width: 70,
   renderCell: (value: any ) => {
     return (
-      <a href={value.formattedValue.link}>
+      <a href={value.formattedValue.link} onClick={value.formattedValue.func}>
          {Icons(value.formattedValue.icono)}
       </a>
     )
   }
 
-},
+  },
   { field: 'activo', headerName: 'No. Activo', width: 100, type:'number' },
   { field: 'tipoAdquisicion', headerName: 'Tipo Adquisición', width: 140 },
   { field: 'descripcion', headerName: 'Descripción', width: 220 },
@@ -64,26 +84,27 @@ const columns: GridColDef[] = [
 ];
 
 const rows = [
-  { id: 1, factura: {icono: "Description", link: "#"}, activo:3800, tipoAdquisicion: 'Jon', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Refrigeración', areaFisica:'Oficina del Secretario', fecha: '13/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 2, factura: {icono: "Description", link: "#"}, activo:1345, tipoAdquisicion: 'Cersei', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Camiones', areaFisica:'Almacén de Bienes Muebles', fecha: '09/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 3, factura: {icono: "Description", link: "#"}, activo:7652, tipoAdquisicion: 'Jaime', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Computo', areaFisica:'Dirección del Archivo', fecha: '08/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 4, factura: {icono: "Description", link: "#"}, activo:1276, tipoAdquisicion: 'Arya', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Vehículos Menores', areaFisica:'Dirección de Infraestructura', fecha: '07/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 5, factura: {icono: "Description", link: "#"}, activo:1334, tipoAdquisicion: 'Daenerys', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Camiones', areaFisica:'Almacén de Bienes Muebles', fecha: '05/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 6, factura: {icono: "Description", link: "#"}, activo:1039, tipoAdquisicion: 'Cersei', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Refrigeración', areaFisica:'Dirección del Archivo', fecha: '03/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"DoDisturbOn"} },
-  { id: 7, factura: {icono: "Description", link: "#"}, activo:6545, tipoAdquisicion: 'Ferrara', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Computo', areaFisica:'Oficina del Secretario', fecha: '02/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"DoDisturbOn"} },
-  { id: 8, factura: {icono: "Description", link: "#"}, activo:7845, tipoAdquisicion: 'Rossini', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Computo', areaFisica:'Dirección de Infraestructura', fecha: '01/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 9, factura: {icono: "Description", link: "#"}, activo:8985, tipoAdquisicion: 'Harvey', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Vehículos Menores', areaFisica:'Almacén de Bienes Muebles', fecha: '10/02/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 10, factura: {icono: "Description", link: "#"}, activo:8345, tipoAdquisicion: 'Flores', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Refrigeración', areaFisica:'Oficina del Secretario', fecha: '09/03/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"Error"} },
-  { id: 11, factura: {icono: "Description", link: "#"}, activo:1305, tipoAdquisicion: 'Flores', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Camiones', areaFisica:'Dirección de Infraestructura', fecha: '08/03/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 12, factura: {icono: "Description", link: "#"}, activo:1735, tipoAdquisicion: 'Flores', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Computo', areaFisica:'Dirección del Archivo', fecha: '07/03/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 13, factura: {icono: "Description", link: "#"}, activo:2475, tipoAdquisicion: 'Flores', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Refrigeración', areaFisica:'Oficina del Secretario', fecha: '06/03/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"Error"} },
-  { id: 14, factura: {icono: "Description", link: "#"}, activo:9876, tipoAdquisicion: 'Flores', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Vehículos Menores', areaFisica:'Almacén de Bienes Muebles', fecha: '05/03/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 15, factura: {icono: "Description", link: "#"}, activo:1270, tipoAdquisicion: 'Flores', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Computo', areaFisica:'Dirección del Archivo', fecha: '04/03/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"DoDisturbOn"} },
+  { id: 1, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:3800, tipoAdquisicion: 'Jon', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Refrigeración', areaFisica:'Oficina del Secretario', fecha: '13/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
+  { id: 2, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:1345, tipoAdquisicion: 'Cersei', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Camiones', areaFisica:'Almacén de Bienes Muebles', fecha: '09/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
+  { id: 3, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:7652, tipoAdquisicion: 'Jaime', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Computo', areaFisica:'Dirección del Archivo', fecha: '08/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
+  { id: 4, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:1276, tipoAdquisicion: 'Arya', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Vehículos Menores', areaFisica:'Dirección de Infraestructura', fecha: '07/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
+  { id: 5, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:1334, tipoAdquisicion: 'Daenerys', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Camiones', areaFisica:'Almacén de Bienes Muebles', fecha: '05/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
+  { id: 6, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:1039, tipoAdquisicion: 'Cersei', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Refrigeración', areaFisica:'Dirección del Archivo', fecha: '03/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"DoDisturbOn"} },
+  { id: 7, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:6545, tipoAdquisicion: 'Ferrara', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Computo', areaFisica:'Oficina del Secretario', fecha: '02/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"DoDisturbOn"} },
+  { id: 8, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:7845, tipoAdquisicion: 'Rossini', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Computo', areaFisica:'Dirección de Infraestructura', fecha: '01/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
+  { id: 9, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:8985, tipoAdquisicion: 'Harvey', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Vehículos Menores', areaFisica:'Almacén de Bienes Muebles', fecha: '10/02/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
+  { id: 10, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:8345, tipoAdquisicion: 'Flores', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Refrigeración', areaFisica:'Oficina del Secretario', fecha: '09/03/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"Error"} },
+  { id: 11, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:1305, tipoAdquisicion: 'Flores', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Camiones', areaFisica:'Dirección de Infraestructura', fecha: '08/03/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
+  { id: 12, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:1735, tipoAdquisicion: 'Flores', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Computo', areaFisica:'Dirección del Archivo', fecha: '07/03/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
+  { id: 13, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:2475, tipoAdquisicion: 'Flores', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Refrigeración', areaFisica:'Oficina del Secretario', fecha: '06/03/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"Error"} },
+  { id: 14, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:9876, tipoAdquisicion: 'Flores', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Vehículos Menores', areaFisica:'Almacén de Bienes Muebles', fecha: '05/03/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
+  { id: 15, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:1270, tipoAdquisicion: 'Flores', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Computo', areaFisica:'Dirección del Archivo', fecha: '04/03/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"DoDisturbOn"} },
 ];
 
 
 
-export default function Principal() {
+
+  
   const [valueDesde, setValueDesde] = React.useState(dayjs(new Date()));
   const handleChangeDesde = (newValue:any) => {
     setValueDesde(newValue);
@@ -93,6 +114,9 @@ export default function Principal() {
   const handleChangeHasta = (newValue:any) => {
     setValueHasta(newValue);
   };
+
+
+  const handleClose = () => setOpen(false);
   return (
     <Grid container spacing={1}>
     <Grid item xs={12}>
@@ -237,6 +261,50 @@ export default function Principal() {
       />
     </div>
     </Grid>
+
+
+
+    <Grid>
+    <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+          <Box sx={style}>
+            <Typography>
+            What is Lorem Ipsum?
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+          </Typography>
+
+            
+            
+      <iframe src="http://localhost:3008/facturas/Heuristic_Summary1-compressed.pdf" style={{top: 0,left: 0,width: "100%",height: "600px" }} title="Factura">    d     
+    </iframe>
+
+
+          <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
+         
+            <Button  
+              onClick={handleClose}
+              variant="contained" 
+              color="secondary"
+              sx={{margin:"1%"}}>  Cerrar </Button>
+          </Box>
+
+          </Box>
+
+      </Modal>
     </Grid>
+
+
+
+    </Grid>
+
+
+
+
+
   );
 }

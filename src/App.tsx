@@ -56,7 +56,7 @@ import ConfiguracionUsuarios from './componentes/Configuracion/Usuarios/Usuarios
 import ConfiguracionRoles from './componentes/Configuracion/Roles/Roles';
 
 import DomiciliosC from './componentes/Configuracion/Catalogos/DomiciliosC';
-import Menuc from './componentes/Configuracion/Catalogos/MenuC';
+import MenuC from './componentes/Configuracion/Catalogos/MenuC';
 import PermisosC from './componentes/Configuracion/Catalogos/Permisos';
 import TipoClasificacion from './componentes/Configuracion/Catalogos/TipoClasificacion';
 import NavBar from './layout/NavBar';
@@ -75,6 +75,7 @@ import Puestos from './componentes/Configuracion/Catalogos/Puestos';
 import {getUserDetails} from './services/Validation';
 import moment from 'moment';
 
+import AdquisicionesAltas from './componentes/Adquisiciones/Altas';
 
 
 function App() {
@@ -166,7 +167,7 @@ function App() {
           <Route path="/Configuracion/Catalogos/Domicilios" element={<DomiciliosC />} />
           <Route path="/Configuracion/Usuarios/Usuarios" element={<ConfiguracionUsuarios />} />
           <Route path="/Configuracion/Roles/Roles" element={<ConfiguracionRoles />} />
-          <Route path="/Configuracion/Catalogos/Menu" element={<Menuc/>} />
+          <Route path="/Configuracion/Catalogos/Menu" element={<MenuC/>} />
           <Route path="/Configuracion/Catalogos/Permisos" element={<PermisosC/>} />
           <Route path="/Configuracion/Catalogos/Secretarias" element={<Secretarias/>} />
           <Route path="/Configuracion/Catalogos/Dependencias" element={<Dependencias/>} />
@@ -175,12 +176,14 @@ function App() {
           <Route path="/Configuracion/Catalogos/Municipios" element={<Municipios/>} />
           <Route path="/Configuracion/Catalogos/Puestos" element={<Puestos/>} />
           <Route path="/Configuracion/Catalogos/TipodeClasificacion" element={<TipoClasificacion/>} />
-          <Route path="/Configuracion/Usuarios/MenuC" element={<Menuc/>} />
+
           <Route path="/Configuracion/Usuarios/Usuario" element={<UsuariosC/>} />
           <Route path="/Configuracion/Usuarios/TipodeUsuarios" element={<TipoUsuariosC/>}/>
           <Route path="/Configuracion/Usuarios/Perfiles" element={<PerfilesC/>}/>
           <Route path="/Configuracion/Usuarios/Roles" element={<RolesC/>}/>
 
+          <Route path="Adquisiciones/Altas" element={<AdquisicionesAltas />}/>
+          
 
         </Routes>
       </NavBar>
