@@ -124,7 +124,12 @@ export const EditDialog = (props: EditDialogProps) => {
 					>
 						<Typography
 						sx={{
-							color: "#ffffff",fontFamily: "Roboto, sans-serif",fontSize: "100%",}}>
+							color: "#ffffff",
+							"&:hover":{
+								color:"#15212f",
+								},
+							fontFamily: "Roboto, sans-serif",
+							fontSize: "100%",}}>
 						Cancelar
 						</Typography>
 					</Button>

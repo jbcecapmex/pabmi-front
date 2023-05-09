@@ -229,7 +229,12 @@ export default function UsuariosC() {
                         sx={{margin:"1%"}}
                         variant="contained">
                       <Typography
-                        sx={{color: "#ffffff",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}}>
+                        sx={{color: "#ffffff",
+                        "&:hover":{
+                          color:"#15212f",
+                          },
+                        fontFamily: "MontserratRegular, sans-serif",
+                        fontSize: "100%",}}>
                         Cancelar
                       </Typography>
                     </Button>
@@ -447,7 +452,12 @@ export default function UsuariosC() {
                 onClick={handleClose}
                 variant="contained" 
                 color="secondary"
-                sx={{margin:"1%"}}>  Cancelar </Button>
+                sx={{margin:"1%",
+                color:"white",
+                "&:hover":{
+                color:"#15212f",
+                },
+                }}>  Cancelar </Button>
             </Box>
             </Grid>
 

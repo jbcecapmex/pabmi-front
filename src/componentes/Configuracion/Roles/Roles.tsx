@@ -230,7 +230,12 @@ export default function Principal() {
         sx={{margin:"1%"}}
         variant="contained">
         <Typography
-        sx={{color: "#ffffff",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}}>
+        sx={{color: "#ffffff",
+        "&:hover":{
+          color:"#15212f",
+          },
+        fontFamily: "MontserratRegular, sans-serif",
+        fontSize: "100%",}}>
         Cancelar
         </Typography>
         </Button>
