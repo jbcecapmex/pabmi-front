@@ -175,10 +175,14 @@ export default function PermisosC() {
                     <Button
                       onClick={handleOpen}
                       variant="contained"
-                      sx={{margin:"1%"}}
-                      startIcon={<AddIcon sx={{color:"#FFFFFF"}} /> }>
+                      sx={{margin:"1%"}} >
                       <Typography
-                        sx={{color: "#FFFFFF",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}}>
+                        sx={{color: "#FFFFFF",
+                        "&:hover":{
+                          color:"#15212f",
+                          },
+                        fontFamily: "MontserratRegular, sans-serif",
+                        fontSize: "100%",}}>
                         Agregar
                       </Typography>
                     </Button>
@@ -282,7 +286,14 @@ export default function PermisosC() {
     </Box>
     
     <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
-    <Button variant="contained" sx={{margin:"1%"}} > Guardar </Button>
+    <Button variant="contained"
+    sx={{margin:"1%",
+    color:"white",
+    "&:hover":{
+      color:"#15212f",
+      },
+     }} 
+     > Guardar </Button>
     <Button  
     onClick={handleClose}
     variant="contained" 

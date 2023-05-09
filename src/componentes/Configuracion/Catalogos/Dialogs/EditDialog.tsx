@@ -107,7 +107,13 @@ export const EditDialog = (props: EditDialogProps) => {
 						sx={{ width: "50%",  borderRadius: "0",borderTopLeftRadius: "5px",borderBottomLeftRadius: "5px",}} variant="contained"
 					>
 						<Typography
-						sx={{color: "#ffffff",fontFamily: "Roboto, sans-serif",fontSize: "100%",}}>
+						sx={{
+							color: "#fff",
+							"&:hover":{
+						    color:"#15212f",
+							 },
+							fontFamily: "Roboto, sans-serif",
+							fontSize: "100%",}}>
 						Guardar
 						</Typography>
 					</Button>

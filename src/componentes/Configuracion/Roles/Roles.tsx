@@ -212,10 +212,14 @@ export default function Principal() {
       <Button
        // onClick={(event) => handleNewBtnClick(event)}
         variant="contained"
-        sx={{margin:"1%"}}
-        startIcon={<AddIcon sx={{color:"#FFFFFF"}} /> }>
+        sx={{margin:"1%"}} >
         <Typography
-        sx={{color: "#FFFFFF",fontFamily: "MontserratRegular, sans-serif",fontSize: "100%",}}>
+        sx={{color: "#FFFFFF",
+        "&:hover":{
+          color:"#15212f",
+          },
+        fontFamily: "MontserratRegular, sans-serif",
+        fontSize: "100%",}}>
         Agregar
         </Typography>
         </Button>

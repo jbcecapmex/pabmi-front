@@ -413,7 +413,15 @@ export default function Dependencias() {
 
             <Grid item xs={12}>
             <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
-              <Button variant="contained"  sx={{margin:"1%"}} > Guardar </Button>
+              <Button variant="contained"  
+              sx={{margin:"1%",
+              color:"white",
+              "&:hover":{
+                color:"#15212f",
+                },
+               }} > 
+               Guardar 
+               </Button>
               <Button  
                 onClick={handleClose}
                 variant="contained" 
