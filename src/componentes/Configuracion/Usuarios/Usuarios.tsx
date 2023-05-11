@@ -196,6 +196,17 @@ const Usuarios = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
+                          href="/Configuracion/Usuarios/Menu"
+                        >
+                          MENU
+                        </Button>
+                      </Grid>
+
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
                           href="/Configuracion/Catalogos/Permisos"
                         >
                           PERMISOS

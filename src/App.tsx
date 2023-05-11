@@ -167,7 +167,6 @@ function App() {
           <Route path="/Configuracion/Catalogos/Domicilios" element={<DomiciliosC />} />
           <Route path="/Configuracion/Usuarios/Usuarios" element={<ConfiguracionUsuarios />} />
           <Route path="/Configuracion/Roles/Roles" element={<ConfiguracionRoles />} />
-          <Route path="/Configuracion/Catalogos/Menu" element={<MenuC/>} />
           <Route path="/Configuracion/Catalogos/Permisos" element={<PermisosC/>} />
           <Route path="/Configuracion/Catalogos/Secretarias" element={<Secretarias/>} />
           <Route path="/Configuracion/Catalogos/Dependencias" element={<Dependencias/>} />
@@ -181,6 +180,7 @@ function App() {
           <Route path="/Configuracion/Usuarios/TipodeUsuarios" element={<TipoUsuariosC/>}/>
           <Route path="/Configuracion/Usuarios/Perfiles" element={<PerfilesC/>}/>
           <Route path="/Configuracion/Usuarios/Roles" element={<RolesC/>}/>
+          <Route path="/Configuracion/Usuarios/Menu" element={<MenuC/>} />
 
           <Route path="Adquisiciones/Altas" element={<AdquisicionesAltas />}/>
           
