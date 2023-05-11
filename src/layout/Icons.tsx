@@ -135,7 +135,11 @@ export const Icons = (icon: string) => {
     case "Place":
       return <Place />
     case "AddBox":
-      return <AddBox style={{ color: '#1E8FD4',fontSize:"large",  width: '35px', height: '35px' }}/>
+      return <AddBox 
+      style={{ 
+      fontSize:"large",  
+      width: '35px', 
+      height: '35px' }}/>
     case "Description":
       return <Description />
     case "QueryStats":
