@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import {Icons}  from '../../layout/Icons';
 
 const MenuSX = {
-  color: "#212121",
+  color: "#bda889",
   "&& .Mui-selected, && .Mui-selected:hover": {
     bgcolor: "#bda889",
     "&, & .MuiListItemIcon-root": { color: "#212121" },
