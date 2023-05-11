@@ -124,7 +124,7 @@ export default function NestedList() {
           divider
           selected={itemSelected === 0 ? true : false}
         >
-          <ListItemIcon>{Icons("Home")}</ListItemIcon>
+          <ListItemIcon sx={{ color:"#bda889" }}>{Icons("Home")}</ListItemIcon>
           <ListItemText primary="Inicio" />
         </ListItemButton>
         {/** Termina el fragmento de código es del botón de inicio que siempre estara en cualquier menu */}
@@ -145,7 +145,7 @@ export default function NestedList() {
                 divider
                 selected={itemSelected === element.id ? true : false}
               >
-                <ListItemIcon>{Icons(element.icon)}</ListItemIcon>
+                <ListItemIcon sx={{ color:"#bda889" }} >{Icons(element.icon)}</ListItemIcon>
                 <ListItemText primary={element.nombre} />
                 {openSegundo ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
@@ -170,7 +170,7 @@ export default function NestedList() {
                               divider
                               selected={itemSelected === subel.id ? true : false}
                             >
-                              <ListItemIcon sx={{ pl: 4 }}>
+                              <ListItemIcon sx={{ pl: 4,  color:"#bda889" }}>
                                 {Icons(subel.icon)}
                               </ListItemIcon>
                               <ListItemText primary={subel.nombre} />
@@ -188,6 +188,7 @@ export default function NestedList() {
                                     (tercer: any) => {
                                       return (
                                         <ListItemButton
+                                        
                                           onClick={() => {
                                             setItemSelected(tercer.id);
                                             navigate(tercer.ruta);
@@ -199,7 +200,7 @@ export default function NestedList() {
                                               : false
                                           }
                                         >
-                                          <ListItemIcon sx={{ pl: 8 }}>
+                                          <ListItemIcon sx={{ pl: 8,  color:"#bda889" }}>
                                             {Icons(tercer.icon)}
                                           </ListItemIcon>
                                           <ListItemText primary={tercer.nombre} />
@@ -227,7 +228,7 @@ export default function NestedList() {
           }}
           divider
         >
-          <ListItemIcon>{Icons("ExitToApp")}</ListItemIcon>
+          <ListItemIcon sx={{ color:"#bda889" }} >{Icons("ExitToApp")}</ListItemIcon>
           <ListItemText primary="Salir" />
         </ListItemButton>
         {/** Este fragmento de código es del botón de Salir que siempre estara en cualquier menu */}
