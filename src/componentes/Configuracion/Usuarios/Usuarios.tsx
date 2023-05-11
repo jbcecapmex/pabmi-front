@@ -19,12 +19,12 @@ import CatGrid from "../Catalogos/CatGrid";
 const MenuSX = {
   // cuando seleccionas una opcion
   "&& .Mui-selected, && .Mui-selected:hover": {
-    bgcolor: "#e57373",
+    bgcolor: "#bda889",
     "&, & .MuiButton-root": { color: "#212121" },
   },
   // cuando pasas el mouse sobre
   "& .MuiButton-root:hover": {
-    bgcolor: "#e57373",
+    bgcolor: "#bda889",
     "&, & .MuiButton-root": { color: "#ffffff" },
   },
 };
@@ -126,14 +126,14 @@ const Usuarios = () => {
                       // este SX es de la barra donde se muestran los tabs
                       sx={{
                         "& .MuiTabs-indicator": {
-                          backgroundColor: "#e57373",
+                          backgroundColor: "#bda889",
                           heigth: 4,
                         },
-                        "& .Mui-selected": { color: "#e57373" },
+                        "& .Mui-selected": { color: "#bda889" },
                         "& button": { borderRadius: 5 },
                         // pasa el mouse
                         "& button:hover": {
-                          backgroundColor: "#e57373",
+                          backgroundColor: "#bda889",
                           color: "#ffffff",
                         },
                         // se queda seleccionado

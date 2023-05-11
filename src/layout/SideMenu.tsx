@@ -20,12 +20,12 @@ const MenuSX = {
   color: "#212121",
   // selected and (selected + hover) states
   "&& .Mui-selected, && .Mui-selected:hover": {
-    bgcolor: "#e57373",
+    bgcolor: "#bda889",
     "&, & .MuiListItemIcon-root": { color: "#212121" },
   },
   // hover states
   "& .MuiListItemButton-root:hover": {
-    bgcolor: "#e57373",
+    bgcolor: "#bda889",
     "&, & .MuiListItemIcon-root": { color: "#ffffff" },
   },
 };
@@ -81,8 +81,8 @@ export default function NestedList() {
         <img src={palacio} alt="Logo" width="200" height="100" />
       </Box>
       {/* box del avatar */}
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Avatar sx={{ fontSize: 34, bgcolor: red[300], p: 3 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", paddingBottom:2}}>
+        <Avatar sx={{ fontSize: 34, bgcolor:"#bda889", p: 3 }}>
           {AvatarUsuario(nombreUsuario!)}
         </Avatar>
       </Box>

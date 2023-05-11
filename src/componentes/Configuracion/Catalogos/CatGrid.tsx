@@ -247,9 +247,14 @@ export default function CatGrid({
                     <Button
                       onClick={(event) => handleNewBtnClick(event)}
                       sx={{ width: "50%", borderTopLeftRadius: "5px",borderBottomLeftRadius: "5px"   }} variant="contained"
-                        startIcon={<AddIcon sx={{color:"#FFFFFF"}} /> }>
+                         >
                       <Typography
-                        sx={{color: "#FFFFFF",fontFamily: "Roboto, sans-serif",fontSize: "100%",}}>
+                        sx={{color: "#FFFFFF",
+                        "&:hover":{
+                          color:"#15212f",
+                          },
+                          fontFamily: "Roboto, sans-serif",
+                          fontSize: "100%",}}>
                         Agregar
                       </Typography>
                     </Button>

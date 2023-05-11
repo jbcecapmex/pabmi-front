@@ -14,11 +14,11 @@ import {Icons}  from '../../layout/Icons';
 const MenuSX = {
   color: "#212121",
   "&& .Mui-selected, && .Mui-selected:hover": {
-    bgcolor: "#e57373",
+    bgcolor: "#bda889",
     "&, & .MuiListItemIcon-root": { color: "#212121" },
   },
   "& .MuiListItemButton-root:hover": {
-    bgcolor: "#e57373",
+    bgcolor: "#bda889",
     "&, & .MuiListItemIcon-root": { color: "#ffffff" },
   },
 };
