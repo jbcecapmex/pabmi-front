@@ -171,10 +171,6 @@ const Catalogos = () => {
                         >
                           DOMICILIOS
                         </Button>
-<<<<<<< HEAD
-                      </Grid>
-
-=======
                       </Grid> */}
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
@@ -189,7 +185,6 @@ const Catalogos = () => {
                           EDIFICIOS
                         </Button>
                       </Grid>
->>>>>>> 23346d15fb049bb721c70062b1dccafbd38007ff
                       <Grid item xs={12} md={6} lg={4}>
                       <Button
                           sx={ButtonSX}
@@ -264,14 +259,9 @@ const Catalogos = () => {
                         </Button>
                       </Grid>
 
-<<<<<<< HEAD
-                      <Grid item xs={12} md={6} lg={4}>
-                      <Button
-=======
 
                       {/* <Grid item xs={12} md={6} lg={4}>
                         <Button
->>>>>>> 23346d15fb049bb721c70062b1dccafbd38007ff
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
@@ -279,9 +269,6 @@ const Catalogos = () => {
                         >
                           MENU
                         </Button>
-<<<<<<< HEAD
-                      </Grid>
-=======
                       </Grid> */}
 
                       <Grid item xs={12} md={6} lg={4}>
@@ -289,7 +276,6 @@ const Catalogos = () => {
                       </Grid>
 
 
->>>>>>> 23346d15fb049bb721c70062b1dccafbd38007ff
                     </Grid>
                   </TabPanel>
 
