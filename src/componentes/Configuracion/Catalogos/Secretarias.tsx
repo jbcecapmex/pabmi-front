@@ -26,11 +26,50 @@ const style = {
 
 
 export default function Secretarias() { 
-  const [Titular, setTitular] = React.useState('');
-  const handleChange = (event: SelectChangeEvent) => {
-    setTitular(event.target.value as string);
+
+  const [Secretaria, setSecretaria] = React.useState('');
+
+  const handleChangeSecretaria = (event: SelectChangeEvent) => {
+    setSecretaria(event.target.value as string);
   };
 
+  const [Cve, setCve] = useState("");
+  const [Descripcion, setDescripcion] = useState("");
+	const [Direccion, setDireccion] = useState("");
+
+  const store = async () => {
+    console.log("entra a la funcion store");
+    const data = {
+      cve: Cve, 
+      descripcion: Descripcion,
+      direccion: Direccion, 
+      secretaria: Secretaria,
+       };
+       
+    axios({
+      method: "post",
+      url:  "http://10.200.4.105:8083/api/catalogos/guardasecretaria",
+      headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("jwtToken") || "",
+      },
+      data: data,
+      })
+    .then(function (response) {
+      
+      /*Toast.fire({
+      icon: "success",
+      title: "Ticket Creado Exitosamente",
+    });*/
+    getAllSecretarias();
+    console.log(response.data);
+    
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+ 
   const navigate = useNavigate();
   const columns = [
     {
@@ -62,9 +101,16 @@ export default function Secretarias() {
     },
      // segunda columna donde se mostrara el nombre
      {
-      field: "Nombre",
-      headerName: "Nombre",
-      width: 360,
+      field: "Cve",
+      headerName: "Cve",
+      width: 100,
+      hideable: false,
+      headerAlign: "center",
+    },
+    {
+      field: "Secretaria",
+      headerName: "Secretaria",
+      width: 300,
       hideable: false,
       headerAlign: "center",
     },
@@ -72,20 +118,28 @@ export default function Secretarias() {
     {
       field: "Descripcion",
       headerName: "Descripción",
-      width: 400,
+      width: 300,
       hideable: false,
       headerAlign: "center",
     },
+    {
+      field: "Direccion",
+      headerName: "Direccion",
+      width: 300,
+      hideable: false,
+      headerAlign: "center",
+    },
+   
 
   ];
 
   const [rows, setRows] = useState([]);
 
 
-  const getAllApps = () => {
+  const getAllSecretarias = () => {
    axios ({
     method: "get",
-    url: process.env.REACT_APP_APPLICATION_BACK+"/api/apps",
+    url:  "http://10.200.4.105:8083/api/catalogos/obtienesecretaria",
     headers: {
       "Content-Type": "application/json",
       // Authorization: localStorage.getItem("jwtToken") || "",
@@ -95,33 +149,17 @@ export default function Secretarias() {
 
    // aqui se recibe lo del endpoint en response
    .then(function (response) {
-    const rows = response.data.data.map((row: any) => {
-      const Id = row.Id;
-      const Nombre = row.Nombre;
-      const Path = row.Path;
-      const EstaActivo = row.EstaActivo;
-      const estatusLabel = row.EstaActivo ? "Activo" : "Inactivo";
-      const rowTemp = { estatusLabel: estatusLabel, ...row };
-      return rowTemp;
-    });
-    setRows(rows);
+    console.log(response.data);
+    setRows(response.data);
     })
     .catch(function (error) {
-      // Swal.fire({
-      // 	icon: "error",
-      // 	title: "Mensaje",
-      // 	text:
-      // 		"(" +
-      // 		error.response.status +
-      // 		") " +
-      // 		error.response.data.message,
-      // }).then((r) => navigate("/config"));
+ 
     });
   };
 
    // esto es solo para que se ejecute la rutina de obtieneaplicaciones cuando cargue la pagina
    useEffect(() => {
-    getAllApps();
+    getAllSecretarias();
   }, []);
 
   const [open, setOpen] = React.useState(false);
@@ -189,7 +227,7 @@ export default function Secretarias() {
       </Box>
 
       <MUIXDataGrid
-      id={(row: any) => row.Id}
+      id={(row: any) => row.Cve}
       columns={columns}
       rows={rows}
       /> 
@@ -225,11 +263,14 @@ export default function Secretarias() {
               autoComplete="off"
 		          display="flex">
 
-                <TextField
-                id="cve" 
+            <TextField
+                id="Cve" 
                 label="Cve"
                 size="small"
-                variant="outlined" />
+                variant="outlined" 
+                value={Cve} 
+                onChange={(v) => {setCve(v.target.value)}}
+                />  
             </Box>
             </Grid>
 
@@ -242,21 +283,18 @@ export default function Secretarias() {
               autoComplete="off"
 		          display="flex">
 
-              <Select
-              labelId="Titular"
-              id="titular"
-              value={Titular}
-              label="Titular"
+            <Select
+              labelId="Secretaria"
+              id="Secretaria"
+              value={Secretaria}
+              label="Secretaría"
               size="small"
               displayEmpty
-              onChange={handleChange}
+              onChange={handleChangeSecretaria}
             >
-                <MenuItem value="">
-                  Seleccione un Titular de la Secretaría
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem key={Cve} value={Cve}>
+               { Secretaria}
+                </MenuItem> 
               </Select>
             </Box>
             </Grid>
@@ -269,9 +307,11 @@ export default function Secretarias() {
               noValidate
               autoComplete="off"
 		          display="flex">
-                <TextField
-                id="descripcion" 
+              <TextField
+                id="Descripcion" 
                 label="Descripción"
+                value={Descripcion} 
+                onChange={(v) => {setDescripcion(v.target.value)}}
                 size="small"
                 variant="outlined" />
                 </Box>
@@ -285,9 +325,11 @@ export default function Secretarias() {
               noValidate
               autoComplete="off"
 		          display="flex">
-            <TextField
-                id="direccion" 
+             <TextField
+                id="Direccion" 
                 label="Dirección"
+                value={Direccion} 
+                onChange={(v) => {setDireccion(v.target.value)}}
                 size="small"
                 variant="outlined" />
                 </Box>
@@ -297,7 +339,7 @@ export default function Secretarias() {
             
             <Grid item xs={12}>
             <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
-              <Button variant="contained"  
+              <Button onClick={store}  variant="contained"  
               sx={{margin:"1%",
               color:"white",
               "&:hover":{
