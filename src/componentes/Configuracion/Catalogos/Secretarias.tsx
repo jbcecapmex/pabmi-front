@@ -241,13 +241,28 @@ export default function Secretarias() {
               noValidate
               autoComplete="off"
 		          display="flex">
-                <TextField
-                id="nombreSecretaria" 
-                label="Nombre de la Secretaría"
-                size="small"
-                variant="outlined" />
-                </Box>
+
+              <Select
+              labelId="Titular"
+              id="titular"
+              value={Titular}
+              label="Titular"
+              size="small"
+              displayEmpty
+              onChange={handleChange}
+            >
+                <MenuItem value="">
+                  Seleccione un Titular de la Secretaría
+                </MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </Box>
             </Grid>
+            
+
+       
 
 
             <Grid item xs={6}>
@@ -282,33 +297,7 @@ export default function Secretarias() {
                 </Box>
             </Grid>
 
-            <Grid item xs={6}>
-            <Box    
-              component="form"
-              sx={{
-              '& > :not(style)': { m: 1.3, width: '80%' },   }}
-              noValidate
-              autoComplete="off"
-		          display="flex">
 
-              <Select
-              labelId="Titular"
-              id="titular"
-              value={Titular}
-              label="Titular"
-              size="small"
-              displayEmpty
-              onChange={handleChange}
-            >
-                <MenuItem value="">
-                  Seleccione un Titular de la Secretaría
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </Box>
-            </Grid>
             
             <Grid item xs={12}>
             <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
