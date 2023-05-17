@@ -233,11 +233,11 @@ export default function Secretarias() {
             </Box>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12}>
             <Box    
               component="form"
               sx={{
-              '& > :not(style)': { m: 1.3, width: '80%' },   }}
+              '& > :not(style)': { m: 1.3, width: '95%' },   }}
               noValidate
               autoComplete="off"
 		          display="flex">
@@ -260,16 +260,12 @@ export default function Secretarias() {
               </Select>
             </Box>
             </Grid>
-            
-
-       
-
 
             <Grid item xs={6}>
             <Box    
               component="form"
               sx={{
-              '& > :not(style)': { m: 1.3, width: '80%' },   }}
+              '& > :not(style)': { m: 1.3, width: '95%' },   }}
               noValidate
               autoComplete="off"
 		          display="flex">
@@ -285,7 +281,7 @@ export default function Secretarias() {
             <Box    
               component="form"
               sx={{
-              '& > :not(style)': { m: 1.3, width: '80%' },   }}
+              '& > :not(style)': { m: 1.3, width: '95%' },   }}
               noValidate
               autoComplete="off"
 		          display="flex">
