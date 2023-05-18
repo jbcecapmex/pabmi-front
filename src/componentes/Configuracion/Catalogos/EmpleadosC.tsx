@@ -64,6 +64,13 @@ export default function EmpleadosC() {
     },
      // segunda columna donde se mostrara el nombre
      {
+      field: "Cve",
+      headerName: "Cve",
+      width: 260,
+      hideable: false,
+      headerAlign: "center",
+    },
+     {
       field: "Nombre",
       headerName: "Nombre",
       width: 260,
@@ -87,18 +94,26 @@ export default function EmpleadosC() {
     },
 
     {
-      field: "correo",
-      headerName: "Correo",
+      field: "CreadoPor",
+      headerName: "Creado por",
       width: 260,
       headerAlign: "center",
     },
 
     {
-      field: "Dependencia",
-      headerName: "Dependencia",
+      field: "ModificadoPor",
+      headerName: "Modificado por",
       width: 260,
       headerAlign: "center",
     },
+
+    {
+      field: "EliminadoPor",
+      headerName: "Eliminado por",
+      width: 260,
+      headerAlign: "center",
+    },
+
  
   ];
 
@@ -290,41 +305,36 @@ export default function EmpleadosC() {
        size="small"  />
 
       <TextField
-       id="correo" 
-       label="correo"
+       id="CreadoPor" 
+       label="Creado por"
        variant="outlined"
        size="small"  />
        
     </Box>
 
+    <Box
+      component="form"
+      sx={{
+        '& > :not(style)': { m: 1, width: '47%' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
 
-    <Grid item xs={6}>
-            <Box    
-              component="form"
-              sx={{
-              '& > :not(style)': { m: 1.3, width: '94%' },   }}
-              noValidate
-              autoComplete="off"
-		          display="flex">
+      <TextField
+       id="ModificadoPor" 
+       label=" Modificado por" 
+       variant="outlined"
+       size="small"  />
 
-              <Select
-              labelId="Dependencia"
-              id="Dependencia"
-              value={Dependencia}
-              label="Dependencia"
-              size="small"
-              displayEmpty
-              onChange={handleChange7}
-            >
-                <MenuItem value="">
-                Dependencia
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </Box>
-            </Grid>
+      <TextField
+       id="EliminadoPor" 
+       label="Eliminado por"
+       variant="outlined"
+       size="small"  />
+       
+    </Box>
+
 
 
     <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
