@@ -1,7 +1,7 @@
+import React, { useEffect, useState } from "react";
 import {Edit as EditIcon,Add as AddIcon,Delete as DeleteIcon,} from "@mui/icons-material";
 import axios from "axios";
 import {Box,Breadcrumbs,Button,Card,CardContent,FormControl,Grid,IconButton,InputLabel,Link,OutlinedInput,TextField,Tooltip,Typography,} from "@mui/material";
-import React, { useEffect, useState } from "react";
 import MUIXDataGrid from "../Grid/MUIXDataGrid";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -88,7 +88,7 @@ const style = {
 
 
 export default function TicketsDashBoard() {
-
+// definicio de variables de estado
   const navigate                      = useNavigate();
   const [uuid, setuuid]               = useState("");
   const [cve, setCve]                 = useState("");
@@ -99,7 +99,7 @@ export default function TicketsDashBoard() {
   const [status, setStatus]           = useState("");
   const [asignadoa, setAsignadoa]     = React.useState("");
 
-  // Agregar
+  // Abrir modal
   const [open, setOpen]               = React.useState(false);
   const handleOpen = ()   => setOpen(true);
   const handleClose = ()  => setOpen(false);
@@ -208,7 +208,7 @@ export default function TicketsDashBoard() {
         uuidcategoriaticket   : categoria,
         uuidprioridadticket   : prioridad,
         uuidstatusticket      : status,
-        creadopor             : localStorage.getItem("IdUsuario"),
+        modificadopor         : localStorage.getItem("IdUsuario"),
       };
       axios({
         method  : "post",
@@ -254,7 +254,7 @@ export default function TicketsDashBoard() {
                 color="primary"
                 // al darle editar se llenan los campos con los valores seleccionados del renglon
                 onClick={(event) => {
-                  console.log(cellValues.row);
+                  // console.log(cellValues.row);
                   setuuid(cellValues.row.uuid);
                   setCve(cellValues.row.Cve);
                   setDescripcion(cellValues.row.Descripcion);
@@ -269,12 +269,10 @@ export default function TicketsDashBoard() {
                 <EditIcon />
               </IconButton>
             </Tooltip>
-
             <Tooltip title={"Elimina Ticket " + cellValues.row.uuid}>
               <IconButton
                 color="error"
-                onClick={(event) => {
-                  handleDelete(event, cellValues);
+                onClick={(event) => {handleDelete(event, cellValues);
                 }}
               >
                 <DeleteIcon />
@@ -342,6 +340,7 @@ export default function TicketsDashBoard() {
       headerAlign: "left",
     },
   ];
+
 // declaracion de la variable de estado "hook" que recibira la informacion del endpoint
   const [rows, setRows] = useState([]);
   // aqui es el consumo del endpoint para obtener el listado de tickets de la base de datos
@@ -367,6 +366,7 @@ export default function TicketsDashBoard() {
         }).then((r) => navigate("/Tickets"));
       });
   };
+
   // declaracion de la variable de estado "hook" que recibira la informacion del endpoint  
   const [rowsempleados, setRowsEmpleados] = useState<Array<EmpleadoInterface>>([]);
   // aqui es el consumo del endpoint para obtener el listado de empleados de la base de datos
@@ -391,6 +391,7 @@ export default function TicketsDashBoard() {
         });
       });
   };
+
   // declaracion de la variable de estado "hook" que recibira la informacion del endpoint    
   const [rowstipos, setRowsTipos] = useState<Array<TiposInterface>>([]);
   // aqui es el consumo del endpoint para obtener el listado de tipos de tickets de la base de datos
@@ -415,6 +416,7 @@ export default function TicketsDashBoard() {
         });
       });
   };
+
   // declaracion de la variable de estado "hook" que recibira la informacion del endpoint    
   const [rowscategorias, setRowsCategorias] = useState<Array<CategoriasInterface>>([]);
   // aqui es el consumo del endpoint para obtener el listado de tipos de tickets de la base de datos
@@ -439,6 +441,7 @@ export default function TicketsDashBoard() {
         });
       });
   };
+
   // declaracion de la variable de estado "hook" que recibira la informacion del endpoint    
   const [rowsprioridades, setRowsPrioridades] = useState<Array<PrioridadesInterface>>([]);
   // aqui es el consumo del endpoint para obtener el listado de tipos de tickets de la base de datos
@@ -463,6 +466,7 @@ export default function TicketsDashBoard() {
         });
       });
   };
+  
   // declaracion de la variable de estado "hook" que recibira la informacion del endpoint    
   const [rowsstatus, setRowsStatus] = useState<Array<StatusInterface>>([]);
   // aqui es el consumo del endpoint para obtener el listado de status de tickets de la base de datos
@@ -642,7 +646,7 @@ export default function TicketsDashBoard() {
                             onChange    ={(v) => { setAsignadoa(v.target.value); }}
                           >
                             <MenuItem value=""></MenuItem>
-                            {rowsempleados.map((empleado, idex) => (
+                            {rowsempleados.map((empleado, index) => (
                               <MenuItem value={empleado.uuid}>
                                 {empleado.Nombre+" "+empleado.ApellidoPaterno+" "+empleado.ApellidoMaterno}
                               </MenuItem>
