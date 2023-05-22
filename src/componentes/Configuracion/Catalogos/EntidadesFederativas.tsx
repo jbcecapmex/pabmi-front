@@ -394,6 +394,7 @@ const handleClose = ()  => setOpen(false);
                           value     ={cve}
                           disabled  = {uuid!=="" ? true:false}
                           onChange  ={(v) => {setCve(v.target.value); }}
+                          inputProps={{ maxLength: 10 }}
                         />
                       </Box>
                     </Grid>

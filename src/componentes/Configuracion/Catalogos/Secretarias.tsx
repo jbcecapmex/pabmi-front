@@ -10,7 +10,7 @@ import Modal from "@mui/material/Modal";
 // componente de sweetalert2 para el uso de los mensajes de alertas
 const Toast = Swal.mixin({
   toast: true,
-  position: "top-end",
+  position: "center",
   showConfirmButton: false,
   timer: 4000,
   timerProgressBar: false,
@@ -406,6 +406,7 @@ const handleClose = ()  => setOpen(false);
                           value     ={cve}
                           disabled  = {uuid!=="" ? true:false}
                           onChange  ={(v) => {setCve(v.target.value); }}
+                          inputProps={{ maxLength: 10 }}
                         />
                       </Box>
                     </Grid>
