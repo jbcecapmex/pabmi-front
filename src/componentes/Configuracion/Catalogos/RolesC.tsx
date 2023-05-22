@@ -403,6 +403,7 @@ const handleClose = ()  => setOpen(false);
                         display="flex"
                       >
                         <TextField
+                          inputProps={{ maxLength: 10 }}
                           label     ="Cve"
                           size      ="small"
                           variant   ="outlined"
