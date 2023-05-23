@@ -190,10 +190,6 @@ export default function TipoDependencias() {
       columns={columns}
       rows={rows}
       /> 
-
-
-
-      {/* Inician los campos del formulario para registrar la nueva Secretaría */}
       
         <Modal
           open={open}
@@ -201,8 +197,6 @@ export default function TipoDependencias() {
          aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-
-
 
 
           <Box sx={style} display="flow">
@@ -246,7 +240,6 @@ export default function TipoDependencias() {
                 </Box>
             </Grid>
 
-
             <Grid item xs={6}>
             <Box    
               component="form"
@@ -262,10 +255,6 @@ export default function TipoDependencias() {
                 variant="outlined" />
                 </Box>
             </Grid>
-
-
-
-
 
             <Grid item xs={12}>
             <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
