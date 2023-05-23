@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardHeader , Grid, Breadcrumbs, Tooltip, Link, IconButton, Typography, Box, TextField, CardContent, Button } from '@mui/material';
+import { Card, CardHeader , Grid, Breadcrumbs, Tooltip, Link, IconButton, Typography, Box, TextField, CardContent, Button, Input } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -11,7 +11,10 @@ import Modal from '@mui/material/Modal';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import Swal from "sweetalert2";
 
+// Estilos para la ventana Modal
 const style = {
   position: 'absolute',
   top: '50%',
@@ -22,55 +25,330 @@ const style = {
   boxShadow: 5,
   p: 2,
 };
- 
+
+// Mnesajes de exito o error
+const Toast = Swal.mixin({
+  toast: true,
+  position: "center",
+  showConfirmButton: false,
+  timer: 4000,
+  timerProgressBar: false,
+  didOpen: (toast:any) => {
+  toast.addEventListener("mouseenter", Swal.stopTimer);
+  toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+  });
+
+  export interface DependenciasInterface {
+    uuid:                string;
+    Cve:                 string;            
+    Nombre:              string;
+    Direccion:           string;  
+    Telefono:            number;   
+    uuidtipodependencia: number;
+    uuidtitular:         number;
+    uuidsecretaria:      number;
+
+  }
+
+  export interface TiposDependenciasInterface {
+    uuid:                string;
+    Cve:                 string;            
+    Nombre:              string;
+    Descripcion:         string;  
+  }
 
 
+  export interface TitularDependenciaInterface {
+    uuid:                string;
+    Cve:                 string;            
+    Nombre:              string;
+  }
+
+
+  export interface SecretariaInterface {
+    uuid:                string;
+    Cve:                 string;            
+    Nombre:              string;
+  }
+// inicia el componente
 export default function Dependencias() { 
 
-  const [TitularDependencia, setTitularDependencia] = React.useState('');
-  const [TipoDependencia, setTipoDependencia] = React.useState('');
-  const [Secretaria, setSecretaria] = React.useState('');
-  
-  
+  // Crear las interfaces que se mandaran en los endpoints
+
+
+  const [TitularDependencia, setTitularDependencia] = useState('');
+  const [TipoDependencia, setTipoDependencia]       = useState('');
+  const [Secretaria, setSecretaria]                 = useState('');
+
+  const [uuid, setuuid]               = useState("");
+  const [Cve, setCve]                 = useState("");
+	const [Nombre, setNombre]           = useState("");
+  const [Descripcion, setDescripcion] = useState("");
+	const [Direccion, setDireccion]     = useState("");
+  const [Telefono, setTelefono]       = useState("");
+	const [UUID, setUUID]         = useState("");
+
+    // Abrir modal
+    const [open, setOpen]               = React.useState(false);
+    const handleOpen = ()   => setOpen(true);
+    const handleClose = ()  => setOpen(false);
+
+
+
   
 
-  const handleChangeTitularDependencia = (event: SelectChangeEvent) => {
-    setTitularDependencia(event.target.value as string);
+  // Guardar un registro nuevo.
+  const handleSave = () => {
+    if (Cve === "" || Nombre === "" || Direccion === "" || Telefono === "" || TipoDependencia === ""  || TitularDependencia ==="" || Secretaria === ""){
+      Swal.fire({
+        icon  : "error",
+        title : "Mensaje",
+        text  : "Completa todos los campos para continuar",
+      });
+    } else {
+      //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
+      const data = {
+        cve                   : Cve,
+        nombre                : Nombre,
+        direccion             : Direccion,
+        telefono              : Telefono,
+        uuidtipodependencia   : TipoDependencia,
+        uuidtitular           : TitularDependencia,
+        uuidsecretaria        : Secretaria,
+        creadopor             : localStorage.getItem("IdUsuario"),
+      };
+      console.log(data);
+      axios({
+        method  : "post",
+        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardadependencias",
+        headers : {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.getItem("jwtToken") || "",
+        },
+        data    : data,
+        
+      })
+        .then(function (response) {
+          setOpen(false);
+          Toast.fire({
+            icon  : "success",
+            title : "Dependencia creada exitosamente",
+          });
+          getAllDependencias();
+        })
+        .catch(function (error) {
+          Swal.fire({
+            icon  : "error",
+            title : "Mensaje",
+            text  : "(" + error.response.status + ") " + error.response.data.msg,});
+            console.log(error);
+        });
+    }
   };
 
-  const handleChangeTipoDependencia = (event: SelectChangeEvent) => {
-    setTipoDependencia(event.target.value as string);
+// Handle delete
+const handleDelete = (event: any, cellValues: any) => {
+  Swal.fire({
+    title               : "Estas Seguro(a)?",
+    text                : `Estas a punto de eliminar un registro (${cellValues.row.Descripcion})`,
+    icon                : "question",
+    showCancelButton    : true,
+    confirmButtonText   : "Eliminar",
+    confirmButtonColor  : "#dc3545",
+    cancelButtonColor   : "#0d6efd",
+    cancelButtonText    : "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const data = { uuid: cellValues.row.uuid };
+      axios({
+        method    : "post",
+        url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminadependencias",
+        headers   : {
+                      "Content-Type": "application/json",
+                      Authorization: localStorage.getItem("jwtToken") || "",
+        },
+        data      : data,
+      })
+        .then(function (response) {
+          Toast.fire({
+            icon  : "success",
+            title : "Dependencia Eliminada Exitosamente",
+          });
+          getAllDependencias();
+        })
+        .catch(function (error) {
+          Swal.fire({
+            icon  : "error",
+            title : "Mensaje",
+            text  : "(" + error.response.status + ") " + error.response.data.msg,});
+        });
+    }
+  });
+};
+
+
+// Handle update
+  const handleUpdate = () => {
+    if (Cve === "" || Nombre === "" || Direccion === "" || Telefono === "" || TipoDependencia === ""  || TitularDependencia ==="" || Secretaria === ""){
+      Swal.fire({
+        icon  : "error",
+        title : "Mensaje",
+        text  : "Completa todos los campos para continuar",
+      });
+    } else {
+      //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
+      const data = {
+        uuid                  : uuid,
+        Cve                   : Cve,
+        Nombre                : Nombre,
+        Direccion             : Direccion,
+        Telefono              : Telefono,
+        uuidtipodependencia   : TipoDependencia,
+        uuidtitular   : TitularDependencia,
+        uuidsecretaria      : Secretaria,
+        creadopor             : localStorage.getItem("IdUsuario"),
+      };
+      axios({
+        method  : "post",
+        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizadependencias",
+        headers : {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.getItem("jwtToken") || "",
+        },
+        data    : data,
+      })
+        .then(function (response) {
+          setOpen(false);
+          Toast.fire({
+            icon  : "success",
+            title : "Ticket Creado Exitosamente",
+          });
+          getAllDependencias();
+        })
+        .catch(function (error) {
+          Swal.fire({
+            icon  : "error",
+            title : "Mensaje",
+            text  : "(" + error.response.status + ") " + error.response.data.msg,
+          });
+        });
+    }
+  };  
+
+
+  const [rowsTiposDependencias, setRowsTiposDependencias] = useState<Array<TiposDependenciasInterface>>([]);
+  // aqui es el consumo del endpoint para obtener el listado de empleados de la base de datos
+  const getAllTipoDependencias = () => {
+    axios({
+      method    : "get",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienetiposdependencias",
+      headers   : {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.getItem("jwtToken") || "",
+      },
+    })
+      .then(({ data }) => {
+        const rowsTiposDependencias = data;
+        setRowsTiposDependencias(rowsTiposDependencias);
+      })
+      .catch(function (error) {
+        Swal.fire({
+          icon  : "error",
+          title : "Mensaje",
+          text  : "("+error.response.status+") "+error.response.data.message,
+        });
+      });
   };
 
-  const handleChangeSecretaria = (event: SelectChangeEvent) => {
-    setSecretaria(event.target.value as string);
+
+
+  
+  const [rowsEmpleados, setRowsEmpleados] = useState<Array<TitularDependenciaInterface>>([]);
+  // aqui es el consumo del endpoint para obtener el listado de empleados de la base de datos
+  const getAllEmpleados = () => {
+    axios({
+      method    : "get",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtieneempleados",
+      headers   : {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.getItem("jwtToken") || "",
+      },
+    })
+      .then(({ data }) => {
+        const rowsEmpleados = data;
+        setRowsEmpleados(rowsEmpleados);
+      })
+      .catch(function (error) {
+        Swal.fire({
+          icon  : "error",
+          title : "Mensaje",
+          text  : "("+error.response.status+") "+error.response.data.message,
+        });
+      });
   };
 
 
 
-
+  const [rowsSecretarias, setRowsSecretarias] = useState<Array<SecretariaInterface>>([]);
+  // aqui es el consumo del endpoint para obtener el listado de empleados de la base de datos
+  const getAllSecretarias = () => {
+    axios({
+      method    : "get",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienesecretaria",
+      headers   : {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.getItem("jwtToken") || "",
+      },
+    })
+      .then(({ data }) => {
+        const rowsSecretarias = data;
+        setRowsSecretarias(rowsSecretarias);
+      })
+      .catch(function (error) {
+        Swal.fire({
+          icon  : "error",
+          title : "Mensaje",
+          text  : "("+error.response.status+") "+error.response.data.message,
+        });
+      });
+  };
 
   const navigate = useNavigate();
+
+
+
   const columns = [
     {
-      field: "acciones",
-      headerName: "",
-      width: 90,
+      field:       "acciones",
+      headerName:  "",
+      width:       90,
       headerAlign: "center",
-      hideable: false,
+      hideable:    false,
       renderCell: (cellValues: any) => {
+        
         return (
           <Box>
-           <Tooltip title={"Editar " + cellValues.row.Nombre}>
+           <Tooltip title={"Editar"}>
            <IconButton color="primary" 
-          //  onClick={(event) => {handleEditBtnClick(event, cellValues);}}
+          onClick={(event) => {
+            setuuid(cellValues.row.uuid);
+            setCve(cellValues.row.Cve);
+            setNombre(cellValues.row.Nombre);
+            setDireccion(cellValues.row.Direccion);
+            setTelefono(cellValues.row.Telefono);
+            setTipoDependencia(cellValues.row.uuidTipoDependencia);
+            setTitularDependencia(cellValues.row.uuidTitular);
+            setSecretaria(cellValues.row.uuidSecretaria);
+            handleOpen();
+          }}
            >
                 <EditIcon />
               </IconButton>
            </Tooltip>
-           <Tooltip title={"Eliminar" + cellValues.row.Nombre}>
+           <Tooltip title={"Eliminar registro con ID: " + cellValues.row.uuid}>
               <IconButton color="error"
-              //  onClick={(event) => {handleDeleteBtnClick(event, cellValues);}}
+              onClick={(event) => {handleDelete(event, cellValues);}}
                >
                 <DeleteIcon />
               </IconButton>
@@ -81,77 +359,122 @@ export default function Dependencias() {
     },
      // segunda columna donde se mostrara el nombre
      {
-      field: "Nombre",
-      headerName: "Nombre",
-      width: 360,
-      hideable: false,
+      field:       "Cve",
+      headerName:  "Cve",
+      width:       150,
+      hideable:    false,
       headerAlign: "center",
     },
     // Tercer columna donde se mostrara el path
     {
-      field: "Descripcion",
-      headerName: "Descripción",
-      width: 400,
-      hideable: false,
+      field:       "Nombre",
+      headerName:  "Nombre",
+      width:       300,
+      hideable:    false,
       headerAlign: "center",
     },
-
+    {
+      field:       "Direccion",
+      headerName:  "Direccion",
+      width:       400,
+      hideable:    false,
+      headerAlign: "center",
+    },
+    {
+      field:       "Telefono",
+      headerName:  "Telefono",
+      width:       150,
+      hideable:    false,
+      headerAlign: "center",
+    },
+    {
+      field:       "uuidTipoDependencia",
+      headerName:  "Tipo de Dependencia",
+      width:       200,
+      hideable:    false,
+      headerAlign: "center",
+    },
+    ,
+    {
+      field:       "uuidTitular",
+      headerName:  "Titular",
+      width:       200,
+      hideable:    false,
+      headerAlign: "center",
+    },
+    {
+      field:       "uuidSecretaria",
+      headerName:  "Secretaría",
+      width:       200,
+      hideable:    false,
+      headerAlign: "center",
+    }
+    
   ];
+
 
   const [rows, setRows] = useState([]);
 
-
-  const getAllApps = () => {
+  const getAllDependencias = () => {
    axios ({
     method: "get",
-    url: process.env.REACT_APP_APPLICATION_BACK+"/api/apps",
+    url:    process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienedependencias",
     headers: {
       "Content-Type": "application/json",
-      // Authorization: localStorage.getItem("jwtToken") || "",
-      //Authorization: token ,
+      Authorization: localStorage.getItem("jwtToken") || "",
     },
    })
-
-   // aqui se recibe lo del endpoint en response
    .then(function (response) {
-    const rows = response.data.data.map((row: any) => {
-      const Id = row.Id;
-      const Nombre = row.Nombre;
-      const Path = row.Path;
-      const EstaActivo = row.EstaActivo;
-      const estatusLabel = row.EstaActivo ? "Activo" : "Inactivo";
-      const rowTemp = { estatusLabel: estatusLabel, ...row };
-      return rowTemp;
-    });
-    setRows(rows);
+    setRows(response.data);
+    // limpiar los campos del formulario
     })
     .catch(function (error) {
-      // Swal.fire({
-      // 	icon: "error",
-      // 	title: "Mensaje",
-      // 	text:
-      // 		"(" +
-      // 		error.response.status +
-      // 		") " +
-      // 		error.response.data.message,
-      // }).then((r) => navigate("/config"));
+      console.error(error)
+      Swal.fire({
+        icon  : "error",
+        title : "Mensaje",
+        text  : "("+error.response.status+") "+error.response.data.message,
+      }).then((r) => navigate("/Dependencias"));
     });
   };
 
-   // esto es solo para que se ejecute la rutina de obtieneaplicaciones cuando cargue la pagina
+  const [rowsDependencias, setRowsDependencias] = useState<Array<DependenciasInterface>>([]);
+
    useEffect(() => {
-    getAllApps();
+    getAllDependencias();
   }, []);
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+    // esto es para que se ejecuten todo los get de los listados solo cuando se abra la modal,
+  // y que limpie las variables cuando se salga de la modal
+  useEffect(() => {
 
- 
+    if (open===false) {
+      setuuid("");
+      setCve("");
+      setNombre("");
+      setDescripcion("");
+      setDireccion("");
+      setTelefono("");
+      setTipoDependencia("");
+      setTitularDependencia("");
+      setSecretaria("");
+      getAllTipoDependencias();
+      getAllEmpleados();
+      getAllSecretarias();
+    }
+  }, [open]);
 
   return (
-    <Grid container sx={{ fontFamily: "MontserratSemiBold" }}>
-      <Grid item xs={12} paddingLeft={2}>
+    <Grid container sx={{ 
+      top       : "9vh",
+      position  : "absolute",
+      fontFamily: "MontserratSemiBold" }}>
+      <Grid item xs={12}         sx={{
+          top       : "-9vh",
+          position  : "absolute",
+          fontFamily: "MontserratSemiBold",
+        }}>
+
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" href="/inicio">
             Inicio
@@ -214,15 +537,12 @@ export default function Dependencias() {
       </Box>
 
       <MUIXDataGrid
-      id={(row: any) => row.Id}
+      id={(row: any) => row.Cve}
       columns={columns}
       rows={rows}
       /> 
 
-
-
-      {/* Inician los campos del formulario para registrar la nueva Secretaría */}
-      
+      {/* Inician los campos del formulario para registrar la nueva Dependencia */}
         <Modal
           open={open}
           onClose={handleClose}
@@ -230,45 +550,46 @@ export default function Dependencias() {
           aria-describedby="modal-modal-description"
         >
 
-
-
-
           <Box sx={style} display="flow">
+          
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <Box> 
                 <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Dependencias </Typography>  
               </Box>
 		        </Grid>
-
+            
             <Grid item xs={12}>
-            <Box    
-              component="form"
+            <Box component="form">
+            <Box
               sx={{
               '& > :not(style)': { m: 1.3, width: '25%' },   }}
-              noValidate
-              autoComplete="off"
+
 		          display="flex">
 
                 <TextField
-                id="cve" 
+                id="Cve" 
                 label="Cve"
                 size="small"
-                variant="outlined" />
+                inputProps={{maxLength:10}}
+                variant="outlined" 
+                value={Cve} 
+                disabled = {uuid!=="" ? true:false}
+                onChange={(v) => {setCve(v.target.value)}}
+                />
+            </Box>
             </Box>
             </Grid>
 
             <Grid item xs={6}>
-            <Box    
-              component="form"
-              sx={{
+            <Box sx={{
               '& > :not(style)': { m: 1.3, width: '80%' },   }}
-              noValidate
-              autoComplete="off"
 		          display="flex">
                 <TextField
-                id="nombre" 
-                label="Nombre de la Secretaría"
+                id="Nombre" 
+                label="Nombre de la Dependencia"
+                value={Nombre} 
+                onChange={(v) => {setNombre(v.target.value)}}
                 size="small"
                 variant="outlined" />
                 </Box>
@@ -276,150 +597,146 @@ export default function Dependencias() {
 
 
             <Grid item xs={6}>
-            <Box    
-              component="form"
-              sx={{
+            <Box sx={{
               '& > :not(style)': { m: 1.3, width: '80%' },   }}
-              noValidate
-              autoComplete="off"
 		          display="flex">
                 <TextField
-                id="descripcion" 
+                id="Descripcion" 
                 label="Descripción"
+                value={Descripcion} 
+                onChange={(v) => {setDescripcion(v.target.value)}}
                 size="small"
                 variant="outlined" />
                 </Box>
             </Grid>
-
+            
             <Grid item xs={6}>
-            <Box    
-              component="form"
-              sx={{
+            <Box sx={{
               '& > :not(style)': { m: 1.3, width: '80%' },   }}
-              noValidate
-              autoComplete="off"
 		          display="flex">
             <TextField
-                id="direccion" 
+                id="Direccion" 
                 label="Dirección"
+                value={Direccion} 
+                onChange={(v) => {setDireccion(v.target.value)}}
                 size="small"
                 variant="outlined" />
                 </Box>
             </Grid>
 
+            <Grid item xs={6}>
+            <Box sx={{
+              '& > :not(style)': { m: 1.3, width: '80%' },   }}
+		          display="flex">
+            <TextField
+                id="Telefono" 
+                label="Teléfono"
+                inputProps={{maxLength:10}}
+                type="number"
+                value={Telefono} 
+                onChange={(v) => {setTelefono(v.target.value)}}
+                size="small"
+                variant="outlined" />
+                </Box>
+            </Grid>
 
             <Grid item xs={6}>
-            <Box    
-              component="form"
-              sx={{
+            <Box sx={{
               '& > :not(style)': { m: 1.3, width: '80%' },   }}
-              noValidate
-              autoComplete="off"
 		          display="flex">
-
-<Select
-              labelId="TipoDependencia"
-              id="tipoDependencia"
+              <FormControl fullWidth sx={{bgColor:"#fff"}}>
+                <InputLabel sx={{ marginTop:"-4px"}}>
+                Seleccione un Tipo de Dependencia
+                </InputLabel>
+              <Select
+              id="TipoDependencia"
               value={TipoDependencia}
               label="Tipo de Dependencia"
               size="small"
               displayEmpty
-              onChange={handleChangeTipoDependencia}
+              onChange = {(v) => { setTipoDependencia(v.target.value)} }
             >
-                <MenuItem value="">
-                  Seleccione un Tipo de Dependencia
-                </MenuItem>
-                <MenuItem value={1}>Secretaría</MenuItem>
-                <MenuItem value={2}>Sub Secretaría</MenuItem>
-                <MenuItem value={3}>Coordinación</MenuItem>
-                <MenuItem value={4}>Dirección</MenuItem>
-                <MenuItem value={5}>Unidad</MenuItem>
-                <MenuItem value={6}>Oficina</MenuItem>
-                <MenuItem value={7}>Representación</MenuItem>
-                <MenuItem value={8}>Instituto</MenuItem>
-                <MenuItem value={9}>Organo</MenuItem>
-                <MenuItem value={10}>Procuraduría</MenuItem>
-                <MenuItem value={11}>Oficialía</MenuItem>
-                <MenuItem value={12}>Centro</MenuItem>
-                <MenuItem value={13}>Jefatura</MenuItem>
-                <MenuItem value={14}>Servicios</MenuItem>
-                <MenuItem value={15}>División</MenuItem>
-                <MenuItem value={16}>Agencia</MenuItem>
-                <MenuItem value={17}>Escuela</MenuItem>
-                <MenuItem value={18}>Consejo</MenuItem>
-                <MenuItem value={19}>De los cuerpos Policiales</MenuItem>
-                <MenuItem value={20}>Comisiones</MenuItem>
-                <MenuItem value={21}>Secretaría Técnica</MenuItem>
-                <MenuItem value={22}>Sub Contraloría</MenuItem>
-                <MenuItem value={23}>Junta</MenuItem>
-                <MenuItem value={24}>Tribunal</MenuItem>
+                      <MenuItem value=""></MenuItem>
+                            {rowsTiposDependencias.map((TipoDependencia, index) => (
+                              <MenuItem value={TipoDependencia.uuid}>
+                                {TipoDependencia.Cve + "-" + TipoDependencia.Nombre}
+                        </MenuItem>
+                        ))}
               </Select>
+              </FormControl>
             </Box>
             </Grid>
             
             <Grid item xs={6}>
-            <Box    
-              component="form"
+            <Box
               sx={{
               '& > :not(style)': { m: 1.3, width: '80%' },   }}
-              noValidate
-              autoComplete="off"
 		          display="flex">
-
+              <FormControl fullWidth sx={{bgColor:"#fff"}}>
+                <InputLabel sx={{ marginTop:"-4px"}}>
+                Seleccione un Titular de la Dependencia
+                </InputLabel>
               <Select
               labelId="Titular"
-              id="titular"
+              id="Titular"
               value={TitularDependencia}
               label="Titular"
               size="small"
               displayEmpty
-              onChange={handleChangeTitularDependencia}
+              onChange={(v)=> {setTitularDependencia(v.target.value)}}
             >
-                <MenuItem value="">
-                  Seleccione un Titular de la Dependencia
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                        <MenuItem value=""></MenuItem>
+                            {rowsEmpleados.map((TitularDependencia, index) => (
+                              <MenuItem value={TitularDependencia.uuid}>
+                                {TitularDependencia.Cve + "-" + TitularDependencia.Nombre}
+                        </MenuItem>
+                        ))}
               </Select>
+              </FormControl>
             </Box>
             </Grid>
 
 
             <Grid item xs={6}>
-            <Box    
-              component="form"
-              sx={{
+            <Box sx={{
               '& > :not(style)': { m: 1.3, width: '80%' },   }}
-              noValidate
-              autoComplete="off"
 		          display="flex">
+              <FormControl fullWidth sx={{bgColor:"#fff"}}>
+                <InputLabel sx={{ marginTop:"-4px"}}>
+                Seleccione una Secretaría
+                </InputLabel>
               <Select
               labelId="Secretaria"
-              id="secretaria"
+              id="Secretaria"
               value={Secretaria}
               label="Secretaría"
               size="small"
               displayEmpty
-              onChange={handleChangeSecretaria}
+              onChange={(v)=>{setSecretaria(v.target.value)}}
             >
-                <MenuItem value="">
-                  Seleccione una Secretaría
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                        <MenuItem value=""></MenuItem>
+                            {rowsSecretarias.map((Secretaria, index) => (
+                              <MenuItem value={Secretaria.uuid}>
+                                {Secretaria.Cve + "-" + Secretaria.Nombre}
+                        </MenuItem>
+                        ))}
               </Select>
-
+              </FormControl>
             </Box>
             </Grid>
 
 
-
+            
 
             <Grid item xs={12}>
             <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
-              <Button variant="contained"  
+              <Button onClick={() => {
+                            if (uuid === "") {
+                              handleSave()  
+                            }else{
+                              handleUpdate()  
+                            }
+                            } } variant="contained" 
               sx={{margin:"1%",
               color:"white",
               "&:hover":{
@@ -428,7 +745,9 @@ export default function Dependencias() {
                }} > 
                Guardar 
                </Button>
-              <Button  
+
+
+              <Button
                 onClick={handleClose}
                 variant="contained" 
                 color="secondary"
@@ -440,14 +759,11 @@ export default function Dependencias() {
                 }}>  Cancelar </Button>
             </Box>
             </Grid>
-
+            
             </Grid>
-
+            
           </Box>
         </Modal>
-      
-      {/* Termina la sección de los campos del formulario para registrar la nueva Secretaría */}
-
 
 
       </CardContent>

@@ -336,130 +336,119 @@ const handleClose = ()  => setOpen(false);
                       sx={{
                         color     : "#FFFFFF","&:hover": { color: "#15212f" },
                         fontFamily: "MontserratRegular, sans-serif",
-                        fontSize  : "100%",
-                      }}
-                    >
-                      Agregar
-                    </Typography>
-                  </Button>
-                  <Button 
-                    onClick={() => navigate(-1)}
-                    color="secondary"
-                    sx={{margin:"1%"}}
-                    variant="contained">
-                    <Typography
-                    sx={{color: "#ffffff",
-                    "&:hover":{
-                      color:"#15212f",
-                      },
-                    fontFamily: "MontserratRegular, sans-serif",
-                    fontSize: "100%",}}>
-                    Cancelar
-                    </Typography>
-                    </Button>                  
-                </Grid>
-              </Box>
-              {/* aqui se asigna un id unico que tiene que tener cada renglon, asi que asignamos un numero al azar*/}
-              <MUIXDataGrid id={Math.random} columns={columns} rows={rows} />
-              {/* AGREGAR---------------------------------------------------------------------------------------------------------------------------------------------- */}
-              {/* Inician los campos del formulario*/}
-              <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box sx={style} display="flow">
-                  <Grid container spacing={1}>
-                    <Grid item xs={12}>
-                      <Box>
-                        <Typography variant="h5" sx={{ padding: "1%" }}>
-                        Entidades Federativas
-                        </Typography>
-                      </Box>
-                    </Grid>
-
-                    <Grid item xs={6}>
-                      <Box
-                        component="form"
-                        sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
-                        noValidate
-                        autoComplete="off"
-                        display="flex"
-                      >
-                        <TextField
-                          label     ="Cve"
-                          size      ="small"
-                          variant   ="outlined"
-                          value     ={cve}
-                          disabled  = {uuid!=="" ? true:false}
-                          onChange  ={(v) => {setCve(v.target.value); }}
-                          inputProps={{ maxLength: 10 }}
-                        />
-                      </Box>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Box>
-                        {/* espacio en blanco */}
-                      </Box>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Box
-                        component="form"
-                        sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
-                        noValidate
-                        autoComplete="off"
-                        display="flex"
-                      >
-                        <TextField
-                          label     ="Nombre"
-                          size      ="small"
-                          variant   ="outlined"
-                          value     ={nombre}
-                          onChange  ={(v) => {setNombre(v.target.value); }}
-                        />
-                      </Box>
-                    </Grid>                  
-                    <Grid item xs={12}>
-                      <Box
-                        maxWidth      ="100%"
-                        paddingTop    ={2}
-                        paddingBottom ={2}
-                        display       ="flex"
-                        justifyContent="end"
-                      >
-                        <Button
-                          onClick={() => {
-                            if (uuid === "") {
-                              handleSave()  
-                            }else{
-                              handleUpdate()  
-                            }
-                            } 
-                          }
-                          variant ="contained"
-                          sx      ={{margin: "1%", color: "white","&:hover": {color: "#15212f",},}}
-                        >
-                          Guardar
-                        </Button>
-                        <Button
-                          onClick ={handleClose}
-                          variant ="contained"
-                          color   ="secondary"
-                          sx      ={{margin: "1%",color: "white","&:hover": {color: "#15212f",},}}
-                        >
-                          Cancelar
-                        </Button>
-                      </Box>
-                    </Grid>
+                        fontSize: "100%",}}>
+                        Cancelar
+                      </Typography>
+                    </Button>
                   </Grid>
+      </Box>
+
+      <MUIXDataGrid
+      id={(row: any) => row.Id}
+      columns={columns}
+      rows={rows}
+      /> 
+      
+        <Modal
+          open={open}
+          onClose={handleClose}
+         aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+
+
+          <Box sx={style} display="flow">
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Box> 
+                <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Entidades Federativas</Typography>  
+              </Box>
+		        </Grid>
+
+            <Grid item xs={12}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '25%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+
+                <TextField
+                id="cve" 
+                label="Cve"
+                size="small"
+                variant="outlined" />
+            </Box>
+            </Grid>
+
+            <Grid item xs={6}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '80%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+                <TextField
+                id="nombreEntidad" 
+                label="Nombre de la Entidad"
+                size="small"
+                variant="outlined" />
                 </Box>
-              </Modal>
-              {/* Termina la sección de los campos del formulario*/}
-              {/* AGREGAR----------------------------------------------------------------------------------------------------------*/}
-            </CardContent>
-          </Card>
-        </Grid>
+            </Grid>
+
+            <Grid item xs={6}>
+            <Box    
+              component="form"
+              sx={{
+              '& > :not(style)': { m: 1.3, width: '80%' },   }}
+              noValidate
+              autoComplete="off"
+		          display="flex">
+                <TextField
+                id="descripcion" 
+                label="Descripción"
+                size="small"
+                variant="outlined" />
+                </Box>
+            </Grid>
+
+            <Grid item xs={12}>
+            <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
+              <Button variant="contained" 
+              sx={{margin:"1%",
+              color:"white",
+              "&:hover":{
+                color:"#15212f",
+                },
+               }} 
+               > Guardar </Button>
+                  <Button  
+                  onClick={handleClose}
+                  variant="contained" 
+                  color="secondary"
+                  sx={{margin:"1%",
+                  color:"white",
+                  "&:hover":{
+                  color:"#15212f",
+                  },
+                  }}>  Cancelar </Button>
+            </Box>
+            </Grid>
+
+            </Grid>
+
+          </Box>
+        </Modal>
+      
+      {/* Termina la sección de los campos del formulario para registrar la nueva Secretaría */}
+
+
+
+      </CardContent>
+      </Card>
+      </Grid>
       </Grid>
     </Grid>
   );
