@@ -185,7 +185,7 @@ export const menu = [
             {
                "id":401,
                "nombre":"Alta",
-               "ruta":"/Tickets/Altas",
+               "ruta":"/Tickets",
                "icon":"Add"
             },
             {

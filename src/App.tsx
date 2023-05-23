@@ -36,8 +36,7 @@ import InmueblesComodato from './componentes/Inmuebles/Comodato';
 import InmueblesGeneracionTarjetas from './componentes/Inmuebles/GeneracionTarjetas';
 
 
-import TicketsAltas from './componentes/Tickets/Altas';
-import TicketsModificaciones from './componentes/Tickets/Modificaciones';
+import TicketsDashboard from './componentes/Tickets/TicketsDashboard';
 
 import DashboardsReportesDashboards from './componentes/DashboardsReportes/Dashboards/Dashboards';
 import DashboardsReportesReportes from './componentes/DashboardsReportes/Reportes/Reportes';
@@ -158,9 +157,8 @@ function App() {
           <Route path="/Inmuebles/Comodato" element={<InmueblesComodato />} />
           <Route path="/Inmuebles/GeneracionTarjetas" element={<InmueblesGeneracionTarjetas />} />
 
-          <Route path="/Tickets/Altas" element={<TicketsAltas />} />
-          <Route path="/Tickets/Modificaciones" element={<TicketsModificaciones />} />
-
+          
+          <Route path="/Tickets" element={<TicketsDashboard />} />
 
           <Route path="/Configuracion/Catalogos/Catalogos" element={<ConfiguracionCatalogos />} />
           <Route path="/Configuracion/Catalogos/Empleados" element={<EmpleadosC />} />
