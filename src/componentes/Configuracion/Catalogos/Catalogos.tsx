@@ -172,19 +172,7 @@ const Catalogos = () => {
                           DOMICILIOS
                         </Button>
                       </Grid> */}
-                      <Grid item xs={12} md={6} lg={4}>
-                        <Button
-                          sx={ButtonSX}
-                          variant="text"
-                          fullWidth
-                          onClick={() => {
-                            changeScreen(3, "Edificios");
-                            setShowCatGrid(true);
-                          }}
-                        >
-                          EDIFICIOS
-                        </Button>
-                      </Grid>
+                  
                       <Grid item xs={12} md={6} lg={4}>
                       <Button
                           sx={ButtonSX}
@@ -405,21 +393,7 @@ const Catalogos = () => {
                   {/* panel de inmuebles */}
                   <TabPanel value={panelValue} index={2}>
                     <Grid sx={MenuSX} container spacing={2}>
-                    <Grid item xs={12} md={6} lg={4}>
-                        <Button
-                          sx={ButtonSX}
-                          variant="text"
-                          fullWidth
-                          onClick={() => {
-                            changeScreen(3, "Edificios");
-                            setShowCatGrid(true);
-                          }}
-                        >
-                          EDIFICIOS
-                        </Button>
-                      </Grid>
-
-
+                
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
