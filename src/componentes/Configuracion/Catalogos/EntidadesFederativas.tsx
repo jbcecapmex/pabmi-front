@@ -140,7 +140,7 @@ const handleClose = ()  => setOpen(false);
       Swal.fire({
         icon  : "error",
         title : "Mensaje",
-        text  : "Completa todos los campos para continuarrrrrrrr",
+        text  : "Completa todos los campos para continuar",
       });
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
@@ -343,10 +343,7 @@ const handleClose = ()  => setOpen(false);
                   </Grid>
       </Box>
 
-      <MUIXDataGrid
-      id={(row: any) => row.Id}
-      columns={columns}
-      rows={rows}
+      <MUIXDataGrid id={Math.random} columns={columns} rows={rows} 
       /> 
       
         <Modal
