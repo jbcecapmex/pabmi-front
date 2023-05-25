@@ -10,7 +10,7 @@ import Modal from "@mui/material/Modal";
 // componente de sweetalert2 para el uso de los mensajes de alertas
 const Toast = Swal.mixin({
   toast: true,
-  position: "center",
+  position: "top-end",
   showConfirmButton: false,
   timer: 4000,
   timerProgressBar: false,
@@ -22,7 +22,7 @@ const Toast = Swal.mixin({
   },
 });
 
-export interface ActivoInterface {
+export interface ModelosInterface {
   uuid: string;
   Cve: string;
   Nombre: string;
@@ -40,7 +40,7 @@ const style = {
   p: 2,
 };
 
-export default function Activos() {
+export default function Modelos() {
 // definicio de variables de estado
 const navigate                      = useNavigate();
 const [uuid, setuuid]               = useState("");
@@ -72,7 +72,7 @@ const handleClose = ()  => setOpen(false);
       };
       axios({
         method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardaactivos",
+        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardamarcas",
         headers : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -83,9 +83,9 @@ const handleClose = ()  => setOpen(false);
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : " Creado Exitosamente",
+            title : "Modelos Creado Exitosamente",
           });
-          getAllActivo();
+          getAllModelos();
         })
         .catch(function (error) {
           Swal.fire({
@@ -111,7 +111,7 @@ const handleClose = ()  => setOpen(false);
         const data = { uuid: cellValues.row.uuid };
         axios({
           method    : "post",
-          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminaactivos",
+          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminamarcas",
           headers   : {
                         "Content-Type": "application/json",
                         Authorization: localStorage.getItem("jwtToken") || "",
@@ -121,9 +121,9 @@ const handleClose = ()  => setOpen(false);
           .then(function (response) {
             Toast.fire({
               icon  : "success",
-              title : " Eliminado Exitosamente",
+              title : "Modelos Eliminado Exitosamente",
             });
-            getAllActivo();
+            getAllModelos();
           })
           .catch(function (error) {
             Swal.fire({
@@ -154,7 +154,7 @@ const handleClose = ()  => setOpen(false);
       };
       axios({
         method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizaactivos",
+        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizamarcas",
         headers : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -165,9 +165,9 @@ const handleClose = ()  => setOpen(false);
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : " Actualizado Exitosamente",
+            title : "Modelos Actualizado Exitosamente",
           });
-          getAllActivo();
+          getAllModelos();
         })
         .catch(function (error) {
           Swal.fire({
@@ -243,10 +243,10 @@ const handleClose = ()  => setOpen(false);
   // declaracion de la variable de estado "hook" que recibira la informacion del endpoint
   const [rows, setRows] = useState([]);
   // aqui es el consumo del endpoint para obtener el listado de la base de datos
-  const getAllActivo = () => {
+  const getAllModelos = () => {
     axios({
       method    : "get",
-      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtieneactivos",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienemarcas",
       headers   : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -262,13 +262,13 @@ const handleClose = ()  => setOpen(false);
           icon  : "error",
           title : "Mensaje",
           text  : "("+error.response.status+") "+error.response.data.message,
-        }).then((r) => navigate("/Configuracion/Catalogos/Activo"));
+        }).then((r) => navigate("/Configuracion/Catalogos/Modelos"));
       });
   };
 
   // esto es solo para que se ejecute la rutina de obtiene cuando cargue la pagina
   useEffect(() => {
-    getAllActivo();
+    getAllModelos();
   }, []);
 
   // esto es para que se ejecuten todo los get de los listados solo cuando se abra la modal,
@@ -314,7 +314,7 @@ const handleClose = ()  => setOpen(false);
           <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
             Usuarios
           </Link>
-          <Typography color="text.primary">Catálogo de Activo</Typography>
+          <Typography color="text.primary">Catálogo de Modelos</Typography>
         </Breadcrumbs>
       </Grid>
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
@@ -386,7 +386,7 @@ const handleClose = ()  => setOpen(false);
                     <Grid item xs={12}>
                       <Box>
                         <Typography variant="h5" sx={{ padding: "1%" }}>
-                          Detalle de Activo
+                          Detalle de Modelos
                         </Typography>
                       </Box>
                     </Grid>

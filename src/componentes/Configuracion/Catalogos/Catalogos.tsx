@@ -275,10 +275,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(10, "Presentación Muebles");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/PresentacionMuebles"
                         >
                           PRESENTACIÓN MUEBLES
                         </Button>
@@ -370,10 +367,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(18, "Modelos");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/Modelos"
                         >
                           MODELOS
                         </Button>
