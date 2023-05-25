@@ -248,16 +248,16 @@ const Catalogos = () => {
                       </Grid>
 
 
-                      {/* <Grid item xs={12} md={6} lg={4}>
+                      <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/Menu"
+                          href="/Configuracion/Catalogos/Notificaciones"
                         >
-                          MENU
+                          NOTIFICACIONES
                         </Button>
-                      </Grid> */}
+                      </Grid>
 
                       <Grid item xs={12} md={6} lg={4}>
 
