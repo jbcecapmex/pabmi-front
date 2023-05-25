@@ -64,6 +64,16 @@ import UsuariosC from './componentes/Configuracion/Catalogos/UsuariosC';
 import TipoUsuariosC from './componentes/Configuracion/Catalogos/TipoUsuariosC';
 import PerfilesC from './componentes/Configuracion/Catalogos/PerfilesC';
 import RolesC from './componentes/Configuracion/Catalogos/RolesC';
+import TiposAdquisicion from './componentes/Configuracion/Catalogos/TipoAdquisicion';
+import TipoBien from './componentes/Configuracion/Catalogos/TipoBien';
+import TipoComprobante from './componentes/Configuracion/Catalogos/TipoComprobante';
+import TipoProceso from './componentes/Configuracion/Catalogos/TipoProceso';
+import TipoProveedor from './componentes/Configuracion/Catalogos/TipoProveedores';
+import TipoReporte from './componentes/Configuracion/Catalogos/TipoReporte';
+import TipoTransaccion from './componentes/Configuracion/Catalogos/TipoTransaccion';
+import ReportesC from './componentes/Configuracion/Catalogos/ReportesC';
+
+
 
 import Secretarias from './componentes/Configuracion/Catalogos/Secretarias';
 import Dependencias from './componentes/Configuracion/Catalogos/Dependencias';
@@ -75,6 +85,11 @@ import {getUserDetails} from './services/Validation';
 import moment from 'moment';
 
 import AdquisicionesAltas from './componentes/Adquisiciones/Altas';
+
+
+
+
+
 
 
 function App() {
@@ -173,6 +188,14 @@ function App() {
           <Route path="/Configuracion/Catalogos/Municipios" element={<Municipios/>} />
           <Route path="/Configuracion/Catalogos/Puestos" element={<Puestos/>} />
           <Route path="/Configuracion/Catalogos/TipodeClasificacion" element={<TipoClasificacion/>} />
+          <Route path="/Configuracion/Catalogos/TiposAdquisicion" element={<TiposAdquisicion/>} />
+          <Route path="/Configuracion/Catalogos/TipoBien" element={<TipoBien/>} />
+          <Route path="/Configuracion/Catalogos/TipoComprobante" element={<TipoComprobante/>} />
+          <Route path="/Configuracion/Catalogos/TipoProceso" element={<TipoProceso/>} />
+          <Route path="/Configuracion/Catalogos/TipoProveedor" element={<TipoProveedor/>} />
+          <Route path="/Configuracion/Catalogos/TipoReporte" element={<TipoReporte/>} />
+          <Route path="/Configuracion/Catalogos/TipoTransaccion" element={<TipoTransaccion/>} />
+          <Route path="/Configuracion/Catalogos/ReportesC" element={<ReportesC/>} />
 
           <Route path="/Configuracion/Usuarios/Usuario" element={<UsuariosC/>} />
           <Route path="/Configuracion/Usuarios/TipodeUsuarios" element={<TipoUsuariosC/>}/>
