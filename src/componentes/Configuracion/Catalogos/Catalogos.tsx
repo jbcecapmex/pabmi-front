@@ -327,10 +327,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(14, "Activo");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/Activo"
                         >
                           ACTIVO
                         </Button>
@@ -353,10 +350,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(16, "Motivos de Baja");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/MotivosBaja"
                         >
                           MOTIVOS DE BAJA
                         </Button>
@@ -366,10 +360,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(17, "Marca");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/Marcas"
                         >
                           MARCAS
                         </Button>
