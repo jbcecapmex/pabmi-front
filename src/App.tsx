@@ -64,6 +64,9 @@ import UsuariosC from './componentes/Configuracion/Catalogos/UsuariosC';
 import TipoUsuariosC from './componentes/Configuracion/Catalogos/TipoUsuariosC';
 import PerfilesC from './componentes/Configuracion/Catalogos/PerfilesC';
 import RolesC from './componentes/Configuracion/Catalogos/RolesC';
+import Activos from './componentes/Configuracion/Catalogos/Activo';
+import MotivosBaja from './componentes/Configuracion/Catalogos/MotivosBaja';
+import Marcas from './componentes/Configuracion/Catalogos/Marcas';
 
 import Secretarias from './componentes/Configuracion/Catalogos/Secretarias';
 import Dependencias from './componentes/Configuracion/Catalogos/Dependencias';
@@ -173,6 +176,9 @@ function App() {
           <Route path="/Configuracion/Catalogos/Municipios" element={<Municipios/>} />
           <Route path="/Configuracion/Catalogos/Puestos" element={<Puestos/>} />
           <Route path="/Configuracion/Catalogos/TipodeClasificacion" element={<TipoClasificacion/>} />
+          <Route path="/Configuracion/Catalogos/Activo" element={<Activos/>} />
+          <Route path="/Configuracion/Catalogos/MotivosBaja" element={<MotivosBaja/>} />
+          <Route path="/Configuracion/Catalogos/Marcas" element={<Marcas/>} />
 
           <Route path="/Configuracion/Usuarios/Usuario" element={<UsuariosC/>} />
           <Route path="/Configuracion/Usuarios/TipodeUsuarios" element={<TipoUsuariosC/>}/>
