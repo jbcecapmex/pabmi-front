@@ -82,7 +82,7 @@ const handleClose = ()  => setOpen(false);
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : "Perfil Creado Exitosamente",
+            title : " Creado Exitosamente",
           });
           getAllEntFederativas();
         })
@@ -120,7 +120,7 @@ const handleClose = ()  => setOpen(false);
           .then(function (response) {
             Toast.fire({
               icon  : "success",
-              title : "Perfil Eliminado Exitosamente",
+              title : " Eliminado Exitosamente",
             });
             getAllEntFederativas();
           })
@@ -163,7 +163,7 @@ const handleClose = ()  => setOpen(false);
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : "Perfil Actualizado Exitosamente",
+            title : "  Actualizado Exitosamente",
           });
           getAllEntFederativas();
         })
@@ -231,7 +231,7 @@ const handleClose = ()  => setOpen(false);
  
   // declaracion de la variable de estado "hook" que recibira la informacion del endpoint
   const [rows, setRows] = useState([]);
-  // aqui es el consumo del endpoint para obtener el listado de Perfil de la base de datos
+  // aqui es el consumo del endpoint para obtener el listado de la base de datos
   const getAllEntFederativas = () => {
     axios({
       method    : "get",

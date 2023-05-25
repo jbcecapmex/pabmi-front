@@ -22,7 +22,7 @@ const Toast = Swal.mixin({
   },
 });
 
-export interface MotivosBajaInterface {
+export interface NivelReportesesInterface {
   uuid: string;
   Cve: string;
   Nombre: string;
@@ -40,7 +40,7 @@ const style = {
   p: 2,
 };
 
-export default function MotivosBaja() {
+export default function NivelReportes() {
 // definicio de variables de estado
 const navigate                      = useNavigate();
 const [uuid, setuuid]               = useState("");
@@ -72,7 +72,7 @@ const handleClose = ()  => setOpen(false);
       };
       axios({
         method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardamotivosbaja",
+        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardanivelreportes",
         headers : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -85,7 +85,7 @@ const handleClose = ()  => setOpen(false);
             icon  : "success",
             title : " Creado Exitosamente",
           });
-          getAllMotivosBaja();
+          getAllNivelReportes();
         })
         .catch(function (error) {
           Swal.fire({
@@ -111,7 +111,7 @@ const handleClose = ()  => setOpen(false);
         const data = { uuid: cellValues.row.uuid };
         axios({
           method    : "post",
-          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminamotivosbaja",
+          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminanivelreportes",
           headers   : {
                         "Content-Type": "application/json",
                         Authorization: localStorage.getItem("jwtToken") || "",
@@ -123,7 +123,7 @@ const handleClose = ()  => setOpen(false);
               icon  : "success",
               title : " Eliminado Exitosamente",
             });
-            getAllMotivosBaja();
+            getAllNivelReportes();
           })
           .catch(function (error) {
             Swal.fire({
@@ -154,7 +154,7 @@ const handleClose = ()  => setOpen(false);
       };
       axios({
         method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizamotivosbaja",
+        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizanivelreportes",
         headers : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -167,7 +167,7 @@ const handleClose = ()  => setOpen(false);
             icon  : "success",
             title : " Actualizado Exitosamente",
           });
-          getAllMotivosBaja();
+          getAllNivelReportes();
         })
         .catch(function (error) {
           Swal.fire({
@@ -242,11 +242,11 @@ const handleClose = ()  => setOpen(false);
  
   // declaracion de la variable de estado "hook" que recibira la informacion del endpoint
   const [rows, setRows] = useState([]);
-  // aqui es el consumo del endpoint para obtener el listado l de la base de datos
-  const getAllMotivosBaja = () => {
+  // aqui es el consumo del endpoint para obtener el listado de la base de datos
+  const getAllNivelReportes = () => {
     axios({
       method    : "get",
-      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienemotivosbaja",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienenivelreportes",
       headers   : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -262,13 +262,13 @@ const handleClose = ()  => setOpen(false);
           icon  : "error",
           title : "Mensaje",
           text  : "("+error.response.status+") "+error.response.data.message,
-        }).then((r) => navigate("/Configuracion/Catalogos/MotivosBaja"));
+        }).then((r) => navigate("/Configuracion/Catalogos/NivelReportes"));
       });
   };
 
   // esto es solo para que se ejecute la rutina de obtiene cuando cargue la pagina
   useEffect(() => {
-    getAllMotivosBaja();
+    getAllNivelReportes();
   }, []);
 
   // esto es para que se ejecuten todo los get de los listados solo cuando se abra la modal,
@@ -314,7 +314,7 @@ const handleClose = ()  => setOpen(false);
           <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
             Usuarios
           </Link>
-          <Typography color="text.primary">Catálogo de Motivos de Baja</Typography>
+          <Typography color="text.primary">Catálogo de Nivel Reportes</Typography>
         </Breadcrumbs>
       </Grid>
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
@@ -386,7 +386,7 @@ const handleClose = ()  => setOpen(false);
                     <Grid item xs={12}>
                       <Box>
                         <Typography variant="h5" sx={{ padding: "1%" }}>
-                          Detalle de Motivos Baja
+                          Detalle de Nivel de Reportes
                         </Typography>
                       </Box>
                     </Grid>
