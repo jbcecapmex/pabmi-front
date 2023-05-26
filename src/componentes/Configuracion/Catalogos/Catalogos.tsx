@@ -235,7 +235,6 @@ const Catalogos = () => {
                           PUESTOS
                         </Button>
                       </Grid>
-
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
@@ -244,6 +243,17 @@ const Catalogos = () => {
                           href="/Configuracion/Catalogos/TipodeClasificacion"
                         >
                           TIPO DE CLASIFICACIÓN
+                        </Button>
+                      </Grid>
+                      
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/ReportesC"
+                        >
+                          Reportes
                         </Button>
                       </Grid>
 
@@ -329,11 +339,11 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(13, "Tipos de Comprobantes");
+                            changeScreen(14, "Activo");
                             setShowCatGrid(true);
                           }}
                         >
-                          TIPOS DE COMPROBANTES
+                          ACTIVO
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
@@ -348,17 +358,64 @@ const Catalogos = () => {
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
-                          sx={ButtonSX}
-                          variant="text"
-                          fullWidth
-                          onClick={() => {
-                            changeScreen(15, "Tipos de Adquisición");
-                            setShowCatGrid(true);
-                          }}
-                        >
-                          TIPOS DE ADQUISICIÓN
+                           sx={ButtonSX}
+                           variant="text"
+                           fullWidth
+                           href="/Configuracion/Catalogos/TipoBien"
+                         >
+                          TIPO DE BIEN
+                        </Button>
+                      </Grid>    
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                           sx={ButtonSX}
+                           variant="text"
+                           fullWidth
+                           href="/Configuracion/Catalogos/TipoComprobante"
+                         >
+                          TIPO DE COMPROBANTE
+                        </Button>
+                      </Grid>     
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                           sx={ButtonSX}
+                           variant="text"
+                           fullWidth
+                           href="/Configuracion/Catalogos/TipoProceso"
+                         >
+                          TIPO DE PROCESO
+                        </Button>
+                      </Grid>          
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                           sx={ButtonSX}
+                           variant="text"
+                           fullWidth
+                           href="/Configuracion/Catalogos/TipoProveedor"
+                         >
+                          TIPO DE PROVEEDOR
                         </Button>
                       </Grid>
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                           sx={ButtonSX}
+                           variant="text"
+                           fullWidth
+                           href="/Configuracion/Catalogos/TipoReporte"
+                         >
+                          TIPO DE REPORTES
+                        </Button>
+                      </Grid>         
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                           sx={ButtonSX}
+                           variant="text"
+                           fullWidth
+                           href="/Configuracion/Catalogos/TipoTransaccion"
+                         >
+                          TIPO DE TRANSACCIÓN
+                        </Button>
+                      </Grid>                                                                                      
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
