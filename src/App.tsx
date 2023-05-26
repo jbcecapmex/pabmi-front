@@ -93,7 +93,8 @@ import {getUserDetails} from './services/Validation';
 import moment from 'moment';
 
 import AdquisicionesAltas from './componentes/Adquisiciones/Altas';
-
+import Notificaciones from './componentes/Configuracion/Catalogos/Notificaciones';
+import Procesos from './componentes/Configuracion/Catalogos/Procesos';
 
 
 
@@ -196,6 +197,8 @@ function App() {
           <Route path="/Configuracion/Catalogos/Municipios" element={<Municipios/>} />
           <Route path="/Configuracion/Catalogos/Puestos" element={<Puestos/>} />
           <Route path="/Configuracion/Catalogos/TipodeClasificacion" element={<TipoClasificacion/>} />
+          <Route path="/Configuracion/Catalogos/Notificaciones" element={<Notificaciones/>} />
+          <Route path="/Configuracion/Catalogos/Procesos" element={<Procesos/>} />
           <Route path="/Configuracion/Catalogos/TiposAdquisicion" element={<TiposAdquisicion/>} />
           <Route path="/Configuracion/Catalogos/TipoBien" element={<TipoBien/>} />
           <Route path="/Configuracion/Catalogos/TipoComprobante" element={<TipoComprobante/>} />
@@ -213,7 +216,6 @@ function App() {
           <Route path="/Configuracion/Catalogos/NivelReportes" element={<NivelReportes/>} />
           <Route path="/Configuracion/Catalogos/Transacciones" element={<Transacciones/>} />
           <Route path="/Configuracion/Catalogos/Titular" element={<Titular/>} />
-
           <Route path="/Configuracion/Usuarios/Usuario" element={<UsuariosC/>} />
           <Route path="/Configuracion/Usuarios/TipodeUsuarios" element={<TipoUsuariosC/>}/>
           <Route path="/Configuracion/Usuarios/Perfiles" element={<PerfilesC/>}/>

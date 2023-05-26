@@ -245,18 +245,32 @@ const Catalogos = () => {
                           TIPO DE CLASIFICACIÓN
                         </Button>
                       </Grid>
-                      
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
+                          href="/Configuracion/Catalogos/Notificaciones"
+                        >
+                          NOTIFICACIONES
+                        </Button>
+                      </Grid>
+
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/Procesos"
+                        >
+                          PROCESOS
+                        </Button>
+                      </Grid>
                           href="/Configuracion/Catalogos/ReportesC"
                         >
                           Reportes
                         </Button>
                       </Grid>
-
                       <Grid item xs={12} md={6} lg={4}>
                       <Button
                           sx={ButtonSX}
