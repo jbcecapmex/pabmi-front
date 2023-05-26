@@ -22,11 +22,11 @@ const Toast = Swal.mixin({
   },
 });
 
-export interface EntFederativasInterface {
+export interface MarcasInterface {
   uuid: string;
   Cve: string;
   Nombre: string;
- 
+  Descripcion: string;
 }
 
 const style = {
@@ -40,13 +40,13 @@ const style = {
   p: 2,
 };
 
-export default function EntFederativas() {
+export default function Marcas() {
 // definicio de variables de estado
 const navigate                      = useNavigate();
 const [uuid, setuuid]               = useState("");
 const [cve, setCve]                 = useState("");
 const [nombre, setNombre]          = useState("");
- 
+const [descripcion, setDescripcion] = useState("");
 
 // Abrir modal
 const [open, setOpen]               = React.useState(false);
@@ -56,7 +56,7 @@ const handleClose = ()  => setOpen(false);
 
   // Handle save
   const handleSave = () => {
-    if (cve === "" || nombre === ""  ){
+    if (cve === "" || nombre === "" || descripcion === ""){
       Swal.fire({
         icon  : "error",
         title : "Mensaje",
@@ -67,11 +67,12 @@ const handleClose = ()  => setOpen(false);
       const data = {
         cve                   : cve,
         nombre                : nombre,
+        descripcion           : descripcion,
         creadopor             : localStorage.getItem("IdUsuario"),
       };
       axios({
         method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardaentfederativas",
+        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardamarcas",
         headers : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -84,7 +85,7 @@ const handleClose = ()  => setOpen(false);
             icon  : "success",
             title : " Creado Exitosamente",
           });
-          getAllEntFederativas();
+          getAllMarcas();
         })
         .catch(function (error) {
           Swal.fire({
@@ -98,7 +99,7 @@ const handleClose = ()  => setOpen(false);
   const handleDelete = (event: any, cellValues: any) => {
     Swal.fire({
       title               : "Estas Seguro(a)?",
-      text                : `Estas a punto de eliminar un registro`,
+      text                : `Estas a punto de eliminar un registro (${cellValues.row.Descripcion})`,
       icon                : "question",
       showCancelButton    : true,
       confirmButtonText   : "Eliminar",
@@ -110,7 +111,7 @@ const handleClose = ()  => setOpen(false);
         const data = { uuid: cellValues.row.uuid };
         axios({
           method    : "post",
-          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminaentfederativas",
+          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminamarcas",
           headers   : {
                         "Content-Type": "application/json",
                         Authorization: localStorage.getItem("jwtToken") || "",
@@ -122,7 +123,7 @@ const handleClose = ()  => setOpen(false);
               icon  : "success",
               title : " Eliminado Exitosamente",
             });
-            getAllEntFederativas();
+            getAllMarcas();
           })
           .catch(function (error) {
             Swal.fire({
@@ -136,7 +137,7 @@ const handleClose = ()  => setOpen(false);
 
 // Handle update
   const handleUpdate = () => {
-    if (cve === "" || nombre === "" ){
+    if (cve === "" || nombre === "" || descripcion === ""){
       Swal.fire({
         icon  : "error",
         title : "Mensaje",
@@ -147,12 +148,13 @@ const handleClose = ()  => setOpen(false);
       const data = {
         uuid                  : uuid,
         cve                   : cve,
-        nombre                : nombre, 
+        nombre                : nombre,
+        descripcion           : descripcion,
         modificadopor         : localStorage.getItem("IdUsuario"),
       };
       axios({
         method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizaentfederativas",
+        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizamarcas",
         headers : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -163,9 +165,9 @@ const handleClose = ()  => setOpen(false);
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : "  Actualizado Exitosamente",
+            title : " Actualizado Exitosamente",
           });
-          getAllEntFederativas();
+          getAllMarcas();
         })
         .catch(function (error) {
           Swal.fire({
@@ -193,7 +195,8 @@ const handleClose = ()  => setOpen(false);
               onClick={(event) => {     
                 setuuid(cellValues.row.uuid);
                 setCve(cellValues.row.Cve);
-                setNombre(cellValues.row.Nombre); 
+                setNombre(cellValues.row.Nombre);
+                setDescripcion(cellValues.row.Descripcion);
                 handleOpen();
               }}
            >
@@ -226,16 +229,24 @@ const handleClose = ()  => setOpen(false);
       width: 150,
       hideable: false,
       headerAlign: "left",
-    }, 
+    },
+    // cuarta columna donde se mostrara si esta activo o no
+    {
+      field: "Descripcion",
+      headerName: "Descripcion",
+      width: 650,
+      hideable: false,
+      headerAlign: "left",
+    },
   ];
  
   // declaracion de la variable de estado "hook" que recibira la informacion del endpoint
   const [rows, setRows] = useState([]);
   // aqui es el consumo del endpoint para obtener el listado de la base de datos
-  const getAllEntFederativas = () => {
+  const getAllMarcas= () => {
     axios({
       method    : "get",
-      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtieneentfederativas",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienemarcas",
       headers   : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -251,13 +262,13 @@ const handleClose = ()  => setOpen(false);
           icon  : "error",
           title : "Mensaje",
           text  : "("+error.response.status+") "+error.response.data.message,
-        }).then((r) => navigate("/Configuracion/Catalogos/EntidadesFederativas"));
+        }).then((r) => navigate("/Configuracion/Catalogos/Marcas"));
       });
   };
 
   // esto es solo para que se ejecute la rutina de obtiene cuando cargue la pagina
   useEffect(() => {
-    getAllEntFederativas();
+    getAllMarcas();
   }, []);
 
   // esto es para que se ejecuten todo los get de los listados solo cuando se abra la modal,
@@ -266,7 +277,8 @@ const handleClose = ()  => setOpen(false);
     if (open===false) {
       setuuid("");
       setCve("");
-      setNombre(""); 
+      setNombre("");
+      setDescripcion("");
     }
   }, [open]);  
  
@@ -300,9 +312,9 @@ const handleClose = ()  => setOpen(false);
             Configuración
           </Link>
           <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
-          Catálogos
+            Usuarios
           </Link>
-          <Typography color="text.primary"> Catálogo de Entidades Federativas </Typography>
+          <Typography color="text.primary">Catálogo de Marcas</Typography>
         </Breadcrumbs>
       </Grid>
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
@@ -336,116 +348,147 @@ const handleClose = ()  => setOpen(false);
                       sx={{
                         color     : "#FFFFFF","&:hover": { color: "#15212f" },
                         fontFamily: "MontserratRegular, sans-serif",
-                        fontSize: "100%",}}>
-                        Cancelar
-                      </Typography>
-                    </Button>
-                  </Grid>
-      </Box>
-
-      <MUIXDataGrid id={Math.random} columns={columns} rows={rows} 
-      /> 
-      
-        <Modal
-          open={open}
-          onClose={handleClose}
-         aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-
-
-          <Box sx={style} display="flow">
-          <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <Box> 
-                <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Entidades Federativas</Typography>  
+                        fontSize  : "100%",
+                      }}
+                    >
+                      Agregar
+                    </Typography>
+                  </Button>
+                  <Button 
+                    onClick={() => navigate(-1)}
+                    color="secondary"
+                    sx={{margin:"1%"}}
+                    variant="contained">
+                    <Typography
+                    sx={{color: "#ffffff",
+                    "&:hover":{
+                      color:"#15212f",
+                      },
+                    fontFamily: "MontserratRegular, sans-serif",
+                    fontSize: "100%",}}>
+                    Cancelar
+                    </Typography>
+                    </Button>                  
+                </Grid>
               </Box>
-		        </Grid>
+              {/* aqui se asigna un id unico que tiene que tener cada renglon, asi que asignamos un numero al azar*/}
+              <MUIXDataGrid id={Math.random} columns={columns} rows={rows} />
+              {/* AGREGAR---------------------------------------------------------------------------------------------------------------------------------------------- */}
+              {/* Inician los campos del formulario*/}
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style} display="flow">
+                  <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                      <Box>
+                        <Typography variant="h5" sx={{ padding: "1%" }}>
+                          Detalle de Marcas
+                        </Typography>
+                      </Box>
+                    </Grid>
 
-            <Grid item xs={12}>
-            <Box    
-              component="form"
-              sx={{
-              '& > :not(style)': { m: 1.3, width: '25%' },   }}
-              noValidate
-              autoComplete="off"
-		          display="flex">
-
-                <TextField
-                id="cve" 
-                label="Cve"
-                size="small"
-                variant="outlined" />
-            </Box>
-            </Grid>
-
-            <Grid item xs={6}>
-            <Box    
-              component="form"
-              sx={{
-              '& > :not(style)': { m: 1.3, width: '80%' },   }}
-              noValidate
-              autoComplete="off"
-		          display="flex">
-                <TextField
-                id="nombreEntidad" 
-                label="Nombre de la Entidad"
-                size="small"
-                variant="outlined" />
+                    <Grid item xs={6}>
+                      <Box
+                        component="form"
+                        sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
+                        noValidate
+                        autoComplete="off"
+                        display="flex"
+                      >
+                        <TextField
+                          label     ="Cve"
+                          size      ="small"
+                          variant   ="outlined"
+                          value     ={cve}
+                          disabled  = {uuid!=="" ? true:false}
+                          onChange  ={(v) => {setCve(v.target.value); }}
+                          inputProps={{ maxLength: 10 }}
+                        />
+                      </Box>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Box>
+                        {/* espacio en blanco */}
+                      </Box>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Box
+                        component="form"
+                        sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
+                        noValidate
+                        autoComplete="off"
+                        display="flex"
+                      >
+                        <TextField
+                          label     ="Nombre"
+                          size      ="small"
+                          variant   ="outlined"
+                          value     ={nombre}
+                          onChange  ={(v) => {setNombre(v.target.value); }}
+                        />
+                      </Box>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Box
+                        component="form"
+                        sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
+                        noValidate
+                        autoComplete="off"
+                        display="flex"
+                      >
+                        <TextField
+                          label     ="Descripcion"
+                          size      ="small"
+                          variant   ="outlined"
+                          value     ={descripcion}
+                          onChange  ={(v) => {setDescripcion(v.target.value); }}
+                        />
+                      </Box>
+                    </Grid>                    
+                    <Grid item xs={12}>
+                      <Box
+                        maxWidth      ="100%"
+                        paddingTop    ={2}
+                        paddingBottom ={2}
+                        display       ="flex"
+                        justifyContent="end"
+                      >
+                        <Button
+                          onClick={() => {
+                            if (uuid === "") {
+                              handleSave()  
+                            }else{
+                              handleUpdate()  
+                            }
+                            } 
+                          }
+                          variant ="contained"
+                          sx      ={{margin: "1%", color: "white","&:hover": {color: "#15212f",},}}
+                        >
+                          Guardar
+                        </Button>
+                        <Button
+                          onClick ={handleClose}
+                          variant ="contained"
+                          color   ="secondary"
+                          sx      ={{margin: "1%",color: "white","&:hover": {color: "#15212f",},}}
+                        >
+                          Cancelar
+                        </Button>
+                      </Box>
+                    </Grid>
+                  </Grid>
                 </Box>
-            </Grid>
-
-            <Grid item xs={6}>
-            <Box    
-              component="form"
-              sx={{
-              '& > :not(style)': { m: 1.3, width: '80%' },   }}
-              noValidate
-              autoComplete="off"
-		          display="flex">
-                <TextField
-                id="descripcion" 
-                label="Descripción"
-                size="small"
-                variant="outlined" />
-                </Box>
-            </Grid>
-
-            <Grid item xs={12}>
-            <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
-              <Button variant="contained" 
-              sx={{margin:"1%",
-              color:"white",
-              "&:hover":{
-                color:"#15212f",
-                },
-               }} 
-               > Guardar </Button>
-                  <Button  
-                  onClick={handleClose}
-                  variant="contained" 
-                  color="secondary"
-                  sx={{margin:"1%",
-                  color:"white",
-                  "&:hover":{
-                  color:"#15212f",
-                  },
-                  }}>  Cancelar </Button>
-            </Box>
-            </Grid>
-
-            </Grid>
-
-          </Box>
-        </Modal>
-      
-      {/* Termina la sección de los campos del formulario para registrar la nueva Secretaría */}
-
-
-
-      </CardContent>
-      </Card>
-      </Grid>
+              </Modal>
+              {/* Termina la sección de los campos del formulario*/}
+              {/* AGREGAR----------------------------------------------------------------------------------------------------------*/}
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
     </Grid>
   );
