@@ -21,7 +21,7 @@ import CatGrid from "./CatGrid";
 const MenuSX = {
   // cuando seleccionas una opcion
   "&& .Mui-selected, && .Mui-selected:hover": {
-    bgcolor: "#bda889",  
+    bgcolor: "#bda889",
     "&, & .MuiButton-root": { color: "#212121" },
   },
   // cuando pasas el mouse sobre
@@ -87,7 +87,7 @@ const Catalogos = () => {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ width: "100%", height: "100%", paddingBottom:"2%", paddingLeft:"2%"}}>
+    <Box sx={{ width: "100%", height: "100%", paddingBottom: "2%", paddingLeft: "2%" }}>
       {showCatGrid ? (
         // manda llamar la pantalla donde esta el grid de los catalogos
         <CatGrid
@@ -172,9 +172,9 @@ const Catalogos = () => {
                           DOMICILIOS
                         </Button>
                       </Grid> */}
-                  
+
                       <Grid item xs={12} md={6} lg={4}>
-                      <Button
+                        <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
@@ -184,7 +184,7 @@ const Catalogos = () => {
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
-                      <Button
+                        <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
@@ -194,7 +194,7 @@ const Catalogos = () => {
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
-                      <Button
+                        <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
@@ -204,7 +204,7 @@ const Catalogos = () => {
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
-                      <Button
+                        <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
@@ -215,7 +215,7 @@ const Catalogos = () => {
                       </Grid>
 
                       <Grid item xs={12} md={6} lg={4}>
-                      <Button
+                        <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
@@ -226,7 +226,7 @@ const Catalogos = () => {
                       </Grid>
 
                       <Grid item xs={12} md={6} lg={4}>
-                      <Button
+                        <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
@@ -266,13 +266,18 @@ const Catalogos = () => {
                           PROCESOS
                         </Button>
                       </Grid>
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
                           href="/Configuracion/Catalogos/ReportesC"
                         >
                           Reportes
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
-                      <Button
+                        <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
@@ -283,27 +288,27 @@ const Catalogos = () => {
                       </Grid>
 
                       <Grid item xs={12} md={6} lg={4}>
-                      <Button
+                        <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
                           href="/Configuracion/Catalogos/Transacciones"
                         >
-                         TRANSACCIONES
+                          TRANSACCIONES
                         </Button>
                       </Grid>
-                      
+
                       <Grid item xs={12} md={6} lg={4}>
-                      <Button
+                        <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
                           href="/Configuracion/Catalogos/Titular"
                         >
-                         TITULAR
+                          TITULAR
                         </Button>
                       </Grid>
- 
+
 
                     </Grid>
                   </TabPanel>
@@ -372,64 +377,64 @@ const Catalogos = () => {
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
-                           sx={ButtonSX}
-                           variant="text"
-                           fullWidth
-                           href="/Configuracion/Catalogos/TipoBien"
-                         >
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/TipoBien"
+                        >
                           TIPO DE BIEN
                         </Button>
-                      </Grid>    
+                      </Grid>
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
-                           sx={ButtonSX}
-                           variant="text"
-                           fullWidth
-                           href="/Configuracion/Catalogos/TipoComprobante"
-                         >
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/TipoComprobante"
+                        >
                           TIPO DE COMPROBANTE
                         </Button>
-                      </Grid>     
+                      </Grid>
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
-                           sx={ButtonSX}
-                           variant="text"
-                           fullWidth
-                           href="/Configuracion/Catalogos/TipoProceso"
-                         >
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/TipoProceso"
+                        >
                           TIPO DE PROCESO
                         </Button>
-                      </Grid>          
+                      </Grid>
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
-                           sx={ButtonSX}
-                           variant="text"
-                           fullWidth
-                           href="/Configuracion/Catalogos/TipoProveedor"
-                         >
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/TipoProveedor"
+                        >
                           TIPO DE PROVEEDOR
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
-                           sx={ButtonSX}
-                           variant="text"
-                           fullWidth
-                           href="/Configuracion/Catalogos/TipoReporte"
-                         >
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/TipoReporte"
+                        >
                           TIPO DE REPORTES
                         </Button>
-                      </Grid>         
+                      </Grid>
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
-                           sx={ButtonSX}
-                           variant="text"
-                           fullWidth
-                           href="/Configuracion/Catalogos/TipoTransaccion"
-                         >
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/TipoTransaccion"
+                        >
                           TIPO DE TRANSACCIÓN
                         </Button>
-                      </Grid>                                                                                      
+                      </Grid>
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
@@ -476,7 +481,7 @@ const Catalogos = () => {
                   {/* panel de inmuebles */}
                   <TabPanel value={panelValue} index={2}>
                     <Grid sx={MenuSX} container spacing={2}>
-                
+
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
@@ -732,9 +737,9 @@ const Catalogos = () => {
               </Card>
             </Grid>
           </Grid>
-        </Grid>
+        </Grid >
       )}
-    </Box>
+    </Box >
   );
 };
 
