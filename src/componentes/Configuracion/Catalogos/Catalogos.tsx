@@ -21,7 +21,7 @@ import CatGrid from "./CatGrid";
 const MenuSX = {
   // cuando seleccionas una opcion
   "&& .Mui-selected, && .Mui-selected:hover": {
-    bgcolor: "#bda889",  
+    bgcolor: "#bda889",
     "&, & .MuiButton-root": { color: "#212121" },
   },
   // cuando pasas el mouse sobre
@@ -87,7 +87,7 @@ const Catalogos = () => {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ width: "100%", height: "100%", paddingBottom:"2%", paddingLeft:"2%"}}>
+    <Box sx={{ width: "100%", height: "100%", paddingBottom: "2%", paddingLeft: "2%" }}>
       {showCatGrid ? (
         // manda llamar la pantalla donde esta el grid de los catalogos
         <CatGrid
@@ -172,9 +172,9 @@ const Catalogos = () => {
                           DOMICILIOS
                         </Button>
                       </Grid> */}
-                  
+
                       <Grid item xs={12} md={6} lg={4}>
-                      <Button
+                        <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
@@ -184,7 +184,7 @@ const Catalogos = () => {
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
-                      <Button
+                        <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
@@ -194,7 +194,7 @@ const Catalogos = () => {
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
-                      <Button
+                        <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
@@ -204,7 +204,7 @@ const Catalogos = () => {
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
-                      <Button
+                        <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
@@ -215,7 +215,7 @@ const Catalogos = () => {
                       </Grid>
 
                       <Grid item xs={12} md={6} lg={4}>
-                      <Button
+                        <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
@@ -226,7 +226,7 @@ const Catalogos = () => {
                       </Grid>
 
                       <Grid item xs={12} md={6} lg={4}>
-                      <Button
+                        <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
@@ -235,7 +235,6 @@ const Catalogos = () => {
                           PUESTOS
                         </Button>
                       </Grid>
-
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
@@ -246,8 +245,6 @@ const Catalogos = () => {
                           TIPO DE CLASIFICACIÓN
                         </Button>
                       </Grid>
-
-
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
@@ -269,7 +266,17 @@ const Catalogos = () => {
                           PROCESOS
                         </Button>
                       </Grid>
-
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/ReportesC"
+                        >
+                          Reportes
+                        </Button>
+                      </Grid>
+                      
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
@@ -282,7 +289,36 @@ const Catalogos = () => {
                       </Grid>
 
                       <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/NivelReportes"
+                        >
+                          NIVEL DE REPORTES
+                        </Button>
+                      </Grid>
 
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/Transacciones"
+                        >
+                          TRANSACCIONES
+                        </Button>
+                      </Grid>
+
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/Titular"
+                        >
+                          TITULAR
+                        </Button>
                       </Grid>
 
 
@@ -297,10 +333,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(10, "Presentación Muebles");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/PresentacionMuebles"
                         >
                           PRESENTACIÓN MUEBLES
                         </Button>
@@ -337,19 +370,6 @@ const Catalogos = () => {
                           variant="text"
                           fullWidth
                           onClick={() => {
-                            changeScreen(13, "Tipos de Comprobantes");
-                            setShowCatGrid(true);
-                          }}
-                        >
-                          TIPOS DE COMPROBANTES
-                        </Button>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={4}>
-                        <Button
-                          sx={ButtonSX}
-                          variant="text"
-                          fullWidth
-                          onClick={() => {
                             changeScreen(14, "Activo");
                             setShowCatGrid(true);
                           }}
@@ -362,12 +382,9 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(15, "Tipos de Adquisición");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/Activo"
                         >
-                          TIPOS DE ADQUISICIÓN
+                          ACTIVO
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
@@ -375,10 +392,67 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(16, "Motivos de Baja");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/TipoBien"
+                        >
+                          TIPO DE BIEN
+                        </Button>
+                      </Grid>
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/TipoComprobante"
+                        >
+                          TIPO DE COMPROBANTE
+                        </Button>
+                      </Grid>
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/TipoProceso"
+                        >
+                          TIPO DE PROCESO
+                        </Button>
+                      </Grid>
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/TipoProveedor"
+                        >
+                          TIPO DE PROVEEDOR
+                        </Button>
+                      </Grid>
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/TipoReporte"
+                        >
+                          TIPO DE REPORTES
+                        </Button>
+                      </Grid>
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/TipoTransaccion"
+                        >
+                          TIPO DE TRANSACCIÓN
+                        </Button>
+                      </Grid>
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/MotivosBaja"
                         >
                           MOTIVOS DE BAJA
                         </Button>
@@ -388,10 +462,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(17, "Marca");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/Marcas"
                         >
                           MARCAS
                         </Button>
@@ -401,12 +472,19 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(18, "Modelos");
-                            setShowCatGrid(true);
-                          }}
+                          href="/Configuracion/Catalogos/Modelos"
                         >
                           MODELOS
+                        </Button>
+                      </Grid>
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          href="/Configuracion/Catalogos/EstatusResguardos"
+                        >
+                          ESTATUS DE RESGUARDOS
                         </Button>
                       </Grid>
                     </Grid>
@@ -415,7 +493,7 @@ const Catalogos = () => {
                   {/* panel de inmuebles */}
                   <TabPanel value={panelValue} index={2}>
                     <Grid sx={MenuSX} container spacing={2}>
-                
+
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
@@ -671,9 +749,9 @@ const Catalogos = () => {
               </Card>
             </Grid>
           </Grid>
-        </Grid>
+        </Grid >
       )}
-    </Box>
+    </Box >
   );
 };
 
