@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Typography, Box, Divider } from "@mui/material";
+import { Typography, Box, Divider, Link } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { Block, Padding } from "@mui/icons-material";
 import { Icons } from "../../../layout/Icons";
@@ -221,18 +221,18 @@ const rows = [
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.
       </Typography>
     </Grid>
-    <Grid item xs={4}>
-   
-    </Grid>
+
     <Grid item xs={4}>
    
    </Grid>
-    <Grid item xs={4}>
-      <Box sx={{display:'flex',justifyContent: 'right',width:'100%',height:'auto', alignItems:'center'}}>
+    <Grid item xs={12}>
+      <Link underline="hover" href="/Muebles/Almacen/Altas/DatosAltas">
+      <Box sx={{display:'flex',justifyContent: 'right',width:'100%',height:'auto', alignItems:'left'}}>
       {Icons("AddBox")}     
       <Typography
         variant="body1"
         component="div"
+        
         sx={{
           fontWeight: "bold",
           display: "inline",
@@ -241,12 +241,12 @@ const rows = [
           marginTop:"5px",
           paddingLeft:"10px",
           paddingRight:"10px"
-
         }}
         >
           NUEVO
       </Typography>
       </Box>
+      </Link>
     </Grid>
     
 

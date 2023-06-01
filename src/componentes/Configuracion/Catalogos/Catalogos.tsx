@@ -106,7 +106,7 @@ const Catalogos = () => {
               <Link underline="hover" color="inherit" href="/Configuracion">
                 Configuración
               </Link>
-              <Typography color="text.primary">Catálogos</Typography>
+              <Typography color="text.primary"> Catálogos </Typography>
             </Breadcrumbs>
           </Grid>
 

@@ -9,6 +9,7 @@ import './App.css';
 
 import Inicio from './componentes/Inicio/FondoInicial';
 import MueblesAlmacen from './componentes/Muebles/Almacen/Altas';
+import DatosAltas from './componentes/Muebles/Almacen/DatosAltas';
 import MueblesAdjudicaciones from './componentes/Muebles/Almacen/Adjudicaciones';
 import MueblesArrendamientos from './componentes/Muebles/Almacen/Arrendamientos';
 import MueblesBajas from './componentes/Muebles/Almacen/Bajas';
@@ -143,6 +144,9 @@ function App() {
           <Route index path="/" element={<Inicio />} />
 
           <Route path="/Muebles/Almacen/Altas" element={<MueblesAlmacen />} />
+
+          <Route path="/Muebles/Almacen/Altas/DatosAltas" element={<DatosAltas/>} />
+
           <Route path="/Muebles/Almacen/Adjudicaciones" element={<MueblesAdjudicaciones />} />
           <Route path="/Muebles/Almacen/Arrendamientos" element={<MueblesArrendamientos />} />
           <Route path="/Muebles/Almacen/Bajas" element={<MueblesBajas />} />
