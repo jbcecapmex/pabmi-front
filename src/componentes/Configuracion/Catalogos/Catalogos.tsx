@@ -157,7 +157,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/Empleados"
+                          onClick={()=> navigate("/Configuracion/Catalogos/Empleados")}
                         >
                           EMPLEADOS
                         </Button>
@@ -178,7 +178,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/Secretarias"
+                          onClick={()=> navigate("/Configuracion/Catalogos/Secretarias")}
                         >
                           SECRETARÍAS
                         </Button>
@@ -188,7 +188,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/Dependencias"
+                          onClick={()=> navigate("/Configuracion/Catalogos/Dependencias")}
                         >
                           DEPENDENCIAS
                         </Button>
@@ -198,7 +198,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/TipoDependencias"
+                          onClick={()=> navigate("/Configuracion/Catalogos/TipoDependencias")}
                         >
                           TIPO DE DEPENDENCIAS
                         </Button>
@@ -208,7 +208,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/EntidadesFederativas"
+                          onClick={()=> navigate("/Configuracion/Catalogos/EntidadesFederativas")}
                         >
                           ENTIDADES FEDERATIVAS
                         </Button>
@@ -219,7 +219,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/Municipios"
+                          onClick={()=> navigate("/Configuracion/Catalogos/Municipios")}
                         >
                           MUNICIPIOS
                         </Button>
@@ -230,7 +230,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/Puestos"
+                          onClick={()=> navigate("/Configuracion/Catalogos/Puestos")}
                         >
                           PUESTOS
                         </Button>
@@ -240,7 +240,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/TipodeClasificacion"
+                          onClick={()=> navigate("/Configuracion/Catalogos/TipodeClasificacion")}
                         >
                           TIPO DE CLASIFICACIÓN
                         </Button>
@@ -250,7 +250,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/Notificaciones"
+                          onClick={()=> navigate("/Configuracion/Catalogos/Notificaciones")}
                         >
                           NOTIFICACIONES
                         </Button>
@@ -261,7 +261,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/Procesos"
+                          onClick={()=> navigate("/Configuracion/Catalogos/Procesos")}
                         >
                           PROCESOS
                         </Button>
@@ -271,7 +271,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/ReportesC"
+                          onClick={()=> navigate("/Configuracion/Catalogos/ReportesC")}
                         >
                           Reportes
                         </Button>
@@ -293,7 +293,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/NivelReportes"
+                          onClick={()=> navigate("/Configuracion/Catalogos/NivelReportes")}
                         >
                           NIVEL DE REPORTES
                         </Button>
@@ -304,7 +304,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/Transacciones"
+                          onClick={()=> navigate("/Configuracion/Catalogos/Transacciones")}
                         >
                           TRANSACCIONES
                         </Button>
@@ -315,11 +315,22 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/Titular"
+                          onClick={()=> navigate("/Configuracion/Catalogos/Titular")}
                         >
                           TITULAR
                         </Button>
                       </Grid>
+
+                      <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          onClick={()=> navigate("/Configuracion/Catalogos/Area")}
+                        >
+                          AREA
+                        </Button>
+                      </Grid>                      
 
 
                     </Grid>
@@ -333,22 +344,20 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/PresentacionMuebles"
+                          onClick={()=> navigate("/Configuracion/Catalogos/PresentacionMuebles")}
                         >
                           PRESENTACIÓN MUEBLES
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
-                        <Button
+                      <Button
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(11, "Tipos de Activo");
-                            setShowCatGrid(true);
-                          }}
+                          // ref="/Configuracion/Catalogos/TipoActivoFijo"                          
+                          onClick={()=> navigate("/Configuracion/Catalogos/TipoActivoFijo")}
                         >
-                          TIPOS DE ACTIVO
+                          TIPOS DE ACTIVO FIJO
                         </Button>
                       </Grid>
                       <Grid item xs={12} md={6} lg={4}>
@@ -356,14 +365,11 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(12, "Lineas");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("/Configuracion/Catalogos/Linea")}
                         >
                           LINEAS
                         </Button>
-                      </Grid>
+                      </Grid>  
                       <Grid item xs={12} md={6} lg={4}>
                         <Button
                           sx={ButtonSX}
@@ -382,7 +388,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/Activo"
+                          onClick={()=> navigate("/Configuracion/Catalogos/Activo")}
                         >
                           ACTIVO
                         </Button>
@@ -392,7 +398,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/TipoBien"
+                          onClick={()=> navigate("/Configuracion/Catalogos/TipoBien")}
                         >
                           TIPO DE BIEN
                         </Button>
@@ -402,7 +408,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/TipoComprobante"
+                          onClick={()=> navigate("/Configuracion/Catalogos/TipoComprobante")}
                         >
                           TIPO DE COMPROBANTE
                         </Button>
@@ -412,7 +418,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/TipoProceso"
+                          onClick={()=> navigate("/Configuracion/Catalogos/TipoProceso")}
                         >
                           TIPO DE PROCESO
                         </Button>
@@ -422,7 +428,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/TipoProveedor"
+                          onClick={()=> navigate("/Configuracion/Catalogos/TipoProveedor")}
                         >
                           TIPO DE PROVEEDOR
                         </Button>
@@ -432,7 +438,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/TipoReporte"
+                          onClick={()=> navigate("/Configuracion/Catalogos/TipoReporte")}
                         >
                           TIPO DE REPORTES
                         </Button>
@@ -442,7 +448,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/TipoTransaccion"
+                          onClick={()=> navigate("/Configuracion/Catalogos/TipoTransaccion")}
                         >
                           TIPO DE TRANSACCIÓN
                         </Button>
@@ -452,7 +458,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/MotivosBaja"
+                          onClick={()=> navigate("/Configuracion/Catalogos/MotivosBaja")}
                         >
                           MOTIVOS DE BAJA
                         </Button>
@@ -462,7 +468,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/Marcas"
+                          onClick={()=> navigate("/Configuracion/Catalogos/Marcas")}
                         >
                           MARCAS
                         </Button>
@@ -472,7 +478,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/Modelos"
+                          onClick={()=> navigate("/Configuracion/Catalogos/Modelos")}
                         >
                           MODELOS
                         </Button>
@@ -482,7 +488,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          href="/Configuracion/Catalogos/EstatusResguardos"
+                          onClick={()=> navigate("/Configuracion/Catalogos/EstatusResguardos")}
                         >
                           ESTATUS DE RESGUARDOS
                         </Button>
@@ -499,10 +505,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(19, "Tipos de Vialidad");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("")}
                         >
                           TIPOS DE VIALIDAD
                         </Button>
@@ -512,10 +515,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(20, "Tipos de Asentamiento");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("")}
                         >
                           TIPOS DE ASENTAMIENTO
                         </Button>
@@ -525,10 +525,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(21, "Entidad Federativa");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("")}
                         >
                           ENTIDAD FEDERATIVA
                         </Button>
@@ -538,10 +535,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(22, "Naturaleza del Inmueble");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("")}
                         >
                           NATURALEZA DEL INMUEBLE
                         </Button>
@@ -552,10 +546,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(23, "Carácter del Monumento");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("")}
                         >
                           CARÁCTER DE MONUMENTO
                         </Button>
@@ -565,10 +556,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(24, "Tipos de Inmueble");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("")}
                         >
                           TIPO DE INMUEBLE
                         </Button>
@@ -578,10 +566,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(25, "Proveedor de Avalúo");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("")}
                         >
                           POROVEEDOR DE AVALÚO
                         </Button>
@@ -591,10 +576,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(26, "Operación que da Origen");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("")}
                         >
                           OPERACIÓN QUE DA ORIGEN
                         </Button>
@@ -604,10 +586,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(27, "Título");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("")}
                         >
                           TÍTULO
                         </Button>
@@ -617,10 +596,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(28, "Situación del Inmueble");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("")}
                         >
                           SITUACIÓN DEL INMUEBLE
                         </Button>
@@ -630,10 +606,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(29, "Modificación del Título");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("")}
                         >
                           MODIFICACIÓN DEL TÍTULO
                         </Button>
@@ -643,10 +616,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(30, "Tipos de Instrumento");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("")}
                         >
                           TIPOS DE INSTRUMENTOS
                         </Button>
@@ -656,10 +626,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(31, "Tipos de Contraparte");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("")}
                         >
                           TIPOS DE CONTRAPARTE
                         </Button>
@@ -669,10 +636,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(32, "Estatus de Instrumentos");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("")}
                         >
                           ESTATUS DE INSTRUMENTOS
                         </Button>
@@ -682,10 +646,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(33, "Solicitado Por");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("")}
                         >
                           SOLICITADO POR
                         </Button>
@@ -695,10 +656,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(34, "Motivos de Alta");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("")}
                         >
                           MOTIVOS DE ALTA
                         </Button>
@@ -708,10 +666,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(35, "Motivos de Baja");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("")}
                         >
                           MOTIVOS DE BAJA
                         </Button>
@@ -721,10 +676,7 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(36, "Motivos de Modificación");
-                            setShowCatGrid(true);
-                          }}
+                          onClick={()=> navigate("")}
                         >
                           MOTIVOS DE MODIFICACIÓN
                         </Button>
