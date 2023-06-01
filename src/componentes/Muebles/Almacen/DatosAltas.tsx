@@ -1,23 +1,9 @@
 import * as React from "react";
-import { Typography, Box, Divider } from "@mui/material";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-import { Block, Padding } from "@mui/icons-material";
-import { Icons } from "../../../layout/Icons";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import InputBase from "@mui/material/InputBase";
+import { Typography, Box, Button, } from "@mui/material";        
 import Grid from "@mui/material/Grid";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import dayjs from "dayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import Modal from "@mui/material/Modal";
+import StepLabel from "@mui/material/StepLabel"; 
 import StepUno from "./PasosAltas/StepUno";
 import StepDos from "./PasosAltas/StepDos";
 import StepTres from "./PasosAltas/StepTres";
@@ -122,7 +108,15 @@ export default function DatosAltas() {
 							</Typography>
 							<Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
 								<Box sx={{ flex: "1 1 auto" }} />
-								<Button onClick={handleReset}>Reiniciar</Button>
+								<Button  variant="contained" sx={{ margin: "1%", color: "#FFFFFF" }} onClick={handleReset}>
+									<Typography 
+									sx={{
+										color     : "#FFFFFF","&:hover": { color: "#15212f" },
+										fontFamily: "MontserratRegular, sans-serif",
+										fontSize  : "100%",
+									}}
+									> Reiniciar </Typography>	
+								</Button>
 							</Box>
 						</React.Fragment>
 					) : (
@@ -136,27 +130,52 @@ export default function DatosAltas() {
 							}
 							<Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
 								<Button
-									color="inherit"
+									color="secondary"
+									variant="contained"
 									disabled={activeStep === 0}
 									onClick={handleBack}
-									sx={{ mr: 1 }}
+									sx={{margin:"1%"}}
 								>
-									Atrás
+								<Typography
+								sx={{color: "#ffffff",
+								"&:hover":{
+								  color:"#15212f",
+								  },
+								fontFamily: "MontserratRegular, sans-serif",
+								fontSize: "100%",}}
+								> Atrás </Typography>
 								</Button>
-								<Box sx={{ flex: "1 1 auto" }} />
+								<Box  sx={{ flex: "1 1 auto" }} />
 								{isStepOptional(activeStep) && (
-									<Button
-										color="inherit"
+									<Button 
+										variant="contained" 
 										onClick={handleSkip}
-										sx={{ mr: 1 }}
+										sx={{  margin: "1%",color: "#FFFFFF"  }}
 									>
-										Saltar
+									<Typography
+									sx={{
+										color     : "#FFFFFF","&:hover": { color: "#15212f" },
+										fontFamily: "MontserratRegular, sans-serif",
+										fontSize  : "100%",
+									}}
+									>
+									Saltar
+									</Typography>
+										
 									</Button>
 								)}
-								<Button onClick={handleNext}>
+								<Button variant="contained" sx={{ margin: "1%", color: "#FFFFFF" }} onClick={handleNext}>
+								<Typography
+								sx={{
+									color     : "#FFFFFF","&:hover": { color: "#15212f" },
+									fontFamily: "MontserratRegular, sans-serif",
+									fontSize  : "100%",
+								}}
+								>
 									{activeStep === steps.length - 1
 										? "Terminado"
 										: "Siguiente"}
+								</Typography>
 								</Button>
 							</Box>
 						</React.Fragment>
