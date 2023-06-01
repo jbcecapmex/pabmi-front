@@ -82,6 +82,9 @@ import EstatusResguardos from './componentes/Configuracion/Catalogos/EstatusResg
 import NivelReportes from './componentes/Configuracion/Catalogos/NivelReportes';
 import Transacciones from './componentes/Configuracion/Catalogos/Transacciones';
 import Titular from './componentes/Configuracion/Catalogos/Titular';
+import Area from './componentes/Configuracion/Catalogos/Area';
+import Linea from './componentes/Configuracion/Catalogos/Linea';
+import TipoActivoFijo from './componentes/Configuracion/Catalogos/TipoActivoFijo';
 
 import Secretarias from './componentes/Configuracion/Catalogos/Secretarias';
 import Dependencias from './componentes/Configuracion/Catalogos/Dependencias';
@@ -95,11 +98,6 @@ import moment from 'moment';
 import AdquisicionesAltas from './componentes/Adquisiciones/Altas';
 import Notificaciones from './componentes/Configuracion/Catalogos/Notificaciones';
 import Procesos from './componentes/Configuracion/Catalogos/Procesos';
-
-
-
-
-
 
 function App() {
 
@@ -221,6 +219,10 @@ function App() {
           <Route path="/Configuracion/Usuarios/Perfiles" element={<PerfilesC/>}/>
           <Route path="/Configuracion/Usuarios/Roles" element={<RolesC/>}/>
           <Route path="/Configuracion/Usuarios/Menu" element={<MenuC/>} />
+
+          <Route path="/Configuracion/Catalogos/Area" element={<Area/>} />
+          <Route path="/Configuracion/Catalogos/Linea" element={<Linea/>} />
+          <Route path="/Configuracion/Catalogos/TipoActivoFijo" element={<TipoActivoFijo/>} />
 
           <Route path="Adquisiciones/Altas" element={<AdquisicionesAltas />}/>
           
