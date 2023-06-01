@@ -95,6 +95,7 @@ import moment from 'moment';
 import AdquisicionesAltas from './componentes/Adquisiciones/Altas';
 import Notificaciones from './componentes/Configuracion/Catalogos/Notificaciones';
 import Procesos from './componentes/Configuracion/Catalogos/Procesos';
+import Proveedores from './componentes/Configuracion/Catalogos/Proveedores';
 
 
 
@@ -199,6 +200,7 @@ function App() {
           <Route path="/Configuracion/Catalogos/TipodeClasificacion" element={<TipoClasificacion/>} />
           <Route path="/Configuracion/Catalogos/Notificaciones" element={<Notificaciones/>} />
           <Route path="/Configuracion/Catalogos/Procesos" element={<Procesos/>} />
+          <Route path="/Configuracion/Catalogos/Proveedores" element={<Proveedores/>} />
           <Route path="/Configuracion/Catalogos/TiposAdquisicion" element={<TiposAdquisicion/>} />
           <Route path="/Configuracion/Catalogos/TipoBien" element={<TipoBien/>} />
           <Route path="/Configuracion/Catalogos/TipoComprobante" element={<TipoComprobante/>} />
