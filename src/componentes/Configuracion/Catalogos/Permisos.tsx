@@ -42,12 +42,14 @@ const style = {
 
 export default function Permisos() {
 // definicio de variables de estado
-const navigate                      = useNavigate();
-const [uuid, setuuid]               = useState("");
-const [cve, setCve]                 = useState("");
-const [nombre, setNombre]          = useState("");
-const [descripcion, setDescripcion] = useState("");
-const [creadopor, setCreadoPor]     = useState("");
+const navigate                          = useNavigate();
+const [uuid, setuuid]                   = useState("");
+const [cve, setCve]                     = useState("");
+const [nombre, setNombre]               = useState("");
+const [descripcion, setDescripcion]     = useState("");
+const [creadopor, setCreadoPor]         = useState("");
+const [modificadopor, setModificadoPor] = useState("");
+const [eliminadopor, setEliminadoPor]   = useState("");
 
 // Abrir modal
 const [open, setOpen]               = React.useState(false);
@@ -70,6 +72,7 @@ const handleClose = ()  => setOpen(false);
         nombre                : nombre,
         descripcion           : descripcion,
         creadopor             : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
       axios({
         method  : "post",
@@ -153,6 +156,7 @@ const handleClose = ()  => setOpen(false);
         descripcion           : descripcion,
         creadopor             : creadopor,
         modificadopor         : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
       axios({
         method  : "post",
@@ -199,7 +203,9 @@ const handleClose = ()  => setOpen(false);
                 setCve(cellValues.row.Cve);
                 setNombre(cellValues.row.Nombre);
                 setDescripcion(cellValues.row.Descripcion);
-                setCreadoPor(cellValues.row.CreadoPor);
+                setCreadoPor(cellValues.row.CreadoPor);   
+                setModificadoPor(cellValues.row.ModificadoPor);
+                setEliminadoPor(cellValues.row.EliminadoPor);
                 handleOpen();
               }}
            >

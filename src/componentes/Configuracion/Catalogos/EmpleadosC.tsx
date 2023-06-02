@@ -43,13 +43,15 @@ const style = {
 
 export default function Empleados() {
 // definicio de variables de estado
-const navigate                      = useNavigate();
-const [uuid, setuuid]               = useState("");
-const [cve, setCve]                 = useState("");
-const [nombre, setNombre]          = useState("");
+const navigate                              = useNavigate();
+const [uuid, setuuid]                       = useState("");
+const [cve, setCve]                         = useState("");
+const [nombre, setNombre]                   = useState("");
 const [ApellidoPaterno, setApellidoPaterno] = useState("");
 const [ApellidoMaterno, setApellidoMaterno] = useState("");
-const [CreadoPor, setCreadoPor] = useState("");
+const [creadopor, setCreadoPor]             = useState("");
+const [modificadopor, setModificadoPor]     = useState("");
+const [eliminadopor, setEliminadoPor]       = useState("");
 
 
 // Abrir modal
@@ -74,6 +76,7 @@ const handleClose = ()  => setOpen(false);
         ApellidoPaterno       : ApellidoPaterno,
         ApellidoMaterno       : ApellidoMaterno,
         creadopor             : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
       console.log(data);
       axios({
@@ -157,8 +160,9 @@ const handleClose = ()  => setOpen(false);
         nombre                : nombre,
         ApellidoPaterno       : ApellidoPaterno,
         ApellidoMaterno       : ApellidoMaterno,
-        CreadoPor             : CreadoPor,
+        creadopor             : creadopor,
         modificadopor         : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
       console.log(data);
       axios({
@@ -207,7 +211,9 @@ const handleClose = ()  => setOpen(false);
                 setNombre(cellValues.row.Nombre);
                 setApellidoPaterno(cellValues.row.ApellidoPaterno);
                 setApellidoMaterno(cellValues.row.ApellidoMaterno);
-                setCreadoPor(cellValues.row.CreadoPor);
+                setCreadoPor(cellValues.row.CreadoPor);   
+                setModificadoPor(cellValues.row.ModificadoPor);
+                setEliminadoPor(cellValues.row.EliminadoPor);
                 handleOpen();
               }}
            >
