@@ -231,7 +231,14 @@ export default function StepTres(){
           variant="contained"
           component="span" 
         >
-          Seleccionar
+			<Typography
+			sx={{
+				color     : "#FFFFFF","&:hover": { color: "#15212f" },
+				fontFamily: "MontserratRegular, sans-serif",
+				fontSize  : "100%",
+			}}>
+				 Seleccionar
+			</Typography>
         </Button>
 		</label>
 	</Box>
