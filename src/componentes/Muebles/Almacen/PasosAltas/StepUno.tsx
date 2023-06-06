@@ -1,6 +1,7 @@
 import React from "react";
-import { Grid, Typography, TextField, Box, Button } from "@mui/material"
+import { Grid, Typography, TextField, Box, Button, FormControl, InputLabel, Select, MenuItem } from "@mui/material"
 import { Divider } from "@mui/material"; 
+ 
 
 export default function StepUno(){
 	return (
@@ -72,24 +73,28 @@ export default function StepUno(){
 	</Grid>
 
 	<Grid item xs={10}  >
-	<Box
-	component="form"
-	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
-	noValidate
-	autoComplete="off"
-	display="flex"
-	>
-	<TextField
-		label     ="Tipo"
-		size      ="small"
-		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
-		inputProps={{ maxLength: 10 }}
-	/>
-	</Box>
-	</Grid>
+		<Box
+		sx={{
+			'& > :not(style)': { m: 1.3, width: '100%' },   }}
+				display="flex"
+		>
+		<FormControl fullWidth sx={{bgColor:"#fff"}}>
+		<InputLabel  sx={{ marginTop:"-4px"}}>
+		 Tipo 
+		</InputLabel>
+		<Select
+		id=" Tipo "
+		// value={TipoDependencia}
+		label=" Tipo "
+		size="small"
+		displayEmpty
+		// onChange = {(v) => { setTipoBien(v.target.value)} }
+		>
+		        <MenuItem value=""> 1 </MenuItem>  
+		</Select>
+		</FormControl>
+		</Box>
+	</Grid> 
 	</Grid>
 
 	<Grid item xs={12} display="flex">
@@ -116,45 +121,53 @@ export default function StepUno(){
 
 	<Grid item xs={12} display="flex">
 	<Grid item xs={6}  >
-	<Box
-	component="form"
-	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
-	noValidate
-	autoComplete="off"
-	display="flex"
-	>
-	<TextField
-		label     ="Tipo Bien"
-		size      ="small"
-		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
-		inputProps={{ maxLength: 10 }}
-	/>
-	</Box>
+		<Box
+		sx={{
+			'& > :not(style)': { m: 1.3, width: '100%' },   }}
+				display="flex"
+		>
+		<FormControl fullWidth sx={{bgColor:"#fff"}}>
+		<InputLabel  sx={{ marginTop:"-4px"}}>
+		 Tipo Bien
+		</InputLabel>
+		<Select
+		id="Tipo Bien"
+		// value={TipoDependencia}
+		label="Tipo Bien"
+		size="small"
+		displayEmpty
+		// onChange = {(v) => { setTipoBien(v.target.value)} }
+		>
+		        <MenuItem value=""> 1 </MenuItem>  
+		</Select>
+		</FormControl>
+		</Box>
 	</Grid>
 	<Grid item xs={6}  >
-	<Box
-	component="form"
-	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
-	noValidate
-	autoComplete="off"
-	display="flex"
-	>
-	<TextField
-		label     ="Área Física "
-		size      ="small"
-		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
-		inputProps={{ maxLength: 10 }}
-	/>
-	</Box>
+		<Box
+		sx={{
+			'& > :not(style)': { m: 1.3, width: '100%' },   }}
+				display="flex"
+		>
+		<FormControl fullWidth sx={{bgColor:"#fff"}}>
+		<InputLabel  sx={{ marginTop:"-4px"}}>
+		 Área Física
+		</InputLabel>
+		<Select
+		id="AreaFisica"
+		// value={TipoDependencia}
+		label="AreaFisica"
+		size="small"
+		displayEmpty
+		// onChange = {(v) => { setTipoBien(v.target.value)} }
+		>
+		        <MenuItem value=""> 1 </MenuItem>  
+		</Select>
+		</FormControl>
+		</Box>
 	</Grid>
 	</Grid>
-
+  
 	<Grid item xs={12} display="flow">
 	<Box>
 	<Divider/>
