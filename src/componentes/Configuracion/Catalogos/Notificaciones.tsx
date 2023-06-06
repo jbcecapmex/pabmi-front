@@ -51,9 +51,12 @@ const Toast = Swal.mixin({
 export default function Notificaciones() { 
 
   // Crear las interfaces que se mandaran en los endpoints
-  const [uuid, setuuid]                        = useState("");
-  const [Encabezado, setEncabezado]            = useState("");
-	const [Descripcion, setDescripcion]          = useState("");
+  const [uuid, setuuid]                   = useState("");
+  const [Encabezado, setEncabezado]       = useState("");
+	const [Descripcion, setDescripcion]     = useState("");
+  const [creadopor, setCreadoPor]         = useState("");
+  const [modificadopor, setModificadoPor] = useState("");
+  const [eliminadopor, setEliminadoPor]   = useState("");  
 
 
     // Abrir modal
@@ -75,6 +78,7 @@ export default function Notificaciones() {
         encabezado            : Encabezado,
         descripcion           : Descripcion,
         creadopor             : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
       console.log(data);
       axios({
@@ -160,7 +164,9 @@ const handleDelete = (event: any, cellValues: any) => {
         uuid              : uuid,
         encabezado        : Encabezado,
         descripcion       : Descripcion,
-        creadopor         : localStorage.getItem("IdUsuario")
+        creadopor         : creadopor,
+        modificadopor     : localStorage.getItem("IdUsuario"),
+        eliminadopor      : eliminadopor,
       };
       axios({
         method  : "post",
@@ -210,6 +216,9 @@ const handleDelete = (event: any, cellValues: any) => {
             setuuid(cellValues.row.uuid);
             setEncabezado(cellValues.row.Encabezado);
             setDescripcion(cellValues.row.Descripcion);
+            setCreadoPor(cellValues.row.CreadoPor);   
+            setModificadoPor(cellValues.row.ModificadoPor);
+            setEliminadoPor(cellValues.row.EliminadoPor);
             handleOpen();
           }}
            >

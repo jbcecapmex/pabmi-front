@@ -39,7 +39,7 @@ const Toast = Swal.mixin({
   },
   });
 
-  export interface ProcesosInterface {
+  export interface ProveedoresInterface {
     uuid:                string;
     Cve:                string;
     Encabezado:          string;            
@@ -49,16 +49,16 @@ const Toast = Swal.mixin({
 
 
 // inicia el componente
-export default function Procesos() { 
+export default function Proveedores() { 
 
-// Crear las interfaces que se mandaran en los endpoints
-const [uuid, setuuid]                   = useState("");
-const [Cve, setCve]                     = useState("");
-const [Nombre, setNombre]               = useState("");
-const [Descripcion, setDescripcion]     = useState("");
-const [creadopor, setCreadoPor]         = useState("");
-const [modificadopor, setModificadoPor] = useState("");
-const [eliminadopor, setEliminadoPor]   = useState("");
+  // Crear las interfaces que se mandaran en los endpoints
+  const [uuid, setuuid]                   = useState("");
+  const [Cve, setCve]                     = useState("");
+  const [Nombre, setNombre]               = useState("");
+	const [Descripcion, setDescripcion]     = useState("");
+  const [creadopor, setCreadoPor]         = useState("");
+  const [modificadopor, setModificadoPor] = useState("");
+  const [eliminadopor, setEliminadoPor]   = useState("");
 
 
     // Abrir modal
@@ -86,7 +86,7 @@ const [eliminadopor, setEliminadoPor]   = useState("");
       console.log(data);
       axios({
         method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardaprocesos",
+        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardaproveedores",
         headers : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -100,7 +100,7 @@ const [eliminadopor, setEliminadoPor]   = useState("");
             icon  : "success",
             title : "Proceso creado exitosamente",
           });
-          getAllProcesos();
+          getAllProveedores();
         })
         .catch(function (error) {
           Swal.fire({
@@ -128,7 +128,7 @@ const handleDelete = (event: any, cellValues: any) => {
       const data = { uuid: cellValues.row.uuid };
       axios({
         method    : "post",
-        url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminaprocesos",
+        url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminaproveedores",
         headers   : {
                       "Content-Type": "application/json",
                       Authorization: localStorage.getItem("jwtToken") || "",
@@ -138,9 +138,9 @@ const handleDelete = (event: any, cellValues: any) => {
         .then(function (response) {
           Toast.fire({
             icon  : "success",
-            title : "Proceso eliminado exitosamente",
+            title : "Registro  eliminado exitosamente",
           });
-          getAllProcesos();
+          getAllProveedores();
         })
         .catch(function (error) {
           Swal.fire({
@@ -174,7 +174,7 @@ const handleDelete = (event: any, cellValues: any) => {
       };
       axios({
         method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizaprocesos",
+        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizaproveedores",
         headers : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -185,9 +185,9 @@ const handleDelete = (event: any, cellValues: any) => {
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : "La notificacion fue actualizada con éxito",
+            title : "La información fue actualizada con éxito",
           });
-          getAllProcesos();
+          getAllProveedores();
         })
         .catch(function (error) {
           Swal.fire({
@@ -267,10 +267,10 @@ const handleDelete = (event: any, cellValues: any) => {
 
   const [rows, setRows] = useState([]);
 
-  const getAllProcesos = () => {
+  const getAllProveedores = () => {
    axios ({
     method: "get",
-    url:    process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtieneprocesos",
+    url:    process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtieneproveedores",
     headers: {
       "Content-Type": "application/json",
       Authorization: localStorage.getItem("jwtToken") || "",
@@ -286,14 +286,14 @@ const handleDelete = (event: any, cellValues: any) => {
         icon  : "error",
         title : "Mensaje",
         text  : "("+error.response.status+") "+error.response.data.message,
-      }).then((r) => navigate("/Procesos"));
+      }).then((r) => navigate("/Proveedores"));
     });
   };
 
-  const [rowsProcesos, setRowsProcesos] = useState<Array<ProcesosInterface>>([]);
+  const [rowsProveedores, setRowsProovedores] = useState<Array<ProveedoresInterface>>([]);
 
    useEffect(() => {
-    getAllProcesos();
+    getAllProveedores();
   }, []);
 
     // esto es para que se ejecuten todo los get de los listados solo cuando se abra la modal,
@@ -329,7 +329,7 @@ const handleDelete = (event: any, cellValues: any) => {
           <Link underline="hover" color="inherit" href="/configuracion/catalogos">
             Catálogos
           </Link>
-          <Typography color="text.primary"> Catálogo de Procesos </Typography>
+          <Typography color="text.primary"> Catálogo de Proveedores </Typography>
         </Breadcrumbs>
       </Grid> 
 
@@ -337,7 +337,7 @@ const handleDelete = (event: any, cellValues: any) => {
       <Grid item xs={12} md={12} mt={2}>
       <Card sx={{ p: 1, boxShadow: 4,width:'100%'}}> {/* Hay que poner wl width en 100%% o buscar la forma de que abwsrque todo esl */}
       <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
-      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>  Catálogo de Procesos </Typography>  
+      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>  Catálogo de Proveedores </Typography>  
       <CardContent>
       <Box display="flex" justifyContent="flex-end">
       <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", paddingBottom:"2%", paddingRight:"1%"}}>
@@ -399,7 +399,7 @@ const handleDelete = (event: any, cellValues: any) => {
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <Box> 
-                <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Procesos </Typography>  
+                <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Proveedores </Typography>  
               </Box>
 		        </Grid>
 

@@ -42,10 +42,14 @@ const style = {
 
 export default function EntFederativas() {
 // definicio de variables de estado
-const navigate                      = useNavigate();
-const [uuid, setuuid]               = useState("");
-const [cve, setCve]                 = useState("");
-const [nombre, setNombre]          = useState("");
+const navigate                          = useNavigate();
+const [uuid, setuuid]                   = useState("");
+const [cve, setCve]                     = useState("");
+const [nombre, setNombre]               = useState("");
+const [creadopor, setCreadoPor]         = useState("");
+const [modificadopor, setModificadoPor] = useState("");
+const [eliminadopor, setEliminadoPor]   = useState("");
+
  
 
 // Abrir modal
@@ -65,9 +69,10 @@ const handleClose = ()  => setOpen(false);
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
       const data = {
-        cve                   : cve,
-        nombre                : nombre,
-        creadopor             : localStorage.getItem("IdUsuario"),
+        cve           : cve,
+        nombre        : nombre,
+        creadopor     : localStorage.getItem("IdUsuario"),
+        eliminadopor  : eliminadopor,
       };
       axios({
         method  : "post",
@@ -148,7 +153,9 @@ const handleClose = ()  => setOpen(false);
         uuid                  : uuid,
         cve                   : cve,
         nombre                : nombre, 
+        creadopor             : creadopor,
         modificadopor         : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
       axios({
         method  : "post",
@@ -193,7 +200,10 @@ const handleClose = ()  => setOpen(false);
               onClick={(event) => {     
                 setuuid(cellValues.row.uuid);
                 setCve(cellValues.row.Cve);
-                setNombre(cellValues.row.Nombre); 
+                setNombre(cellValues.row.Nombre);
+                setCreadoPor(cellValues.row.CreadoPor);   
+                setModificadoPor(cellValues.row.ModificadoPor);
+                setEliminadoPor(cellValues.row.EliminadoPor); 
                 handleOpen();
               }}
            >

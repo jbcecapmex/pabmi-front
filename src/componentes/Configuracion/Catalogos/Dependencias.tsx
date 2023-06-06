@@ -87,7 +87,12 @@ export default function Dependencias() {
   const [Descripcion, setDescripcion] = useState("");
 	const [Direccion, setDireccion]     = useState("");
   const [Telefono, setTelefono]       = useState("");
-	const [UUID, setUUID]         = useState("");
+	const [UUID, setUUID]               = useState("");
+
+  const [creadopor, setCreadoPor]         = useState("");
+  const [modificadopor, setModificadoPor] = useState("");
+  const [eliminadopor, setEliminadoPor]   = useState("");
+
 
     // Abrir modal
     const [open, setOpen]               = React.useState(false);
@@ -117,6 +122,7 @@ export default function Dependencias() {
         uuidtitular           : TitularDependencia,
         uuidsecretaria        : Secretaria,
         creadopor             : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
       console.log(data);
       axios({
@@ -206,8 +212,10 @@ const handleDelete = (event: any, cellValues: any) => {
         Telefono              : Telefono,
         uuidtipodependencia   : TipoDependencia,
         uuidtitular   : TitularDependencia,
-        uuidsecretaria      : Secretaria,
-        creadopor             : localStorage.getItem("IdUsuario"),
+        uuidsecretaria        : Secretaria,
+        creadopor             : creadopor,
+        modificadopor         : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
       axios({
         method  : "post",
@@ -340,6 +348,9 @@ const handleDelete = (event: any, cellValues: any) => {
             setTipoDependencia(cellValues.row.uuidTipoDependencia);
             setTitularDependencia(cellValues.row.uuidTitular);
             setSecretaria(cellValues.row.uuidSecretaria);
+            setCreadoPor(cellValues.row.CreadoPor);   
+            setModificadoPor(cellValues.row.ModificadoPor);
+            setEliminadoPor(cellValues.row.EliminadoPor);
             handleOpen();
           }}
            >
@@ -394,7 +405,6 @@ const handleDelete = (event: any, cellValues: any) => {
       hideable:    false,
       headerAlign: "center",
     },
-    ,
     {
       field:       "uuidTitular",
       headerName:  "Titular",
@@ -408,8 +418,7 @@ const handleDelete = (event: any, cellValues: any) => {
       width:       200,
       hideable:    false,
       headerAlign: "center",
-    }
-    
+    }    
   ];
 
 

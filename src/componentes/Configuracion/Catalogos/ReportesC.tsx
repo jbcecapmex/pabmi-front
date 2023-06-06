@@ -56,9 +56,11 @@ const [uuid, setuuid]                     = useState("");
 const [cve, setCve]                       = useState("");
 const [nombre, setNombre]                 = useState("");
 const [descripcion, setDescripcion]       = useState("");
-const [tiporeporte, setTipoReporte]   = useState("");
+const [tiporeporte, setTipoReporte]       = useState("");
 const [nomtiporeporte, setNomTipoReporte] = useState("");
 const [creadopor, setCreadoPor]           = useState("");
+const [modificadopor, setModificadoPor]   = useState("");
+const [eliminadopor, setEliminadoPor]     = useState("");
 
 // Abrir modal
 const [open, setOpen]               = React.useState(false);
@@ -82,6 +84,7 @@ const handleClose = ()  => setOpen(false);
         descripcion     : descripcion,
         uuidtiporeporte : tiporeporte,
         creadopor       : localStorage.getItem("IdUsuario"),
+        eliminadopor    : eliminadopor,
       };
       axios({
         method  : "post",
@@ -166,6 +169,7 @@ const handleClose = ()  => setOpen(false);
         uuidtiporeporte : tiporeporte,
         creadopor       : creadopor,
         modificadopor   : localStorage.getItem("IdUsuario"),
+        eliminadopor    : eliminadopor,
       };
       console.log(data);      
       axios({
@@ -216,7 +220,9 @@ const handleClose = ()  => setOpen(false);
                 setDescripcion(cellValues.row.Descripcion);
                 setTipoReporte(cellValues.row.uuidTipoReporte);
                 setNomTipoReporte(cellValues.row.NomTipoReporte);
-                setCreadoPor(cellValues.row.CreadoPor);             
+                setCreadoPor(cellValues.row.CreadoPor);   
+                setModificadoPor(cellValues.row.ModificadoPor);
+                setEliminadoPor(cellValues.row.EliminadoPor);            
                 handleOpen();
               }}
            >

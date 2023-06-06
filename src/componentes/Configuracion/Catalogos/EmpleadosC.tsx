@@ -42,14 +42,16 @@ const style = {
 };
 
 export default function Empleados() {
-  // definicio de variables de estado
-  const navigate = useNavigate();
-  const [uuid, setuuid] = useState("");
-  const [cve, setCve] = useState("");
-  const [nombre, setNombre] = useState("");
-  const [ApellidoPaterno, setApellidoPaterno] = useState("");
-  const [ApellidoMaterno, setApellidoMaterno] = useState("");
-  const [CreadoPor, setCreadoPor] = useState("");
+// definicio de variables de estado
+const navigate                              = useNavigate();
+const [uuid, setuuid]                       = useState("");
+const [cve, setCve]                         = useState("");
+const [nombre, setNombre]                   = useState("");
+const [ApellidoPaterno, setApellidoPaterno] = useState("");
+const [ApellidoMaterno, setApellidoMaterno] = useState("");
+const [creadopor, setCreadoPor]             = useState("");
+const [modificadopor, setModificadoPor]     = useState("");
+const [eliminadopor, setEliminadoPor]       = useState("");
 
 
   // Abrir modal
@@ -69,11 +71,12 @@ export default function Empleados() {
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
       const data = {
-        cve: cve,
-        nombre: nombre,
-        ApellidoPaterno: ApellidoPaterno,
-        ApellidoMaterno: ApellidoMaterno,
-        creadopor: localStorage.getItem("IdUsuario"),
+        cve                   : cve,
+        nombre                : nombre,
+        ApellidoPaterno       : ApellidoPaterno,
+        ApellidoMaterno       : ApellidoMaterno,
+        creadopor             : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
       console.log(data);
       axios({
@@ -154,13 +157,14 @@ export default function Empleados() {
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
       const data = {
-        uuid: uuid,
-        cve: cve,
-        nombre: nombre,
-        ApellidoPaterno: ApellidoPaterno,
-        ApellidoMaterno: ApellidoMaterno,
-        CreadoPor: CreadoPor,
-        modificadopor: localStorage.getItem("IdUsuario"),
+        uuid                  : uuid,
+        cve                   : cve,
+        nombre                : nombre,
+        ApellidoPaterno       : ApellidoPaterno,
+        ApellidoMaterno       : ApellidoMaterno,
+        creadopor             : creadopor,
+        modificadopor         : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
       console.log(data);
       axios({
@@ -200,19 +204,21 @@ export default function Empleados() {
       renderCell: (cellValues: any) => {
         return (
           <Box>
-            <Tooltip title={"Editar " + cellValues.row.Nombre}>
-              <IconButton color="primary"
-                // al darle editar se llenan los campos con los valores seleccionados del renglon
-                onClick={(event) => {
-                  setuuid(cellValues.row.uuid);
-                  setCve(cellValues.row.Cve);
-                  setNombre(cellValues.row.Nombre);
-                  setApellidoPaterno(cellValues.row.ApellidoPaterno);
-                  setApellidoMaterno(cellValues.row.ApellidoMaterno);
-                  setCreadoPor(cellValues.row.CreadoPor);
-                  handleOpen();
-                }}
-              >
+           <Tooltip title={"Editar " + cellValues.row.Nombre}>
+           <IconButton color="primary" 
+              // al darle editar se llenan los campos con los valores seleccionados del renglon
+              onClick={(event) => {     
+                setuuid(cellValues.row.uuid);
+                setCve(cellValues.row.Cve);
+                setNombre(cellValues.row.Nombre);
+                setApellidoPaterno(cellValues.row.ApellidoPaterno);
+                setApellidoMaterno(cellValues.row.ApellidoMaterno);
+                setCreadoPor(cellValues.row.CreadoPor);   
+                setModificadoPor(cellValues.row.ModificadoPor);
+                setEliminadoPor(cellValues.row.EliminadoPor);
+                handleOpen();
+              }}
+           >
                 <EditIcon />
               </IconButton>
             </Tooltip>

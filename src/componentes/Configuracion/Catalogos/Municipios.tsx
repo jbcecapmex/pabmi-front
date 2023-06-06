@@ -41,10 +41,13 @@ const style = {
 
 export default function Municipios() {
 // definicio de variables de estado
-const navigate                      = useNavigate();
-const [uuid, setuuid]               = useState("");
-const [cve, setCve]                 = useState("");
-const [nombre, setNombre]          = useState(""); 
+const navigate                          = useNavigate();
+const [uuid, setuuid]                   = useState("");
+const [cve, setCve]                     = useState("");
+const [nombre, setNombre]               = useState(""); 
+const [creadopor, setCreadoPor]         = useState("");
+const [modificadopor, setModificadoPor] = useState("");
+const [eliminadopor, setEliminadoPor]   = useState("");
 
 // Abrir modal
 const [open, setOpen]               = React.useState(false);
@@ -66,6 +69,7 @@ const handleClose = ()  => setOpen(false);
         cve                   : cve,
         nombre                : nombre, 
         creadopor             : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
       axios({
         method  : "post",
@@ -146,7 +150,9 @@ const handleClose = ()  => setOpen(false);
         uuid                  : uuid,
         cve                   : cve,
         nombre                : nombre, 
+        creadopor             : creadopor,
         modificadopor         : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
       axios({
         method  : "post",
@@ -192,6 +198,9 @@ const handleClose = ()  => setOpen(false);
                 setuuid(cellValues.row.uuid);
                 setCve(cellValues.row.Cve);
                 setNombre(cellValues.row.Nombre); 
+                setCreadoPor(cellValues.row.CreadoPor);   
+                setModificadoPor(cellValues.row.ModificadoPor);
+                setEliminadoPor(cellValues.row.EliminadoPor);
                 handleOpen();
               }}
            >

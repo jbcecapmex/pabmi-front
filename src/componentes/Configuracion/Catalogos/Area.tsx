@@ -22,7 +22,7 @@ const Toast = Swal.mixin({
   },
 });
 
-export interface PresentacionMueblesInterface {
+export interface AreaInterface {
   uuid: string;
   Cve: string;
   Nombre: string;
@@ -40,7 +40,7 @@ const style = {
   p: 2,
 };
 
-export default function PresentacionMuebles() {
+export default function Areas() {
 // definicio de variables de estado
 const navigate                          = useNavigate();
 const [uuid, setuuid]                   = useState("");
@@ -72,11 +72,11 @@ const handleClose = ()  => setOpen(false);
         nombre                : nombre,
         descripcion           : descripcion,
         creadopor             : localStorage.getItem("IdUsuario"),
-        eliminadopor          : eliminadopor,
+      eliminadopor            : eliminadopor,
       };
       axios({
         method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardapresentacionesmuebles",
+        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardaarea",
         headers : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -87,9 +87,9 @@ const handleClose = ()  => setOpen(false);
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : "Creado Exitosamente",
+            title : " Creado Exitosamente",
           });
-          getAllPresentacionMuebles();
+          getAllArea();
         })
         .catch(function (error) {
           Swal.fire({
@@ -115,7 +115,7 @@ const handleClose = ()  => setOpen(false);
         const data = { uuid: cellValues.row.uuid };
         axios({
           method    : "post",
-          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminapresentacionesmuebles",
+          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminaarea",
           headers   : {
                         "Content-Type": "application/json",
                         Authorization: localStorage.getItem("jwtToken") || "",
@@ -127,7 +127,7 @@ const handleClose = ()  => setOpen(false);
               icon  : "success",
               title : " Eliminado Exitosamente",
             });
-            getAllPresentacionMuebles();
+            getAllArea();
           })
           .catch(function (error) {
             Swal.fire({
@@ -145,7 +145,7 @@ const handleClose = ()  => setOpen(false);
       Swal.fire({
         icon  : "error",
         title : "Mensaje",
-        text  : "Completa todos los campos para continuarrrrrrrr",
+        text  : "Completa todos los campos para continuar ",
       });
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
@@ -160,7 +160,7 @@ const handleClose = ()  => setOpen(false);
       };
       axios({
         method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizapresentacionesmuebles",
+        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizaarea",
         headers : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -173,7 +173,7 @@ const handleClose = ()  => setOpen(false);
             icon  : "success",
             title : " Actualizado Exitosamente",
           });
-          getAllPresentacionMuebles();
+          getAllArea();
         })
         .catch(function (error) {
           Swal.fire({
@@ -239,7 +239,7 @@ const handleClose = ()  => setOpen(false);
       hideable: false,
       headerAlign: "left",
     },
-    // cuarta columna donde se mostrara si esta activo o no
+    // cuarta columna donde se mostrara si esta Area o no
     {
       field: "Descripcion",
       headerName: "Descripcion",
@@ -251,11 +251,11 @@ const handleClose = ()  => setOpen(false);
  
   // declaracion de la variable de estado "hook" que recibira la informacion del endpoint
   const [rows, setRows] = useState([]);
-  // aqui es el consumo del endpoint para obtener el listado  de la base de datos
-  const getAllPresentacionMuebles = () => {
+  // aqui es el consumo del endpoint para obtener el listado de la base de datos
+  const getAllArea = () => {
     axios({
       method    : "get",
-      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienepresentacionesmuebles",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienearea",
       headers   : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -271,13 +271,13 @@ const handleClose = ()  => setOpen(false);
           icon  : "error",
           title : "Mensaje",
           text  : "("+error.response.status+") "+error.response.data.message,
-        }).then((r) => navigate("/Configuracion/Catalogos/PresentacionMuebles"));
+        }).then((r) => navigate("/Configuracion/Catalogos/Area"));
       });
   };
 
   // esto es solo para que se ejecute la rutina de obtiene cuando cargue la pagina
   useEffect(() => {
-    getAllPresentacionMuebles();
+    getAllArea();
   }, []);
 
   // esto es para que se ejecuten todo los get de los listados solo cuando se abra la modal,
@@ -293,28 +293,49 @@ const handleClose = ()  => setOpen(false);
  
   return (
     // contenedor principal
-    <Grid container sx={{ }}>
-      <Grid sx={{}} item xs={12}>
+    <Grid
+      container
+      sx={{
+        top       : "9vh",
+        position  : "absolute",
+        fontFamily: "MontserratSemiBold",
+      }}
+    >
+      {/* grid de Breadcrumbs */}
+      <Grid
+        item
+        xs={12}
+        sx={{
+          top       : "-9vh",
+          position  : "absolute",
+          fontFamily: "MontserratSemiBold",
+        }}
+      >
         {/* este componente es para armar la ruta que se muestra arriba y poder navegar hacia atras */}
         {/* ejemplo inicio/configuracion/catalogos/marca */}
         <Breadcrumbs aria-label="breadcrumb">
         <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
+          <Link underline="hover" color="inherit" href="/Configuracion/Area">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
+          <Link underline="hover" color="inherit" href="/Configuracion/Area">
             Usuarios
           </Link>
-          <Typography color="text.primary">Catálogo de Presentación Muebles</Typography>
+          <Typography color="text.primary">Catálogo de Area</Typography>
         </Breadcrumbs>
       </Grid>
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
-      <Grid container xs={12} justifyContent={"center"}>
-        <Grid item xs={12} md={12} mt={2}>
+      <Grid
+        container
+        justifyContent={"center"}
+        sx={{ fontFamily: "MontserratSemiBold" }}
+      >
+        {/* este grid es del card del centro el que contiene los objetos */}
+        <Grid item xs={12} md={12} mt={-5}>
           {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
-          <Card sx={{ p: 0, boxShadow: 8 }}>
+          <Card sx={{ p: 0, boxShadow: 8, height: "86vh" }}>
             <CardContent sx={{ fontFamily: "MontserratBold", bgcolor: "" }}>
               {/* aqui es el cardcontent que es el contenido del card,y ponemos primero un box y estamos dibujando el boton para agregar un nuevo registro */}
               <Box display="flex" justifyContent="flex-end">
@@ -374,7 +395,7 @@ const handleClose = ()  => setOpen(false);
                     <Grid item xs={12}>
                       <Box>
                         <Typography variant="h5" sx={{ padding: "1%" }}>
-                          Detalle de Presentación Muebles
+                          Detalle de Area
                         </Typography>
                       </Box>
                     </Grid>

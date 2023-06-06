@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Typography, Box, Divider } from "@mui/material";
+import { Typography, Box, Divider, Link } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { Block, Padding } from "@mui/icons-material";
 import { Icons } from "../../../layout/Icons";
@@ -134,8 +134,8 @@ const rows = [
       </Typography>
       <Box sx={{height:'30px',width:'100%',display:'block'}}></Box>
     </Grid>
-    <Grid item xs={6}>
-    <InputBase placeholder="Buscar" sx={{width: '400px',height:'45px',border:1,borderRadius:3,borderColor:"#cdcdcd",paddingLeft:'10PX'}}
+    <Grid item xs={6}  >
+    <InputBase placeholder="Buscar" sx={{width: '60%',height:'45px',border:1,borderRadius:3,borderColor:"#cdcdcd",paddingLeft:'3%', marginLeft:"3%"}}
             id="filled-adornment-weight" 
             startAdornment={<InputAdornment position="start">{Icons("Search")}</InputAdornment>}
             aria-describedby="filled-weight-helper-text"
@@ -144,7 +144,7 @@ const rows = [
             }}
           />
     </Grid>
-    <Grid item xs={6}>
+    <Grid item xs={6}  >
     
           <Typography
         variant="subtitle1"
@@ -218,21 +218,21 @@ const rows = [
 
         }}
       >
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
       </Typography>
     </Grid>
-    <Grid item xs={4}>
-   
-    </Grid>
+
     <Grid item xs={4}>
    
    </Grid>
-    <Grid item xs={4}>
-      <Box sx={{display:'flex',justifyContent: 'right',width:'100%',height:'auto', alignItems:'center'}}>
+    <Grid item xs={12}>
+      <Link underline="hover" href="/Muebles/Almacen/Altas/DatosAltas">
+      <Box sx={{display:'flex',justifyContent: 'right',width:'100%',height:'auto', alignItems:'left'}}>
       {Icons("AddBox")}     
       <Typography
         variant="body1"
         component="div"
+        
         sx={{
           fontWeight: "bold",
           display: "inline",
@@ -241,12 +241,12 @@ const rows = [
           marginTop:"5px",
           paddingLeft:"10px",
           paddingRight:"10px"
-
         }}
         >
           NUEVO
       </Typography>
       </Box>
+      </Link>
     </Grid>
     
 
@@ -280,7 +280,10 @@ const rows = [
 
             
             
-      <iframe src="http://localhost:3008/facturas/Heuristic_Summary1-compressed.pdf" style={{top: 0,left: 0,width: "100%",height: "600px" }} title="Factura">    d     
+      <iframe 
+      src="http://localhost:3008/facturas/Heuristic_Summary1-compressed.pdf" 
+      style={{top: 0,left: 0,width: "100%",height: "600px" }} 
+      title="Factura">         
     </iframe>
 
 
