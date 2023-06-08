@@ -520,24 +520,8 @@ export default function TicketsDashBoard() {
   // -------------------------------------------------------------------------------------------
   return (
     // contenedor principal
-    <Grid
-      container
-      sx={{
-        top       : "9vh",
-        position  : "absolute",
-        fontFamily: "MontserratSemiBold",
-      }}
-    >
-      {/* grid de Breadcrumbs */}
-      <Grid
-        item
-        xs={12}
-        sx={{
-          top       : "-9vh",
-          position  : "absolute",
-          fontFamily: "MontserratSemiBold",
-        }}
-      >
+    <Grid container sx={{ }}>
+      <Grid sx={{}} item xs={12}>
         {/* este componente es para armar la ruta que se muestra arriba y poder navegar hacia atras */}
         {/* ejemplo inicio/configuracion/catalogos/marca */}
         <Breadcrumbs aria-label="breadcrumb">
@@ -556,7 +540,7 @@ export default function TicketsDashBoard() {
         {/* este grid es del card del centro el que contiene los objetos */}
         <Grid item xs={12} md={12} mt={-5}>
           {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
-          <Card sx={{ p: 0, boxShadow: 8, height: "86vh" }}>
+          <Card sx={{ p: 0, boxShadow: 8 }}>
             <CardContent sx={{ fontFamily: "MontserratBold", bgcolor: "" }}>
               {/* aqui es el cardcontent que es el contenido del card,y ponemos primero un box y estamos dibujando el boton para agregar un nuevo registro */}
               <Box display="flex" justifyContent="flex-end">

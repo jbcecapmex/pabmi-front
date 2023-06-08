@@ -1,8 +1,9 @@
 import React from "react";
-import {Edit as EditIcon, Delete as DeleteIcon,} from "@mui/icons-material";import { useEffect, useState } from "react";
+import {OpenInNew as OpenIcon, ForwardToInbox as ForwardIcon, MarkEmailRead as Leido, MarkEmailUnread  as NoLeido} from "@mui/icons-material";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import {Box,Breadcrumbs,Button,Card,CardContent,Grid,IconButton,Link,TextField,Tooltip,Typography,} from "@mui/material";
-import MUIXDataGrid from "../../Grid/MUIXDataGrid";
+import {Box,Breadcrumbs,Button,Card,CardContent,CardHeader,FormControl,Grid,IconButton,InputLabel,Link,MenuItem,Select,TextField,Tooltip,Typography,} from "@mui/material";
+import MUIXDataGrid from "../Grid/MUIXDataGrid";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
@@ -22,12 +23,23 @@ const Toast = Swal.mixin({
   },
 });
 
-export interface PresentacionMueblesInterface {
-  uuid: string;
-  Cve: string;
-  Nombre: string;
-  Descripcion: string;
+
+export interface UsuariosInterface {
+  uuid: string
+  uuidTiCentral: string
+  uuidDependencia: string
+  NombreCorto: string
+  uuidPuesto: string
 }
+
+export interface MensajesInterface {
+  uuid: string
+  Asignadoa: string
+  Encabezado: string
+  Descripcion: string
+  Visto: string;
+}
+
 
 const style = {
   position: "absolute",
@@ -40,13 +52,14 @@ const style = {
   p: 2,
 };
 
-export default function PresentacionMuebles() {
+export default function Mensajes() {
 // definicio de variables de estado
 const navigate                          = useNavigate();
 const [uuid, setuuid]                   = useState("");
-const [cve, setCve]                     = useState("");
-const [nombre, setNombre]               = useState("");
+const [asignadoa, setAsignadoa]         = useState("");
+const [encabezado, setEncabezado]       = useState("");
 const [descripcion, setDescripcion]     = useState("");
+// const [visto, setVisto]                 = useState("");
 const [creadopor, setCreadoPor]         = useState("");
 const [modificadopor, setModificadoPor] = useState("");
 const [eliminadopor, setEliminadoPor]   = useState("");
@@ -59,7 +72,7 @@ const handleClose = ()  => setOpen(false);
 
   // Handle save
   const handleSave = () => {
-    if (cve === "" || nombre === "" || descripcion === ""){
+    if (encabezado === "" || descripcion === ""){
       Swal.fire({
         icon  : "error",
         title : "Mensaje",
@@ -68,15 +81,16 @@ const handleClose = ()  => setOpen(false);
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
       const data = {
-        cve                   : cve,
-        nombre                : nombre,
-        descripcion           : descripcion,
-        creadopor             : localStorage.getItem("IdUsuario"),
-        eliminadopor          : eliminadopor,
+        asignadoa       : asignadoa,
+        encabezado      : encabezado,
+        descripcion     : descripcion,
+        visto           : 0,
+        creadopor       : localStorage.getItem("IdUsuario"),
+        eliminadopor    : eliminadopor,
       };
       axios({
         method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardapresentacionesmuebles",
+        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/mensajes/guardamensajes",
         headers : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -87,9 +101,9 @@ const handleClose = ()  => setOpen(false);
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : "Creado Exitosamente",
+            title : "Enviado Exitosamente",
           });
-          getAllPresentacionMuebles();
+          getAllMensajes();
         })
         .catch(function (error) {
           Swal.fire({
@@ -115,7 +129,7 @@ const handleClose = ()  => setOpen(false);
         const data = { uuid: cellValues.row.uuid };
         axios({
           method    : "post",
-          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminapresentacionesmuebles",
+          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/mensajes/eliminamensajes",
           headers   : {
                         "Content-Type": "application/json",
                         Authorization: localStorage.getItem("jwtToken") || "",
@@ -127,7 +141,7 @@ const handleClose = ()  => setOpen(false);
               icon  : "success",
               title : " Eliminado Exitosamente",
             });
-            getAllPresentacionMuebles();
+            getAllMensajes();
           })
           .catch(function (error) {
             Swal.fire({
@@ -138,21 +152,19 @@ const handleClose = ()  => setOpen(false);
       }
     });
   };
-
-// Handle update
+  // Handle update
   const handleUpdate = () => {
-    if (cve === "" || nombre === "" || descripcion === ""){
+    if (encabezado === "" || descripcion === ""){
       Swal.fire({
         icon  : "error",
         title : "Mensaje",
-        text  : "Completa todos los campos para continuarrrrrrrr",
+        text  : "Completa todos los campos para continuar ",
       });
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
       const data = {
         uuid                  : uuid,
-        cve                   : cve,
-        nombre                : nombre,
+        encabezado            : encabezado,
         descripcion           : descripcion,
         creadopor             : creadopor,
         modificadopor         : localStorage.getItem("IdUsuario"),
@@ -160,7 +172,7 @@ const handleClose = ()  => setOpen(false);
       };
       axios({
         method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizapresentacionesmuebles",
+        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/mensajes/actualizamensajes",
         headers : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -173,7 +185,7 @@ const handleClose = ()  => setOpen(false);
             icon  : "success",
             title : " Actualizado Exitosamente",
           });
-          getAllPresentacionMuebles();
+          getAllMensajes();
         })
         .catch(function (error) {
           Swal.fire({
@@ -185,23 +197,45 @@ const handleClose = ()  => setOpen(false);
     }
   }; 
 
+  const handleLeido = () => {
+    //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
+    const data = {
+      uuid   : uuid,
+      visto  : 1,
+
+    };
+    console.log(data);
+    axios({
+      method  : "post",
+      url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/mensajes/mensajeleido",
+      headers : {
+                  "Content-Type": "application/json",
+                  Authorization: localStorage.getItem("jwtToken") || "",
+      },
+      data    : data,
+    })
+  };   
+
   const columns = [
     {
       field: "acciones",
       headerName: "",
-      width: 80,
+      width: 40,
       headerAlign: "center",
       hideable: false,
       renderCell: (cellValues: any) => {
         return (
           <Box>
-           <Tooltip title={"Editar " + cellValues.row.Nombre}>
+           <Tooltip title={"Abrir " + cellValues.row.Encabezado}>
            <IconButton color="primary" 
               // al darle editar se llenan los campos con los valores seleccionados del renglon
               onClick={(event) => {     
+                
                 setuuid(cellValues.row.uuid);
-                setCve(cellValues.row.Cve);
-                setNombre(cellValues.row.Nombre);
+                console.log(uuid);
+                setAsignadoa(cellValues.row.Asignadoa);
+                console.log(asignadoa);
+                setEncabezado(cellValues.row.Encabezado);
                 setDescripcion(cellValues.row.Descripcion);
                 setCreadoPor(cellValues.row.CreadoPor);   
                 setModificadoPor(cellValues.row.ModificadoPor);
@@ -209,112 +243,173 @@ const handleClose = ()  => setOpen(false);
                 handleOpen();
               }}
            >
-                <EditIcon />
+                <OpenIcon />
               </IconButton>
            </Tooltip>
-           <Tooltip title={"Eliminar" + cellValues.row.Nombre}>
-              <IconButton color="error"
+           {/* <Tooltip title={"Eliminar" + cellValues.row.Nombre}>
+              <IconButton color="secondary"
                 onClick={(event) => {handleDelete(event, cellValues);}}
                >
-                <DeleteIcon />
+                <ForwardIcon />
               </IconButton>
-            </Tooltip>
+            </Tooltip> */}
           </Box>
         );
       },
     },
      // segunda columna donde se mostrara el nombre
      {
-      field: "Cve",
-      headerName: "Cve",
+      field: "Encabezado",
+      headerName: "Encabezado",
       width: 100,
       hideable: false,
       headerAlign: "left",
     },
     // Tercer columna donde se mostrara el path
     {
-      field: "Nombre",
-      headerName: "Nombre",
-      width: 150,
+      field: "Descripcion",
+      headerName: "Descripcion",
+      width: 900,
       hideable: false,
       headerAlign: "left",
     },
-    // cuarta columna donde se mostrara si esta activo o no
     {
-      field: "Descripcion",
-      headerName: "Descripcion",
-      width: 650,
+      field: "Visto",
+      headerName: "Leido",
+      width: 50,
       hideable: false,
       headerAlign: "left",
+      renderCell: (cellValues: any) => {
+        return (
+          <Box>
+            {
+              cellValues.row.Visto===1? <Leido color="success" />:<NoLeido color="info" />
+            }
+          </Box>
+        );
+      },
     },
   ];
  
   // declaracion de la variable de estado "hook" que recibira la informacion del endpoint
   const [rows, setRows] = useState([]);
-  // aqui es el consumo del endpoint para obtener el listado  de la base de datos
-  const getAllPresentacionMuebles = () => {
+  // aqui es el consumo del endpoint para obtener el listado de la base de datos
+  const getAllMensajes = () => {
+    //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
+    const data = {
+      // asignadoa         :  "a4f79e57-32b7-11ed-aed0-040300000000",
+      asignadoa         : localStorage.getItem("IdUsuario"),
+    };
     axios({
-      method    : "get",
-      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienepresentacionesmuebles",
+      method    : "post",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/mensajes/detallemensajes",
       headers   : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
       },
+      data    : data,      
     })
       // aqui se recibe lo del endpoint en response
       .then(({ data }) => {
         const rows = data;
         setRows(rows);
+        
       })
       .catch(function (error) {
         Swal.fire({
           icon  : "error",
           title : "Mensaje",
           text  : "("+error.response.status+") "+error.response.data.message,
-        }).then((r) => navigate("/Configuracion/Catalogos/PresentacionMuebles"));
+        }).then((r) => navigate("/Mensajes/Mensajes"));
       });
   };
 
+// declaracion de la variable de estado "hook" que recibira la informacion del endpoint
+const [rowsasignadoa, setRowsAsignadoa] = useState<Array<UsuariosInterface>>([]);
+// aqui es el consumo del endpoint para obtener el listado de menus de la base de datos
+const getAllAsignadoa = () => {
+  axios({
+    method    : "get",
+    url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtieneusuarios",
+    headers   : {
+                  "Content-Type": "application/json",
+                  Authorization: localStorage.getItem("jwtToken") || "",
+    },
+  })
+    // aqui se recibe lo del endpoint en response
+    .then(({ data }) => {
+      const rowsasignadoa = data;
+      setRowsAsignadoa(rowsasignadoa);
+    })
+    .catch(function (error) {
+      Swal.fire({
+        icon  : "error",
+        title : "Mensaje",
+        text  : "("+error.response.status+") "+error.response.data.message,
+      })
+      // .then((r) => navigate("/Configuracion/Usuarios"));
+    });
+};
+
   // esto es solo para que se ejecute la rutina de obtiene cuando cargue la pagina
   useEffect(() => {
-    getAllPresentacionMuebles();
+    getAllMensajes();
   }, []);
 
   // esto es para que se ejecuten todo los get de los listados solo cuando se abra la modal,
   // y que limpie las variables cuando se salga de la modal
   useEffect(() => {
     if (open===false) {
+      getAllAsignadoa();
       setuuid("");
-      setCve("");
-      setNombre("");
+      setAsignadoa("");
+      setEncabezado("");
       setDescripcion("");
+      getAllMensajes();
     }
   }, [open]);  
  
   return (
     // contenedor principal
-    <Grid container sx={{ }}>
-      <Grid sx={{}} item xs={12}>
+    <Grid
+      container
+      sx={{
+        top       : "9vh",
+        position  : "absolute",
+        fontFamily: "MontserratSemiBold",
+      }}
+    >
+      {/* grid de Breadcrumbs */}
+      <Grid
+        item
+        xs={12}
+        sx={{
+          top       : "-9vh",
+          position  : "absolute",
+          fontFamily: "MontserratSemiBold",
+        }}
+      >
         {/* este componente es para armar la ruta que se muestra arriba y poder navegar hacia atras */}
         {/* ejemplo inicio/configuracion/catalogos/marca */}
         <Breadcrumbs aria-label="breadcrumb">
         <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
-          </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
-            Configuración
-          </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
-            Usuarios
-          </Link>
-          <Typography color="text.primary">Catálogo de Presentación Muebles</Typography>
+        </Link>
+          <Typography color="text.primary">Mensajes</Typography>
         </Breadcrumbs>
       </Grid>
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
-      <Grid container xs={12} justifyContent={"center"}>
-        <Grid item xs={12} md={12} mt={2}>
+      <Grid
+        container
+        justifyContent={"center"}
+        sx={{ fontFamily: "MontserratSemiBold" }}
+      >
+        {/* este grid es del card del centro el que contiene los objetos */}
+        <Grid item xs={12} md={12} mt={-5}>
           {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
-          <Card sx={{ p: 0, boxShadow: 8 }}>
+          <Card sx={{ p: 0, boxShadow: 8, height: "86vh" }}>
+            <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
+            <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>Mensajes</Typography>                  
             <CardContent sx={{ fontFamily: "MontserratBold", bgcolor: "" }}>
               {/* aqui es el cardcontent que es el contenido del card,y ponemos primero un box y estamos dibujando el boton para agregar un nuevo registro */}
               <Box display="flex" justifyContent="flex-end">
@@ -339,7 +434,7 @@ const handleClose = ()  => setOpen(false);
                         fontSize  : "100%",
                       }}
                     >
-                      Agregar
+                      Nuevo
                     </Typography>
                   </Button>
                   <Button 
@@ -374,28 +469,38 @@ const handleClose = ()  => setOpen(false);
                     <Grid item xs={12}>
                       <Box>
                         <Typography variant="h5" sx={{ padding: "1%" }}>
-                          Detalle de Presentación Muebles
+                          Mensajes
                         </Typography>
                       </Box>
                     </Grid>
-
                     <Grid item xs={6}>
                       <Box
                         component="form"
-                        sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
+                        sx={{ "& > :not(style)": { m: 1.3, width: "100%" }, }}
                         noValidate
                         autoComplete="off"
                         display="flex"
                       >
-                        <TextField
-                          label     ="Cve"
-                          size      ="small"
-                          variant   ="outlined"
-                          value     ={cve}
-                          disabled  = {uuid!=="" ? true:false}
-                          onChange  ={(v) => {setCve(v.target.value); }}
-                          inputProps={{ maxLength: 10 }}
-                        />
+                        <FormControl fullWidth sx={{ bgColor: "#fff" }}>
+                          <InputLabel sx={{ marginTop: "-4px" }}>
+                            Asignado a
+                          </InputLabel>
+                          <Select
+                            id          ="usuario"
+                            value       ={asignadoa}
+                            disabled  = {uuid!=="" ? true:false}
+                            size        ="small"
+                            displayEmpty
+                            onChange    ={(v) => { setAsignadoa(v.target.value); }}
+                          >
+                            <MenuItem value=""></MenuItem>
+                            {rowsasignadoa.map((asignadoa, index) => (
+                              <MenuItem value={asignadoa.uuidTiCentral}>
+                                {asignadoa.NombreCorto}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
                       </Box>
                     </Grid>
                     <Grid item xs={6}>
@@ -403,7 +508,7 @@ const handleClose = ()  => setOpen(false);
                         {/* espacio en blanco */}
                       </Box>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={24}>
                       <Box
                         component="form"
                         sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -412,15 +517,16 @@ const handleClose = ()  => setOpen(false);
                         display="flex"
                       >
                         <TextField
-                          label     ="Nombre"
+                          label     ="Encabezado"
                           size      ="small"
                           variant   ="outlined"
-                          value     ={nombre}
-                          onChange  ={(v) => {setNombre(v.target.value); }}
+                          disabled  = {uuid!=="" ? true:false}
+                          value     ={encabezado}
+                          onChange  ={(v) => {setEncabezado(v.target.value); }}
                         />
                       </Box>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={24}>
                       <Box
                         component="form"
                         sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -429,9 +535,12 @@ const handleClose = ()  => setOpen(false);
                         display="flex"
                       >
                         <TextField
-                          label     ="Descripcion"
-                          size      ="small"
+                          label     ="Mensaje"
+                          // size      ="small"
+                          multiline
+                          rows={10}
                           variant   ="outlined"
+                          disabled  = {uuid!=="" ? true:false}
                           value     ={descripcion}
                           onChange  ={(v) => {setDescripcion(v.target.value); }}
                         />
@@ -445,22 +554,29 @@ const handleClose = ()  => setOpen(false);
                         display       ="flex"
                         justifyContent="end"
                       >
+                        {uuid==="" ? <Button
+                        onClick={() => {
+                          if (uuid === "") {
+                            handleSave()  
+                          }else{
+                            handleUpdate()  
+                          }
+                          } 
+                        }
+                        // disabled  = {uuid!=="" ? true:false}
+                        variant ="contained"
+                        sx      ={{margin: "1%", color: "white","&:hover": {color: "#15212f",},}}
+                      >
+                        ENVIAR
+                      </Button>:null}
+                      
+
                         <Button
                           onClick={() => {
-                            if (uuid === "") {
-                              handleSave()  
-                            }else{
-                              handleUpdate()  
-                            }
+                            if (uuid !== "") {handleLeido()}
+                            handleClose();
                             } 
                           }
-                          variant ="contained"
-                          sx      ={{margin: "1%", color: "white","&:hover": {color: "#15212f",},}}
-                        >
-                          Guardar
-                        </Button>
-                        <Button
-                          onClick ={handleClose}
                           variant ="contained"
                           color   ="secondary"
                           sx      ={{margin: "1%",color: "white","&:hover": {color: "#15212f",},}}

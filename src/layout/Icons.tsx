@@ -58,7 +58,8 @@ import {
   Error,
   DoDisturbOn,
   CheckCircle,
-  UploadFile
+  UploadFile,
+  AccountCircleOutlined
 } from "@mui/icons-material";
 
 
@@ -108,6 +109,8 @@ export const Icons = (icon: string) => {
       return <ViewList />
     case "Person":
       return <Person />
+    case "AccountCircleOutlined":
+      return <AccountCircleOutlined />
     case "People":
       return <People />
     case "Abc":
@@ -148,15 +151,12 @@ export const Icons = (icon: string) => {
       return <Search />
     case "UploadFile":
       return <UploadFile />
-
-
     case "Error":
       return <Error style={{ color: 'red' }} />
     case "CheckCircle":
       return <CheckCircle style={{ color: 'green' }} />
     case "DoDisturbOn":
       return <DoDisturbOn style={{ color: 'orange' }} />
-
     case "ListAlt":
       return <ListAlt />
     case "Dashboard":

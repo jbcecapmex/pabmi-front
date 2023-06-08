@@ -44,6 +44,7 @@ export default function NestedList() {
 
   const [itemSelected, setItemSelected] = useState(0);
   const [nombreUsuario, setNombreUsuario] = useState("");
+  const [appName, setAppName] = useState("");
   const [rolUsuario, setRolUsuario] = useState("");
   const navigate = useNavigate();
 
@@ -65,30 +66,25 @@ export default function NestedList() {
     if(!localStorage.getItem("NombreUsuario")){
       setTimeout(() => {
         setNombreUsuario(localStorage.getItem("NombreUsuario")!) 
+        setAppName(localStorage.getItem("AppName")!) 
         setRolUsuario(localStorage.getItem("RolUsuario")!) 
       }, 1000);
     } else {
       setNombreUsuario(localStorage.getItem("NombreUsuario")!) 
       setRolUsuario(localStorage.getItem("RolUsuario")!) 
+      setAppName(localStorage.getItem("AppName")!) 
     }
   }, [])
 
   return (
     // box del sidemenu
-    <Box sx={{ width: "90%", top: "6vh", position: "absolute" }}>
+    <Box sx={{ width: "100%", overflowY: "visible" }}>
       {/* box del palacio */}
-      <Box sx={{ display: "flex", justifyContent: "center", height: "11vh" }}>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
         <img src={palacio} alt="Logo" width="200" height="100" />
       </Box>
-      {/* box del avatar */}
-      <Box sx={{ display: "flex", justifyContent: "center", paddingBottom:2}}>
-        <Avatar sx={{ fontSize: 34, bgcolor:"#bda889", p: 3 }}>
-          {AvatarUsuario(nombreUsuario!)}
-        </Avatar>
-      </Box>
-      {/* nombre */}
       <Typography
-        variant="h5"
+        variant="h6"
         component="div"
         sx={{
           flexGrow: 1,
@@ -97,7 +93,25 @@ export default function NestedList() {
           justifyContent: "center",
         }}
       >
-        {nombreUsuario!}
+        {appName!}
+      </Typography>
+      {/* box del avatar */}
+      <Box sx={{ display: "flex", justifyContent: "center", paddingBottom:2}}>
+        <Avatar sx={{ fontSize: 34, bgcolor:"#bda889", p: 3 }}>
+          {AvatarUsuario(nombreUsuario!)}
+        </Avatar>
+      </Box>
+      {/* nombre */}
+      <Typography
+        component="div"
+        sx={{
+          flexGrow: 1,
+          fontWeight: "bold",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        {nombreUsuario!}<br/><br/>
       </Typography>
       {/* Puesto */}
       <Typography

@@ -87,7 +87,7 @@ const Catalogos = () => {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ width: "100%", height: "100%", paddingBottom: "2%", paddingLeft: "2%" }}>
+    <div>
       {showCatGrid ? (
         // manda llamar la pantalla donde esta el grid de los catalogos
         <CatGrid
@@ -98,7 +98,6 @@ const Catalogos = () => {
       ) : (
         <Grid container>
           <Grid sx={{}} item xs={12}>
-            {/* arma ruta de donde esta ubicado */}
             <Breadcrumbs aria-label="breadcrumb">
               <Link underline="hover" color="inherit" href="/Home">
                 Inicio
@@ -109,8 +108,6 @@ const Catalogos = () => {
               <Typography color="text.primary"> Catálogos </Typography>
             </Breadcrumbs>
           </Grid>
-
-          {/* grid que contiene el recuadro donde estan los catalogos */}
           <Grid container xs={12} justifyContent={"center"}>
             <Grid item xs={12} md={12} mt={2}>
               <Card sx={{ p: 1, boxShadow: 8 }}>
@@ -703,7 +700,7 @@ const Catalogos = () => {
           </Grid>
         </Grid >
       )}
-    </Box >
+    </div >
   );
 };
 
