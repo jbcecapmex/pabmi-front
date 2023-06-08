@@ -59,7 +59,7 @@ import DomiciliosC from './componentes/Configuracion/Catalogos/DomiciliosC';
 import MenuC from './componentes/Configuracion/Catalogos/MenuC';
 import PermisosC from './componentes/Configuracion/Catalogos/Permisos';
 import TipoClasificacion from './componentes/Configuracion/Catalogos/TipoClasificacion';
-import NavBar from './layout/NavBarNew';
+import NavBar from './layout/NavBar';
 import EmpleadosC from './componentes/Configuracion/Catalogos/EmpleadosC';
 import UsuariosC from './componentes/Configuracion/Catalogos/UsuariosC';
 import TipoUsuariosC from './componentes/Configuracion/Catalogos/TipoUsuariosC';
@@ -122,7 +122,7 @@ function App() {
   const validarSession = () => {
     setInterval(() => {
       continueSession()
-    }, 54321);
+    }, 8765);
   };
 
   useLayoutEffect(() => {

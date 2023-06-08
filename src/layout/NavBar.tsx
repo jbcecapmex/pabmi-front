@@ -1,10 +1,20 @@
 import React, { useState } from "react";
-import {AppBar,Box,Drawer,IconButton,Menu,MenuItem,Toolbar,Typography,} from "@mui/material";
+import {
+  AppBar, Box, Drawer, IconButton, Menu, MenuItem, Toolbar, Typography, Grid,
+  Tooltip, Badge
+} from "@mui/material";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { Email, Notifications } from "@mui/icons-material";
+import MenuIcon from "@mui/icons-material/Menu";
 import SideMenu from "./SideMenu";
-import { grey} from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
+import { NavStyle } from "./NavStyle";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import logo from "../assets/svg/logo.svg";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import { logoutapp } from "../services/Validation";
+import { Icons } from "./Icons";
 
 // ancho del drawer
 const drawerWidth = 300;
@@ -37,133 +47,114 @@ function NavBar(props: { children?: any; window?: any }) {
 
   const handleLogout = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    navigate("/");
+    logoutapp();
   };
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawerNotificationOpen, setIsDrawerNotificationOpen] = useState(false);
+  const query = {
+    isXs: useMediaQuery("(min-width: 0px) and (max-width: 1025px)"),
+  };
   // const container = window !== undefined ? () => window().document.body : undefined;
-    
+
   // no se como cambiar esto
   if (auth)
     return (
-      <Box sx={{ display: "flex" }}>
-        <AppBar
-          position="absolute"
-          // ancho del appbar
-          sx={{
-            width: '100vw',
-            height: '6vh',
-            bgcolor: ColorGris, //color del appbar
-            
-          }}
-        >
+      <Box>
+        <AppBar position="static">
           <Toolbar variant="dense">
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { sm: "none" } }}
+            <Grid
+              container
+              sx={{ alignItems: "center", justifyContent: "space-between" }}
             >
-              <i className="fa-solid fa-bars" />
-            </IconButton>
-            <Typography  component="div" sx={{ flexGrow: 1, fontFamily: "MontserratRegular, sans-serif",fontSize: "130%" }}>
-              Plataforma de Administración de Bienes Muebles e Inmuebles 
-            </Typography>
-            {/* menu de mensajes */}
-            <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenuNotificaciones}
-                color="inherit"
+              <Grid item mt={0.5}>
+                <IconButton
+                  size="large"
+                  color="inherit"
+                  onClick={() => setIsDrawerOpen(true)}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Grid>
+              <Grid item mt={0.5}>
+                <img src={logo} style={{ height: "40px" }} alt={"logo"}></img>
+              </Grid>
+              <Grid
+                mt={1.5}
+                display={"flex"}
+                justifyContent={"space-between"}
+                width={85}
               >
-                <Email />
-              </IconButton>
-              {/* {userName} */}
-              <Menu
-								id="appbar-notificaciones"
-								anchorOrigin={{
-									vertical: "top",
-									horizontal: "right",
-								}}
-								keepMounted
-								transformOrigin={{
-									vertical: "top",
-									horizontal: "right",
-								}}
-								open={Boolean(anchorNotificaciones)}
-								onClose={handleCloseNotificaciones}
-							>
-								<MenuItem onClick={handleCloseNotificaciones}>Profile</MenuItem>
-								<MenuItem onClick={handleLogout}>Logout</MenuItem>
-							</Menu>
-            </div>
-            {/* menu de notificaciones */}
-            <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenuAlerta}
-                color="inherit"
+                <Grid>
+                  <Badge badgeContent={0} color="info">
+                    <IconButton
+                      size="large"
+                      aria-label="account of current user"
+                      aria-controls="menu-appbar"
+                      aria-haspopup="true"
+                      onClick={handleMenuAlerta}
+                      color="inherit"
+                    >
+                      {Icons("AccountCircleOutlined")}
+                    </IconButton>
+                    {/* {userName} */}
+                    <Menu
+                      id="appbar-alerta"
+                      anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      open={Boolean(anchorAlerta)}
+                      onClose={handleCloseAlerta}
+                    >
+                      <MenuItem onClick={handleCloseAlerta}>
+                        {Icons("Person")}
+                        Perfil
+                      </MenuItem>
+                      <MenuItem onClick={handleLogout}>
+                        {Icons("ExitToApp")}
+                        Salir
+                      </MenuItem>
+                    </Menu>
+                  </Badge>
+                </Grid>
+                <Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Drawer
+              anchor="left"
+              open={isDrawerOpen}
+              onClose={() => setIsDrawerOpen(false)}
+            >
+              <Grid
+                container
+                sx={{ width: query.isXs ? "50vw" : "30vw", height: "inherit" }}
               >
-                <Notifications />
-              </IconButton>
-              {/* {userName} */}
-              <Menu
-								id="appbar-alerta"
-								anchorOrigin={{
-									vertical: "top",
-									horizontal: "right",
-								}}
-								keepMounted
-								transformOrigin={{
-									vertical: "top",
-									horizontal: "right",
-								}}
-								open={Boolean(anchorAlerta)}
-								onClose={handleCloseAlerta}
-							>
-								<MenuItem onClick={handleCloseAlerta}>Profile</MenuItem>
-								<MenuItem onClick={handleLogout}>Logout</MenuItem>
-							</Menu>
-            </div>
+                <Grid item container direction="column" mt={2}>
+                  <SideMenu />
+                </Grid>
+              </Grid>
+            </Drawer>
           </Toolbar>
         </AppBar>
-
-        {/* no se donde esta este box */}
-        {/* <Box>
-         <SideMenu />
-        </Box> */}
-          <Drawer
-            variant="permanent"
-            sx={{
-              display: { xs: "none", sm: "block" },
-              "& .MuiDrawer-paper": {
-                boxSizing: "border-box",
-                width: drawerWidth,
-                zIndex: 1,
-              },
-            }}
-            open
-          >
-            <SideMenu />
-          </Drawer>
-        {/* fondo de pantalla del centro */}
-        
-        <Box component="main"
-         sx={{ flexGrow: 1, paddingTop:2, paddingBottom:4, paddingLeft:4, width:'76vw',top:'7vh', position:'absolute',left:'18vw', }}>
-          {/* <Toolbar /> */}
-          {props.children}
-        </Box>
+        <Grid
+          container
+          sx={{ width: "100%", height: "inherit", paddingX: 2, paddingY: 4 }}
+        >
+            {props.children}
+        </Grid>
       </Box>
     );
-  else 
+  else
     return <div>{props.children}</div>;
 }
 
