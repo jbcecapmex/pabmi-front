@@ -30,6 +30,9 @@ export const continueSession = () => {
           if(!localStorage.getItem("NombreUsuario")!){
             getUserDetails(r.data.data.IdUsuario);
           }
+          if(!localStorage.getItem("AppName")!){
+            getAppDetails(localStorage.getItem("IdApp")!)
+          }
         }
         if (dif <= -1) {
           logoutapp();
@@ -69,7 +72,32 @@ export const getUserDetails = (idCentral: string) => {
       if (r.status === 200) {
         localStorage.setItem("IdUsuario", r.data.data.Id);
         localStorage.setItem( "NombreUsuario", r.data.data.Nombre.split(" ")[0] + " " + r.data.data.ApellidoPaterno );
+        return true;
+      }
+    })
+    .catch((error) => {
+      if (error.response.status === 401) {
+        logoutapp();
+      }
+    });
+};
 
+export const getAppDetails = (idApp: string) => {
+  return axios
+    .post(process.env.REACT_APP_APPLICATION_LOGIN_BACK + "/api/app-detail",
+    {
+      IdApp: idApp,
+    },
+    {
+      headers: { 
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("jwtToken") || "" 
+      },
+    })
+    .then((r) => {
+      console.log("Detail", r)
+      if (r.status === 200) {
+        localStorage.setItem( "AppName", r.data.data.Nombre);
         return true;
       }
     })

@@ -101,6 +101,9 @@ import Notificaciones from './componentes/Configuracion/Catalogos/Notificaciones
 import Procesos from './componentes/Configuracion/Catalogos/Procesos';
 import Proveedores from './componentes/Configuracion/Catalogos/Proveedores';
 
+
+import Mensajes from './componentes/Mensajes/Mensajes';
+
 function App() {
 
   // const navigate = useNavigate();
@@ -122,7 +125,7 @@ function App() {
   const validarSession = () => {
     setInterval(() => {
       continueSession()
-    }, 54321);
+    }, 8765);
   };
 
   useLayoutEffect(() => {
@@ -230,7 +233,9 @@ function App() {
           <Route path="/Configuracion/Catalogos/Linea" element={<Linea/>} />
           <Route path="/Configuracion/Catalogos/TipoActivoFijo" element={<TipoActivoFijo/>} />
 
-          <Route path="Adquisiciones/Altas" element={<AdquisicionesAltas />}/>
+          <Route path="/Adquisiciones/Altas" element={<AdquisicionesAltas />}/>
+
+          <Route path="/Mensajes" element={<Mensajes />}/>
           
 
         </Routes>

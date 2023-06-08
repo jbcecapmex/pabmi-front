@@ -4,10 +4,8 @@ import fondo from "../../assets/svg/fondo.png";
 
 export default function Dashboard() {
   return (
-    <Box>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
         <img src={fondo} alt="Logo" width="400" height="550" />
       </Box>
-    </Box>
   );
 }
