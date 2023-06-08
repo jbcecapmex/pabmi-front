@@ -1,5 +1,5 @@
 import React from "react";
-import {Edit as EditIcon, Delete as DeleteIcon,} from "@mui/icons-material";
+import {OpenInNew as OpenIcon, ForwardToInbox as ForwardIcon, MarkEmailRead as Leido, MarkEmailUnread  as NoLeido} from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {Box,Breadcrumbs,Button,Card,CardContent,CardHeader,FormControl,Grid,IconButton,InputLabel,Link,MenuItem,Select,TextField,Tooltip,Typography,} from "@mui/material";
@@ -23,71 +23,23 @@ const Toast = Swal.mixin({
   },
 });
 
-const ListaModulos = [
-  {
-    value: '0',
-    label: '',
-  },  
-  {
-    value: '1',
-    label: 'ADMINISTRACIÓN',
-  },
-  {
-    value: '2',
-    label: 'CONFIGURACIÓN',
-  },
-  {
-    value: '3',
-    label: 'MUEBLES',
-  },
-  {
-    value: '4',
-    label: 'VEHÍCULOS',
-  },
-  {
-    value: '5',
-    label: 'INMUEBLES',
-  },  
-  {
-    value: '6',
-    label: 'TICKETS',
-  },
-  {
-    value: '7',
-    label: 'DASHBOARD Y REPORTES',
-  },
-];
 
-const TipoParam = [
-  {
-    value: '0',
-    label: '',
-  },  
-  {
-    value: '1',
-    label: 'CADENA',
-  },
-  {
-    value: '2',
-    label: 'ENTERO',
-  },
-  {
-    value: '3',
-    label: 'DECIMAL',
-  },
-];
-
-
-export interface ValoresGlobaleInterface {
+export interface UsuariosInterface {
   uuid: string
-  Modulo: string
-  Cve: string
-  Descripcion: string
-  Tipo: number
-  ParamStr: string
-  ParamInt: number
-  ParamFloat: number | undefined;
+  uuidTiCentral: string
+  uuidDependencia: string
+  NombreCorto: string
+  uuidPuesto: string
 }
+
+export interface MensajesInterface {
+  uuid: string
+  Asignadoa: string
+  Encabezado: string
+  Descripcion: string
+  Visto: string;
+}
+
 
 const style = {
   position: "absolute",
@@ -100,17 +52,14 @@ const style = {
   p: 2,
 };
 
-export default function VariablesGlobales() {
+export default function Mensajes() {
 // definicio de variables de estado
 const navigate                          = useNavigate();
 const [uuid, setuuid]                   = useState("");
-const [modulo, setModulo]               = useState("");
-const [cve, setCve]                     = useState("");
+const [asignadoa, setAsignadoa]         = useState("");
+const [encabezado, setEncabezado]       = useState("");
 const [descripcion, setDescripcion]     = useState("");
-const [tipo, setTipo]                   = useState("");
-const [paramstr, setParamStr]           = useState("");
-const [paramint, setParamInt]           = useState("");
-const [paramfloat, setParamFloat]       = useState("");
+// const [visto, setVisto]                 = useState("");
 const [creadopor, setCreadoPor]         = useState("");
 const [modificadopor, setModificadoPor] = useState("");
 const [eliminadopor, setEliminadoPor]   = useState("");
@@ -120,9 +69,10 @@ const [open, setOpen]               = React.useState(false);
 const handleOpen = ()   => setOpen(true);
 const handleClose = ()  => setOpen(false);
 
+
   // Handle save
   const handleSave = () => {
-    if (modulo === "" || cve === "" || descripcion === "" || tipo === "" ){
+    if (encabezado === "" || descripcion === ""){
       Swal.fire({
         icon  : "error",
         title : "Mensaje",
@@ -131,19 +81,16 @@ const handleClose = ()  => setOpen(false);
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
       const data = {
-        modulo          : modulo,
-        cve             : cve,
+        asignadoa       : asignadoa,
+        encabezado      : encabezado,
         descripcion     : descripcion,
-        tipo            : tipo,
-        paramstr        : paramstr,
-        paramint         : paramint,
-        paramfloat      : paramfloat,
-        creadopor     : localStorage.getItem("IdUsuario"),
-        eliminadopor  : eliminadopor,
+        visto           : 0,
+        creadopor       : localStorage.getItem("IdUsuario"),
+        eliminadopor    : eliminadopor,
       };
       axios({
         method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/administracion/guardavalores",
+        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/mensajes/guardamensajes",
         headers : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -154,9 +101,9 @@ const handleClose = ()  => setOpen(false);
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : "Creado Exitosamente",
+            title : "Enviado Exitosamente",
           });
-          getAllValoresGlobales();
+          getAllMensajes();
         })
         .catch(function (error) {
           Swal.fire({
@@ -182,7 +129,7 @@ const handleClose = ()  => setOpen(false);
         const data = { uuid: cellValues.row.uuid };
         axios({
           method    : "post",
-          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/administracion/eliminavalores",
+          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/mensajes/eliminamensajes",
           headers   : {
                         "Content-Type": "application/json",
                         Authorization: localStorage.getItem("jwtToken") || "",
@@ -194,7 +141,7 @@ const handleClose = ()  => setOpen(false);
               icon  : "success",
               title : " Eliminado Exitosamente",
             });
-            getAllValoresGlobales();
+            getAllMensajes();
           })
           .catch(function (error) {
             Swal.fire({
@@ -205,10 +152,9 @@ const handleClose = ()  => setOpen(false);
       }
     });
   };
-
-// Handle update
+  // Handle update
   const handleUpdate = () => {
-    if (modulo === "" || cve === "" || descripcion === "" || tipo === "" ){
+    if (encabezado === "" || descripcion === ""){
       Swal.fire({
         icon  : "error",
         title : "Mensaje",
@@ -217,21 +163,16 @@ const handleClose = ()  => setOpen(false);
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
       const data = {
-        uuid            : uuid,
-        modulo          : modulo,
-        cve             : cve,
-        descripcion     : descripcion,
-        tipo            : tipo,
-        paramstr        : paramstr,
-        paramint         : paramint,
-        paramfloat      : paramfloat,
-        creadopor       : creadopor,
-        modificadopor   : localStorage.getItem("IdUsuario"),
-        eliminadopor    : eliminadopor,
+        uuid                  : uuid,
+        encabezado            : encabezado,
+        descripcion           : descripcion,
+        creadopor             : creadopor,
+        modificadopor         : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
       axios({
         method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/administracion/actualizavalores",
+        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/mensajes/actualizamensajes",
         headers : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -244,7 +185,7 @@ const handleClose = ()  => setOpen(false);
             icon  : "success",
             title : " Actualizado Exitosamente",
           });
-          getAllValoresGlobales();
+          getAllMensajes();
         })
         .catch(function (error) {
           Swal.fire({
@@ -256,116 +197,140 @@ const handleClose = ()  => setOpen(false);
     }
   }; 
 
+  const handleLeido = () => {
+    //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
+    const data = {
+      uuid   : uuid,
+      visto  : 1,
+
+    };
+    console.log(data);
+    axios({
+      method  : "post",
+      url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/mensajes/mensajeleido",
+      headers : {
+                  "Content-Type": "application/json",
+                  Authorization: localStorage.getItem("jwtToken") || "",
+      },
+      data    : data,
+    })
+  };   
+
   const columns = [
     {
       field: "acciones",
       headerName: "",
-      width: 80,
+      width: 40,
       headerAlign: "center",
       hideable: false,
       renderCell: (cellValues: any) => {
         return (
           <Box>
-           <Tooltip title={"Editar " + cellValues.row.Cve}>
+           <Tooltip title={"Abrir " + cellValues.row.Encabezado}>
            <IconButton color="primary" 
               // al darle editar se llenan los campos con los valores seleccionados del renglon
               onClick={(event) => {     
+                
                 setuuid(cellValues.row.uuid);
-                setModulo(cellValues.row.Modulo);
-                setCve(cellValues.row.Cve);
+                console.log(uuid);
+                setAsignadoa(cellValues.row.Asignadoa);
+                console.log(asignadoa);
+                setEncabezado(cellValues.row.Encabezado);
                 setDescripcion(cellValues.row.Descripcion);
-                setTipo(cellValues.row.Tipo.toString());
-                setParamStr(cellValues.row.ParamStr);
-                setParamInt(cellValues.row.ParamInt);
-                setParamFloat(cellValues.row.ParamFloat);                
                 setCreadoPor(cellValues.row.CreadoPor);   
                 setModificadoPor(cellValues.row.ModificadoPor);
                 setEliminadoPor(cellValues.row.EliminadoPor);
-                console.log(cellValues.row);
                 handleOpen();
               }}
            >
-                <EditIcon />
+                <OpenIcon />
               </IconButton>
            </Tooltip>
-           <Tooltip title={"Eliminar" + cellValues.row.Nombre}>
+           {/* <Tooltip title={"Eliminar" + cellValues.row.Nombre}>
               <IconButton color="secondary"
                 onClick={(event) => {handleDelete(event, cellValues);}}
                >
-                <DeleteIcon />
+                <ForwardIcon />
               </IconButton>
-            </Tooltip>
+            </Tooltip> */}
           </Box>
         );
       },
     },
+     // segunda columna donde se mostrara el nombre
      {
-      field: "Modulo",
-      headerName: "Modulo",
-      width: 150,
-      hideable: false,
-      headerAlign: "left",
-    },
-    {
-      field: "Cve",
-      headerName: "Cve",
+      field: "Encabezado",
+      headerName: "Encabezado",
       width: 100,
       hideable: false,
       headerAlign: "left",
-    },    
+    },
+    // Tercer columna donde se mostrara el path
     {
       field: "Descripcion",
       headerName: "Descripcion",
-      width: 350,
+      width: 900,
       hideable: false,
       headerAlign: "left",
     },
     {
-      field: "Tipo",
-      headerName: "Tipo",
-      width: 75,
+      field: "Visto",
+      headerName: "Leido",
+      width: 50,
       hideable: false,
       headerAlign: "left",
       renderCell: (cellValues: any) => {
         return (
           <Box>
             {
-              cellValues.row.Tipo===1? "CADENA":cellValues.row.Tipo===2? "ENTERO":"DECIMAL"
+              cellValues.row.Visto===1? <Leido color="success" />:<NoLeido color="info" />
             }
           </Box>
         );
       },
-    },        
-    {
-      field: "ParamStr",
-      headerName: "ParamStr",
-      width: 220,
-      hideable: false,
-      headerAlign: "left",
-    },        
-    {
-      field: "ParamInt",
-      headerName: "ParamInt",
-      width: 80,
-      hideable: false,
-      headerAlign: "left",
-    },
-    {
-      field: "ParamFloat",
-      headerName: "ParamFloat",
-      width: 100,
-      hideable: false,
-      headerAlign: "left",
     },
   ];
  
+  // declaracion de la variable de estado "hook" que recibira la informacion del endpoint
+  const [rows, setRows] = useState([]);
+  // aqui es el consumo del endpoint para obtener el listado de la base de datos
+  const getAllMensajes = () => {
+    //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
+    const data = {
+      // asignadoa         :  "a4f79e57-32b7-11ed-aed0-040300000000",
+      asignadoa         : localStorage.getItem("IdUsuario"),
+    };
+    axios({
+      method    : "post",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/mensajes/detallemensajes",
+      headers   : {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.getItem("jwtToken") || "",
+      },
+      data    : data,      
+    })
+      // aqui se recibe lo del endpoint en response
+      .then(({ data }) => {
+        const rows = data;
+        setRows(rows);
+        
+      })
+      .catch(function (error) {
+        Swal.fire({
+          icon  : "error",
+          title : "Mensaje",
+          text  : "("+error.response.status+") "+error.response.data.message,
+        }).then((r) => navigate("/Mensajes/Mensajes"));
+      });
+  };
+
 // declaracion de la variable de estado "hook" que recibira la informacion del endpoint
-const [rows, setRows] = useState([]);
-// aqui es el consumo del endpoint para obtener el listado de la base de datos
-const getAllValoresGlobales = () => {
+const [rowsasignadoa, setRowsAsignadoa] = useState<Array<UsuariosInterface>>([]);
+// aqui es el consumo del endpoint para obtener el listado de menus de la base de datos
+const getAllAsignadoa = () => {
   axios({
     method    : "get",
-    url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/administracion/obtienevalores",
+    url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtieneusuarios",
     headers   : {
                   "Content-Type": "application/json",
                   Authorization: localStorage.getItem("jwtToken") || "",
@@ -373,35 +338,34 @@ const getAllValoresGlobales = () => {
   })
     // aqui se recibe lo del endpoint en response
     .then(({ data }) => {
-      const rows = data;
-      setRows(rows);
+      const rowsasignadoa = data;
+      setRowsAsignadoa(rowsasignadoa);
     })
     .catch(function (error) {
       Swal.fire({
         icon  : "error",
         title : "Mensaje",
         text  : "("+error.response.status+") "+error.response.data.message,
-      }).then((r) => navigate("/"));
+      })
+      // .then((r) => navigate("/Configuracion/Usuarios"));
     });
 };
 
   // esto es solo para que se ejecute la rutina de obtiene cuando cargue la pagina
   useEffect(() => {
-    getAllValoresGlobales();
+    getAllMensajes();
   }, []);
 
-  // esto es para que se limpien todas las variables al salir del modal
+  // esto es para que se ejecuten todo los get de los listados solo cuando se abra la modal,
   // y que limpie las variables cuando se salga de la modal
   useEffect(() => {
     if (open===false) {
+      getAllAsignadoa();
       setuuid("");
-      setModulo("");
-      setCve("");
+      setAsignadoa("");
+      setEncabezado("");
       setDescripcion("");
-      setTipo("");
-      setParamStr("");
-      setParamInt("");
-      setParamFloat("");      
+      getAllMensajes();
     }
   }, [open]);  
  
@@ -431,10 +395,7 @@ const getAllValoresGlobales = () => {
         <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
         </Link>
-        <Link underline="hover" color="inherit" href="/Inicio">
-            Administración
-        </Link>
-          <Typography color="text.primary">Variables Globales</Typography>
+          <Typography color="text.primary">Mensajes</Typography>
         </Breadcrumbs>
       </Grid>
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
@@ -448,7 +409,7 @@ const getAllValoresGlobales = () => {
           {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
           <Card sx={{ p: 0, boxShadow: 8, height: "86vh" }}>
             <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
-            <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>Variables Globales</Typography>                  
+            <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>Mensajes</Typography>                  
             <CardContent sx={{ fontFamily: "MontserratBold", bgcolor: "" }}>
               {/* aqui es el cardcontent que es el contenido del card,y ponemos primero un box y estamos dibujando el boton para agregar un nuevo registro */}
               <Box display="flex" justifyContent="flex-end">
@@ -505,52 +466,48 @@ const getAllValoresGlobales = () => {
               >
                 <Box sx={style} display="flow">
                   <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                      <Box>
+                        <Typography variant="h5" sx={{ padding: "1%" }}>
+                          Mensajes
+                        </Typography>
+                      </Box>
+                    </Grid>
                     <Grid item xs={6}>
                       <Box
                         component="form"
-                        sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
+                        sx={{ "& > :not(style)": { m: 1.3, width: "100%" }, }}
                         noValidate
                         autoComplete="off"
                         display="flex"
                       >
-                        <TextField
-                          select
-                          label     ="Modulo"
-                          size      ="small"
-                          variant   ="outlined"
-                          disabled  = {uuid!=="" ? true:false}
-                          value     ={modulo}
-                          onChange  ={(v) => {setModulo(v.target.value); }}
-                        >
-                        {ListaModulos.map((option) => (
-                          <MenuItem key={option.label} value={option.label}>
-                            {option.label}
-                          </MenuItem>
-                        ))}                
-                        </TextField>
+                        <FormControl fullWidth sx={{ bgColor: "#fff" }}>
+                          <InputLabel sx={{ marginTop: "-4px" }}>
+                            Asignado a
+                          </InputLabel>
+                          <Select
+                            id          ="usuario"
+                            value       ={asignadoa}
+                            disabled  = {uuid!=="" ? true:false}
+                            size        ="small"
+                            displayEmpty
+                            onChange    ={(v) => { setAsignadoa(v.target.value); }}
+                          >
+                            <MenuItem value=""></MenuItem>
+                            {rowsasignadoa.map((asignadoa, index) => (
+                              <MenuItem value={asignadoa.uuidTiCentral}>
+                                {asignadoa.NombreCorto}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
                       </Box>
                     </Grid>
-
                     <Grid item xs={6}>
-                      <Box
-                        component="form"
-                        sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
-                        noValidate
-                        autoComplete="off"
-                        display="flex"
-                      >
-                        <TextField
-                          inputProps={{ maxLength: 20 }}
-                          label     ="Cve"
-                          size      ="small"
-                          variant   ="outlined"
-                          disabled  = {uuid!=="" ? true:false}
-                          value     ={cve}
-                          onChange  ={(v) => {setCve(v.target.value); }}
-                        />
+                      <Box>
+                        {/* espacio en blanco */}
                       </Box>
                     </Grid>
-
                     <Grid item xs={24}>
                       <Box
                         component="form"
@@ -560,108 +517,35 @@ const getAllValoresGlobales = () => {
                         display="flex"
                       >
                         <TextField
-                          inputProps={{ maxLength: 100 }}
-                          label     ="Descripcion"
+                          label     ="Encabezado"
                           size      ="small"
                           variant   ="outlined"
-                          // disabled  = {uuid!=="" ? true:false}
+                          disabled  = {uuid!=="" ? true:false}
+                          value     ={encabezado}
+                          onChange  ={(v) => {setEncabezado(v.target.value); }}
+                        />
+                      </Box>
+                    </Grid>
+                    <Grid item xs={24}>
+                      <Box
+                        component="form"
+                        sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
+                        noValidate
+                        autoComplete="off"
+                        display="flex"
+                      >
+                        <TextField
+                          label     ="Mensaje"
+                          // size      ="small"
+                          multiline
+                          rows={10}
+                          variant   ="outlined"
+                          disabled  = {uuid!=="" ? true:false}
                           value     ={descripcion}
                           onChange  ={(v) => {setDescripcion(v.target.value); }}
-                          helperText= {`Carácteres restantes ${255-descripcion.length}` }
                         />
                       </Box>
-                    </Grid>
-
-                    <Grid item xs={3}>
-                      <Box
-                        component="form"
-                        sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
-                        noValidate
-                        autoComplete="off"
-                        display="flex"
-                      >
-                        <TextField
-                          select
-                          label     ="Tipo"
-                          size      ="small"
-                          variant   ="outlined"
-                          value     ={tipo}
-                          onChange  ={(v) => {setTipo(v.target.value); 
-                                              setParamStr("");
-                                              setParamInt("");
-                                              setParamFloat("");}}
-                        >
-                        {TipoParam.map((option) => (
-                          <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                          </MenuItem>
-                        ))}                
-                        </TextField>                          
-                      </Box>
-                    </Grid>
-
-                    <Grid item xs={9}>
-                      <Box
-                        component="form"
-                        sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
-                        noValidate
-                        autoComplete="off"
-                        display="flex"
-                      >
-                        <TextField
-                          inputProps={{ maxLength: 255 }}
-                          label     ="ParamStr"
-                          size      ="small"
-                          variant   ="outlined"
-                          disabled  = {tipo !== "1" ?  true:false}
-                          value     ={paramstr}
-                          onChange  ={(v) => {setParamStr(v.target.value); }}
-                          helperText= {tipo === "1" ?  `Carácteres restantes ${255-paramstr.length}` :""} 
-                        />
-                      </Box>
-                    </Grid>
-
-                    <Grid item xs={6}>
-                      <Box
-                        component="form"
-                        sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
-                        noValidate
-                        autoComplete="off"
-                        display="flex"
-                      >
-                        <TextField
-                          type      ="number"
-                          label     ="ParamInt"
-                          size      ="small"
-                          variant   ="outlined"
-                          disabled  = {tipo !== "2" ?  true:false}
-                          value     ={paramint}
-                          onChange  ={(v) => {setParamInt(v.target.value); }}
-                        />
-                      </Box>
-                    </Grid>
-
-                    <Grid item xs={6}>
-                      <Box
-                        component="form"
-                        sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
-                        noValidate
-                        autoComplete="off"
-                        display="flex"
-                      >
-                        <TextField
-                          type      ="number"
-                          label     ="ParamFloat"
-                          size      ="small"
-                          variant   ="outlined"
-                          disabled  = {tipo !== "3" ?  true:false}
-                          value     ={paramfloat}
-                          onChange  ={(v) => {setParamFloat(v.target.value); }}
-                        />
-                      </Box>
-                    </Grid>
-
-                 
+                    </Grid>                    
                     <Grid item xs={12}>
                       <Box
                         maxWidth      ="100%"
@@ -670,22 +554,29 @@ const getAllValoresGlobales = () => {
                         display       ="flex"
                         justifyContent="end"
                       >
+                        {uuid==="" ? <Button
+                        onClick={() => {
+                          if (uuid === "") {
+                            handleSave()  
+                          }else{
+                            handleUpdate()  
+                          }
+                          } 
+                        }
+                        // disabled  = {uuid!=="" ? true:false}
+                        variant ="contained"
+                        sx      ={{margin: "1%", color: "white","&:hover": {color: "#15212f",},}}
+                      >
+                        ENVIAR
+                      </Button>:null}
+                      
+
                         <Button
                           onClick={() => {
-                            if (uuid === "") {
-                              handleSave()  
-                            }else{
-                              handleUpdate()  
-                            }
+                            if (uuid !== "") {handleLeido()}
+                            handleClose();
                             } 
                           }
-                          variant ="contained"
-                          sx      ={{margin: "1%", color: "white","&:hover": {color: "#15212f",},}}
-                        >
-                          Guardar
-                        </Button>
-                        <Button
-                          onClick ={handleClose}
                           variant ="contained"
                           color   ="secondary"
                           sx      ={{margin: "1%",color: "white","&:hover": {color: "#15212f",},}}
