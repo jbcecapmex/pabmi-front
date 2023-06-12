@@ -226,13 +226,13 @@ const handleClose = ()  => setOpen(false);
         <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Area">
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Area">
-            Usuarios
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          Catálogos
           </Link>
-          <Typography color="text.primary">Catálogo de Area</Typography>
+          <Typography color="text.primary">Catálogo de Área</Typography>
         </Breadcrumbs>
       </Grid>
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
@@ -300,7 +300,7 @@ const handleClose = ()  => setOpen(false);
                     <Grid item xs={12}>
                       <Box>
                         <Typography variant="h5" sx={{ padding: "1%" }}>
-                          Detalle de Area
+                          Detalle de Área
                         </Typography>
                       </Box>
                     </Grid>
@@ -355,7 +355,7 @@ const handleClose = ()  => setOpen(false);
                         display="flex"
                       >
                         <TextField
-                          label     ="Descripcion"
+                          label     ="Descripción"
                           size      ="small"
                           variant   ="outlined"
                           value     ={descripcion}
@@ -405,5 +405,6 @@ const handleClose = ()  => setOpen(false);
         </Grid>
       </Grid>
     </Grid>
+    
   );
 }
