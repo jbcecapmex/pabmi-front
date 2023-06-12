@@ -6,19 +6,7 @@ import MUIXDataGrid from "../../Grid/MUIXDataGrid";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
-
-// componente de sweetalert2 para el uso de los mensajes de alertas
-const Toast = Swal.mixin({
-  toast: true,
-  position: "center",
-  showConfirmButton: false,
-  timer: 4000,
-  timerProgressBar: false,
-  didOpen: (toast) => {
-    toast.addEventListener("mouseenter", Swal.stopTimer);
-    toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
-});
+import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
 
 export interface TipoReporteInterface {
   uuid: string;
@@ -75,69 +63,22 @@ const handleClose = ()  => setOpen(false);
         creadopor             : localStorage.getItem("IdUsuario"),
         eliminadopor          : eliminadopor,
       };
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardatiposreportes",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
+      const url = "/catalogos/guardatiposreportes";
+      catalogoSave(data,url).then((response) =>{
+        setOpen(false);
+        getAllTipoReporte();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : "Creado Exitosamente",
-          });
-          getAllTipoReporte();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,});
-        });
     }
   };
   // Handle delete
   const handleDelete = (event: any, cellValues: any) => {
-    Swal.fire({
-      title               : "Estas Seguro(a)?",
-      text                : `Estas a punto de eliminar un registro (${cellValues.row.Descripcion})`,
-      icon                : "question",
-      showCancelButton    : true,
-      confirmButtonText   : "Eliminar",
-      confirmButtonColor  : "#dc3545",
-      cancelButtonColor   : "#0d6efd",
-      cancelButtonText    : "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const data = { uuid: cellValues.row.uuid };
-        axios({
-          method    : "post",
-          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminatiposreportes",
-          headers   : {
-                        "Content-Type": "application/json",
-                        Authorization: localStorage.getItem("jwtToken") || "",
-          },
-          data      : data,
-        })
-          .then(function (response) {
-            Toast.fire({
-              icon  : "success",
-              title : "Eliminado Exitosamente",
-            });
-            getAllTipoReporte();
-          })
-          .catch(function (error) {
-            Swal.fire({
-              icon  : "error",
-              title : "Mensaje",
-              text  : "(" + error.response.status + ") " + error.response.data.msg,});
-          });
-      }
-    });
+    const data = cellValues.row.uuid;
+    const descripcion = cellValues.row.Descripcion;   
+    const url = "/catalogos/eliminatiposreportes";
+    catalogoDelete(data,url,descripcion).then((response) =>{
+      setOpen(false);
+      getAllTipoReporte();
+    })
   };
 
 // Handle update
@@ -159,30 +100,11 @@ const handleClose = ()  => setOpen(false);
         modificadopor         : localStorage.getItem("IdUsuario"),
         eliminadopor          : eliminadopor,
       };
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizatiposreportes",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
+      const url = "/catalogos/actualizatiposreportes";
+      catalogoUpdate(data,url).then((response) =>{
+        setOpen(false);
+        getAllTipoReporte();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : "Actualizado Exitosamente",
-          });
-          getAllTipoReporte();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,
-          });
-        });
     }
   }; 
 

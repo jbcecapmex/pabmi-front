@@ -6,22 +6,7 @@ import MUIXDataGrid from "../../Grid/MUIXDataGrid";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
-import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices"
-
-// componente de sweetalert2 para el uso de los mensajes de alertas
-const Toast = Swal.mixin({
-  toast: true,
-  position: "center",
-  showConfirmButton: false,
-  timer: 4000,
-  timerProgressBar: false,
-  //background: '#2e7d32',
-  //color: '#fff',  
-  didOpen: (toast) => {
-    toast.addEventListener("mouseenter", Swal.stopTimer);
-    toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
-});
+import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
 
 export interface EstatusResguardosInterface {
   uuid: string;
@@ -82,7 +67,6 @@ const handleClose = ()  => setOpen(false);
         setOpen(false);
         getAllEstatusResguardos();
       })
-
     }
   };
   // Handle delete
@@ -114,7 +98,7 @@ const handleClose = ()  => setOpen(false);
         eliminadopor          : eliminadopor,
       };
       const url = "/catalogos/actualizaestatusresguardo";
-      catalogoSave(data,url).then((response) =>{
+      catalogoUpdate(data,url).then((response) =>{
         setOpen(false);
         getAllEstatusResguardos();
       })
