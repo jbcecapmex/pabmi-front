@@ -283,8 +283,11 @@ const handleClose = ()  => setOpen(false);
     })
       // aqui se recibe lo del endpoint en response
       .then(({ data }) => {
-        const rows = data;
-        setRows(rows);
+        if (data) {
+          setRows(data);
+        } else {
+          setRows([])
+        }
       })
       .catch(function (error) {
         Swal.fire({
@@ -308,11 +311,14 @@ const handleClose = ()  => setOpen(false);
       },
     })
       // aqui se recibe lo del endpoint en response
-      .then(({ data }) => {
-        const rowstiporeportes = data;
-        setRowsTipoReportes(rowstiporeportes);
+      .then((response) => {
+        if (response) {
+          setRowsTipoReportes(response.data);
+        } else {
+          setRowsTipoReportes([])
+        }
       })
-      .catch(function (error) {
+      .catch(function (error: any) {
         Swal.fire({
           icon  : "error",
           title : "Mensaje",
@@ -500,11 +506,14 @@ const handleClose = ()  => setOpen(false);
                             onChange    ={(v) => { setTipoReporte(v.target.value); }}
                           >
                             <MenuItem value=""></MenuItem>
-                            {rowstiporeportes.map((tiporeporte, index) => (
-                              <MenuItem value={tiporeporte.uuid}>
-                                {tiporeporte.Nombre}
-                              </MenuItem>
-                            ))}
+                            {
+                              rowstiporeportes.length > 0 &&
+                              rowstiporeportes.map((tiporeporte, index) => (
+                                <MenuItem key={tiporeporte.uuid} value={tiporeporte.uuid}>
+                                  {tiporeporte.Nombre}
+                                </MenuItem>
+                              ))
+                            }
                           </Select>
                         </FormControl>
                       </Box>

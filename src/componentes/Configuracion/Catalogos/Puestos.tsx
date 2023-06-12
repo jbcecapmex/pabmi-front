@@ -27,6 +27,9 @@ export interface PuestosInterface {
   Cve: string;
   Nombre: string;
   Descripcion: string;
+  creadopor: string;
+  modificadopor: string;
+  eliminadopor: string;    
 }
 
 const style = {
@@ -72,6 +75,7 @@ const handleClose = ()  => setOpen(false);
         nombre                : nombre,
         descripcion           : descripcion,
         creadopor             : localStorage.getItem("IdUsuario"),
+        modificadopor         : modificadopor,
         eliminadopor          : eliminadopor,
       };
       axios({
@@ -87,7 +91,7 @@ const handleClose = ()  => setOpen(false);
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : "Puesto Creado Exitosamente",
+            title : "Creado Exitosamente",
           });
           getAllPuestos();
         })
@@ -125,7 +129,7 @@ const handleClose = ()  => setOpen(false);
           .then(function (response) {
             Toast.fire({
               icon  : "success",
-              title : "Puesto Eliminado Exitosamente",
+              title : "Eliminado Exitosamente",
             });
             getAllPuestos();
           })
@@ -171,7 +175,7 @@ const handleClose = ()  => setOpen(false);
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : "Puesto Actualizado Exitosamente",
+            title : "Actualizado Exitosamente",
           });
           getAllPuestos();
         })
@@ -262,9 +266,12 @@ const handleClose = ()  => setOpen(false);
       },
     })
       // aqui se recibe lo del endpoint en response
-      .then(({ data }) => {
-        const rows = data;
-        setRows(rows);
+      .then(({data}) => {
+        if (data) {
+          setRows(data);
+        } else {
+          setRows([])
+        }
       })
       .catch(function (error) {
         Swal.fire({

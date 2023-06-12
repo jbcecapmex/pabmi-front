@@ -79,6 +79,7 @@ export default function Notificaciones() {
         descripcion           : Descripcion,
         creadopor             : localStorage.getItem("IdUsuario"),
         eliminadopor          : eliminadopor,
+        visto                 :0
       };
       console.log(data);
       axios({
@@ -162,8 +163,8 @@ const handleDelete = (event: any, cellValues: any) => {
       
       const data = {
         uuid              : uuid,
-        encabezado        : Encabezado,
-        descripcion       : Descripcion,
+        Encabezado        : Encabezado,
+        Descripcion       : Descripcion,
         creadopor         : creadopor,
         modificadopor     : localStorage.getItem("IdUsuario"),
         eliminadopor      : eliminadopor,
@@ -264,9 +265,12 @@ const handleDelete = (event: any, cellValues: any) => {
       Authorization: localStorage.getItem("jwtToken") || "",
     },
    })
-   .then(function (response) {
-    setRows(response.data);
-    // limpiar los campos del formulario
+    .then(({ data }) => {
+      if (data) {
+        setRows(data);
+      } else {
+        setRows([])
+      }
     })
     .catch(function (error) {
       console.error(error)

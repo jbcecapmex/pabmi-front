@@ -27,6 +27,9 @@ export interface AreaInterface {
   Cve: string;
   Nombre: string;
   Descripcion: string;
+  creadopor:          string;
+  modificadopor:      string;
+  eliminadopor:       string;    
 }
 
 const style = {
@@ -87,7 +90,7 @@ const handleClose = ()  => setOpen(false);
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : " Creado Exitosamente",
+            title : "Creado Exitosamente",
           });
           getAllArea();
         })
@@ -125,7 +128,7 @@ const handleClose = ()  => setOpen(false);
           .then(function (response) {
             Toast.fire({
               icon  : "success",
-              title : " Eliminado Exitosamente",
+              title : "Eliminado Exitosamente",
             });
             getAllArea();
           })
@@ -138,7 +141,6 @@ const handleClose = ()  => setOpen(false);
       }
     });
   };
-
 // Handle update
   const handleUpdate = () => {
     if (cve === "" || nombre === "" || descripcion === ""){
@@ -171,7 +173,7 @@ const handleClose = ()  => setOpen(false);
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : " Actualizado Exitosamente",
+            title : "Actualizado Exitosamente",
           });
           getAllArea();
         })
@@ -262,9 +264,12 @@ const handleClose = ()  => setOpen(false);
       },
     })
       // aqui se recibe lo del endpoint en response
-      .then(({ data }) => {
-        const rows = data;
-        setRows(rows);
+      .then(({data}) => {
+        if (data) {
+          setRows(data);
+        } else {
+          setRows([])
+        }
       })
       .catch(function (error) {
         Swal.fire({
@@ -293,8 +298,8 @@ const handleClose = ()  => setOpen(false);
  
   return (
     // contenedor principal
-    <Grid container  > 
-      <Grid item xs={12} >
+    <Grid container sx={{ }}>
+      <Grid sx={{}} item xs={12}>
         {/* este componente es para armar la ruta que se muestra arriba y poder navegar hacia atras */}
         {/* ejemplo inicio/configuracion/catalogos/marca */}
         <Breadcrumbs aria-label="breadcrumb">
@@ -311,14 +316,11 @@ const handleClose = ()  => setOpen(false);
         </Breadcrumbs>
       </Grid>
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
-      <Grid
-        container
-        justifyContent={"center"}
-      >
+      <Grid container xs={12} justifyContent={"center"}>
         {/* este grid es del card del centro el que contiene los objetos */}
         <Grid item xs={12} md={12} mt={2}>
           {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
-          <Card sx={{ p: 0, boxShadow: 8, height: "86vh" }}>
+          <Card sx={{ p: 0, boxShadow: 8 }}>
             <CardContent sx={{ fontFamily: "MontserratBold", bgcolor: "" }}>
               {/* aqui es el cardcontent que es el contenido del card,y ponemos primero un box y estamos dibujando el boton para agregar un nuevo registro */}
               <Box display="flex" justifyContent="flex-end">

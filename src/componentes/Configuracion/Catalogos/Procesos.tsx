@@ -40,31 +40,28 @@ const Toast = Swal.mixin({
   });
 
   export interface ProcesosInterface {
-    uuid:                string;
+    uuid:               string;
     Cve:                string;
-    Encabezado:          string;            
-    Descripcion:         string;
-
+    Nombre:             string;            
+    Descripcion:        string;
+    creadopor:          string;
+    modificadopor:      string;
+    eliminadopor:       string;     
   }
-
-
-// inicia el componente
-export default function Procesos() { 
-
-// Crear las interfaces que se mandaran en los endpoints
-const [uuid, setuuid]                   = useState("");
-const [Cve, setCve]                     = useState("");
-const [Nombre, setNombre]               = useState("");
-const [Descripcion, setDescripcion]     = useState("");
-const [creadopor, setCreadoPor]         = useState("");
-const [modificadopor, setModificadoPor] = useState("");
-const [eliminadopor, setEliminadoPor]   = useState("");
-
-
-    // Abrir modal
-    const [open, setOpen]               = React.useState(false);
-    const handleOpen = ()   => setOpen(true);
-    const handleClose = ()  => setOpen(false);
+  // inicia el componente
+  export default function Procesos() { 
+  // Crear las interfaces que se mandaran en los endpoints
+  const [uuid, setuuid]                   = useState("");
+  const [Cve, setCve]                     = useState("");
+  const [Nombre, setNombre]               = useState("");
+  const [Descripcion, setDescripcion]     = useState("");
+  const [creadopor, setCreadoPor]         = useState("");
+  const [modificadopor, setModificadoPor] = useState("");
+  const [eliminadopor, setEliminadoPor]   = useState("");
+  // Abrir modal
+  const [open, setOpen]               = React.useState(false);
+  const handleOpen = ()   => setOpen(true);
+  const handleClose = ()  => setOpen(false);
 
   // Guardar un registro nuevo.
   const handleSave = () => {
@@ -80,8 +77,9 @@ const [eliminadopor, setEliminadoPor]   = useState("");
         cve             : Cve,
         nombre          : Nombre,
         descripcion     : Descripcion,
-        creadopor       : localStorage.getItem("IdUsuario"),
-        eliminadopor    : eliminadopor,
+        creadopor             : localStorage.getItem("IdUsuario"),
+        modificadopor         : modificadopor,
+        eliminadopor          : eliminadopor,
       };
       console.log(data);
       axios({
@@ -98,7 +96,7 @@ const [eliminadopor, setEliminadoPor]   = useState("");
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : "Proceso creado exitosamente",
+            title : "creado exitosamente",
           });
           getAllProcesos();
         })
@@ -138,7 +136,7 @@ const handleDelete = (event: any, cellValues: any) => {
         .then(function (response) {
           Toast.fire({
             icon  : "success",
-            title : "Proceso eliminado exitosamente",
+            title : "eliminado exitosamente",
           });
           getAllProcesos();
         })
@@ -151,7 +149,6 @@ const handleDelete = (event: any, cellValues: any) => {
     }
   });
 };
-
 
 // Handle update
   const handleUpdate = () => {
@@ -185,7 +182,7 @@ const handleDelete = (event: any, cellValues: any) => {
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : "La notificacion fue actualizada con éxito",
+            title : "Actualizado Exitosament",
           });
           getAllProcesos();
         })
@@ -198,8 +195,6 @@ const handleDelete = (event: any, cellValues: any) => {
         });
     }
   };  
-
-
 
   const navigate = useNavigate();
 
@@ -242,7 +237,7 @@ const handleDelete = (event: any, cellValues: any) => {
       },
     },
     {
-      field:       "cve",
+      field:       "Cve",
       headerName:  "Cve",
       width:       200,
       hideable:    false,
@@ -265,7 +260,7 @@ const handleDelete = (event: any, cellValues: any) => {
   ];
 
 
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState<Array<ProcesosInterface>>([]);
 
   const getAllProcesos = () => {
    axios ({
@@ -276,21 +271,24 @@ const handleDelete = (event: any, cellValues: any) => {
       Authorization: localStorage.getItem("jwtToken") || "",
     },
    })
-   .then(function (response) {
-    setRows(response.data);
-    // limpiar los campos del formulario
-    })
-    .catch(function (error) {
-      console.error(error)
-      Swal.fire({
-        icon  : "error",
-        title : "Mensaje",
-        text  : "("+error.response.status+") "+error.response.data.message,
-      }).then((r) => navigate("/Procesos"));
-    });
+      // aqui se recibe lo del endpoint en response
+      .then(({data}) => {
+        if (data) {
+          setRows(data);
+        } else {
+          setRows([])
+        }
+      })
+      .catch(function (error) {
+        Swal.fire({
+          icon  : "error",
+          title : "Mensaje",
+          text  : "("+error.response.status+") "+error.response.data.message,
+        }).then((r) => navigate("/Configuracion/Catalogos/Procesos"));
+      });
   };
 
-  const [rowsProcesos, setRowsProcesos] = useState<Array<ProcesosInterface>>([]);
+  // const [rowsProcesos, setRowsProcesos] = useState<Array<ProcesosInterface>>([]);
 
    useEffect(() => {
     getAllProcesos();
@@ -309,12 +307,8 @@ const handleDelete = (event: any, cellValues: any) => {
   }, [open]);
 
   return (
-    <Grid container sx={{ 
-      top       : "9vh",
-      position  : "absolute",
-      fontFamily: "MontserratSemiBold" }}>
-      <Grid item xs={12} >
-
+    <Grid container sx={{ }}>
+      <Grid sx={{}} item xs={12}>
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" href="/inicio">
             Inicio
@@ -328,13 +322,10 @@ const handleDelete = (event: any, cellValues: any) => {
           <Typography color="text.primary"> Catálogo de Procesos </Typography>
         </Breadcrumbs>
       </Grid> 
-
-      <Grid container justifyContent={"center"} item xs={0} paddingLeft={0} paddingTop={5}>
+      <Grid container xs={12} justifyContent={"center"}>
       <Grid item xs={12} md={12} mt={2}>
-      <Card sx={{ p: 1, boxShadow: 4,width:'100%'}}> {/* Hay que poner wl width en 100%% o buscar la forma de que abwsrque todo esl */}
-      <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
-      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>  Catálogo de Procesos </Typography>  
-      <CardContent>
+      <Card sx={{ p: 0, boxShadow: 8}}> {/* Hay que poner wl width en 100%% o buscar la forma de que abwsrque todo esl */}
+      <CardContent sx={{ fontFamily: "MontserratBold", bgcolor: "" }}>
       <Box display="flex" justifyContent="flex-end">
       <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", paddingBottom:"2%", paddingRight:"1%"}}>
                     <Button
@@ -389,9 +380,7 @@ const handleDelete = (event: any, cellValues: any) => {
          aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-
-          <Box sx={style} display="flow">
-          
+          <Box sx={style} display="flow">          
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <Box> 
@@ -413,7 +402,11 @@ const handleDelete = (event: any, cellValues: any) => {
                 variant="outlined" />
                 </Box>
             </Grid>
-
+            <Grid item xs={6}>
+                      <Box>
+                        {/* espacio en blanco */}
+                      </Box>
+                    </Grid>
             <Grid item xs={6}>
             <Box sx={{
               '& > :not(style)': { m: 1.3, width: '80%' },   }}
@@ -427,8 +420,6 @@ const handleDelete = (event: any, cellValues: any) => {
                 variant="outlined" />
                 </Box>
             </Grid>
-
-
             <Grid item xs={6}>
             <Box sx={{
               '& > :not(style)': { m: 1.3, width: '80%' },   }}

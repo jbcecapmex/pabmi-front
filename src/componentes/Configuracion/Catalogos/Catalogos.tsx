@@ -372,19 +372,6 @@ const Catalogos = () => {
                           sx={ButtonSX}
                           variant="text"
                           fullWidth
-                          onClick={() => {
-                            changeScreen(14, "Activo");
-                            setShowCatGrid(true);
-                          }}
-                        >
-                          ACTIVO
-                        </Button>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={4}>
-                        <Button
-                          sx={ButtonSX}
-                          variant="text"
-                          fullWidth
                           onClick={()=> navigate("/Configuracion/Catalogos/Activo")}
                         >
                           ACTIVO

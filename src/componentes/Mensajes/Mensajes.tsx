@@ -1,8 +1,8 @@
 import React from "react";
-import { OpenInNew as OpenIcon, ForwardToInbox as ForwardIcon, MarkEmailRead as Leido, MarkEmailUnread as NoLeido } from "@mui/icons-material";
+import { OpenInNew as OpenIcon, ForwardToInbox as ForwardIcon,} from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Box, Breadcrumbs, Button, Card, CardContent, CardHeader, FormControl, Grid, IconButton, InputLabel, Link, MenuItem, Select, TextField, Tooltip, Typography, } from "@mui/material";
+import { Box, Breadcrumbs, Button, Card, CardContent, CardHeader, Chip, Stack, FormControl, Grid, IconButton, InputLabel, Link, MenuItem, Select, TextField, Tooltip, Typography, } from "@mui/material";
 import MUIXDataGrid from "../Grid/MUIXDataGrid";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +19,6 @@ const Toast = Swal.mixin({
     toast.addEventListener("mouseleave", Swal.resumeTimer);
   },
 });
-
 
 export interface UsuariosInterface {
   uuid: string
@@ -105,45 +104,45 @@ export default function Mensajes() {
     }
   };
   // Handle delete
-  const handleDelete = (event: any, cellValues: any) => {
-    Swal.fire({
-      title: "Estas Seguro(a)?",
-      text: `Estas a punto de eliminar un registro (${cellValues.row.Descripcion})`,
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonText: "Eliminar",
-      confirmButtonColor: "#dc3545",
-      cancelButtonColor: "#0d6efd",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const data = { uuid: cellValues.row.uuid };
-        axios({
-          method: "post",
-          url: process.env.REACT_APP_APPLICATION_ENDPOINT + "/mensajes/eliminamensajes",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: localStorage.getItem("jwtToken") || "",
-          },
-          data: data,
-        })
-          .then(function (response) {
-            Toast.fire({
-              icon: "success",
-              title: " Eliminado Exitosamente",
-            });
-            getAllMensajes();
-          })
-          .catch(function (error) {
-            Swal.fire({
-              icon: "error",
-              title: "Mensaje",
-              text: "(" + error.response.status + ") " + error.response.data.msg,
-            });
-          });
-      }
-    });
-  };
+  // const handleDelete = (event: any, cellValues: any) => {
+  //   Swal.fire({
+  //     title: "Estas Seguro(a)?",
+  //     text: `Estas a punto de eliminar un registro (${cellValues.row.Descripcion})`,
+  //     icon: "question",
+  //     showCancelButton: true,
+  //     confirmButtonText: "Eliminar",
+  //     confirmButtonColor: "#dc3545",
+  //     cancelButtonColor: "#0d6efd",
+  //     cancelButtonText: "Cancelar",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       const data = { uuid: cellValues.row.uuid };
+  //       axios({
+  //         method: "post",
+  //         url: process.env.REACT_APP_APPLICATION_ENDPOINT + "/mensajes/eliminamensajes",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: localStorage.getItem("jwtToken") || "",
+  //         },
+  //         data: data,
+  //       })
+  //         .then(function (response) {
+  //           Toast.fire({
+  //             icon: "success",
+  //             title: " Eliminado Exitosamente",
+  //           });
+  //           getAllMensajes();
+  //         })
+  //         .catch(function (error) {
+  //           Swal.fire({
+  //             icon: "error",
+  //             title: "Mensaje",
+  //             text: "(" + error.response.status + ") " + error.response.data.msg,
+  //           });
+  //         });
+  //     }
+  //   });
+  // };
   const handleUpdate = () => {
     if (encabezado === "" || descripcion === "") {
       Swal.fire({
@@ -191,7 +190,6 @@ export default function Mensajes() {
     const data = {
       uuid: uuid,
       visto: 1,
-
     };
     console.log(data);
     axios({
@@ -234,13 +232,6 @@ export default function Mensajes() {
                 <OpenIcon />
               </IconButton>
             </Tooltip>
-            {/* <Tooltip title={"Eliminar" + cellValues.row.Nombre}>
-              <IconButton color="secondary"
-                onClick={(event) => {handleDelete(event, cellValues);}}
-               >
-                <ForwardIcon />
-              </IconButton>
-            </Tooltip> */}
           </Box>
         );
       },
@@ -248,28 +239,35 @@ export default function Mensajes() {
     {
       field: "Encabezado",
       headerName: "Encabezado",
-      width: 100,
+      width: 300,
       hideable: false,
       headerAlign: "left",
     },
     {
       field: "Descripcion",
       headerName: "Descripcion",
-      width: 900,
+      width: 1000,
       hideable: false,
       headerAlign: "left",
     },
     {
       field: "Visto",
       headerName: "Leido",
-      width: 50,
+      width: "auto",
       hideable: false,
       headerAlign: "left",
       renderCell: (cellValues: any) => {
         return (
           <Box>
             {
-              cellValues.row.Visto === 1 ? <Leido color="success" /> : <NoLeido color="info" />
+              cellValues.row.Visto === 1 ? 
+                <Stack direction="row" spacing={1}>                  
+                  <Chip label="Leido" color="success" variant="outlined" />
+                </Stack>
+                : 
+                  <Stack direction="row" spacing={1}>
+                    <Chip label="Nuevo" color="primary" variant="outlined" />                    
+                  </Stack>
             }
           </Box>
         );
@@ -365,7 +363,7 @@ export default function Mensajes() {
       >
         <Grid sx={{}} item xs={12}>
           {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
-          <Card sx={{ p: 0, boxShadow: 8, height: "86vh" }}>
+          <Card sx={{ p: 0, boxShadow: 8, height: "79vh" }}>
             <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold" }} />
             <Typography variant="h5" sx={{ paddingTop: "1%", paddingLeft: "1%" }}>Mensajes</Typography>
             <CardContent sx={{ fontFamily: "MontserratBold", bgcolor: "" }}>
