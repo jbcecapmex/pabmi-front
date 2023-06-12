@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography, TextField, Box, Button } from "@mui/material"
+import { Grid, Typography, TextField, Box, Button, FormControl, Select, MenuItem, InputLabel } from "@mui/material"
 import { Divider } from "@mui/material"; 
 
 export default function StepDos(){
@@ -47,26 +47,30 @@ export default function StepDos(){
 	</Box>
 	</Grid>
 
-
 	<Grid item xs={4}  >
-	<Box
-	component="form"
-	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
-	noValidate
-	autoComplete="off"
-	display="flex"
-	>
-	<TextField
-		label     ="Marca"
-		size      ="small"
-		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
-		inputProps={{ maxLength: 10 }}
-	/>
-	</Box>
-	</Grid>
+		<Box
+		sx={{
+			'& > :not(style)': { m: 1.3, width: '100%' },   }}
+				display="flex"
+		>
+		<FormControl fullWidth sx={{bgColor:"#fff"}}>
+		<InputLabel  sx={{ marginTop:"-4px"}}>
+		 Marca
+		</InputLabel>
+		<Select
+		id=" Marca "
+		// value={TipoDependencia}
+		label="Marca "
+		size="small"
+		displayEmpty
+		// onChange = {(v) => { setTipoBien(v.target.value)} }
+		>
+		        <MenuItem value="">  </MenuItem>  
+		</Select>
+		</FormControl>
+		</Box>
+	</Grid> 
+ 
 	</Grid>
 
 	<Grid item xs={12} display="flex">
@@ -133,25 +137,30 @@ export default function StepDos(){
 	</Grid>
 
 	<Grid item xs={12} display="flex">
-	<Grid item xs={4}>
-	<Box
-	component="form"
-	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
-	noValidate
-	autoComplete="off"
-	display="flex"
-	>
-	<TextField
-		label     ="Modelo"
-		size      ="small"
-		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
-		inputProps={{ maxLength: 10 }}
-	/>
-	</Box>
-	</Grid>
+	
+	<Grid item xs={4}  >
+		<Box
+		sx={{
+			'& > :not(style)': { m: 1.3, width: '100%' },   }}
+				display="flex"
+		>
+		<FormControl fullWidth sx={{bgColor:"#fff"}}>
+		<InputLabel  sx={{ marginTop:"-4px"}}>
+		Modelo 
+		</InputLabel>
+		<Select
+		id=" Modelo "
+		// value={TipoDependencia}
+		label="Modelo"
+		size="small"
+		displayEmpty
+		// onChange = {(v) => { setTipoBien(v.target.value)} }
+		>
+		        <MenuItem value=""> 1 </MenuItem>  
+		</Select>
+		</FormControl>
+		</Box>
+	</Grid>  
 	</Grid>
 
 	<Grid item xs={12} display="flow">
@@ -161,25 +170,32 @@ export default function StepDos(){
 	</Grid>
 	
 	<Grid item xs={12} display="flex">
+
 	<Grid item xs={8}  >
-	<Box
-	component="form"
-	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
-	noValidate
-	autoComplete="off"
-	display="flex"
-	>
-	<TextField
-		label     ="Personal De Resguardo "
-		size      ="small"
-		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
-		inputProps={{ maxLength: 10 }}
-	/>
-	</Box>
-	</Grid>
+		<Box
+		sx={{
+			'& > :not(style)': { m: 1.3, width: '100%' },   }}
+				display="flex"
+		>
+		<FormControl fullWidth sx={{bgColor:"#fff"}}>
+		<InputLabel  sx={{ marginTop:"-4px"}}>
+			Personal De Resguardo
+		</InputLabel>
+		<Select
+		id="Personal De Resguardo"
+		// value={TipoDependencia}
+		label="Personal De Resguardo"
+		size="small"
+		displayEmpty
+		// onChange = {(v) => { setTipoBien(v.target.value)} }
+		>
+		        <MenuItem value=""> 1 </MenuItem>  
+		</Select>
+		</FormControl>
+		</Box>
+	</Grid>  
+
+ 
 	<Grid item xs={4}  >
 	<Box
 	component="form"
@@ -202,25 +218,31 @@ export default function StepDos(){
 	</Grid>
 
 	<Grid item xs={12} display="flex">
+	
 	<Grid item xs={8}  >
-	<Box
-	component="form"
-	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
-	noValidate
-	autoComplete="off"
-	display="flex"
-	>
-	<TextField
-		label     ="Conductor"
-		size      ="small"
-		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
-		inputProps={{ maxLength: 10 }}
-	/>
-	</Box>
-	</Grid>
+		<Box
+		sx={{
+			'& > :not(style)': { m: 1.3, width: '100%' },   }}
+				display="flex"
+		>
+		<FormControl fullWidth sx={{bgColor:"#fff"}}>
+		<InputLabel  sx={{ marginTop:"-4px"}}>
+		Conductor
+		</InputLabel>
+		<Select
+		id="Conductor"
+		// value={TipoDependencia}
+		label="Conductor"
+		size="small"
+		displayEmpty
+		// onChange = {(v) => { setTipoBien(v.target.value)} }
+		>
+		        <MenuItem value=""> 1 </MenuItem>  
+		</Select>
+		</FormControl>
+		</Box>
+	</Grid>  
+ 
 	</Grid>
 
 	<Grid item xs={12} display="flow">

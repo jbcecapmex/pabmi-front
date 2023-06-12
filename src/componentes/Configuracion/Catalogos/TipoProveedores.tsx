@@ -6,25 +6,18 @@ import MUIXDataGrid from "../../Grid/MUIXDataGrid";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
+import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
 
-// componente de sweetalert2 para el uso de los mensajes de alertas
-const Toast = Swal.mixin({
-  toast: true,
-  position: "center",
-  showConfirmButton: false,
-  timer: 4000,
-  timerProgressBar: false,
-  didOpen: (toast) => {
-    toast.addEventListener("mouseenter", Swal.stopTimer);
-    toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
-});
+
 
 export interface TipoProveedoresInterface {
   uuid: string;
   Cve: string;
   Nombre: string;
   Descripcion: string;
+  creadopor:          string;
+  modificadopor:      string;
+  eliminadopor:       string;   
 }
 
 const style = {
@@ -72,69 +65,22 @@ const handleClose = ()  => setOpen(false);
         creadopor             : localStorage.getItem("IdUsuario"),
         eliminadopor          : eliminadopor,
       };
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardatiposproveedores",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
+      const url = "/catalogos/guardatiposproveedores";
+      catalogoSave(data,url).then((response) =>{
+        setOpen(false);
+        getAllTipoProveedores();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : "Tipo Proveedor Creado Exitosamente",
-          });
-          getAllTipoProveedores();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,});
-        });
     }
   };
   // Handle delete
   const handleDelete = (event: any, cellValues: any) => {
-    Swal.fire({
-      title               : "Estas Seguro(a)?",
-      text                : `Estas a punto de eliminar un registro (${cellValues.row.Descripcion})`,
-      icon                : "question",
-      showCancelButton    : true,
-      confirmButtonText   : "Eliminar",
-      confirmButtonColor  : "#dc3545",
-      cancelButtonColor   : "#0d6efd",
-      cancelButtonText    : "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const data = { uuid: cellValues.row.uuid };
-        axios({
-          method    : "post",
-          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminatiposproveedores",
-          headers   : {
-                        "Content-Type": "application/json",
-                        Authorization: localStorage.getItem("jwtToken") || "",
-          },
-          data      : data,
-        })
-          .then(function (response) {
-            Toast.fire({
-              icon  : "success",
-              title : "Tipo Proveedor Eliminado Exitosamente",
-            });
-            getAllTipoProveedores();
-          })
-          .catch(function (error) {
-            Swal.fire({
-              icon  : "error",
-              title : "Mensaje",
-              text  : "(" + error.response.status + ") " + error.response.data.msg,});
-          });
-      }
-    });
+    const data = cellValues.row.uuid;
+    const descripcion = cellValues.row.Descripcion;   
+    const url = "/catalogos/eliminatiposproveedores";
+    catalogoDelete(data,url,descripcion).then((response) =>{
+      setOpen(false);
+      getAllTipoProveedores();
+    })
   };
 
 // Handle update
@@ -156,30 +102,11 @@ const handleClose = ()  => setOpen(false);
         modificadopor         : localStorage.getItem("IdUsuario"),
         eliminadopor          : eliminadopor,
       };
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizatiposproveedores",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
+      const url = "/catalogos/actualizatiposproveedores";
+      catalogoUpdate(data,url).then((response) =>{
+        setOpen(false);
+        getAllTipoProveedores();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : "Tipo Proveedor Actualizado Exitosamente",
-          });
-          getAllTipoProveedores();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,
-          });
-        });
     }
   }; 
 
@@ -260,9 +187,12 @@ const handleClose = ()  => setOpen(false);
       },
     })
       // aqui se recibe lo del endpoint en response
-      .then(({ data }) => {
-        const rows = data;
-        setRows(rows);
+      .then(({data}) => {
+        if (data) {
+          setRows(data);
+        } else {
+          setRows([])
+        }
       })
       .catch(function (error) {
         Swal.fire({

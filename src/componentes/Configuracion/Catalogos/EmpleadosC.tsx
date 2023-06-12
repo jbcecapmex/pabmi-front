@@ -6,21 +6,7 @@ import MUIXDataGrid from "../../Grid/MUIXDataGrid";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
-
-// componente de sweetalert2 para el uso de los mensajes de alertas
-const Toast = Swal.mixin({
-  toast: true,
-  position: "center",
-  showConfirmButton: false,
-  timer: 4000,
-  timerProgressBar: false,
-  //background: '#2e7d32',
-  //color: '#fff',  
-  didOpen: (toast) => {
-    toast.addEventListener("mouseenter", Swal.stopTimer);
-    toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
-});
+import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
 
 export interface PerfilesInterface {
   uuid: string;
@@ -28,6 +14,9 @@ export interface PerfilesInterface {
   Nombre: string;
   ApellidoPaterno: string;
   ApellidoMaterno: string;
+  creadopor: string;
+  modificadopor: string;
+  eliminadopor: string;
 }
 
 const style = {
@@ -73,86 +62,36 @@ const [eliminadopor, setEliminadoPor]       = useState("");
       const data = {
         cve                   : cve,
         nombre                : nombre,
-        ApellidoPaterno       : ApellidoPaterno,
-        ApellidoMaterno       : ApellidoMaterno,
+        apellidopaterno       : ApellidoPaterno,
+        apellidomaterno       : ApellidoMaterno,
         creadopor             : localStorage.getItem("IdUsuario"),
+        modificadopor         : modificadopor,
         eliminadopor          : eliminadopor,
-      };
-      console.log(data);
-      axios({
-        method: "post",
-        url: process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardaempleados",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data: data,
+      };      
+      const url = "/catalogos/guardaempleados";
+      catalogoSave(data,url).then((response) =>{
+        setOpen(false);
+        getAllEmpleados();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon: "success",
-            title: "Perfil Creado Exitosamente",
-          });
-          getAllEmpleados();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon: "error",
-            title: "Mensaje",
-            text: "(" + error.response.status + ") " + error.response.data.msg,
-          });
-        });
     }
   };
   // Handle delete
   const handleDelete = (event: any, cellValues: any) => {
-    Swal.fire({
-      title: "Estas Seguro(a)?",
-      text: `Estas a punto de eliminar un registro (${cellValues.row.Descripcion})`,
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonText: "Eliminar",
-      confirmButtonColor: "#dc3545",
-      cancelButtonColor: "#0d6efd",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const data = { uuid: cellValues.row.uuid };
-        axios({
-          method: "post",
-          url: process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/eliminaempleados",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: localStorage.getItem("jwtToken") || "",
-          },
-          data: data,
-        })
-          .then(function (response) {
-            Toast.fire({
-              icon: "success",
-              title: "Perfil Eliminado Exitosamente",
-            });
-            getAllEmpleados();
-          })
-          .catch(function (error) {
-            Swal.fire({
-              icon: "error",
-              title: "Mensaje",
-              text: "(" + error.response.status + ") " + error.response.data.msg,
-            });
-          });
-      }
-    });
+    const data = cellValues.row.uuid;
+    const descripcion = cellValues.row.Descripcion;   
+    const url = "/catalogos/eliminaempleados";
+    catalogoDelete(data,url,descripcion).then((response) =>{
+      setOpen(false);
+      getAllEmpleados();
+    })
   };
-
   // Handle update
   const handleUpdate = () => {
     if (cve === "" || nombre === "" || ApellidoPaterno === "" || ApellidoMaterno === "") {
       Swal.fire({
         icon: "error",
         title: "Mensaje",
-        text: "Completa todos los campos para continuarrrrrrrr",
+        text: "Completa todos los campos para continuar",
       });
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
@@ -160,37 +99,17 @@ const [eliminadopor, setEliminadoPor]       = useState("");
         uuid                  : uuid,
         cve                   : cve,
         nombre                : nombre,
-        ApellidoPaterno       : ApellidoPaterno,
-        ApellidoMaterno       : ApellidoMaterno,
+        apellidopaterno       : ApellidoPaterno,
+        apellidomaterno       : ApellidoMaterno,
         creadopor             : creadopor,
         modificadopor         : localStorage.getItem("IdUsuario"),
         eliminadopor          : eliminadopor,
       };
-      console.log(data);
-      axios({
-        method: "post",
-        url: process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizaempleados",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data: data,
+      const url = "/catalogos/actualizaempleados";
+      catalogoUpdate(data,url).then((response) =>{
+        setOpen(false);
+        getAllEmpleados();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon: "success",
-            title: "Perfil Actualizado Exitosamente",
-          });
-          getAllEmpleados();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon: "error",
-            title: "Mensaje",
-            text: "(" + error.response.status + ") " + error.response.data.msg,
-          });
-        });
     }
   };
 
@@ -278,11 +197,13 @@ const [eliminadopor, setEliminadoPor]       = useState("");
         Authorization: localStorage.getItem("jwtToken") || "",
       },
     })
-      // aqui se recibe lo del endpoint en response
-      .then(({ data }) => {
-        const rows = data;
-        setRows(rows);
-      })
+    .then(({data}) => {
+      if (data) {
+        setRows(data);
+      } else {
+        setRows([])
+      }
+    })
       .catch(function (error) {
         Swal.fire({
           icon: "error",
@@ -316,11 +237,11 @@ const [eliminadopor, setEliminadoPor]       = useState("");
           <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
-            Usuarios
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          Catálogos
           </Link>
           <Typography color="text.primary">Catálogo de Empleados </Typography>
         </Breadcrumbs>

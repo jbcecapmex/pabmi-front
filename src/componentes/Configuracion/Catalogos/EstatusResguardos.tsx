@@ -6,27 +6,16 @@ import MUIXDataGrid from "../../Grid/MUIXDataGrid";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
-
-// componente de sweetalert2 para el uso de los mensajes de alertas
-const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 4000,
-  timerProgressBar: false,
-  //background: '#2e7d32',
-  //color: '#fff',  
-  didOpen: (toast) => {
-    toast.addEventListener("mouseenter", Swal.stopTimer);
-    toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
-});
+import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
 
 export interface EstatusResguardosInterface {
   uuid: string;
   Cve: string;
   Nombre: string;
   Descripcion: string;
+  creadopor:          string;
+  modificadopor:      string;
+  eliminadopor:       string;    
 }
 
 const style = {
@@ -66,7 +55,6 @@ const handleClose = ()  => setOpen(false);
         text  : "Completa todos los campos para continuar",
       });
     } else {
-      //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
       const data = {
         cve                   : cve,
         nombre                : nombre,
@@ -74,71 +62,23 @@ const handleClose = ()  => setOpen(false);
         creadopor             : localStorage.getItem("IdUsuario"),
         eliminadopor          : eliminadopor,
       };
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardaestatusresguardo",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
+      const url = "/catalogos/guardaestatusresguardo";
+      catalogoSave(data,url).then((response) =>{
+        setOpen(false);
+        getAllEstatusResguardos();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : " Creado Exitosamente",
-          });
-          getAllEstatusResguardos();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,});
-        });
     }
   };
   // Handle delete
   const handleDelete = (event: any, cellValues: any) => {
-    Swal.fire({
-      title               : "Estas Seguro(a)?",
-      text                : `Estas a punto de eliminar un registro (${cellValues.row.Descripcion})`,
-      icon                : "question",
-      showCancelButton    : true,
-      confirmButtonText   : "Eliminar",
-      confirmButtonColor  : "#dc3545",
-      cancelButtonColor   : "#0d6efd",
-      cancelButtonText    : "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const data = { uuid: cellValues.row.uuid };
-        axios({
-          method    : "post",
-          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminaestatusresguardo",
-          headers   : {
-                        "Content-Type": "application/json",
-                        Authorization: localStorage.getItem("jwtToken") || "",
-          },
-          data      : data,
-        })
-          .then(function (response) {
-            Toast.fire({
-              icon  : "success",
-              title : " Eliminado Exitosamente",
-            });
-            getAllEstatusResguardos();
-          })
-          .catch(function (error) {
-            Swal.fire({
-              icon  : "error",
-              title : "Mensaje",
-              text  : "(" + error.response.status + ") " + error.response.data.msg,});
-          });
-      }
-    });
+    const data = cellValues.row.uuid;
+    const descripcion = cellValues.row.Descripcion;   
+    const url = "/catalogos/eliminaestatusresguardo";
+    catalogoDelete(data,url,descripcion).then((response) =>{
+      setOpen(false);
+      getAllEstatusResguardos();
+    })
   };
-
 // Handle update
   const handleUpdate = () => {
     if (cve === "" || nombre === "" || descripcion === ""){
@@ -148,7 +88,6 @@ const handleClose = ()  => setOpen(false);
         text  : "Completa todos los campos para continuar",
       });
     } else {
-      //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
       const data = {
         uuid                  : uuid,
         cve                   : cve,
@@ -158,30 +97,11 @@ const handleClose = ()  => setOpen(false);
         modificadopor         : localStorage.getItem("IdUsuario"),
         eliminadopor          : eliminadopor,
       };
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizaestatusresguardo",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
+      const url = "/catalogos/actualizaestatusresguardo";
+      catalogoUpdate(data,url).then((response) =>{
+        setOpen(false);
+        getAllEstatusResguardos();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : " Actualizado Exitosamente",
-          });
-          EstatusResguardos();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,
-          });
-        });
     }
   }; 
 
@@ -262,9 +182,12 @@ const handleClose = ()  => setOpen(false);
       },
     })
       // aqui se recibe lo del endpoint en response
-      .then(({ data }) => {
-        const rows = data;
-        setRows(rows);
+      .then(({data}) => {
+        if (data) {
+          setRows(data);
+        } else {
+          setRows([])
+        }
       })
       .catch(function (error) {
         Swal.fire({

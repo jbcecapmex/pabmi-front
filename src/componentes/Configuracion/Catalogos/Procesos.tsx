@@ -13,6 +13,17 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Swal from "sweetalert2";
+import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
+
+export interface ProcesosInterface {
+  uuid:               string;
+  Cve:                string;
+  Nombre:             string;            
+  Descripcion:        string;
+  creadopor:          string;
+  modificadopor:      string;
+  eliminadopor:       string;     
+}
 
 // Estilos para la ventana Modal
 const style = {
@@ -26,45 +37,21 @@ const style = {
   p: 2,
 };
 
-// Mnesajes de exito o error
-const Toast = Swal.mixin({
-  toast: true,
-  position: "center",
-  showConfirmButton: false,
-  timer: 4000,
-  timerProgressBar: false,
-  didOpen: (toast:any) => {
-  toast.addEventListener("mouseenter", Swal.stopTimer);
-  toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
-  });
 
-  export interface ProcesosInterface {
-    uuid:                string;
-    Cve:                string;
-    Encabezado:          string;            
-    Descripcion:         string;
-
-  }
-
-
-// inicia el componente
-export default function Procesos() { 
-
-// Crear las interfaces que se mandaran en los endpoints
-const [uuid, setuuid]                   = useState("");
-const [Cve, setCve]                     = useState("");
-const [Nombre, setNombre]               = useState("");
-const [Descripcion, setDescripcion]     = useState("");
-const [creadopor, setCreadoPor]         = useState("");
-const [modificadopor, setModificadoPor] = useState("");
-const [eliminadopor, setEliminadoPor]   = useState("");
-
-
-    // Abrir modal
-    const [open, setOpen]               = React.useState(false);
-    const handleOpen = ()   => setOpen(true);
-    const handleClose = ()  => setOpen(false);
+  // inicia el componente
+  export default function Procesos() { 
+  // Crear las interfaces que se mandaran en los endpoints
+  const [uuid, setuuid]                   = useState("");
+  const [Cve, setCve]                     = useState("");
+  const [Nombre, setNombre]               = useState("");
+  const [Descripcion, setDescripcion]     = useState("");
+  const [creadopor, setCreadoPor]         = useState("");
+  const [modificadopor, setModificadoPor] = useState("");
+  const [eliminadopor, setEliminadoPor]   = useState("");
+  // Abrir modal
+  const [open, setOpen]               = React.useState(false);
+  const handleOpen = ()   => setOpen(true);
+  const handleClose = ()  => setOpen(false);
 
   // Guardar un registro nuevo.
   const handleSave = () => {
@@ -80,80 +67,28 @@ const [eliminadopor, setEliminadoPor]   = useState("");
         cve             : Cve,
         nombre          : Nombre,
         descripcion     : Descripcion,
-        creadopor       : localStorage.getItem("IdUsuario"),
-        eliminadopor    : eliminadopor,
+        creadopor             : localStorage.getItem("IdUsuario"),
+        modificadopor         : modificadopor,
+        eliminadopor          : eliminadopor,
       };
-      console.log(data);
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardaprocesos",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
-        
+      const url = "/catalogos/guardaprocesos";
+      catalogoSave(data,url).then((response) =>{
+        setOpen(false);
+        getAllProcesos();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : "Proceso creado exitosamente",
-          });
-          getAllProcesos();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,});
-            console.log(error);
-        });
     }
   };
-
-// Handle delete
-const handleDelete = (event: any, cellValues: any) => {
-  Swal.fire({
-    title               : "Estas Seguro(a)?",
-    text                : `Estas a punto de eliminar un registro (${cellValues.row.Descripcion})`,
-    icon                : "question",
-    showCancelButton    : true,
-    confirmButtonText   : "Eliminar",
-    confirmButtonColor  : "#dc3545",
-    cancelButtonColor   : "#0d6efd",
-    cancelButtonText    : "Cancelar",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      const data = { uuid: cellValues.row.uuid };
-      axios({
-        method    : "post",
-        url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminaprocesos",
-        headers   : {
-                      "Content-Type": "application/json",
-                      Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data      : data,
-      })
-        .then(function (response) {
-          Toast.fire({
-            icon  : "success",
-            title : "Proceso eliminado exitosamente",
-          });
-          getAllProcesos();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,});
-        });
-    }
-  });
-};
-
-
-// Handle update
+  // Handle delete
+  const handleDelete = (event: any, cellValues: any) => {
+    const data = cellValues.row.uuid;
+    const descripcion = cellValues.row.Descripcion;   
+    const url = "/catalogos/eliminaprocesos";
+    catalogoDelete(data,url,descripcion).then((response) =>{
+      setOpen(false);
+      getAllProcesos();
+    })
+  };
+  // Handle update
   const handleUpdate = () => {
     if (Cve === "" || Nombre === "" || Descripcion === ""){
       Swal.fire({
@@ -172,34 +107,13 @@ const handleDelete = (event: any, cellValues: any) => {
         modificadopor     : localStorage.getItem("IdUsuario"),
         eliminadopor      : eliminadopor,
       };
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizaprocesos",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
+      const url = "/catalogos/actualizaprocesos";
+      catalogoUpdate(data,url).then((response) =>{
+        setOpen(false);
+        getAllProcesos();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : "La notificacion fue actualizada con éxito",
-          });
-          getAllProcesos();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,
-          });
-        });
     }
   };  
-
-
 
   const navigate = useNavigate();
 
@@ -242,7 +156,7 @@ const handleDelete = (event: any, cellValues: any) => {
       },
     },
     {
-      field:       "cve",
+      field:       "Cve",
       headerName:  "Cve",
       width:       200,
       hideable:    false,
@@ -264,9 +178,7 @@ const handleDelete = (event: any, cellValues: any) => {
     }
   ];
 
-
-  const [rows, setRows] = useState([]);
-
+  const [rows, setRows] = useState<Array<ProcesosInterface>>([]);
   const getAllProcesos = () => {
    axios ({
     method: "get",
@@ -276,21 +188,24 @@ const handleDelete = (event: any, cellValues: any) => {
       Authorization: localStorage.getItem("jwtToken") || "",
     },
    })
-   .then(function (response) {
-    setRows(response.data);
-    // limpiar los campos del formulario
-    })
-    .catch(function (error) {
-      console.error(error)
-      Swal.fire({
-        icon  : "error",
-        title : "Mensaje",
-        text  : "("+error.response.status+") "+error.response.data.message,
-      }).then((r) => navigate("/Procesos"));
-    });
+      // aqui se recibe lo del endpoint en response
+      .then(({data}) => {
+        if (data) {
+          setRows(data);
+        } else {
+          setRows([])
+        }
+      })
+      .catch(function (error) {
+        Swal.fire({
+          icon  : "error",
+          title : "Mensaje",
+          text  : "("+error.response.status+") "+error.response.data.message,
+        }).then((r) => navigate("/Configuracion/Catalogos/Procesos"));
+      });
   };
 
-  const [rowsProcesos, setRowsProcesos] = useState<Array<ProcesosInterface>>([]);
+  // const [rowsProcesos, setRowsProcesos] = useState<Array<ProcesosInterface>>([]);
 
    useEffect(() => {
     getAllProcesos();
@@ -309,36 +224,25 @@ const handleDelete = (event: any, cellValues: any) => {
   }, [open]);
 
   return (
-    <Grid container sx={{ 
-      top       : "9vh",
-      position  : "absolute",
-      fontFamily: "MontserratSemiBold" }}>
-      <Grid item xs={12}         sx={{
-          top       : "-9vh",
-          position  : "absolute",
-          fontFamily: "MontserratSemiBold",
-        }}>
-
+    <Grid container sx={{ }}>
+      <Grid sx={{}} item xs={12}>
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" href="/inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
             Catálogos
           </Link>
           <Typography color="text.primary"> Catálogo de Procesos </Typography>
         </Breadcrumbs>
       </Grid> 
-
-      <Grid container justifyContent={"center"} item xs={0} paddingLeft={0} paddingTop={5}>
+      <Grid container xs={12} justifyContent={"center"}>
       <Grid item xs={12} md={12} mt={2}>
-      <Card sx={{ p: 1, boxShadow: 4,width:'100%'}}> {/* Hay que poner wl width en 100%% o buscar la forma de que abwsrque todo esl */}
-      <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
-      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>  Catálogo de Procesos </Typography>  
-      <CardContent>
+      <Card sx={{ p: 0, boxShadow: 8}}> {/* Hay que poner wl width en 100%% o buscar la forma de que abwsrque todo esl */}
+      <CardContent sx={{ fontFamily: "MontserratBold", bgcolor: "" }}>
       <Box display="flex" justifyContent="flex-end">
       <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", paddingBottom:"2%", paddingRight:"1%"}}>
                     <Button
@@ -393,9 +297,7 @@ const handleDelete = (event: any, cellValues: any) => {
          aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-
-          <Box sx={style} display="flow">
-          
+          <Box sx={style} display="flow">          
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <Box> 
@@ -417,7 +319,11 @@ const handleDelete = (event: any, cellValues: any) => {
                 variant="outlined" />
                 </Box>
             </Grid>
-
+            <Grid item xs={6}>
+                      <Box>
+                        {/* espacio en blanco */}
+                      </Box>
+                    </Grid>
             <Grid item xs={6}>
             <Box sx={{
               '& > :not(style)': { m: 1.3, width: '80%' },   }}
@@ -431,8 +337,6 @@ const handleDelete = (event: any, cellValues: any) => {
                 variant="outlined" />
                 </Box>
             </Grid>
-
-
             <Grid item xs={6}>
             <Box sx={{
               '& > :not(style)': { m: 1.3, width: '80%' },   }}

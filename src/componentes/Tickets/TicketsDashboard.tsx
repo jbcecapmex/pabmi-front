@@ -532,13 +532,8 @@ export default function TicketsDashBoard() {
         </Breadcrumbs>
       </Grid>
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
-      <Grid
-        container
-        justifyContent={"center"}
-        sx={{ fontFamily: "MontserratSemiBold" }}
-      >
-        {/* este grid es del card del centro el que contiene los objetos */}
-        <Grid item xs={12} md={12} mt={-5}>
+      <Grid container xs={12} justifyContent={"center"}>
+        <Grid item xs={12} md={12} mt={2}>
           {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
           <Card sx={{ p: 0, boxShadow: 8 }}>
             <CardContent sx={{ fontFamily: "MontserratBold", bgcolor: "" }}>

@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Swal from "sweetalert2";
+import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
 
 // Estilos para la ventana Modal
 const style = {
@@ -26,26 +27,14 @@ const style = {
   p: 2,
 };
 
-// Mnesajes de exito o error
-const Toast = Swal.mixin({
-  toast: true,
-  position: "center",
-  showConfirmButton: false,
-  timer: 4000,
-  timerProgressBar: false,
-  didOpen: (toast:any) => {
-  toast.addEventListener("mouseenter", Swal.stopTimer);
-  toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
-  });
-
-  export interface NotificacionesInterface {
-    uuid:                string;
-    Encabezado:          string;            
-    Descripcion:         string;
-
-  }
-
+export interface NotificacionesInterface {
+  uuid:                string;
+  Encabezado:          string;            
+  Descripcion:         string;
+  creadopor:          string;
+  modificadopor:      string;
+  eliminadopor:       string; 
+}
 
 // inicia el componente
 export default function Notificaciones() { 
@@ -79,78 +68,26 @@ export default function Notificaciones() {
         descripcion           : Descripcion,
         creadopor             : localStorage.getItem("IdUsuario"),
         eliminadopor          : eliminadopor,
+        visto                 :0
       };
-      console.log(data);
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardanotificaciones",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
-        
+      const url = "/catalogos/guardanotificaciones";
+      catalogoSave(data,url).then((response) =>{
+        setOpen(false);
+        getAllNotificaciones();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : "Notificación creada exitosamente",
-          });
-          getAllNotificaciones();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,});
-            console.log(error);
-        });
     }
   };
-
-// Handle delete
-const handleDelete = (event: any, cellValues: any) => {
-  Swal.fire({
-    title               : "Estas Seguro(a)?",
-    text                : `Estas a punto de eliminar un registro (${cellValues.row.Descripcion})`,
-    icon                : "question",
-    showCancelButton    : true,
-    confirmButtonText   : "Eliminar",
-    confirmButtonColor  : "#dc3545",
-    cancelButtonColor   : "#0d6efd",
-    cancelButtonText    : "Cancelar",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      const data = { uuid: cellValues.row.uuid };
-      axios({
-        method    : "post",
-        url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminanotificaciones",
-        headers   : {
-                      "Content-Type": "application/json",
-                      Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data      : data,
-      })
-        .then(function (response) {
-          Toast.fire({
-            icon  : "success",
-            title : "Notificación eliminada exitosamente",
-          });
-          getAllNotificaciones();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,});
-        });
-    }
-  });
-};
-
-
-// Handle update
+  // Handle delete
+  const handleDelete = (event: any, cellValues: any) => {
+    const data = cellValues.row.uuid;
+    const descripcion = cellValues.row.Descripcion;   
+    const url = "/catalogos/eliminanotificaciones";
+    catalogoDelete(data,url,descripcion).then((response) =>{
+      setOpen(false);
+      getAllNotificaciones();
+    })
+  };
+  // Handle update
   const handleUpdate = () => {
     if (Encabezado === "" || Descripcion === ""){
       Swal.fire({
@@ -162,40 +99,19 @@ const handleDelete = (event: any, cellValues: any) => {
       
       const data = {
         uuid              : uuid,
-        encabezado        : Encabezado,
-        descripcion       : Descripcion,
+        Encabezado        : Encabezado,
+        Descripcion       : Descripcion,
         creadopor         : creadopor,
         modificadopor     : localStorage.getItem("IdUsuario"),
         eliminadopor      : eliminadopor,
       };
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizanotificaciones",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
+      const url = "/catalogos/actualizanotificaciones";
+      catalogoUpdate(data,url).then((response) =>{
+        setOpen(false);
+        getAllNotificaciones();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : "La notificacion fue actualizada con éxito",
-          });
-          getAllNotificaciones();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,
-          });
-        });
     }
   };  
-
-
 
   const navigate = useNavigate();
 
@@ -254,7 +170,6 @@ const handleDelete = (event: any, cellValues: any) => {
 
 
   const [rows, setRows] = useState([]);
-
   const getAllNotificaciones = () => {
    axios ({
     method: "get",
@@ -264,9 +179,12 @@ const handleDelete = (event: any, cellValues: any) => {
       Authorization: localStorage.getItem("jwtToken") || "",
     },
    })
-   .then(function (response) {
-    setRows(response.data);
-    // limpiar los campos del formulario
+    .then(({ data }) => {
+      if (data) {
+        setRows(data);
+      } else {
+        setRows([])
+      }
     })
     .catch(function (error) {
       console.error(error)
@@ -300,20 +218,16 @@ const handleDelete = (event: any, cellValues: any) => {
       top       : "9vh",
       position  : "absolute",
       fontFamily: "MontserratSemiBold" }}>
-      <Grid item xs={12}         sx={{
-          top       : "-9vh",
-          position  : "absolute",
-          fontFamily: "MontserratSemiBold",
-        }}>
+      <Grid item xs={12} >
 
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" href="/inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
             Catálogos
           </Link>
           <Typography color="text.primary"> Catálogo de Notificaciones </Typography>
