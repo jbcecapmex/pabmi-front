@@ -248,11 +248,14 @@ const handleClose = ()  => setOpen(false);
                     Authorization: localStorage.getItem("jwtToken") || "",
       },
     })
-      // aqui se recibe lo del endpoint en response
-      .then(({ data }) => {
-        const rows = data;
-        setRows(rows);
+    .then(({ data }) => {
+        if (data) {
+          setRows(data);
+        } else {
+          setRows([])
+        }
       })
+
       .catch(function (error) {
         Swal.fire({
           icon  : "error",

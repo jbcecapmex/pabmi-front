@@ -276,9 +276,12 @@ const handleDelete = (event: any, cellValues: any) => {
       Authorization: localStorage.getItem("jwtToken") || "",
     },
    })
-   .then(function (response) {
-    setRows(response.data);
-    // limpiar los campos del formulario
+    .then(({ data }) => {
+      if (data) {
+        setRows(data);
+      } else {
+        setRows([])
+      }
     })
     .catch(function (error) {
       console.error(error)
