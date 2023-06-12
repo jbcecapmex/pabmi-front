@@ -10,7 +10,7 @@ import Modal from "@mui/material/Modal";
 // componente de sweetalert2 para el uso de los mensajes de alertas
 const Toast = Swal.mixin({
   toast: true,
-  position: "top-end",
+  position: "center",
   showConfirmButton: false,
   timer: 4000,
   timerProgressBar: false,
@@ -27,6 +27,9 @@ export interface ModelosInterface {
   Cve: string;
   Nombre: string;
   Descripcion: string;
+  creadopor:          string;
+  modificadopor:      string;
+  eliminadopor:       string;    
 }
 
 const style = {
@@ -87,7 +90,7 @@ const handleClose = ()  => setOpen(false);
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : "Modelos Creado Exitosamente",
+            title : "Creado Exitosamente",
           });
           getAllModelos();
         })
@@ -125,7 +128,7 @@ const handleClose = ()  => setOpen(false);
           .then(function (response) {
             Toast.fire({
               icon  : "success",
-              title : "Modelos Eliminado Exitosamente",
+              title : "Eliminado Exitosamente",
             });
             getAllModelos();
           })
@@ -171,7 +174,7 @@ const handleClose = ()  => setOpen(false);
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : "Modelos Actualizado Exitosamente",
+            title : "Actualizado Exitosamente",
           });
           getAllModelos();
         })
@@ -262,9 +265,12 @@ const handleClose = ()  => setOpen(false);
       },
     })
       // aqui se recibe lo del endpoint en response
-      .then(({ data }) => {
-        const rows = data;
-        setRows(rows);
+      .then(({data}) => {
+        if (data) {
+          setRows(data);
+        } else {
+          setRows([])
+        }
       })
       .catch(function (error) {
         Swal.fire({
