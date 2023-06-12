@@ -305,11 +305,11 @@ const handleClose = ()  => setOpen(false);
         <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
-          Catálogos
+          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
+            Usuarios
           </Link>
           <Typography color="text.primary">Catálogo de Nivel Reportes</Typography>
         </Breadcrumbs>

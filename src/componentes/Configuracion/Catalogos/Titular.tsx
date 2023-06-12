@@ -13,7 +13,9 @@ const Toast = Swal.mixin({
   position: "center",
   showConfirmButton: false,
   timer: 4000,
-  timerProgressBar: false, 
+  timerProgressBar: false,
+  //background: '#2e7d32',
+  //color: '#fff',  
   didOpen: (toast) => {
     toast.addEventListener("mouseenter", Swal.stopTimer);
     toast.addEventListener("mouseleave", Swal.resumeTimer);
@@ -302,11 +304,11 @@ const handleClose = ()  => setOpen(false);
         <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
-          Catálogos
+          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
+		  Catalogos
           </Link>
           <Typography color="text.primary">Catálogo de Titular</Typography>
         </Breadcrumbs>
