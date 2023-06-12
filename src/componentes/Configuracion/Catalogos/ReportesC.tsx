@@ -311,14 +311,14 @@ const handleClose = ()  => setOpen(false);
       },
     })
       // aqui se recibe lo del endpoint en response
-      .then(({ data }) => {
-        if (data) {
-          setRowsTipoReportes(data);
+      .then((response) => {
+        if (response) {
+          setRowsTipoReportes(response.data);
         } else {
           setRowsTipoReportes([])
         }
       })
-      .catch(function (error) {
+      .catch(function (error: any) {
         Swal.fire({
           icon  : "error",
           title : "Mensaje",
@@ -508,8 +508,8 @@ const handleClose = ()  => setOpen(false);
                             <MenuItem value=""></MenuItem>
                             {
                               rowstiporeportes.length > 0 &&
-                              rowstiporeportes?.map((tiporeporte, index) => (
-                                <MenuItem value={tiporeporte.uuid}>
+                              rowstiporeportes.map((tiporeporte, index) => (
+                                <MenuItem key={tiporeporte.uuid} value={tiporeporte.uuid}>
                                   {tiporeporte.Nombre}
                                 </MenuItem>
                               ))
