@@ -152,7 +152,7 @@ const [eliminadopor, setEliminadoPor]       = useState("");
       Swal.fire({
         icon: "error",
         title: "Mensaje",
-        text: "Completa todos los campos para continuarrrrrrrr",
+        text: "Completa todos los campos para continuar",
       });
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
@@ -316,11 +316,11 @@ const [eliminadopor, setEliminadoPor]       = useState("");
           <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
-            Usuarios
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          Catálogos
           </Link>
           <Typography color="text.primary">Catálogo de Empleados </Typography>
         </Breadcrumbs>

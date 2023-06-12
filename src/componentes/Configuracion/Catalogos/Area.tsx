@@ -293,47 +293,30 @@ const handleClose = ()  => setOpen(false);
  
   return (
     // contenedor principal
-    <Grid
-      container
-      sx={{
-        top       : "9vh",
-        position  : "absolute",
-        fontFamily: "MontserratSemiBold",
-      }}
-    >
-      {/* grid de Breadcrumbs */}
-      <Grid
-        item
-        xs={12}
-        sx={{
-          top       : "-9vh",
-          position  : "absolute",
-          fontFamily: "MontserratSemiBold",
-        }}
-      >
+    <Grid container  > 
+      <Grid item xs={12} >
         {/* este componente es para armar la ruta que se muestra arriba y poder navegar hacia atras */}
         {/* ejemplo inicio/configuracion/catalogos/marca */}
         <Breadcrumbs aria-label="breadcrumb">
         <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Area">
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Area">
-            Usuarios
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          Catálogos
           </Link>
-          <Typography color="text.primary">Catálogo de Area</Typography>
+          <Typography color="text.primary">Catálogo de Área</Typography>
         </Breadcrumbs>
       </Grid>
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
       <Grid
         container
         justifyContent={"center"}
-        sx={{ fontFamily: "MontserratSemiBold" }}
       >
         {/* este grid es del card del centro el que contiene los objetos */}
-        <Grid item xs={12} md={12} mt={-5}>
+        <Grid item xs={12} md={12} mt={2}>
           {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
           <Card sx={{ p: 0, boxShadow: 8, height: "86vh" }}>
             <CardContent sx={{ fontFamily: "MontserratBold", bgcolor: "" }}>
@@ -395,7 +378,7 @@ const handleClose = ()  => setOpen(false);
                     <Grid item xs={12}>
                       <Box>
                         <Typography variant="h5" sx={{ padding: "1%" }}>
-                          Detalle de Area
+                          Detalle de Área
                         </Typography>
                       </Box>
                     </Grid>
@@ -450,7 +433,7 @@ const handleClose = ()  => setOpen(false);
                         display="flex"
                       >
                         <TextField
-                          label     ="Descripcion"
+                          label     ="Descripción"
                           size      ="small"
                           variant   ="outlined"
                           value     ={descripcion}
@@ -500,5 +483,6 @@ const handleClose = ()  => setOpen(false);
         </Grid>
       </Grid>
     </Grid>
+    
   );
 }

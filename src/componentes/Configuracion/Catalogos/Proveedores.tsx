@@ -313,20 +313,16 @@ const handleDelete = (event: any, cellValues: any) => {
       top       : "9vh",
       position  : "absolute",
       fontFamily: "MontserratSemiBold" }}>
-      <Grid item xs={12}         sx={{
-          top       : "-9vh",
-          position  : "absolute",
-          fontFamily: "MontserratSemiBold",
-        }}>
+      <Grid item xs={12}  >
 
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" href="/inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
             Catálogos
           </Link>
           <Typography color="text.primary"> Catálogo de Proveedores </Typography>
