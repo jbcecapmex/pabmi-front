@@ -312,7 +312,6 @@ const handleClose = ()  => setOpen(false);
     })
       // aqui se recibe lo del endpoint en response
       .then((response) => {
-         console.log('response',response.data)
         if (response) {
           setRowsTipoReportes(response.data);
         } else {
@@ -515,7 +514,6 @@ const handleClose = ()  => setOpen(false);
                                 </MenuItem>
                               ))
                             }
-
                           </Select>
                         </FormControl>
                       </Box>

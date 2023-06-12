@@ -28,6 +28,9 @@ export interface PerfilesInterface {
   Nombre: string;
   ApellidoPaterno: string;
   ApellidoMaterno: string;
+  creadopor: string;
+  modificadopor: string;
+  eliminadopor: string;
 }
 
 const style = {
@@ -73,12 +76,12 @@ const [eliminadopor, setEliminadoPor]       = useState("");
       const data = {
         cve                   : cve,
         nombre                : nombre,
-        ApellidoPaterno       : ApellidoPaterno,
-        ApellidoMaterno       : ApellidoMaterno,
+        apellidopaterno       : ApellidoPaterno,
+        apellidomaterno       : ApellidoMaterno,
         creadopor             : localStorage.getItem("IdUsuario"),
+        modificadopor         : modificadopor,
         eliminadopor          : eliminadopor,
-      };
-      console.log(data);
+      };      
       axios({
         method: "post",
         url: process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardaempleados",
@@ -92,11 +95,11 @@ const [eliminadopor, setEliminadoPor]       = useState("");
           setOpen(false);
           Toast.fire({
             icon: "success",
-            title: "Perfil Creado Exitosamente",
+            title: "Creado Exitosamente",
           });
           getAllEmpleados();
         })
-        .catch(function (error) {
+        .catch(function (error) {          
           Swal.fire({
             icon: "error",
             title: "Mensaje",
@@ -131,7 +134,7 @@ const [eliminadopor, setEliminadoPor]       = useState("");
           .then(function (response) {
             Toast.fire({
               icon: "success",
-              title: "Perfil Eliminado Exitosamente",
+              title: "Eliminado Exitosamente",
             });
             getAllEmpleados();
           })
@@ -145,7 +148,6 @@ const [eliminadopor, setEliminadoPor]       = useState("");
       }
     });
   };
-
   // Handle update
   const handleUpdate = () => {
     if (cve === "" || nombre === "" || ApellidoPaterno === "" || ApellidoMaterno === "") {
@@ -160,13 +162,12 @@ const [eliminadopor, setEliminadoPor]       = useState("");
         uuid                  : uuid,
         cve                   : cve,
         nombre                : nombre,
-        ApellidoPaterno       : ApellidoPaterno,
-        ApellidoMaterno       : ApellidoMaterno,
+        apellidopaterno       : ApellidoPaterno,
+        apellidomaterno       : ApellidoMaterno,
         creadopor             : creadopor,
         modificadopor         : localStorage.getItem("IdUsuario"),
         eliminadopor          : eliminadopor,
       };
-      console.log(data);
       axios({
         method: "post",
         url: process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizaempleados",
@@ -180,7 +181,7 @@ const [eliminadopor, setEliminadoPor]       = useState("");
           setOpen(false);
           Toast.fire({
             icon: "success",
-            title: "Perfil Actualizado Exitosamente",
+            title: "Actualizado Exitosamente",
           });
           getAllEmpleados();
         })
@@ -278,11 +279,13 @@ const [eliminadopor, setEliminadoPor]       = useState("");
         Authorization: localStorage.getItem("jwtToken") || "",
       },
     })
-      // aqui se recibe lo del endpoint en response
-      .then(({ data }) => {
-        const rows = data;
-        setRows(rows);
-      })
+    .then(({data}) => {
+      if (data) {
+        setRows(data);
+      } else {
+        setRows([])
+      }
+    })
       .catch(function (error) {
         Swal.fire({
           icon: "error",

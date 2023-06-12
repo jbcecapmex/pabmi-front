@@ -25,6 +25,9 @@ export interface TipoTransaccionInterface {
   Cve: string;
   Nombre: string;
   Descripcion: string;
+  creadopor:          string;
+  modificadopor:      string;
+  eliminadopor:       string;    
 }
 
 const style = {
@@ -85,7 +88,7 @@ const handleClose = ()  => setOpen(false);
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : "Tipo Transacción Creado Exitosamente",
+            title : "Creado Exitosamente",
           });
           getAllTipoTransaccion();
         })
@@ -123,7 +126,7 @@ const handleClose = ()  => setOpen(false);
           .then(function (response) {
             Toast.fire({
               icon  : "success",
-              title : "Tipo Transacción Eliminado Exitosamente",
+              title : "Eliminado Exitosamente",
             });
             getAllTipoTransaccion();
           })
@@ -169,7 +172,7 @@ const handleClose = ()  => setOpen(false);
           setOpen(false);
           Toast.fire({
             icon  : "success",
-            title : "Tipo Transacción Actualizado Exitosamente",
+            title : "Actualizado Exitosamente",
           });
           getAllTipoTransaccion();
         })
@@ -260,9 +263,12 @@ const handleClose = ()  => setOpen(false);
       },
     })
       // aqui se recibe lo del endpoint en response
-      .then(({ data }) => {
-        const rows = data;
-        setRows(rows);
+      .then(({data}) => {
+        if (data) {
+          setRows(data);
+        } else {
+          setRows([])
+        }
       })
       .catch(function (error) {
         Swal.fire({
