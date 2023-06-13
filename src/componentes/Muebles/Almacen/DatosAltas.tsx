@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Typography, Box, Button, } from "@mui/material";        
+import { Typography, Box, Button, } from "@mui/material";    
+import { useNavigate } from "react-router-dom";    
 import Grid from "@mui/material/Grid";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -12,7 +13,9 @@ const steps = ["Paso1", "Paso2", "Paso3"];
 
 export default function DatosAltas() {
 	const [open, setOpen] = React.useState(false);
-	const handleOpen = () => setOpen(true);
+	const handleOpen = () => setOpen(true); 
+
+	const navigate = useNavigate();
 
 	// CONST DE LOS PASOS
 	const [activeStep, setActiveStep] = React.useState(0);
@@ -145,25 +148,18 @@ export default function DatosAltas() {
 								fontSize: "100%",}}
 								> Atrás </Typography>
 								</Button>
-								<Box  sx={{ flex: "1 1 auto" }} />
-								{isStepOptional(activeStep) && (
-									<Button 
-										variant="contained" 
-										onClick={handleSkip}
-										sx={{  margin: "1%",color: "#FFFFFF"  }}
-									>
-									<Typography
-									sx={{
-										color     : "#FFFFFF","&:hover": { color: "#15212f" },
-										fontFamily: "MontserratRegular, sans-serif",
-										fontSize  : "100%",
-									}}
-									>
-									Saltar
-									</Typography>
-										
-									</Button>
-								)}
+								<Box sx={{ flex: "1 1 auto" }} />
+								<Button
+									 onClick={() => navigate(-1)}
+									variant="contained" 
+									color="secondary"
+									sx={{margin:"1%",
+									color:"white",
+									"&:hover":{
+									color:"#15212f",
+									},
+									}}>  Cancelar </Button>
+								
 								<Button variant="contained" sx={{ margin: "1%", color: "#FFFFFF" }} onClick={handleNext}>
 								<Typography
 								sx={{
