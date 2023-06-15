@@ -1,9 +1,100 @@
 import React from "react";
-import { Grid, Typography, TextField, Box, Button, FormControl, InputLabel, Select, MenuItem } from "@mui/material"
+import { Grid, Typography, TextField, Box, Button, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { Divider } from "@mui/material"; 
+import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+
+// componente de sweetalert2 para el uso de los mensajes de alertas
+const Toast = Swal.mixin({
+	toast: true,
+	position: "center",
+	showConfirmButton: false,
+	timer: 4000,
+	timerProgressBar: false,
+	//background: '#2e7d32',
+	//color: '#fff',     
+	didOpen: (toast) => {
+	  toast.addEventListener("mouseenter", Swal.stopTimer);
+	  toast.addEventListener("mouseleave", Swal.resumeTimer);
+	},
+  });
+   
+export interface TipoBienInterface {
+    uuid:                string;
+    Cve:                 string;            
+    Nombre:              string;
+  }
+
+  export interface AreaInterface {
+	uuid: string;
+	Cve: string;
+	Nombre: string;
+	Descripcion: string; 
+  }
+
+  
+export default function StepUno(){
+
+	const navigate                  = useNavigate();
+	const [TipoBien, setTipoBien]  = useState('');
+	const [Area, setArea]  = useState('');
  
 
-export default function StepUno(){
+  const [rowsTipoBien, setRowsTipoBien] = useState<Array<TipoBienInterface>>([]);
+  // aqui es el consumo del endpoint para obtener el listado de Titular de la base de datos
+  const getAllTipoBien= () => {
+    axios({
+      method    : "get",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienetiposbien",
+      headers   : {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.getItem("jwtToken") || "",
+      },
+    })
+      // aqui se recibe lo del endpoint en response
+      .then(({ data }) => {
+        const rowsTipoBien = data;
+        setRowsTipoBien(rowsTipoBien);
+      })
+      .catch(function (error) {
+        Swal.fire({ 
+          text  : "("+error.response.status+") "+error.response.data.message,
+        }).then((r) => navigate("/Configuracion/Usuarios/Menu"));
+      });
+  };
+
+  const [rowsArea, setRowsArea] = useState<Array<AreaInterface>>([]);
+  // aqui es el consumo del endpoint para obtener el listado de Titular de la base de datos
+  const getAllArea= () => {
+    axios({
+      method    : "get",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienearea",
+      headers   : {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.getItem("jwtToken") || "",
+      },
+    })
+      // aqui se recibe lo del endpoint en response
+      .then(({ data }) => {
+        const rowsArea = data;
+        setRowsArea(rowsArea);
+      })
+      .catch(function (error) {
+        Swal.fire({ 
+          text  : "("+error.response.status+") "+error.response.data.message,
+        }).then((r) => navigate("/Configuracion/Usuarios/Menu"));
+      });
+  };
+
+
+  useEffect(() => {
+	getAllArea();
+    getAllTipoBien();
+  }, []);
+
+
 	return (
 	<Grid container spacing={2} paddingTop="3%">
 	<Grid item xs={12} display="flex" >
@@ -132,13 +223,18 @@ export default function StepUno(){
 		</InputLabel>
 		<Select
 		id="Tipo Bien"
-		// value={TipoDependencia}
+		value={TipoBien}
 		label="Tipo Bien"
 		size="small"
 		displayEmpty
-		// onChange = {(v) => { setTipoBien(v.target.value)} }
+		onChange = {(v) => { setTipoBien(v.target.value); }}
 		>
-		        <MenuItem value=""> 1 </MenuItem>  
+		        <MenuItem value=""></MenuItem>
+                            {rowsTipoBien.map((TipoBien, index) => (
+                              <MenuItem value={TipoBien.uuid}>
+                                {TipoBien.Nombre}
+                              </MenuItem>
+                            ))}
 		</Select>
 		</FormControl>
 		</Box>
@@ -155,13 +251,19 @@ export default function StepUno(){
 		</InputLabel>
 		<Select
 		id="AreaFisica"
-		// value={TipoDependencia}
+		value={Area}
 		label="AreaFisica"
 		size="small"
 		displayEmpty
-		// onChange = {(v) => { setTipoBien(v.target.value)} }
+		onChange = {(v) => { setArea(v.target.value)} }
 		>
-		        <MenuItem value=""> 1 </MenuItem>  
+		  <MenuItem value=""></MenuItem>
+            {rowsArea.map((Area, index) => (
+            <MenuItem value={Area.uuid}>
+             {Area.Nombre}
+             </MenuItem>
+           ))}
+
 		</Select>
 		</FormControl>
 		</Box>
