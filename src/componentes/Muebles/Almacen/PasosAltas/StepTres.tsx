@@ -1,8 +1,63 @@
 import React,  { useState }  from "react";
 import { Grid, Typography, TextField, Box, Button, FormControl, Select, MenuItem, InputLabel } from "@mui/material"
-import { Divider } from "@mui/material"; 
+import { Divider } from "@mui/material";   
+import { useEffect } from "react";
+import Swal from "sweetalert2";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";  
+
+
+const Toast = Swal.mixin({
+	toast: true,
+	position: "center",
+	showConfirmButton: false,
+	timer: 4000,
+	timerProgressBar: false,
+	//background: '#2e7d32',
+	//color: '#fff',     
+	didOpen: (toast) => {
+	  toast.addEventListener("mouseenter", Swal.stopTimer);
+	  toast.addEventListener("mouseleave", Swal.resumeTimer);
+	},
+  });
+
+  export interface TipoActivoFijoInterface {
+	uuid: string;
+	Cve: string;
+	Nombre: string;
+	Descripcion: string;   
+  }
+   
+
 
 export default function StepTres(){
+
+	const navigate                  = useNavigate();
+	const [TipoActivoFijo, setTipoActivoFijo]  = useState('');
+
+	const [rowsTipoActivoFijo, setRowsTipoActivoFijo] = useState<Array<TipoActivoFijoInterface>>([]);
+  // aqui es el consumo del endpoint para obtener el listado de Titular de la base de datos
+  const getAllTipoActivoFijo= () => {
+    axios({
+      method    : "get",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienetipoactivofijo",
+      headers   : {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.getItem("jwtToken") || "",
+      },
+    })
+      // aqui se recibe lo del endpoint en response
+      .then(({ data }) => {
+        const rowsTipoActivoFijo = data;
+        setRowsTipoActivoFijo(rowsTipoActivoFijo);
+      })
+      .catch(function (error) {
+        Swal.fire({ 
+          text  : "("+error.response.status+") "+error.response.data.message,
+        }).then((r) => navigate("/Configuracion/Usuarios/Menu"));
+      });
+  };
+
 
 	const [selectedFile, setSelectedFile] = useState(null);
 
@@ -25,6 +80,10 @@ export default function StepTres(){
 
 	const [rfc, setRfc] = useState("");
 	const [disableValidar, setDisableValidar] = useState(false);
+
+	useEffect(() => {
+		getAllTipoActivoFijo();
+	  }, []);
 
 	return (
 	<Grid container spacing={2} paddingTop="3%">
@@ -173,13 +232,18 @@ export default function StepTres(){
 		</InputLabel>
 		<Select
 		id="Tipo Act. Fijo "
-		// value={TipoDependencia}
+		value={TipoActivoFijo}
 		label="Tipo Act. Fijo"
 		size="small"
 		displayEmpty
-		// onChange = {(v) => { setTipoBien(v.target.value)} }
+		onChange = {(v) => { setTipoActivoFijo(v.target.value)} }
 		>
-		        <MenuItem value=""> 1 </MenuItem>  
+		         <MenuItem value=""></MenuItem>
+                 {rowsTipoActivoFijo.map((TipoActivoFijo, index) => (
+                 <MenuItem value={TipoActivoFijo.uuid}>
+                 {TipoActivoFijo.Nombre}
+                  </MenuItem>
+                 ))}
 		</Select>
 		</FormControl>
 		</Box>

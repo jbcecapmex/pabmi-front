@@ -4,7 +4,7 @@ import { Divider } from "@mui/material";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";  
 
 // componente de sweetalert2 para el uso de los mensajes de alertas
 const Toast = Swal.mixin({
@@ -230,11 +230,12 @@ export default function StepUno(){
 		onChange = {(v) => { setTipoBien(v.target.value); }}
 		>
 		        <MenuItem value=""></MenuItem>
-                            {rowsTipoBien.map((TipoBien, index) => (
-                              <MenuItem value={TipoBien.uuid}>
-                                {TipoBien.Nombre}
-                              </MenuItem>
-                            ))}
+                 {rowsTipoBien.map((TipoBien, index) => (
+                 <MenuItem value={TipoBien.uuid}>
+                 {TipoBien.Nombre}
+                  </MenuItem>
+                 ))}
+				 
 		</Select>
 		</FormControl>
 		</Box>
