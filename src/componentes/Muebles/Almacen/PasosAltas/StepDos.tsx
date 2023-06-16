@@ -1,4 +1,5 @@
 import React from "react";
+import {Edit as EditIcon, Delete as DeleteIcon,} from "@mui/icons-material";
 import { Grid, Typography, TextField, Box, Button, FormControl, Select, MenuItem, InputLabel } from "@mui/material"
 import { Divider } from "@mui/material"; 
 import { useEffect, useState } from "react";
@@ -28,6 +29,7 @@ export interface MarcasInterface {
 	Nombre: string;
 	Descripcion: string; 
   }
+
 
   export interface ModelosInterface {
 	uuid: string;
@@ -78,8 +80,10 @@ export default function StepDos(){
 		})
 		.catch(function (error) {
 		  Swal.fire({ 
+			icon  : "error",
+			title : "Mensaje",
 			text  : "("+error.response.status+") "+error.response.data.message,
-		  }).then((r) => navigate("/Configuracion/Usuarios/Menu"));
+		  }).then((r) => navigate("/Muebles/Almacen/Altas"));
 		});
 	};
 
@@ -101,8 +105,10 @@ export default function StepDos(){
 		})
 		.catch(function (error) {
 		  Swal.fire({ 
+			icon  : "error",
+			title : "Mensaje",
 			text  : "("+error.response.status+") "+error.response.data.message,
-		  }).then((r) => navigate("/Configuracion/Usuarios/Menu"));
+		  }).then((r) => navigate("/Muebles/Almacen/Altas"));
 		});
 	};
 
@@ -124,8 +130,10 @@ export default function StepDos(){
 		})
 		.catch(function (error) {
 		  Swal.fire({ 
+			icon  : "error",
+			title : "Mensaje",
 			text  : "("+error.response.status+") "+error.response.data.message,
-		  }).then((r) => navigate("/Configuracion/Usuarios/Menu"));
+		  }).then((r) => navigate("/Muebles/Almacen/Altas"));
 		});
 	};
 
@@ -146,9 +154,11 @@ export default function StepDos(){
 		  setRowsEmpleados(rowsEmpleados);
 		})
 		.catch(function (error) {
-		  Swal.fire({ 
+		  Swal.fire({
+			icon  : "error",
+			title : "Mensaje", 
 			text  : "("+error.response.status+") "+error.response.data.message,
-		  }).then((r) => navigate("/Configuracion/Usuarios/Menu"));
+		  }).then((r) => navigate("/Muebles/Almacen/Altas"));
 		});
 	};
 
@@ -315,11 +325,11 @@ export default function StepDos(){
 		</InputLabel>
 		<Select
 		id=" Modelo "
-		// value={Modelos}
+		value={Modelos}
 		label="Modelo"
 		size="small"
 		displayEmpty
-		// onChange = {(v) => { setModelos(v.target.value)} }
+		onChange = {(v) => { setModelos(v.target.value)} }
 		>
 		    <MenuItem value=""></MenuItem>
              {rowsModelos.map((Modelos, index) => (
@@ -412,7 +422,7 @@ export default function StepDos(){
 		size="small"
 		displayEmpty
 		onChange = {(v) => { setEmpleados(v.target.value)} }
-		>
+		> 
 		     <MenuItem value=""></MenuItem>
              {rowsEmpleados.map((Empleados, index) => (
              <MenuItem value={Empleados.uuid}>
