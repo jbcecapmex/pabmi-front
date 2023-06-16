@@ -1,8 +1,168 @@
 import React from "react";
 import { Grid, Typography, TextField, Box, Button, FormControl, Select, MenuItem, InputLabel } from "@mui/material"
 import { Divider } from "@mui/material"; 
+import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
-export default function StepDos(){
+// componente de sweetalert2 para el uso de los mensajes de alertas
+const Toast = Swal.mixin({
+	toast: true,
+	position: "center",
+	showConfirmButton: false,
+	timer: 4000,
+	timerProgressBar: false,
+	//background: '#2e7d32',
+	//color: '#fff',     
+	didOpen: (toast) => {
+	  toast.addEventListener("mouseenter", Swal.stopTimer);
+	  toast.addEventListener("mouseleave", Swal.resumeTimer);
+	},
+  });
+
+  
+export interface MarcasInterface {
+	uuid: string;
+	Cve: string;
+	Nombre: string;
+	Descripcion: string; 
+  }
+
+  export interface ModelosInterface {
+	uuid: string;
+	Cve: string;
+	Nombre: string;
+	Descripcion: string; 
+  }
+
+  export interface EstatusResguardosInterface {
+	uuid: string;
+	Cve: string;
+	Nombre: string;
+	Descripcion: string;  
+  }
+
+  export interface EmpleadosInterface {
+	uuid: string;
+	Cve: string;
+	Nombre: string;
+	ApellidoPaterno: string;
+	ApellidoMaterno: string;
+  }
+
+export default function StepDos(){  
+
+	const navigate                  = useNavigate();
+	const [Marcas, setMarcas]       = useState('');
+	const [Modelos, setModelos]     = useState('');
+	const [EstatusResguardos, setEstatusResguardos]  = useState('');
+	const [Empleados, setEmpleados]  = useState('');
+
+	
+	const [rowsMarcas, setRowsMarcas] = useState<Array<MarcasInterface>>([]);
+	// aqui es el consumo del endpoint para obtener el listado de Titular de la base de datos
+	const getAllMarcas= () => {
+	  axios({
+		method    : "get",
+		url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienemarcas",
+		headers   : {
+					  "Content-Type": "application/json",
+					  Authorization: localStorage.getItem("jwtToken") || "",
+		},
+	  })
+		// aqui se recibe lo del endpoint en response
+		.then(({ data }) => {
+		  const rowsMarcas = data;
+		  setRowsMarcas(rowsMarcas);
+		})
+		.catch(function (error) {
+		  Swal.fire({ 
+			text  : "("+error.response.status+") "+error.response.data.message,
+		  }).then((r) => navigate("/Configuracion/Usuarios/Menu"));
+		});
+	};
+
+	const [rowsModelos, setRowsModelos] = useState<Array<ModelosInterface>>([]);
+	// aqui es el consumo del endpoint para obtener el listado de Titular de la base de datos
+	const getAllModelos= () => {
+	  axios({
+		method    : "get",
+		url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienemodelos",
+		headers   : {
+					  "Content-Type": "application/json",
+					  Authorization: localStorage.getItem("jwtToken") || "",
+		},
+	  })
+		// aqui se recibe lo del endpoint en response
+		.then(({ data }) => {
+		  const rowsModelos = data;
+		  setRowsModelos(rowsModelos);
+		})
+		.catch(function (error) {
+		  Swal.fire({ 
+			text  : "("+error.response.status+") "+error.response.data.message,
+		  }).then((r) => navigate("/Configuracion/Usuarios/Menu"));
+		});
+	};
+
+	const [rowsEstatusResguardos, setRowsEstatusResguardos] = useState<Array<EstatusResguardosInterface>>([]);
+	// aqui es el consumo del endpoint para obtener el listado de Titular de la base de datos
+	const getAllEstatusResguardos= () => {
+	  axios({
+		method    : "get",
+		url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtieneestatusresguardo",
+		headers   : {
+					  "Content-Type": "application/json",
+					  Authorization: localStorage.getItem("jwtToken") || "",
+		},
+	  })
+		// aqui se recibe lo del endpoint en response
+		.then(({ data }) => {
+		  const rowsEstatusResguardos = data;
+		  setRowsEstatusResguardos(rowsEstatusResguardos);
+		})
+		.catch(function (error) {
+		  Swal.fire({ 
+			text  : "("+error.response.status+") "+error.response.data.message,
+		  }).then((r) => navigate("/Configuracion/Usuarios/Menu"));
+		});
+	};
+
+	const [rowsEmpleados, setRowsEmpleados] = useState<Array<EmpleadosInterface>>([]);
+	// aqui es el consumo del endpoint para obtener el listado de Titular de la base de datos
+	const getAllEmpleados= () => {
+	  axios({
+		method    : "get",
+		url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtieneempleados",
+		headers   : {
+					  "Content-Type": "application/json",
+					  Authorization: localStorage.getItem("jwtToken") || "",
+		},
+	  })
+		// aqui se recibe lo del endpoint en response
+		.then(({ data }) => {
+		  const rowsEmpleados = data;
+		  setRowsEmpleados(rowsEmpleados);
+		})
+		.catch(function (error) {
+		  Swal.fire({ 
+			text  : "("+error.response.status+") "+error.response.data.message,
+		  }).then((r) => navigate("/Configuracion/Usuarios/Menu"));
+		});
+	};
+
+	
+	
+	useEffect(() => {
+		getAllMarcas(); 
+		getAllModelos(); 
+		getAllEstatusResguardos();
+		getAllEmpleados();
+	  }, []);
+	
+
+
 	return (
 	<Grid container spacing={2} paddingTop="3%">
 	<Grid item xs={12} display="flex" >
@@ -59,13 +219,18 @@ export default function StepDos(){
 		</InputLabel>
 		<Select
 		id=" Marca "
-		// value={TipoDependencia}
+		value={Marcas}
 		label="Marca "
 		size="small"
 		displayEmpty
-		// onChange = {(v) => { setTipoBien(v.target.value)} }
+		onChange = {(v) => { setMarcas(v.target.value)} }
 		>
-		        <MenuItem value="">  </MenuItem>  
+			 <MenuItem value=""></MenuItem>
+             {rowsMarcas.map((Marcas, index) => (
+             <MenuItem value={Marcas.uuid}>
+             {Marcas.Nombre}
+             </MenuItem>
+             ))}
 		</Select>
 		</FormControl>
 		</Box>
@@ -150,13 +315,18 @@ export default function StepDos(){
 		</InputLabel>
 		<Select
 		id=" Modelo "
-		// value={TipoDependencia}
+		// value={Modelos}
 		label="Modelo"
 		size="small"
 		displayEmpty
-		// onChange = {(v) => { setTipoBien(v.target.value)} }
+		// onChange = {(v) => { setModelos(v.target.value)} }
 		>
-		        <MenuItem value=""> 1 </MenuItem>  
+		    <MenuItem value=""></MenuItem>
+             {rowsModelos.map((Modelos, index) => (
+             <MenuItem value={Modelos.uuid}>
+             {Modelos.Nombre}
+             </MenuItem>
+             ))}
 		</Select>
 		</FormControl>
 		</Box>
@@ -183,13 +353,19 @@ export default function StepDos(){
 		</InputLabel>
 		<Select
 		id="Personal De Resguardo"
-		// value={TipoDependencia}
+		value={EstatusResguardos}
 		label="Personal De Resguardo"
 		size="small"
 		displayEmpty
-		// onChange = {(v) => { setTipoBien(v.target.value)} }
+		onChange = {(v) => { setEstatusResguardos(v.target.value); }}
 		>
-		        <MenuItem value=""> 1 </MenuItem>  
+		      <MenuItem value=""></MenuItem>
+             {rowsEstatusResguardos.map((EstatusResguardos, index) => (
+             <MenuItem value={EstatusResguardos.uuid}>
+             {EstatusResguardos.Nombre}
+             </MenuItem>
+             ))}
+
 		</Select>
 		</FormControl>
 		</Box>
@@ -231,13 +407,19 @@ export default function StepDos(){
 		</InputLabel>
 		<Select
 		id="Conductor"
-		// value={TipoDependencia}
+		value={Empleados}
 		label="Conductor"
 		size="small"
 		displayEmpty
-		// onChange = {(v) => { setTipoBien(v.target.value)} }
+		onChange = {(v) => { setEmpleados(v.target.value)} }
 		>
-		        <MenuItem value=""> 1 </MenuItem>  
+		     <MenuItem value=""></MenuItem>
+             {rowsEmpleados.map((Empleados, index) => (
+             <MenuItem value={Empleados.uuid}>
+             {Empleados.Nombre} {Empleados.ApellidoPaterno} {Empleados.ApellidoMaterno}
+             </MenuItem>
+             ))}
+
 		</Select>
 		</FormControl>
 		</Box>
