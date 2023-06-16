@@ -90,9 +90,7 @@ export default function DatosAltas() {
 								optional?: React.ReactNode;
 							} = {};
 							if (isStepOptional(index)) {
-								labelProps.optional = (
-									<Typography variant="caption">Opcional</Typography>
-								);
+								labelProps.optional = false;
 							}
 							if (isStepSkipped(index)) {
 								stepProps.completed = false;
