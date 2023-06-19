@@ -156,7 +156,7 @@ export default function Proveedores() {
       },
     },
     {
-      field:       "cve",
+      field:       "Cve",
       headerName:  "Cve",
       width:       200,
       hideable:    false,

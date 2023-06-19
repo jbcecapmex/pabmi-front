@@ -1,7 +1,7 @@
 import React from "react";
 import {Edit as EditIcon, Delete as DeleteIcon,} from "@mui/icons-material";import { useEffect, useState } from "react";
 import axios from "axios";
-import {Box,Breadcrumbs,Button,Card,CardContent,Grid,IconButton,Link,TextField,Tooltip,Typography,} from "@mui/material";
+import {Box,Breadcrumbs,Button,Card,CardContent,FormControl,Grid,IconButton,InputLabel,Link,MenuItem,Select,TextField,Tooltip,Typography,} from "@mui/material";
 import MUIXDataGrid from "../../Grid/MUIXDataGrid";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +16,19 @@ export interface ModelosInterface {
   creadopor:          string;
   modificadopor:      string;
   eliminadopor:       string;    
+}
+
+export interface MarcasInterface {
+  uuid: string
+  Cve: string
+  Nombre: string
+  Descripcion: string
+  CreadoPor: string
+  ModificadoPor: string
+  EliminadoPor: any
+  created_at: string
+  updated_at: string
+  deleted_at: string
 }
 
 const style = {
@@ -39,6 +52,7 @@ const [descripcion, setDescripcion]     = useState("");
 const [creadopor, setCreadoPor]         = useState("");
 const [modificadopor, setModificadoPor] = useState("");
 const [eliminadopor, setEliminadoPor]   = useState("");
+const [marcas, setMarcas]                 = useState("");
 
 // Abrir modal
 const [open, setOpen]               = React.useState(false);
@@ -60,10 +74,11 @@ const handleClose = ()  => setOpen(false);
         cve                   : cve,
         nombre                : nombre,
         descripcion           : descripcion,
+        uuidmarca             : marcas,
         creadopor             : localStorage.getItem("IdUsuario"),
         eliminadopor          : eliminadopor,
       };
-      const url = "/catalogos/guardamarcas";
+      const url = "/catalogos/guardamodelos";
       catalogoSave(data,url).then((response) =>{
         setOpen(false);
         getAllModelos();
@@ -74,13 +89,12 @@ const handleClose = ()  => setOpen(false);
   const handleDelete = (event: any, cellValues: any) => {
     const data = cellValues.row.uuid;
     const descripcion = cellValues.row.Descripcion;   
-    const url = "/catalogos/eliminamarcas";
+    const url = "/catalogos/eliminamodelos";
     catalogoDelete(data,url,descripcion).then((response) =>{
       setOpen(false);
       getAllModelos();
     })
   };
-
 // Handle update
   const handleUpdate = () => {
     if (cve === "" || nombre === "" || descripcion === ""){
@@ -96,11 +110,12 @@ const handleClose = ()  => setOpen(false);
         cve                   : cve,
         nombre                : nombre,
         descripcion           : descripcion,
+        uuidmarca             : marcas,
         creadopor             : creadopor,
         modificadopor         : localStorage.getItem("IdUsuario"),
         eliminadopor          : eliminadopor,
       };
-      const url = "/catalogos/actualizamarcas";
+      const url = "/catalogos/actualizamodelos";
       catalogoUpdate(data,url).then((response) =>{
         setOpen(false);
         getAllModelos();
@@ -178,7 +193,7 @@ const handleClose = ()  => setOpen(false);
   const getAllModelos = () => {
     axios({
       method    : "get",
-      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienemarcas",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienemodelos",
       headers   : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -201,6 +216,34 @@ const handleClose = ()  => setOpen(false);
       });
   };
 
+// declaracion de la variable de estado "hook" que recibira la informacion del endpoint
+const [rowsmarcas, setRowsMarcas] = useState<Array<MarcasInterface>>([]);
+// aqui es el consumo del endpoint para obtener el listado de la base de datos
+const getAllMarcas= () => {
+  axios({
+    method    : "get",
+    url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienemarcas",
+    headers   : {
+                  "Content-Type": "application/json",
+                  Authorization: localStorage.getItem("jwtToken") || "",
+    },
+  })
+    // aqui se recibe lo del endpoint en response
+    .then(({data}) => {
+      if (data) {
+        setRowsMarcas(data);
+      } else {
+        setRowsMarcas([])
+      }
+    })
+    .catch(function (error) {
+      Swal.fire({
+        icon  : "error",
+        title : "Mensaje",
+        text  : "("+error.response.status+") "+error.response.data.message,
+      }).then((r) => navigate("/Configuracion/Catalogos/Modelos"));
+    });
+};  
   // esto es solo para que se ejecute la rutina de obtiene cuando cargue la pagina
   useEffect(() => {
     getAllModelos();
@@ -210,10 +253,12 @@ const handleClose = ()  => setOpen(false);
   // y que limpie las variables cuando se salga de la modal
   useEffect(() => {
     if (open===false) {
+      getAllMarcas();
       setuuid("");
       setCve("");
       setNombre("");
       setDescripcion("");
+      setMarcas("");
     }
   }, [open]);  
  
@@ -324,11 +369,7 @@ const handleClose = ()  => setOpen(false);
                         />
                       </Box>
                     </Grid>
-                    <Grid item xs={6}>
-                      <Box>
-                        {/* espacio en blanco */}
-                      </Box>
-                    </Grid>
+
                     <Grid item xs={6}>
                       <Box
                         component="form"
@@ -362,7 +403,44 @@ const handleClose = ()  => setOpen(false);
                           onChange  ={(v) => {setDescripcion(v.target.value); }}
                         />
                       </Box>
-                    </Grid>                    
+                    </Grid> 
+
+                    <Grid item xs={6}>
+                      <Box
+                        component="form"
+                        sx={{ "& > :not(style)": { m: 1.3, width: "100%" }, }}
+                        noValidate
+                        autoComplete="off"
+                        display="flex"
+                      >
+                        <FormControl fullWidth sx={{ bgColor: "#fff" }}>
+                          <InputLabel sx={{ marginTop: "-4px" }}>
+                            Marca
+                          </InputLabel>
+                          <Select
+                            id          ="marcas"
+                            value       ={marcas}
+                            size        ="small"
+                            displayEmpty
+                            onChange    ={(v) => { setMarcas(v.target.value); }}
+                          >
+                            <MenuItem value=""></MenuItem>
+                            {rowsmarcas.map((marcas, index) => (
+                              <MenuItem value={marcas.uuid}>
+                                {marcas.Nombre}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </Box>
+                    </Grid>
+
+
+
+
+
+
+
                     <Grid item xs={12}>
                       <Box
                         maxWidth      ="100%"
