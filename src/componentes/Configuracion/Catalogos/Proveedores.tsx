@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Swal from "sweetalert2";
+import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
 
 // Estilos para la ventana Modal
 const style = {
@@ -26,27 +27,15 @@ const style = {
   p: 2,
 };
 
-// Mnesajes de exito o error
-const Toast = Swal.mixin({
-  toast: true,
-  position: "center",
-  showConfirmButton: false,
-  timer: 4000,
-  timerProgressBar: false,
-  didOpen: (toast:any) => {
-  toast.addEventListener("mouseenter", Swal.stopTimer);
-  toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
-  });
-
-  export interface ProveedoresInterface {
-    uuid:                string;
-    Cve:                string;
-    Encabezado:          string;            
-    Descripcion:         string;
-
-  }
-
+export interface ProveedoresInterface {
+  uuid:                string;
+  Cve:                string;
+  Encabezado:          string;            
+  Descripcion:         string;
+  creadopor:          string;
+  modificadopor:      string;
+  eliminadopor:       string;  
+}
 
 // inicia el componente
 export default function Proveedores() { 
@@ -83,77 +72,24 @@ export default function Proveedores() {
         creadopor       : localStorage.getItem("IdUsuario"),
         eliminadopor    : eliminadopor,
       };
-      console.log(data);
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardaproveedores",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
-        
+      const url = "/catalogos/guardaproveedores";
+      catalogoSave(data,url).then((response) =>{
+        setOpen(false);
+        getAllProveedores();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : "Proceso creado exitosamente",
-          });
-          getAllProveedores();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,});
-            console.log(error);
-        });
     }
   };
-
-// Handle delete
-const handleDelete = (event: any, cellValues: any) => {
-  Swal.fire({
-    title               : "Estas Seguro(a)?",
-    text                : `Estas a punto de eliminar un registro (${cellValues.row.Descripcion})`,
-    icon                : "question",
-    showCancelButton    : true,
-    confirmButtonText   : "Eliminar",
-    confirmButtonColor  : "#dc3545",
-    cancelButtonColor   : "#0d6efd",
-    cancelButtonText    : "Cancelar",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      const data = { uuid: cellValues.row.uuid };
-      axios({
-        method    : "post",
-        url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminaproveedores",
-        headers   : {
-                      "Content-Type": "application/json",
-                      Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data      : data,
-      })
-        .then(function (response) {
-          Toast.fire({
-            icon  : "success",
-            title : "Registro  eliminado exitosamente",
-          });
-          getAllProveedores();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,});
-        });
-    }
-  });
-};
-
-
-// Handle update
+  // Handle delete
+  const handleDelete = (event: any, cellValues: any) => {
+    const data = cellValues.row.uuid;
+    const descripcion = cellValues.row.Descripcion;   
+    const url = "/catalogos/eliminaproveedores";
+    catalogoDelete(data,url,descripcion).then((response) =>{
+      setOpen(false);
+      getAllProveedores();
+    })
+  };
+  // Handle update
   const handleUpdate = () => {
     if (Cve === "" || Nombre === "" || Descripcion === ""){
       Swal.fire({
@@ -172,34 +108,13 @@ const handleDelete = (event: any, cellValues: any) => {
         modificadopor     : localStorage.getItem("IdUsuario"),
         eliminadopor      : eliminadopor,
       };
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizaproveedores",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
+      const url = "/catalogos/actualizaproveedores";
+      catalogoUpdate(data,url).then((response) =>{
+        setOpen(false);
+        getAllProveedores();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : "La información fue actualizada con éxito",
-          });
-          getAllProveedores();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,
-          });
-        });
     }
   };  
-
-
 
   const navigate = useNavigate();
 
@@ -210,8 +125,7 @@ const handleDelete = (event: any, cellValues: any) => {
       width:       90,
       headerAlign: "center",
       hideable:    false,
-      renderCell: (cellValues: any) => {
-        
+      renderCell: (cellValues: any) => {        
         return (
           <Box>
            <Tooltip title={"Editar"}>
@@ -266,7 +180,6 @@ const handleDelete = (event: any, cellValues: any) => {
 
 
   const [rows, setRows] = useState([]);
-
   const getAllProveedores = () => {
    axios ({
     method: "get",
@@ -302,7 +215,6 @@ const handleDelete = (event: any, cellValues: any) => {
     // esto es para que se ejecuten todo los get de los listados solo cuando se abra la modal,
   // y que limpie las variables cuando se salga de la modal
   useEffect(() => {
-
     if (open===false) {
       setuuid("");
       setCve("");
@@ -420,7 +332,11 @@ const handleDelete = (event: any, cellValues: any) => {
                 variant="outlined" />
                 </Box>
             </Grid>
-
+            <Grid item xs={6}>
+                      <Box>
+                        {/* espacio en blanco */}
+                      </Box>
+                    </Grid>
             <Grid item xs={6}>
             <Box sx={{
               '& > :not(style)': { m: 1.3, width: '80%' },   }}
@@ -434,8 +350,6 @@ const handleDelete = (event: any, cellValues: any) => {
                 variant="outlined" />
                 </Box>
             </Grid>
-
-
             <Grid item xs={6}>
             <Box sx={{
               '& > :not(style)': { m: 1.3, width: '80%' },   }}

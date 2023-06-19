@@ -192,10 +192,7 @@ export default function UsuariosC() {
           </Link>
           <Link underline="hover" color="inherit" href="/configuracion/catalogos">
           Usuario
-          </Link>
-          <Link underline="hover" color="inherit">
-          Usuario
-          </Link>
+          </Link> 
           <Typography color="text.primary"> Catálogo de Usuarios </Typography>
         </Breadcrumbs>
       </Grid> 
