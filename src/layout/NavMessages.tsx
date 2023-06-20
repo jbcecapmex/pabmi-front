@@ -10,7 +10,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 function NavMessages(props: { children?: any; window?: any }) {
-  const [timermsg, setTimerMsg] = useState(5000);
+  const [timermsg, setTimerMsg] = useState(3600000);
   useEffect(() => {    
       getTimerMsg();    
   }, []);  
