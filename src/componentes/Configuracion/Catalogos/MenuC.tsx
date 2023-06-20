@@ -69,8 +69,10 @@ const [icono, setIcono]                 = useState("");
 const [path, setPath]                   = useState("");
 const [nivel, setNivel]                 = useState("");
 const [ordenamiento, setOrdenamiento]   = useState("");
+
 const [menupadre, setMenuPadre]         = useState("");
 const [nommenupadre, setNomMenuPadre]   = useState("");
+
 const [creadopor, setCreadoPor]         = useState("");
 const [modificadopor, setModificadoPor] = useState("");
 const [eliminadopor, setEliminadoPor]   = useState("");
@@ -168,8 +170,7 @@ const handleClose = ()  => setOpen(false);
       }
     });
   };
-
-// Handle update
+  // Handle update
   const handleUpdate = () => {
     if (cve === "" || nombre === "" || descripcion === "" || icono === "" || path === "" || nivel === "" || ordenamiento === "" || menupadre === ""){
       Swal.fire({
@@ -243,8 +244,10 @@ const handleClose = ()  => setOpen(false);
                 setPath(cellValues.row.Path);
                 setNivel(cellValues.row.Nivel);
                 setOrdenamiento(cellValues.row.Ordenamiento);
+
                 setMenuPadre(cellValues.row.MenuPadre); 
                 setNomMenuPadre(cellValues.row.NomMP); 
+
                 setCreadoPor(cellValues.row.CreadoPor);   
                 setModificadoPor(cellValues.row.ModificadoPor);
                 setEliminadoPor(cellValues.row.EliminadoPor);

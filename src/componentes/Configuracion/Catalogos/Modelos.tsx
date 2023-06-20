@@ -52,7 +52,9 @@ const [descripcion, setDescripcion]     = useState("");
 const [creadopor, setCreadoPor]         = useState("");
 const [modificadopor, setModificadoPor] = useState("");
 const [eliminadopor, setEliminadoPor]   = useState("");
-const [marcas, setMarcas]                 = useState("");
+
+const [uuidmarcas, setUuidMarcas]       = useState("");
+const [marcas, setMarcas]               = useState("");
 
 // Abrir modal
 const [open, setOpen]               = React.useState(false);
@@ -101,7 +103,7 @@ const handleClose = ()  => setOpen(false);
       Swal.fire({
         icon  : "error",
         title : "Mensaje",
-        text  : "Completa todos los campos para continuarrrrrrrr",
+        text  : "Completa todos los campos para continuar",
       });
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
@@ -144,6 +146,9 @@ const handleClose = ()  => setOpen(false);
                 setCreadoPor(cellValues.row.CreadoPor);   
                 setModificadoPor(cellValues.row.ModificadoPor);
                 setEliminadoPor(cellValues.row.EliminadoPor);
+
+                setUuidMarcas(cellValues.row.uuidMarca); 
+                setMarcas(cellValues.row.Marca); 
                 handleOpen();
               }}
            >
@@ -185,11 +190,17 @@ const handleClose = ()  => setOpen(false);
       hideable: false,
       headerAlign: "left",
     },
+    {
+      field: "Marca",
+      headerName: "Marca",
+      width: 650,
+      hideable: false,
+      headerAlign: "left",
+    },    
   ];
  
-  // declaracion de la variable de estado "hook" que recibira la informacion del endpoint
+  
   const [rows, setRows] = useState([]);
-  // aqui es el consumo del endpoint para obtener el listado de la base de datos
   const getAllModelos = () => {
     axios({
       method    : "get",
@@ -216,34 +227,32 @@ const handleClose = ()  => setOpen(false);
       });
   };
 
-// declaracion de la variable de estado "hook" que recibira la informacion del endpoint
-const [rowsmarcas, setRowsMarcas] = useState<Array<MarcasInterface>>([]);
-// aqui es el consumo del endpoint para obtener el listado de la base de datos
-const getAllMarcas= () => {
-  axios({
-    method    : "get",
-    url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienemarcas",
-    headers   : {
-                  "Content-Type": "application/json",
-                  Authorization: localStorage.getItem("jwtToken") || "",
-    },
-  })
-    // aqui se recibe lo del endpoint en response
-    .then(({data}) => {
-      if (data) {
-        setRowsMarcas(data);
-      } else {
-        setRowsMarcas([])
-      }
+  const [rowsmarcas, setRowsMarcas] = useState<Array<MarcasInterface>>([]);
+  const getAllMarcas= () => {
+    axios({
+      method    : "get",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienemarcas",
+      headers   : {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.getItem("jwtToken") || "",
+      },
     })
-    .catch(function (error) {
-      Swal.fire({
-        icon  : "error",
-        title : "Mensaje",
-        text  : "("+error.response.status+") "+error.response.data.message,
-      }).then((r) => navigate("/Configuracion/Catalogos/Modelos"));
-    });
-};  
+      // aqui se recibe lo del endpoint en response
+      .then(({data}) => {
+        if (data) {
+          setRowsMarcas(data);
+        } else {
+          setRowsMarcas([])
+        }
+      })
+      .catch(function (error) {
+        Swal.fire({
+          icon  : "error",
+          title : "Mensaje",
+          text  : "("+error.response.status+") "+error.response.data.message,
+        }).then((r) => navigate("/Configuracion/Catalogos/Modelos"));
+      });
+  };  
   // esto es solo para que se ejecute la rutina de obtiene cuando cargue la pagina
   useEffect(() => {
     getAllModelos();
@@ -419,7 +428,7 @@ const getAllMarcas= () => {
                           </InputLabel>
                           <Select
                             id          ="marcas"
-                            value       ={marcas}
+                            value       ={uuidmarcas}
                             size        ="small"
                             displayEmpty
                             onChange    ={(v) => { setMarcas(v.target.value); }}
@@ -434,13 +443,6 @@ const getAllMarcas= () => {
                         </FormControl>
                       </Box>
                     </Grid>
-
-
-
-
-
-
-
                     <Grid item xs={12}>
                       <Box
                         maxWidth      ="100%"
