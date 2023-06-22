@@ -187,10 +187,10 @@ export default function UsuariosC() {
           <Link underline="hover" color="inherit" href="/inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
+          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
+          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
           Usuario
           </Link> 
           <Typography color="text.primary"> Catálogo de Usuarios </Typography>
