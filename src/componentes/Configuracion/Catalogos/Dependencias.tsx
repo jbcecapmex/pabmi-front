@@ -413,7 +413,7 @@ export default function Dependencias() {
           <Link underline="hover" color="inherit" href="/inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
             Configuración
           </Link>
           <Link
