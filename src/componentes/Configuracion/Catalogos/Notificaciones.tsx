@@ -80,7 +80,7 @@ export default function Notificaciones() {
   // Handle delete
   const handleDelete = (event: any, cellValues: any) => {
     const data = cellValues.row.uuid;
-    const descripcion = cellValues.row.Descripcion;   
+    const descripcion = cellValues.row.Encabezado;   
     const url = "/catalogos/eliminanotificaciones";
     catalogoDelete(data,url,descripcion).then((response) =>{
       setOpen(false);
@@ -99,11 +99,12 @@ export default function Notificaciones() {
       
       const data = {
         uuid              : uuid,
-        Encabezado        : Encabezado,
-        Descripcion       : Descripcion,
+        encabezado        : Encabezado,
+        descripcion       : Descripcion,
         creadopor         : creadopor,
         modificadopor     : localStorage.getItem("IdUsuario"),
         eliminadopor      : eliminadopor,
+        visto                 :0,
       };
       const url = "/catalogos/actualizanotificaciones";
       catalogoUpdate(data,url).then((response) =>{
@@ -154,7 +155,7 @@ export default function Notificaciones() {
     },
     {
       field:       "Encabezado",
-      headerName:  "Nombre",
+      headerName:  "Encabezado",
       width:       400,
       hideable:    false,
       headerAlign: "center",

@@ -8,17 +8,6 @@ import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
 import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
 
-export interface PerfilesInterface {
-  uuid: string;
-  Cve: string;
-  Nombre: string;
-  ApellidoPaterno: string;
-  ApellidoMaterno: string;
-  creadopor: string;
-  modificadopor: string;
-  eliminadopor: string;
-}
-
 const style = {
   position: "absolute",
   top: "50%",
@@ -78,9 +67,9 @@ const [eliminadopor, setEliminadoPor]       = useState("");
   // Handle delete
   const handleDelete = (event: any, cellValues: any) => {
     const data = cellValues.row.uuid;
-    const descripcion = cellValues.row.Descripcion;   
+    const cve = cellValues.row.Cve;   
     const url = "/catalogos/eliminaempleados";
-    catalogoDelete(data,url,descripcion).then((response) =>{
+    catalogoDelete(data,url,cve).then((response) =>{
       setOpen(false);
       getAllEmpleados();
     })
@@ -311,7 +300,7 @@ const [eliminadopor, setEliminadoPor]       = useState("");
                     <Grid item xs={12}>
                       <Box>
                         <Typography variant="h5" sx={{ padding: "1%" }}>
-                          Detalle de Perfil
+                          Detalle de Empleados
                         </Typography>
                       </Box>
                     </Grid>
@@ -335,6 +324,7 @@ const [eliminadopor, setEliminadoPor]       = useState("");
                         />
                       </Box>
                     </Grid>
+                    
                     <Grid item xs={6}>
                       <Box>
                         {/* espacio en blanco */}
