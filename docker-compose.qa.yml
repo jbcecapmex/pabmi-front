@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  front-siednl:
+    container_name: front-pabmi
+    image: front-pabmi
+    build:
+      context: .´
+    environment:
+      REACT_APP_APPLICATION_LOGIN: http://10.200.4.165
+      REACT_APP_APPLICATION_LOGIN_BACK: http://10.200.4.164:5000
+      REACT_APP_APPLICATION_ENDPOINT: http://10.200.4.164:8083/api
+    volumes:
+      - ./src:/app/src
+    ports:
+      - 3800:3000

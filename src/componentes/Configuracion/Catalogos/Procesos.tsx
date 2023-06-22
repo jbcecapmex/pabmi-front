@@ -230,10 +230,10 @@ const style = {
           <Link underline="hover" color="inherit" href="/inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
             Catálogos
           </Link>
           <Typography color="text.primary"> Catálogo de Procesos </Typography>

@@ -86,7 +86,7 @@ const handleClose = ()  => setOpen(false);
       Swal.fire({
         icon  : "error",
         title : "Mensaje",
-        text  : "Completa todos los campos para continuar",
+        text  : "Completa todos los campos para continuarrrrrrrr",
       });
     } else {
       const data = {
@@ -222,10 +222,10 @@ const handleClose = ()  => setOpen(false);
         <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/TipodeClasificacion">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/TipodeClasificacion">
             Catálogos
           </Link>
           <Typography color="text.primary">Catálogo de Tipo de Clasificación</Typography>
