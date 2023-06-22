@@ -87,7 +87,12 @@ export default function Dependencias() {
   const [Descripcion, setDescripcion] = useState("");
 	const [Direccion, setDireccion]     = useState("");
   const [Telefono, setTelefono]       = useState("");
-	const [UUID, setUUID]         = useState("");
+	const [UUID, setUUID]               = useState("");
+
+  const [creadopor, setCreadoPor]         = useState("");
+  const [modificadopor, setModificadoPor] = useState("");
+  const [eliminadopor, setEliminadoPor]   = useState("");
+
 
     // Abrir modal
     const [open, setOpen]               = React.useState(false);
@@ -117,6 +122,7 @@ export default function Dependencias() {
         uuidtitular           : TitularDependencia,
         uuidsecretaria        : Secretaria,
         creadopor             : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
       console.log(data);
       axios({
@@ -206,8 +212,10 @@ const handleDelete = (event: any, cellValues: any) => {
         Telefono              : Telefono,
         uuidtipodependencia   : TipoDependencia,
         uuidtitular   : TitularDependencia,
-        uuidsecretaria      : Secretaria,
-        creadopor             : localStorage.getItem("IdUsuario"),
+        uuidsecretaria        : Secretaria,
+        creadopor             : creadopor,
+        modificadopor         : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
       axios({
         method  : "post",
@@ -238,7 +246,7 @@ const handleDelete = (event: any, cellValues: any) => {
 
 
   const [rowsTiposDependencias, setRowsTiposDependencias] = useState<Array<TiposDependenciasInterface>>([]);
-  // aqui es el consumo del endpoint para obtener el listado de empleados de la base de datos
+  // aqui es el consumo del endpoint para obtener el listado de Titular de la base de datos
   const getAllTipoDependencias = () => {
     axios({
       method    : "get",
@@ -249,8 +257,12 @@ const handleDelete = (event: any, cellValues: any) => {
       },
     })
       .then(({ data }) => {
-        const rowsTiposDependencias = data;
-        setRowsTiposDependencias(rowsTiposDependencias);
+        console.log(data);
+        if (data) {
+          setRowsTiposDependencias(data);
+        } else {
+          setRowsTiposDependencias([])
+        }
       })
       .catch(function (error) {
         Swal.fire({
@@ -264,20 +276,23 @@ const handleDelete = (event: any, cellValues: any) => {
 
 
   
-  const [rowsEmpleados, setRowsEmpleados] = useState<Array<TitularDependenciaInterface>>([]);
-  // aqui es el consumo del endpoint para obtener el listado de empleados de la base de datos
-  const getAllEmpleados = () => {
+  const [rowsTitular, setRowsTitular] = useState<Array<TitularDependenciaInterface>>([]);
+  // aqui es el consumo del endpoint para obtener el listado de Titular de la base de datos
+  const getAllTitular = () => {
     axios({
       method    : "get",
-      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtieneempleados",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienetitular",
       headers   : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
       },
     })
       .then(({ data }) => {
-        const rowsEmpleados = data;
-        setRowsEmpleados(rowsEmpleados);
+        if (data) {
+          setRowsTitular(data);
+        } else {
+          setRowsTitular([])
+        }
       })
       .catch(function (error) {
         Swal.fire({
@@ -291,7 +306,7 @@ const handleDelete = (event: any, cellValues: any) => {
 
 
   const [rowsSecretarias, setRowsSecretarias] = useState<Array<SecretariaInterface>>([]);
-  // aqui es el consumo del endpoint para obtener el listado de empleados de la base de datos
+  // aqui es el consumo del endpoint para obtener el listado de Titular de la base de datos
   const getAllSecretarias = () => {
     axios({
       method    : "get",
@@ -301,9 +316,13 @@ const handleDelete = (event: any, cellValues: any) => {
                     Authorization: localStorage.getItem("jwtToken") || "",
       },
     })
+
       .then(({ data }) => {
-        const rowsSecretarias = data;
-        setRowsSecretarias(rowsSecretarias);
+        if (data) {
+          setRowsSecretarias(data);
+        } else {
+          setRowsSecretarias([])
+        }
       })
       .catch(function (error) {
         Swal.fire({
@@ -340,6 +359,9 @@ const handleDelete = (event: any, cellValues: any) => {
             setTipoDependencia(cellValues.row.uuidTipoDependencia);
             setTitularDependencia(cellValues.row.uuidTitular);
             setSecretaria(cellValues.row.uuidSecretaria);
+            setCreadoPor(cellValues.row.CreadoPor);   
+            setModificadoPor(cellValues.row.ModificadoPor);
+            setEliminadoPor(cellValues.row.EliminadoPor);
             handleOpen();
           }}
            >
@@ -394,7 +416,6 @@ const handleDelete = (event: any, cellValues: any) => {
       hideable:    false,
       headerAlign: "center",
     },
-    ,
     {
       field:       "uuidTitular",
       headerName:  "Titular",
@@ -408,8 +429,7 @@ const handleDelete = (event: any, cellValues: any) => {
       width:       200,
       hideable:    false,
       headerAlign: "center",
-    }
-    
+    }    
   ];
 
 
@@ -424,10 +444,16 @@ const handleDelete = (event: any, cellValues: any) => {
       Authorization: localStorage.getItem("jwtToken") || "",
     },
    })
-   .then(function (response) {
-    setRows(response.data);
-    // limpiar los campos del formulario
-    })
+   .then(({ data }) => {
+    console.log(data)
+    if (data) {
+      setRows(data);
+    } else {
+      setRows([])
+    }
+
+    
+  })
     .catch(function (error) {
       console.error(error)
       Swal.fire({
@@ -459,7 +485,7 @@ const handleDelete = (event: any, cellValues: any) => {
       setTitularDependencia("");
       setSecretaria("");
       getAllTipoDependencias();
-      getAllEmpleados();
+      getAllTitular();
       getAllSecretarias();
     }
   }, [open]);
@@ -469,20 +495,15 @@ const handleDelete = (event: any, cellValues: any) => {
       top       : "9vh",
       position  : "absolute",
       fontFamily: "MontserratSemiBold" }}>
-      <Grid item xs={12}         sx={{
-          top       : "-9vh",
-          position  : "absolute",
-          fontFamily: "MontserratSemiBold",
-        }}>
-
+      <Grid item xs={12} >
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" href="/inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
             Catálogos
           </Link>
           <Typography color="text.primary"> Catálogo de Dependencias </Typography>
@@ -656,12 +677,16 @@ const handleDelete = (event: any, cellValues: any) => {
               displayEmpty
               onChange = {(v) => { setTipoDependencia(v.target.value)} }
             >
-                      <MenuItem value=""></MenuItem>
-                            {rowsTiposDependencias.map((TipoDependencia, index) => (
-                              <MenuItem value={TipoDependencia.uuid}>
-                                {TipoDependencia.Cve + "-" + TipoDependencia.Nombre}
-                        </MenuItem>
-                        ))}
+                         <MenuItem value=""></MenuItem>
+                            {
+                              rowsTiposDependencias.length > 0 &&
+                              rowsTiposDependencias?.map((TipoDependencia, index) => (
+                                <MenuItem value={TipoDependencia.uuid}>
+                                  {TipoDependencia.Cve + "-" + TipoDependencia.Nombre}
+                                </MenuItem>
+                              ))
+                            }
+
               </Select>
               </FormControl>
             </Box>
@@ -685,12 +710,16 @@ const handleDelete = (event: any, cellValues: any) => {
               displayEmpty
               onChange={(v)=> {setTitularDependencia(v.target.value)}}
             >
-                        <MenuItem value=""></MenuItem>
-                            {rowsEmpleados.map((TitularDependencia, index) => (
-                              <MenuItem value={TitularDependencia.uuid}>
-                                {TitularDependencia.Cve + "-" + TitularDependencia.Nombre}
-                        </MenuItem>
-                        ))}
+                          <MenuItem value=""></MenuItem>
+                            {
+                              rowsTitular.length > 0 &&
+                              rowsTitular?.map((TitularDependencia, index) => (
+                                <MenuItem value={TitularDependencia.uuid}>
+                                  {TitularDependencia.Cve + "-" + TitularDependencia.Nombre}
+                                </MenuItem>
+                              ))
+                            }
+
               </Select>
               </FormControl>
             </Box>
@@ -714,12 +743,17 @@ const handleDelete = (event: any, cellValues: any) => {
               displayEmpty
               onChange={(v)=>{setSecretaria(v.target.value)}}
             >
-                        <MenuItem value=""></MenuItem>
-                            {rowsSecretarias.map((Secretaria, index) => (
-                              <MenuItem value={Secretaria.uuid}>
-                                {Secretaria.Cve + "-" + Secretaria.Nombre}
-                        </MenuItem>
-                        ))}
+-
+                            <MenuItem value=""></MenuItem>
+                            {
+                              rowsSecretarias.length > 0 &&
+                              rowsSecretarias?.map((Secretaria, index) => (
+                                <MenuItem value={Secretaria.uuid}>
+                                  {Secretaria.Cve + "-" + Secretaria.Nombre}
+                                </MenuItem>
+                              ))
+                            }
+
               </Select>
               </FormControl>
             </Box>

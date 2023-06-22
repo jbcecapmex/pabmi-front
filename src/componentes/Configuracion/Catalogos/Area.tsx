@@ -8,14 +8,14 @@ import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
 import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
 
-export interface ActivoInterface {
+export interface AreaInterface {
   uuid: string;
   Cve: string;
   Nombre: string;
   Descripcion: string;
   creadopor:          string;
   modificadopor:      string;
-  eliminadopor:       string;     
+  eliminadopor:       string;    
 }
 
 const style = {
@@ -29,7 +29,7 @@ const style = {
   p: 2,
 };
 
-export default function Activos() {
+export default function Areas() {
 // definicio de variables de estado
 const navigate                          = useNavigate();
 const [uuid, setuuid]                   = useState("");
@@ -61,12 +61,12 @@ const handleClose = ()  => setOpen(false);
         nombre                : nombre,
         descripcion           : descripcion,
         creadopor             : localStorage.getItem("IdUsuario"),
-        eliminadopor : eliminadopor,
+      eliminadopor            : eliminadopor,
       };
-      const url = "/catalogos/guardaactivos";
+      const url = "/catalogos/guardaarea";
       catalogoSave(data,url).then((response) =>{
         setOpen(false);
-        getAllActivo();
+        getAllArea();
       })
     }
   };
@@ -74,13 +74,12 @@ const handleClose = ()  => setOpen(false);
   const handleDelete = (event: any, cellValues: any) => {
     const data = cellValues.row.uuid;
     const descripcion = cellValues.row.Descripcion;   
-    const url = "/catalogos/eliminaactivos";
+    const url = "/catalogos/eliminaarea";
     catalogoDelete(data,url,descripcion).then((response) =>{
       setOpen(false);
-      getAllActivo();
+      getAllArea();
     })
   };
-
 // Handle update
   const handleUpdate = () => {
     if (cve === "" || nombre === "" || descripcion === ""){
@@ -97,13 +96,13 @@ const handleClose = ()  => setOpen(false);
         nombre                : nombre,
         descripcion           : descripcion,
         creadopor             : creadopor,
-        modificadopor: localStorage.getItem("IdUsuario"),
-        eliminadopor : eliminadopor,
+        modificadopor         : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
-      const url = "/catalogos/actualizaactivos";
+      const url = "/catalogos/actualizaarea";
       catalogoUpdate(data,url).then((response) =>{
         setOpen(false);
-        getAllActivo();
+        getAllArea();
       })
     }
   }; 
@@ -162,7 +161,7 @@ const handleClose = ()  => setOpen(false);
       hideable: false,
       headerAlign: "left",
     },
-    // cuarta columna donde se mostrara si esta activo o no
+    // cuarta columna donde se mostrara si esta Area o no
     {
       field: "Descripcion",
       headerName: "Descripcion",
@@ -175,10 +174,10 @@ const handleClose = ()  => setOpen(false);
   // declaracion de la variable de estado "hook" que recibira la informacion del endpoint
   const [rows, setRows] = useState([]);
   // aqui es el consumo del endpoint para obtener el listado de la base de datos
-  const getAllActivo = () => {
+  const getAllArea = () => {
     axios({
       method    : "get",
-      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtieneactivos",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienearea",
       headers   : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -197,13 +196,13 @@ const handleClose = ()  => setOpen(false);
           icon  : "error",
           title : "Mensaje",
           text  : "("+error.response.status+") "+error.response.data.message,
-        }).then((r) => navigate("/Configuracion/Catalogos/Activo"));
+        }).then((r) => navigate("/Configuracion/Catalogos/Area"));
       });
   };
 
   // esto es solo para que se ejecute la rutina de obtiene cuando cargue la pagina
   useEffect(() => {
-    getAllActivo();
+    getAllArea();
   }, []);
 
   // esto es para que se ejecuten todo los get de los listados solo cuando se abra la modal,
@@ -227,17 +226,18 @@ const handleClose = ()  => setOpen(false);
         <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
-            Usuarios
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          Catálogos
           </Link>
-          <Typography color="text.primary">Catálogo de Activo</Typography>
+          <Typography color="text.primary">Catálogo de Área</Typography>
         </Breadcrumbs>
       </Grid>
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
       <Grid container xs={12} justifyContent={"center"}>
+        {/* este grid es del card del centro el que contiene los objetos */}
         <Grid item xs={12} md={12} mt={2}>
           {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
           <Card sx={{ p: 0, boxShadow: 8 }}>
@@ -300,7 +300,7 @@ const handleClose = ()  => setOpen(false);
                     <Grid item xs={12}>
                       <Box>
                         <Typography variant="h5" sx={{ padding: "1%" }}>
-                          Detalle de Activo
+                          Detalle de Área
                         </Typography>
                       </Box>
                     </Grid>
@@ -355,7 +355,7 @@ const handleClose = ()  => setOpen(false);
                         display="flex"
                       >
                         <TextField
-                          label     ="Descripcion"
+                          label     ="Descripción"
                           size      ="small"
                           variant   ="outlined"
                           value     ={descripcion}
@@ -405,5 +405,6 @@ const handleClose = ()  => setOpen(false);
         </Grid>
       </Grid>
     </Grid>
+    
   );
 }

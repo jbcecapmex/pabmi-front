@@ -9,6 +9,7 @@ import './App.css';
 
 import Inicio from './componentes/Inicio/FondoInicial';
 import MueblesAlmacen from './componentes/Muebles/Almacen/Altas';
+import DatosAltas from './componentes/Muebles/Almacen/DatosAltas';
 import MueblesAdjudicaciones from './componentes/Muebles/Almacen/Adjudicaciones';
 import MueblesArrendamientos from './componentes/Muebles/Almacen/Arrendamientos';
 import MueblesBajas from './componentes/Muebles/Almacen/Bajas';
@@ -82,11 +83,14 @@ import EstatusResguardos from './componentes/Configuracion/Catalogos/EstatusResg
 import NivelReportes from './componentes/Configuracion/Catalogos/NivelReportes';
 import Transacciones from './componentes/Configuracion/Catalogos/Transacciones';
 import Titular from './componentes/Configuracion/Catalogos/Titular';
+import Area from './componentes/Configuracion/Catalogos/Area';
+import Linea from './componentes/Configuracion/Catalogos/Linea';
+import TipoActivoFijo from './componentes/Configuracion/Catalogos/TipoActivoFijo';
 
 import Secretarias from './componentes/Configuracion/Catalogos/Secretarias';
 import Dependencias from './componentes/Configuracion/Catalogos/Dependencias';
 import TipoDependencias from './componentes/Configuracion/Catalogos/TipoDependencias';
-import EntidadesFederativas from './componentes/Configuracion/Catalogos/EntidadesFederativas';
+import EntFederativas from './componentes/Configuracion/Catalogos/EntidadesFederativas';
 import Municipios from './componentes/Configuracion/Catalogos/Municipios';
 import Puestos from './componentes/Configuracion/Catalogos/Puestos';
 import {getUserDetails} from './services/Validation';
@@ -95,11 +99,10 @@ import moment from 'moment';
 import AdquisicionesAltas from './componentes/Adquisiciones/Altas';
 import Notificaciones from './componentes/Configuracion/Catalogos/Notificaciones';
 import Procesos from './componentes/Configuracion/Catalogos/Procesos';
+import Proveedores from './componentes/Configuracion/Catalogos/Proveedores';
 
 
-
-
-
+import Mensajes from './componentes/Mensajes/Mensajes';
 
 function App() {
 
@@ -122,7 +125,7 @@ function App() {
   const validarSession = () => {
     setInterval(() => {
       continueSession()
-    }, 54321);
+    }, 8765);
   };
 
   useLayoutEffect(() => {
@@ -142,6 +145,9 @@ function App() {
           <Route index path="/" element={<Inicio />} />
 
           <Route path="/Muebles/Almacen/Altas" element={<MueblesAlmacen />} />
+
+          <Route path="/Muebles/Almacen/Altas/DatosAltas" element={<DatosAltas/>} />
+
           <Route path="/Muebles/Almacen/Adjudicaciones" element={<MueblesAdjudicaciones />} />
           <Route path="/Muebles/Almacen/Arrendamientos" element={<MueblesArrendamientos />} />
           <Route path="/Muebles/Almacen/Bajas" element={<MueblesBajas />} />
@@ -193,12 +199,13 @@ function App() {
           <Route path="/Configuracion/Catalogos/Secretarias" element={<Secretarias/>} />
           <Route path="/Configuracion/Catalogos/Dependencias" element={<Dependencias/>} />
           <Route path="/Configuracion/Catalogos/TipoDependencias" element={<TipoDependencias/>} />
-          <Route path="/Configuracion/Catalogos/EntidadesFederativas" element={<EntidadesFederativas/>} />
+          <Route path="/Configuracion/Catalogos/EntidadesFederativas" element={<EntFederativas/>} />
           <Route path="/Configuracion/Catalogos/Municipios" element={<Municipios/>} />
           <Route path="/Configuracion/Catalogos/Puestos" element={<Puestos/>} />
           <Route path="/Configuracion/Catalogos/TipodeClasificacion" element={<TipoClasificacion/>} />
           <Route path="/Configuracion/Catalogos/Notificaciones" element={<Notificaciones/>} />
           <Route path="/Configuracion/Catalogos/Procesos" element={<Procesos/>} />
+          <Route path="/Configuracion/Catalogos/Proveedores" element={<Proveedores/>} />
           <Route path="/Configuracion/Catalogos/TiposAdquisicion" element={<TiposAdquisicion/>} />
           <Route path="/Configuracion/Catalogos/TipoBien" element={<TipoBien/>} />
           <Route path="/Configuracion/Catalogos/TipoComprobante" element={<TipoComprobante/>} />
@@ -222,7 +229,13 @@ function App() {
           <Route path="/Configuracion/Usuarios/Roles" element={<RolesC/>}/>
           <Route path="/Configuracion/Usuarios/Menu" element={<MenuC/>} />
 
-          <Route path="Adquisiciones/Altas" element={<AdquisicionesAltas />}/>
+          <Route path="/Configuracion/Catalogos/Area" element={<Area/>} />
+          <Route path="/Configuracion/Catalogos/Linea" element={<Linea/>} />
+          <Route path="/Configuracion/Catalogos/TipoActivoFijo" element={<TipoActivoFijo/>} />
+
+          <Route path="/Adquisiciones/Altas" element={<AdquisicionesAltas />}/>
+
+          <Route path="/Mensajes" element={<Mensajes />}/>
           
 
         </Routes>

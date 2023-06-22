@@ -42,12 +42,14 @@ const style = {
 
 export default function Permisos() {
 // definicio de variables de estado
-const navigate                      = useNavigate();
-const [uuid, setuuid]               = useState("");
-const [cve, setCve]                 = useState("");
-const [nombre, setNombre]          = useState("");
-const [descripcion, setDescripcion] = useState("");
-const [creadopor, setCreadoPor]     = useState("");
+const navigate                          = useNavigate();
+const [uuid, setuuid]                   = useState("");
+const [cve, setCve]                     = useState("");
+const [nombre, setNombre]               = useState("");
+const [descripcion, setDescripcion]     = useState("");
+const [creadopor, setCreadoPor]         = useState("");
+const [modificadopor, setModificadoPor] = useState("");
+const [eliminadopor, setEliminadoPor]   = useState("");
 
 // Abrir modal
 const [open, setOpen]               = React.useState(false);
@@ -70,6 +72,7 @@ const handleClose = ()  => setOpen(false);
         nombre                : nombre,
         descripcion           : descripcion,
         creadopor             : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
       axios({
         method  : "post",
@@ -142,7 +145,7 @@ const handleClose = ()  => setOpen(false);
       Swal.fire({
         icon  : "error",
         title : "Mensaje",
-        text  : "Completa todos los campos para continuarrrrrrrr",
+        text  : "Completa todos los campos para continuar",
       });
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
@@ -153,6 +156,7 @@ const handleClose = ()  => setOpen(false);
         descripcion           : descripcion,
         creadopor             : creadopor,
         modificadopor         : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
       axios({
         method  : "post",
@@ -199,7 +203,9 @@ const handleClose = ()  => setOpen(false);
                 setCve(cellValues.row.Cve);
                 setNombre(cellValues.row.Nombre);
                 setDescripcion(cellValues.row.Descripcion);
-                setCreadoPor(cellValues.row.CreadoPor);
+                setCreadoPor(cellValues.row.CreadoPor);   
+                setModificadoPor(cellValues.row.ModificadoPor);
+                setEliminadoPor(cellValues.row.EliminadoPor);
                 handleOpen();
               }}
            >
@@ -287,24 +293,8 @@ const handleClose = ()  => setOpen(false);
  
   return (
     // contenedor principal
-    <Grid
-      container
-      sx={{
-        top       : "9vh",
-        position  : "absolute",
-        fontFamily: "MontserratSemiBold",
-      }}
-    >
-      {/* grid de Breadcrumbs */}
-      <Grid
-        item
-        xs={12}
-        sx={{
-          top       : "-9vh",
-          position  : "absolute",
-          fontFamily: "MontserratSemiBold",
-        }}
-      >
+    <Grid container sx={{ }}>
+      <Grid sx={{}} item xs={12}>
         {/* este componente es para armar la ruta que se muestra arriba y poder navegar hacia atras */}
         {/* ejemplo inicio/configuracion/catalogos/marca */}
         <Breadcrumbs aria-label="breadcrumb">
@@ -321,15 +311,10 @@ const handleClose = ()  => setOpen(false);
         </Breadcrumbs>
       </Grid>
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
-      <Grid
-        container
-        justifyContent={"center"}
-        sx={{ fontFamily: "MontserratSemiBold" }}
-      >
-        {/* este grid es del card del centro el que contiene los objetos */}
-        <Grid item xs={12} md={12} mt={-5}>
+      <Grid container xs={12} justifyContent={"center"}>
+        <Grid item xs={12} md={12} mt={2}>
           {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
-          <Card sx={{ p: 0, boxShadow: 8, height: "86vh" }}>
+          <Card sx={{ p: 0, boxShadow: 8 }}>
             <CardContent sx={{ fontFamily: "MontserratBold", bgcolor: "" }}>
               {/* aqui es el cardcontent que es el contenido del card,y ponemos primero un box y estamos dibujando el boton para agregar un nuevo registro */}
               <Box display="flex" justifyContent="flex-end">

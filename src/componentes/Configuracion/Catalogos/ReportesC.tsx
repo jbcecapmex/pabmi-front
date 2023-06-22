@@ -6,21 +6,7 @@ import MUIXDataGrid from "../../Grid/MUIXDataGrid";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
-
-// componente de sweetalert2 para el uso de los mensajes de alertas
-const Toast = Swal.mixin({
-  toast: true,
-  position: "center",
-  showConfirmButton: false,
-  timer: 4000,
-  timerProgressBar: false,
-  //background: '#2e7d32',
-  //color: '#fff',  
-  didOpen: (toast) => {
-    toast.addEventListener("mouseenter", Swal.stopTimer);
-    toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
-});
+import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
 
 export interface ReportesInterface {
   uuid: string
@@ -29,6 +15,9 @@ export interface ReportesInterface {
   Descripcion: string
   uuidTipoReporte: string
   NomTipoReporte: string
+  creadopor:          string
+  modificadopor:      string
+  eliminadopor:       string  
 }
 
 export interface TipoReportesInterface {
@@ -50,20 +39,22 @@ const style = {
 };
 
 export default function ReportesC() {
-// definicio de variables de estado
-const navigate                            = useNavigate();
-const [uuid, setuuid]                     = useState("");
-const [cve, setCve]                       = useState("");
-const [nombre, setNombre]                 = useState("");
-const [descripcion, setDescripcion]       = useState("");
-const [tiporeporte, setTipoReporte]   = useState("");
-const [nomtiporeporte, setNomTipoReporte] = useState("");
-const [creadopor, setCreadoPor]           = useState("");
+  // definicio de variables de estado
+  const navigate                            = useNavigate();
+  const [uuid, setuuid]                     = useState("");
+  const [cve, setCve]                       = useState("");
+  const [nombre, setNombre]                 = useState("");
+  const [descripcion, setDescripcion]       = useState("");
+  const [tiporeporte, setTipoReporte]       = useState("");
+  const [nomtiporeporte, setNomTipoReporte] = useState("");
+  const [creadopor, setCreadoPor]           = useState("");
+  const [modificadopor, setModificadoPor]   = useState("");
+  const [eliminadopor, setEliminadoPor]     = useState("");
 
-// Abrir modal
-const [open, setOpen]               = React.useState(false);
-const handleOpen = ()   => setOpen(true);
-const handleClose = ()  => setOpen(false);
+  // Abrir modal
+  const [open, setOpen]               = React.useState(false);
+  const handleOpen = ()   => setOpen(true);
+  const handleClose = ()  => setOpen(false);
 
 
   // Handle save
@@ -82,70 +73,24 @@ const handleClose = ()  => setOpen(false);
         descripcion     : descripcion,
         uuidtiporeporte : tiporeporte,
         creadopor       : localStorage.getItem("IdUsuario"),
+        eliminadopor    : eliminadopor,
       };
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardareportes",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
+      const url = "/catalogos/guardareportes";
+      catalogoSave(data,url).then((response) =>{
+        setOpen(false);
+        getAllReportes();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : "Reporte Creado Exitosamente",
-          });
-          getAllReportes();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,});
-        });
     }
   };
   // Handle delete
   const handleDelete = (event: any, cellValues: any) => {
-    Swal.fire({
-      title               : "Estas Seguro(a)?",
-      text                : `Estas a punto de eliminar un registro (${cellValues.row.Descripcion})`,
-      icon                : "question",
-      showCancelButton    : true,
-      confirmButtonText   : "Eliminar",
-      confirmButtonColor  : "#dc3545",
-      cancelButtonColor   : "#0d6efd",
-      cancelButtonText    : "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const data = { uuid: cellValues.row.uuid };
-        axios({
-          method    : "post",
-          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminareportes",
-          headers   : {
-                        "Content-Type": "application/json",
-                        Authorization: localStorage.getItem("jwtToken") || "",
-          },
-          data      : data,
-        })
-          .then(function (response) {
-            Toast.fire({
-              icon  : "success",
-              title : "Reporte Eliminado Exitosamente",
-            });
-            getAllReportes();
-          })
-          .catch(function (error) {
-            Swal.fire({
-              icon  : "error",
-              title : "Mensaje",
-              text  : "(" + error.response.status + ") " + error.response.data.msg,});
-          });
-      }
-    });
+    const data = cellValues.row.uuid;
+    const descripcion = cellValues.row.Descripcion;   
+    const url = "/catalogos/eliminareportes";
+    catalogoDelete(data,url,descripcion).then((response) =>{
+      setOpen(false);
+      getAllReportes();
+    })
   };
 
 // Handle update
@@ -154,7 +99,7 @@ const handleClose = ()  => setOpen(false);
       Swal.fire({
         icon  : "error",
         title : "Mensaje",
-        text  : "Completa todos los campos para continuarrrrrrrr",
+        text  : "Completa todos los campos para continuar",
       });
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
@@ -166,32 +111,13 @@ const handleClose = ()  => setOpen(false);
         uuidtiporeporte : tiporeporte,
         creadopor       : creadopor,
         modificadopor   : localStorage.getItem("IdUsuario"),
+        eliminadopor    : eliminadopor,
       };
-      console.log(data);      
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizareportes",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
+      const url = "/catalogos/actualizareportes";
+      catalogoUpdate(data,url).then((response) =>{
+        setOpen(false);
+        getAllReportes();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : "Reporte Actualizado Exitosamente",
-          });
-          getAllReportes();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,
-          });
-        });
     }
   }; 
 
@@ -216,7 +142,9 @@ const handleClose = ()  => setOpen(false);
                 setDescripcion(cellValues.row.Descripcion);
                 setTipoReporte(cellValues.row.uuidTipoReporte);
                 setNomTipoReporte(cellValues.row.NomTipoReporte);
-                setCreadoPor(cellValues.row.CreadoPor);             
+                setCreadoPor(cellValues.row.CreadoPor);   
+                setModificadoPor(cellValues.row.ModificadoPor);
+                setEliminadoPor(cellValues.row.EliminadoPor);            
                 handleOpen();
               }}
            >
@@ -277,8 +205,11 @@ const handleClose = ()  => setOpen(false);
     })
       // aqui se recibe lo del endpoint en response
       .then(({ data }) => {
-        const rows = data;
-        setRows(rows);
+        if (data) {
+          setRows(data);
+        } else {
+          setRows([])
+        }
       })
       .catch(function (error) {
         Swal.fire({
@@ -302,11 +233,14 @@ const handleClose = ()  => setOpen(false);
       },
     })
       // aqui se recibe lo del endpoint en response
-      .then(({ data }) => {
-        const rowstiporeportes = data;
-        setRowsTipoReportes(rowstiporeportes);
+      .then((response) => {
+        if (response) {
+          setRowsTipoReportes(response.data);
+        } else {
+          setRowsTipoReportes([])
+        }
       })
-      .catch(function (error) {
+      .catch(function (error: any) {
         Swal.fire({
           icon  : "error",
           title : "Mensaje",
@@ -335,49 +269,28 @@ const handleClose = ()  => setOpen(false);
  
   return (
     // contenedor principal
-    <Grid
-      container
-      sx={{
-        top       : "9vh",
-        position  : "absolute",
-        fontFamily: "MontserratSemiBold",
-      }}
-    >
-      {/* grid de Breadcrumbs */}
-      <Grid
-        item
-        xs={12}
-        sx={{
-          top       : "-9vh",
-          position  : "absolute",
-          fontFamily: "MontserratSemiBold",
-        }}
-      >
+    <Grid container sx={{ }}>
+      <Grid sx={{}} item xs={12}>
         {/* este componente es para armar la ruta que se muestra arriba y poder navegar hacia atras */}
         {/* ejemplo inicio/configuracion/catalogos/marca */}
         <Breadcrumbs aria-label="breadcrumb">
         <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/ReportesC">
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Catalogo/ReportesC">
-            Usuarios
+          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          Catálogos
           </Link>
           <Typography color="text.primary">Catálogo de Reportes</Typography>
         </Breadcrumbs>
       </Grid>
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
-      <Grid
-        container
-        justifyContent={"center"}
-        sx={{ fontFamily: "MontserratSemiBold" }}
-      >
-        {/* este grid es del card del centro el que contiene los objetos */}
-        <Grid item xs={12} md={12} mt={-5}>
+      <Grid container xs={12} justifyContent={"center"}>
+        <Grid item xs={12} md={12} mt={2}>
           {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
-          <Card sx={{ p: 0, boxShadow: 8, height: "86vh" }}>
+          <Card sx={{ p: 0, boxShadow: 8 }}>
             <CardContent sx={{ fontFamily: "MontserratBold", bgcolor: "" }}>
               {/* aqui es el cardcontent que es el contenido del card,y ponemos primero un box y estamos dibujando el boton para agregar un nuevo registro */}
               <Box display="flex" justifyContent="flex-end">
@@ -515,11 +428,14 @@ const handleClose = ()  => setOpen(false);
                             onChange    ={(v) => { setTipoReporte(v.target.value); }}
                           >
                             <MenuItem value=""></MenuItem>
-                            {rowstiporeportes.map((tiporeporte, index) => (
-                              <MenuItem value={tiporeporte.uuid}>
-                                {tiporeporte.Nombre}
-                              </MenuItem>
-                            ))}
+                            {
+                              rowstiporeportes.length > 0 &&
+                              rowstiporeportes.map((tiporeporte, index) => (
+                                <MenuItem key={tiporeporte.uuid} value={tiporeporte.uuid}>
+                                  {tiporeporte.Nombre}
+                                </MenuItem>
+                              ))
+                            }
                           </Select>
                         </FormControl>
                       </Box>

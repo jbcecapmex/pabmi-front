@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
 import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
 
-export interface ActivoInterface {
+export interface LineaInterface {
   uuid: string;
   Cve: string;
   Nombre: string;
@@ -29,7 +29,7 @@ const style = {
   p: 2,
 };
 
-export default function Activos() {
+export default function Lineas() {
 // definicio de variables de estado
 const navigate                          = useNavigate();
 const [uuid, setuuid]                   = useState("");
@@ -61,12 +61,12 @@ const handleClose = ()  => setOpen(false);
         nombre                : nombre,
         descripcion           : descripcion,
         creadopor             : localStorage.getItem("IdUsuario"),
-        eliminadopor : eliminadopor,
+        eliminadopor          : eliminadopor,
       };
-      const url = "/catalogos/guardaactivos";
+      const url = "/catalogos/guardalinea";
       catalogoSave(data,url).then((response) =>{
         setOpen(false);
-        getAllActivo();
+        getAllLinea();
       })
     }
   };
@@ -74,13 +74,12 @@ const handleClose = ()  => setOpen(false);
   const handleDelete = (event: any, cellValues: any) => {
     const data = cellValues.row.uuid;
     const descripcion = cellValues.row.Descripcion;   
-    const url = "/catalogos/eliminaactivos";
+    const url = "/catalogos/eliminalinea";
     catalogoDelete(data,url,descripcion).then((response) =>{
       setOpen(false);
-      getAllActivo();
+      getAllLinea();
     })
   };
-
 // Handle update
   const handleUpdate = () => {
     if (cve === "" || nombre === "" || descripcion === ""){
@@ -97,13 +96,13 @@ const handleClose = ()  => setOpen(false);
         nombre                : nombre,
         descripcion           : descripcion,
         creadopor             : creadopor,
-        modificadopor: localStorage.getItem("IdUsuario"),
-        eliminadopor : eliminadopor,
+        modificadopor         : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
-      const url = "/catalogos/actualizaactivos";
+      const url = "/catalogos/actualizalinea";
       catalogoUpdate(data,url).then((response) =>{
         setOpen(false);
-        getAllActivo();
+        getAllLinea();
       })
     }
   }; 
@@ -162,7 +161,7 @@ const handleClose = ()  => setOpen(false);
       hideable: false,
       headerAlign: "left",
     },
-    // cuarta columna donde se mostrara si esta activo o no
+    // cuarta columna donde se mostrara si esta Linea o no
     {
       field: "Descripcion",
       headerName: "Descripcion",
@@ -175,10 +174,10 @@ const handleClose = ()  => setOpen(false);
   // declaracion de la variable de estado "hook" que recibira la informacion del endpoint
   const [rows, setRows] = useState([]);
   // aqui es el consumo del endpoint para obtener el listado de la base de datos
-  const getAllActivo = () => {
+  const getAllLinea = () => {
     axios({
       method    : "get",
-      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtieneactivos",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienelinea",
       headers   : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -197,13 +196,13 @@ const handleClose = ()  => setOpen(false);
           icon  : "error",
           title : "Mensaje",
           text  : "("+error.response.status+") "+error.response.data.message,
-        }).then((r) => navigate("/Configuracion/Catalogos/Activo"));
+        }).then((r) => navigate("/Configuracion/Catalogos/linea"));
       });
   };
 
   // esto es solo para que se ejecute la rutina de obtiene cuando cargue la pagina
   useEffect(() => {
-    getAllActivo();
+    getAllLinea();
   }, []);
 
   // esto es para que se ejecuten todo los get de los listados solo cuando se abra la modal,
@@ -227,20 +226,20 @@ const handleClose = ()  => setOpen(false);
         <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
+          <Link underline="hover" color="inherit" href="/Configuracion/Linea">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
+          <Link underline="hover" color="inherit" href="/Configuracion/Linea">
             Usuarios
           </Link>
-          <Typography color="text.primary">Catálogo de Activo</Typography>
+          <Typography color="text.primary">Catálogo de Linea</Typography>
         </Breadcrumbs>
       </Grid>
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
       <Grid container xs={12} justifyContent={"center"}>
         <Grid item xs={12} md={12} mt={2}>
           {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
-          <Card sx={{ p: 0, boxShadow: 8 }}>
+          <Card sx={{ p: 0, boxShadow: 8, height: "86vh" }}>
             <CardContent sx={{ fontFamily: "MontserratBold", bgcolor: "" }}>
               {/* aqui es el cardcontent que es el contenido del card,y ponemos primero un box y estamos dibujando el boton para agregar un nuevo registro */}
               <Box display="flex" justifyContent="flex-end">
@@ -300,7 +299,7 @@ const handleClose = ()  => setOpen(false);
                     <Grid item xs={12}>
                       <Box>
                         <Typography variant="h5" sx={{ padding: "1%" }}>
-                          Detalle de Activo
+                          Detalle de Linea
                         </Typography>
                       </Box>
                     </Grid>

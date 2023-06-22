@@ -6,25 +6,17 @@ import MUIXDataGrid from "../../Grid/MUIXDataGrid";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
+import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
 
-// componente de sweetalert2 para el uso de los mensajes de alertas
-const Toast = Swal.mixin({
-  toast: true,
-  position: "center",
-  showConfirmButton: false,
-  timer: 4000,
-  timerProgressBar: false,
-  didOpen: (toast) => {
-    toast.addEventListener("mouseenter", Swal.stopTimer);
-    toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
-});
 
 export interface TipoBienInterface {
   uuid: string;
   Cve: string;
   Nombre: string;
   Descripcion: string;
+  creadopor:          string;
+  modificadopor:      string;
+  eliminadopor:       string;   
 }
 
 const style = {
@@ -40,12 +32,14 @@ const style = {
 
 export default function TipoBien() {
 // definicio de variables de estado
-const navigate                      = useNavigate();
-const [uuid, setuuid]               = useState("");
-const [cve, setCve]                 = useState("");
-const [nombre, setNombre]          = useState("");
-const [descripcion, setDescripcion] = useState("");
-const [creadopor, setCreadoPor]     = useState("");
+const navigate                          = useNavigate();
+const [uuid, setuuid]                   = useState("");
+const [cve, setCve]                     = useState("");
+const [nombre, setNombre]               = useState("");
+const [descripcion, setDescripcion]     = useState("");
+const [creadopor, setCreadoPor]         = useState("");
+const [modificadopor, setModificadoPor] = useState("");
+const [eliminadopor, setEliminadoPor]   = useState("");
 
 // Abrir modal
 const [open, setOpen]   = React.useState(false);
@@ -68,70 +62,24 @@ const handleClose = ()  => setOpen(false);
         nombre                : nombre,
         descripcion           : descripcion,
         creadopor             : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardatiposbien",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
+      const url = "/catalogos/guardatiposbien";
+      catalogoSave(data,url).then((response) =>{
+        setOpen(false);
+        getAllTipoBien();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : "Tipo Bien Creado Exitosamente",
-          });
-          getAllTipoBien();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,});
-        });
     }
   };
   // Handle delete
   const handleDelete = (event: any, cellValues: any) => {
-    Swal.fire({
-      title               : "Estas Seguro(a)?",
-      text                : `Estas a punto de eliminar un registro (${cellValues.row.Descripcion})`,
-      icon                : "question",
-      showCancelButton    : true,
-      confirmButtonText   : "Eliminar",
-      confirmButtonColor  : "#dc3545",
-      cancelButtonColor   : "#0d6efd",
-      cancelButtonText    : "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const data = { uuid: cellValues.row.uuid };
-        axios({
-          method    : "post",
-          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminatiposbien",
-          headers   : {
-                        "Content-Type": "application/json",
-                        Authorization: localStorage.getItem("jwtToken") || "",
-          },
-          data      : data,
-        })
-          .then(function (response) {
-            Toast.fire({
-              icon  : "success",
-              title : "Tipo Bien Eliminado Exitosamente",
-            });
-            getAllTipoBien();
-          })
-          .catch(function (error) {
-            Swal.fire({
-              icon  : "error",
-              title : "Mensaje",
-              text  : "(" + error.response.status + ") " + error.response.data.msg,});
-          });
-      }
-    });
+    const data = cellValues.row.uuid;
+    const descripcion = cellValues.row.Descripcion;   
+    const url = "/catalogos/eliminatiposbien";
+    catalogoDelete(data,url,descripcion).then((response) =>{
+      setOpen(false);
+      getAllTipoBien();
+    })
   };
 
 // Handle update
@@ -151,31 +99,13 @@ const handleClose = ()  => setOpen(false);
         descripcion           : descripcion,
         creadopor             : creadopor,
         modificadopor         : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizatiposbien",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
+      const url = "/catalogos/actualizatiposbien";
+      catalogoUpdate(data,url).then((response) =>{
+        setOpen(false);
+        getAllTipoBien();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : "Tipo Bien Actualizado Exitosamente",
-          });
-          getAllTipoBien();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,
-          });
-        });
     }
   }; 
 
@@ -197,7 +127,9 @@ const handleClose = ()  => setOpen(false);
                 setCve(cellValues.row.Cve);
                 setNombre(cellValues.row.Nombre);
                 setDescripcion(cellValues.row.Descripcion);
-                setCreadoPor(cellValues.row.CreadoPor);
+                setCreadoPor(cellValues.row.CreadoPor);   
+                setModificadoPor(cellValues.row.ModificadoPor);
+                setEliminadoPor(cellValues.row.EliminadoPor);
                 handleOpen();
               }}
            >
@@ -254,9 +186,12 @@ const handleClose = ()  => setOpen(false);
       },
     })
       // aqui se recibe lo del endpoint en response
-      .then(({ data }) => {
-        const rows = data;
-        setRows(rows);
+      .then(({data}) => {
+        if (data) {
+          setRows(data);
+        } else {
+          setRows([])
+        }
       })
       .catch(function (error) {
         Swal.fire({
@@ -285,24 +220,8 @@ const handleClose = ()  => setOpen(false);
  
   return (
     // contenedor principal
-    <Grid
-      container
-      sx={{
-        top       : "9vh",
-        position  : "absolute",
-        fontFamily: "MontserratSemiBold",
-      }}
-    >
-      {/* grid de Breadcrumbs */}
-      <Grid
-        item
-        xs={12}
-        sx={{
-          top       : "-9vh",
-          position  : "absolute",
-          fontFamily: "MontserratSemiBold",
-        }}
-      >
+    <Grid container sx={{ }}>
+      <Grid sx={{}} item xs={12}>
         {/* este componente es para armar la ruta que se muestra arriba y poder navegar hacia atras */}
         {/* ejemplo inicio/configuracion/catalogos/marca */}
         <Breadcrumbs aria-label="breadcrumb">
@@ -319,15 +238,10 @@ const handleClose = ()  => setOpen(false);
         </Breadcrumbs>
       </Grid>
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
-      <Grid
-        container
-        justifyContent={"center"}
-        sx={{ fontFamily: "MontserratSemiBold" }}
-      >
-        {/* este grid es del card del centro el que contiene los objetos */}
-        <Grid item xs={12} md={12} mt={-5}>
+      <Grid container xs={12} justifyContent={"center"}>
+        <Grid item xs={12} md={12} mt={2}>
           {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
-          <Card sx={{ p: 0, boxShadow: 8, height: "86vh" }}>
+          <Card sx={{ p: 0, boxShadow: 8 }}>
             <CardContent sx={{ fontFamily: "MontserratBold", bgcolor: "" }}>
               {/* aqui es el cardcontent que es el contenido del card,y ponemos primero un box y estamos dibujando el boton para agregar un nuevo registro */}
               <Box display="flex" justifyContent="flex-end">

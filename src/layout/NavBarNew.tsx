@@ -8,13 +8,11 @@ import { useNavigate } from "react-router-dom";
 import { Email, Notifications } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SideMenu from "./SideMenu";
-import NavMessages from "./NavMessages";
 import { grey } from "@mui/material/colors";
 import { NavStyle } from "./NavStyle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import logo from "../assets/svg/logo.svg";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import { logoutapp } from "../services/Validation";
 
 // ancho del drawer
 const drawerWidth = 300;
@@ -47,7 +45,7 @@ function NavBar(props: { children?: any; window?: any }) {
 
   const handleLogout = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    logoutapp();
+    navigate("/");
   };
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -88,7 +86,6 @@ function NavBar(props: { children?: any; window?: any }) {
                 justifyContent={"space-between"}
                 width={85}
               >
-                <NavMessages />
                 <Grid>
                   <Badge badgeContent={0} color="info">
                     <IconButton

@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
 import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
 
-export interface ActivoInterface {
+export interface TipoActivoFijoInterface {
   uuid: string;
   Cve: string;
   Nombre: string;
@@ -29,7 +29,7 @@ const style = {
   p: 2,
 };
 
-export default function Activos() {
+export default function TipoActivoFijos() {
 // definicio de variables de estado
 const navigate                          = useNavigate();
 const [uuid, setuuid]                   = useState("");
@@ -61,12 +61,12 @@ const handleClose = ()  => setOpen(false);
         nombre                : nombre,
         descripcion           : descripcion,
         creadopor             : localStorage.getItem("IdUsuario"),
-        eliminadopor : eliminadopor,
+        eliminadopor          : eliminadopor,
       };
-      const url = "/catalogos/guardaactivos";
+      const url = "/catalogos/guardatipoactivofijo";
       catalogoSave(data,url).then((response) =>{
         setOpen(false);
-        getAllActivo();
+        getAllTipoActivoFijo();
       })
     }
   };
@@ -74,13 +74,12 @@ const handleClose = ()  => setOpen(false);
   const handleDelete = (event: any, cellValues: any) => {
     const data = cellValues.row.uuid;
     const descripcion = cellValues.row.Descripcion;   
-    const url = "/catalogos/eliminaactivos";
+    const url = "/catalogos/eliminatipoactivofijo";
     catalogoDelete(data,url,descripcion).then((response) =>{
       setOpen(false);
-      getAllActivo();
+      getAllTipoActivoFijo();
     })
   };
-
 // Handle update
   const handleUpdate = () => {
     if (cve === "" || nombre === "" || descripcion === ""){
@@ -97,13 +96,13 @@ const handleClose = ()  => setOpen(false);
         nombre                : nombre,
         descripcion           : descripcion,
         creadopor             : creadopor,
-        modificadopor: localStorage.getItem("IdUsuario"),
-        eliminadopor : eliminadopor,
+        modificadopor         : localStorage.getItem("IdUsuario"),
+        eliminadopor          : eliminadopor,
       };
-      const url = "/catalogos/actualizaactivos";
+      const url = "/catalogos/actualizatipoactivofijo";
       catalogoUpdate(data,url).then((response) =>{
         setOpen(false);
-        getAllActivo();
+        getAllTipoActivoFijo();
       })
     }
   }; 
@@ -162,7 +161,7 @@ const handleClose = ()  => setOpen(false);
       hideable: false,
       headerAlign: "left",
     },
-    // cuarta columna donde se mostrara si esta activo o no
+    // cuarta columna donde se mostrara si esta TipoActivoFijo o no
     {
       field: "Descripcion",
       headerName: "Descripcion",
@@ -175,10 +174,10 @@ const handleClose = ()  => setOpen(false);
   // declaracion de la variable de estado "hook" que recibira la informacion del endpoint
   const [rows, setRows] = useState([]);
   // aqui es el consumo del endpoint para obtener el listado de la base de datos
-  const getAllActivo = () => {
+  const getAllTipoActivoFijo = () => {
     axios({
       method    : "get",
-      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtieneactivos",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienetipoactivofijo",
       headers   : {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("jwtToken") || "",
@@ -197,13 +196,13 @@ const handleClose = ()  => setOpen(false);
           icon  : "error",
           title : "Mensaje",
           text  : "("+error.response.status+") "+error.response.data.message,
-        }).then((r) => navigate("/Configuracion/Catalogos/Activo"));
+        }).then((r) => navigate("/Configuracion/Catalogos/TipoActivoFijo"));
       });
   };
 
   // esto es solo para que se ejecute la rutina de obtiene cuando cargue la pagina
   useEffect(() => {
-    getAllActivo();
+    getAllTipoActivoFijo();
   }, []);
 
   // esto es para que se ejecuten todo los get de los listados solo cuando se abra la modal,
@@ -227,13 +226,13 @@ const handleClose = ()  => setOpen(false);
         <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
+          <Link underline="hover" color="inherit" href="/Configuracion/TipoActivoFijo">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
+          <Link underline="hover" color="inherit" href="/Configuracion/TipoActivoFijo">
             Usuarios
           </Link>
-          <Typography color="text.primary">Catálogo de Activo</Typography>
+          <Typography color="text.primary">Catálogo de Tipo Activo Fijo</Typography>
         </Breadcrumbs>
       </Grid>
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
@@ -300,7 +299,7 @@ const handleClose = ()  => setOpen(false);
                     <Grid item xs={12}>
                       <Box>
                         <Typography variant="h5" sx={{ padding: "1%" }}>
-                          Detalle de Activo
+                          Detalle de Tipo Activo Fijo
                         </Typography>
                       </Box>
                     </Grid>

@@ -15,16 +15,6 @@ import FormControl from '@mui/material/FormControl';
 import Swal from "sweetalert2";
 import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
 
-export interface ProcesosInterface {
-  uuid:               string;
-  Cve:                string;
-  Nombre:             string;            
-  Descripcion:        string;
-  creadopor:          string;
-  modificadopor:      string;
-  eliminadopor:       string;     
-}
-
 // Estilos para la ventana Modal
 const style = {
   position: 'absolute',
@@ -37,21 +27,33 @@ const style = {
   p: 2,
 };
 
+export interface ProveedoresInterface {
+  uuid:                string;
+  Cve:                string;
+  Encabezado:          string;            
+  Descripcion:         string;
+  creadopor:          string;
+  modificadopor:      string;
+  eliminadopor:       string;  
+}
 
-  // inicia el componente
-  export default function Procesos() { 
+// inicia el componente
+export default function Proveedores() { 
+
   // Crear las interfaces que se mandaran en los endpoints
   const [uuid, setuuid]                   = useState("");
   const [Cve, setCve]                     = useState("");
   const [Nombre, setNombre]               = useState("");
-  const [Descripcion, setDescripcion]     = useState("");
+	const [Descripcion, setDescripcion]     = useState("");
   const [creadopor, setCreadoPor]         = useState("");
   const [modificadopor, setModificadoPor] = useState("");
   const [eliminadopor, setEliminadoPor]   = useState("");
-  // Abrir modal
-  const [open, setOpen]               = React.useState(false);
-  const handleOpen = ()   => setOpen(true);
-  const handleClose = ()  => setOpen(false);
+
+
+    // Abrir modal
+    const [open, setOpen]               = React.useState(false);
+    const handleOpen = ()   => setOpen(true);
+    const handleClose = ()  => setOpen(false);
 
   // Guardar un registro nuevo.
   const handleSave = () => {
@@ -67,14 +69,13 @@ const style = {
         cve             : Cve,
         nombre          : Nombre,
         descripcion     : Descripcion,
-        creadopor             : localStorage.getItem("IdUsuario"),
-        modificadopor         : modificadopor,
-        eliminadopor          : eliminadopor,
+        creadopor       : localStorage.getItem("IdUsuario"),
+        eliminadopor    : eliminadopor,
       };
-      const url = "/catalogos/guardaprocesos";
+      const url = "/catalogos/guardaproveedores";
       catalogoSave(data,url).then((response) =>{
         setOpen(false);
-        getAllProcesos();
+        getAllProveedores();
       })
     }
   };
@@ -82,10 +83,10 @@ const style = {
   const handleDelete = (event: any, cellValues: any) => {
     const data = cellValues.row.uuid;
     const descripcion = cellValues.row.Descripcion;   
-    const url = "/catalogos/eliminaprocesos";
+    const url = "/catalogos/eliminaproveedores";
     catalogoDelete(data,url,descripcion).then((response) =>{
       setOpen(false);
-      getAllProcesos();
+      getAllProveedores();
     })
   };
   // Handle update
@@ -107,10 +108,10 @@ const style = {
         modificadopor     : localStorage.getItem("IdUsuario"),
         eliminadopor      : eliminadopor,
       };
-      const url = "/catalogos/actualizaprocesos";
+      const url = "/catalogos/actualizaproveedores";
       catalogoUpdate(data,url).then((response) =>{
         setOpen(false);
-        getAllProcesos();
+        getAllProveedores();
       })
     }
   };  
@@ -124,8 +125,7 @@ const style = {
       width:       90,
       headerAlign: "center",
       hideable:    false,
-      renderCell: (cellValues: any) => {
-        
+      renderCell: (cellValues: any) => {        
         return (
           <Box>
            <Tooltip title={"Editar"}>
@@ -156,7 +156,7 @@ const style = {
       },
     },
     {
-      field:       "Cve",
+      field:       "cve",
       headerName:  "Cve",
       width:       200,
       hideable:    false,
@@ -178,43 +178,43 @@ const style = {
     }
   ];
 
-  const [rows, setRows] = useState<Array<ProcesosInterface>>([]);
-  const getAllProcesos = () => {
+
+  const [rows, setRows] = useState([]);
+  const getAllProveedores = () => {
    axios ({
     method: "get",
-    url:    process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtieneprocesos",
+    url:    process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtieneproveedores",
     headers: {
       "Content-Type": "application/json",
       Authorization: localStorage.getItem("jwtToken") || "",
     },
    })
-      // aqui se recibe lo del endpoint en response
-      .then(({data}) => {
-        if (data) {
-          setRows(data);
-        } else {
-          setRows([])
-        }
-      })
-      .catch(function (error) {
-        Swal.fire({
-          icon  : "error",
-          title : "Mensaje",
-          text  : "("+error.response.status+") "+error.response.data.message,
-        }).then((r) => navigate("/Configuracion/Catalogos/Procesos"));
-      });
+    .then(({ data }) => {
+      if (data) {
+        setRows(data);
+      } else {
+        setRows([])
+      }
+    })
+    .catch(function (error) {
+      console.error(error)
+      Swal.fire({
+        icon  : "error",
+        title : "Mensaje",
+        text  : "("+error.response.status+") "+error.response.data.message,
+      }).then((r) => navigate("/Proveedores"));
+    });
   };
 
-  // const [rowsProcesos, setRowsProcesos] = useState<Array<ProcesosInterface>>([]);
+  const [rowsProveedores, setRowsProovedores] = useState<Array<ProveedoresInterface>>([]);
 
    useEffect(() => {
-    getAllProcesos();
+    getAllProveedores();
   }, []);
 
     // esto es para que se ejecuten todo los get de los listados solo cuando se abra la modal,
   // y que limpie las variables cuando se salga de la modal
   useEffect(() => {
-
     if (open===false) {
       setuuid("");
       setCve("");
@@ -224,8 +224,12 @@ const style = {
   }, [open]);
 
   return (
-    <Grid container sx={{ }}>
-      <Grid sx={{}} item xs={12}>
+    <Grid container sx={{ 
+      top       : "9vh",
+      position  : "absolute",
+      fontFamily: "MontserratSemiBold" }}>
+      <Grid item xs={12}  >
+
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" href="/inicio">
             Inicio
@@ -236,13 +240,16 @@ const style = {
           <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
             Catálogos
           </Link>
-          <Typography color="text.primary"> Catálogo de Procesos </Typography>
+          <Typography color="text.primary"> Catálogo de Proveedores </Typography>
         </Breadcrumbs>
       </Grid> 
-      <Grid container xs={12} justifyContent={"center"}>
+
+      <Grid container justifyContent={"center"} item xs={0} paddingLeft={0} paddingTop={5}>
       <Grid item xs={12} md={12} mt={2}>
-      <Card sx={{ p: 0, boxShadow: 8}}> {/* Hay que poner wl width en 100%% o buscar la forma de que abwsrque todo esl */}
-      <CardContent sx={{ fontFamily: "MontserratBold", bgcolor: "" }}>
+      <Card sx={{ p: 1, boxShadow: 4,width:'100%'}}> {/* Hay que poner wl width en 100%% o buscar la forma de que abwsrque todo esl */}
+      <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
+      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>  Catálogo de Proveedores </Typography>  
+      <CardContent>
       <Box display="flex" justifyContent="flex-end">
       <Grid sx={{display: "flex", alignItems: "right", justifyContent: "right", paddingBottom:"2%", paddingRight:"1%"}}>
                     <Button
@@ -297,11 +304,13 @@ const style = {
          aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style} display="flow">          
+
+          <Box sx={style} display="flow">
+          
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <Box> 
-                <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Procesos </Typography>  
+                <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Proveedores </Typography>  
               </Box>
 		        </Grid>
 

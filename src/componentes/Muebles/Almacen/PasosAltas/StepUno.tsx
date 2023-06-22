@@ -1,0 +1,280 @@
+import React from "react";
+import { Grid, Typography, TextField, Box, Button, FormControl, InputLabel, Select, MenuItem } from "@mui/material"
+import { Divider } from "@mui/material"; 
+ 
+
+export default function StepUno(){
+	return (
+	<Grid container spacing={2} paddingTop="3%">
+	<Grid item xs={12} display="flex" >
+
+	<Grid item xs={6} >
+	<Box
+	component="form"
+	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
+	noValidate
+	autoComplete="off"
+	display="flex"
+	>
+	<TextField
+		label     ="No. Inventario"
+		size      ="small"
+		variant   ="outlined"
+		// value     ={cve}
+		// disabled  = {uuid!=="" ? true:false}
+		// onChange  ={(v) => {setCve(v.target.value); }}
+		inputProps={{ maxLength: 10 }}
+	/>
+	</Box>
+	</Grid>
+
+	<Grid item xs={4}  ></Grid>
+
+	<Grid item xs={2}  >
+	<Box
+	component="form"
+	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
+	noValidate
+	autoComplete="off"
+	display="flex"
+	>
+	<TextField
+		label     ="Cantidad"
+		size      ="small"
+		variant   ="outlined"
+		// value     ={cve}
+		// disabled  = {uuid!=="" ? true:false}
+		// onChange  ={(v) => {setCve(v.target.value); }}
+		inputProps={{ maxLength: 10 }}
+	/>
+	</Box>
+	</Grid>
+	</Grid>
+
+	<Grid item xs={12} display="flex">
+	<Grid item xs={2}  >
+	<Box
+	component="form"
+	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
+	noValidate
+	autoComplete="off"
+	display="flex"
+	>
+	<TextField
+		label     ="No. Activo"
+		size      ="small"
+		variant   ="outlined"
+		// value     ={cve}
+		// disabled  = {uuid!=="" ? true:false}
+		// onChange  ={(v) => {setCve(v.target.value); }}
+		inputProps={{ maxLength: 10 }}
+	/>
+	</Box>
+	</Grid>
+
+	<Grid item xs={10}  >
+		<Box
+		sx={{
+			'& > :not(style)': { m: 1.3, width: '100%' },   }}
+				display="flex"
+		>
+		<FormControl fullWidth sx={{bgColor:"#fff"}}>
+		<InputLabel  sx={{ marginTop:"-4px"}}>
+		 Tipo 
+		</InputLabel>
+		<Select
+		id=" Tipo "
+		// value={TipoDependencia}
+		label=" Tipo "
+		size="small"
+		displayEmpty
+		// onChange = {(v) => { setTipoBien(v.target.value)} }
+		>
+		        <MenuItem value=""> 1 </MenuItem>  
+		</Select>
+		</FormControl>
+		</Box>
+	</Grid> 
+	</Grid>
+
+	<Grid item xs={12} display="flex">
+	<Grid item xs={12}>
+	<Box
+	component="form"
+	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
+	noValidate
+	autoComplete="off"
+	display="flex"
+	>
+	<TextField
+		label     ="Descripción"
+		size      ="small"
+		variant   ="outlined"
+		// value     ={cve}
+		// disabled  = {uuid!=="" ? true:false}
+		// onChange  ={(v) => {setCve(v.target.value); }}
+		inputProps={{ maxLength: 10 }}
+	/>
+	</Box>
+	</Grid>
+	</Grid>
+
+	<Grid item xs={12} display="flex">
+	<Grid item xs={6}  >
+		<Box
+		sx={{
+			'& > :not(style)': { m: 1.3, width: '100%' },   }}
+				display="flex"
+		>
+		<FormControl fullWidth sx={{bgColor:"#fff"}}>
+		<InputLabel  sx={{ marginTop:"-4px"}}>
+		 Tipo Bien
+		</InputLabel>
+		<Select
+		id="Tipo Bien"
+		// value={TipoDependencia}
+		label="Tipo Bien"
+		size="small"
+		displayEmpty
+		// onChange = {(v) => { setTipoBien(v.target.value)} }
+		>
+		        <MenuItem value=""> 1 </MenuItem>  
+		</Select>
+		</FormControl>
+		</Box>
+	</Grid>
+	<Grid item xs={6}  >
+		<Box
+		sx={{
+			'& > :not(style)': { m: 1.3, width: '100%' },   }}
+				display="flex"
+		>
+		<FormControl fullWidth sx={{bgColor:"#fff"}}>
+		<InputLabel  sx={{ marginTop:"-4px"}}>
+		 Área Física
+		</InputLabel>
+		<Select
+		id="AreaFisica"
+		// value={TipoDependencia}
+		label="AreaFisica"
+		size="small"
+		displayEmpty
+		// onChange = {(v) => { setTipoBien(v.target.value)} }
+		>
+		        <MenuItem value=""> 1 </MenuItem>  
+		</Select>
+		</FormControl>
+		</Box>
+	</Grid>
+	</Grid>
+  
+	<Grid item xs={12} display="flow">
+	<Box>
+	<Divider/>
+	</Box>
+	</Grid>
+
+	<Grid item xs={12} display="flex">
+	<Grid item xs={4}  >
+	<Box
+	component="form"
+	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
+	noValidate
+	autoComplete="off"
+	display="flex"
+	>
+	<TextField
+		label     ="Costo Sin Iva"
+		size      ="small"
+		variant   ="outlined"
+		// value     ={cve}
+		// disabled  = {uuid!=="" ? true:false}
+		// onChange  ={(v) => {setCve(v.target.value); }}
+		inputProps={{ maxLength: 10 }}
+	/>
+	</Box>
+	</Grid>
+	<Grid item xs={4}  >
+	<Box
+	component="form"
+	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
+	noValidate
+	autoComplete="off"
+	display="flex"
+	>
+	<TextField
+		label     ="Costo Con Iva"
+		size      ="small"
+		variant   ="outlined"
+		// value     ={cve}
+		// disabled  = {uuid!=="" ? true:false}
+		// onChange  ={(v) => {setCve(v.target.value); }}
+		inputProps={{ maxLength: 10 }}
+	/>
+	</Box>
+	</Grid>
+	<Grid item xs={4}  >
+	<Box
+	component="form"
+	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
+	noValidate
+	autoComplete="off"
+	display="flex"
+	>
+	<TextField
+		label     ="Depreciación Acumulada"
+		size      ="small"
+		variant   ="outlined"
+		// value     ={cve}
+		// disabled  = {uuid!=="" ? true:false}
+		// onChange  ={(v) => {setCve(v.target.value); }}
+		inputProps={{ maxLength: 10 }}
+	/>
+	</Box>
+	</Grid>
+	</Grid>
+
+	<Grid item xs={12} display="flex">
+	<Grid item xs={4}  >
+	<Box
+	component="form"
+	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
+	noValidate
+	autoComplete="off"
+	display="flex"
+	>
+	<TextField
+		label     ="Fecha De Entrada "
+		size      ="small"
+		variant   ="outlined"
+		// value     ={cve}
+		// disabled  = {uuid!=="" ? true:false}
+		// onChange  ={(v) => {setCve(v.target.value); }}
+		inputProps={{ maxLength: 10 }}
+	/>
+	</Box>
+	</Grid>
+	<Grid item xs={4}  >
+	<Box
+	component="form"
+	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
+	noValidate
+	autoComplete="off"
+	display="flex"
+	>
+	<TextField
+		label     ="Fecha Última Actualización"
+		size      ="small"
+		variant   ="outlined"
+		// value     ={cve}
+		// disabled  = {uuid!=="" ? true:false}
+		// onChange  ={(v) => {setCve(v.target.value); }}
+		inputProps={{ maxLength: 10 }}
+	/>
+	</Box>
+	</Grid>
+	</Grid>
+ 
+	</Grid>
+	);
+};
