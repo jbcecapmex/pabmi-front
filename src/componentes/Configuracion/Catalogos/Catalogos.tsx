@@ -69,8 +69,8 @@ const Catalogos = () => {
           <Typography color="text.primary"> Catálogos </Typography>
         </Breadcrumbs>
       </Grid>
-      <Grid container xs={12} justifyContent={"center"}>
-        <Grid item xs={12} md={12} mt={2}>
+        <Grid container xs={12} justifyContent={"center"}>
+          <Grid item xs={12} md={12} mt={2}>
           <Card sx={{ p: 1, boxShadow: 8 }}>
             <CardHeader
               title="Catálogos"
