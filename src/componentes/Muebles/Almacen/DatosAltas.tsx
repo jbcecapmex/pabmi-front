@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Typography, Box, Button, } from "@mui/material";    
+import { Typography, Box, Button,FormControl,InputLabel, Select, MenuItem} from "@mui/material";    
 import { useNavigate } from "react-router-dom";    
 import Grid from "@mui/material/Grid";
 import Stepper from "@mui/material/Stepper";
@@ -11,6 +11,7 @@ import StepTres from "./PasosAltas/StepTres";
 import axios from 'axios';
 import Swal from "sweetalert2";
 import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
+ 
 
 const steps = ["Paso1", "Paso2", "Paso3"];
 
@@ -155,21 +156,55 @@ export default function DatosAltas() {
 
 	return (
 		<Grid container spacing={1}>
-			<Grid item xs={12}>
+			<Grid item xs={12}  md ={12} >
 				<Typography
 					variant="h5"
 					component="div"
+					justifyContent={{ xs: 'center', md: 'left' }}
 					sx={{
 						flexGrow: 1,
 						fontWeight: "bold",
 						display: "flex",
-						justifyContent: "left",
 					}}
 				>
 					Datos para Alta
 				</Typography>
 			</Grid>
-			<Grid item xs={12} padding={2}>
+			
+			<Grid xs={12} >
+			<Grid item xs={12} md ={4} padding={3}>
+			<Box 
+			sx={{
+				'& > :not(style)': { m: 1.3, width: '100%' },   }}
+					display="flex">
+			<FormControl fullWidth sx={{bgColor:"#fff"}}>
+			<InputLabel  sx={{ marginTop:"-4px"}}> 
+			Tipo Adquisición
+			</InputLabel>
+			<Select
+			id="Tipo Adquisición"
+			// value={datosAlta.uuidTipoActivoFijo}
+			label="Tipo Adquisición"
+			size="small"
+			displayEmpty
+			// onChange  ={(v) => {setDatosAlta({...datosAlta, uuidTipoActivoFijo: v.target.value}); }}
+			>
+				<MenuItem value="">1</MenuItem>
+				<MenuItem value="">2</MenuItem>
+				 {/* <MenuItem value=""></MenuItem>
+				 {rowsTipoActivoFijo.map((TipoActivoFijo, index) => (
+                 <MenuItem value={TipoActivoFijo.uuid}>
+                 {TipoActivoFijo.Cve} - {TipoActivoFijo.Nombre}
+                  </MenuItem>
+                 ))} */}
+
+			</Select> 
+			</FormControl>
+			</Box>
+			</Grid>
+			</Grid>
+			
+			<Grid item xs={12} md ={12} padding={2} >
 				<Box sx={{ width: "95%", padding: "2%" }}>
 					<Stepper activeStep={activeStep}>
 						{steps.map((label, index) => {
@@ -217,7 +252,7 @@ export default function DatosAltas() {
 									2:  <StepTres datosAlta={datosAlta} setDatosAlta={setDatosAlta} />  ,
 								}[activeStep]
 							}
-							<Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+							<Box  display={{ xs: 'flow', md: 'flex' }} flexDirection={{  xs:"column", md:"row"}}>
 								<Button
 									color="secondary"
 									variant="contained"

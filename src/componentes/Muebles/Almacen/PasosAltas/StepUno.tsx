@@ -1,6 +1,6 @@
 import React from "react";
 import {Edit as EditIcon, Delete as DeleteIcon,} from "@mui/icons-material";
-import { Grid, Typography, TextField, Box, Button, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { Grid, Typography, TextField, Box, Button, FormControl, InputLabel, Select, MenuItem, useMediaQuery} from "@mui/material";
 import { Divider } from "@mui/material"; 
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
@@ -46,10 +46,6 @@ export interface TipoBienInterface {
 export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, setDatosAlta: any} ) {
 
 	const navigate                				  			  = useNavigate();
-	const [TipoActivoFijo, setTipoActivoFijo]				  = useState('');
-	const [TipoBien, setTipoBien] 							  = useState('');
-	const [Area, setArea]									  = useState('');
-
   
 	const [rowsTipoActivoFijo, setRowsTipoActivoFijo] = useState<Array<TipoActivoFijoInterface>>([]);
   // aqui es el consumo del endpoint para obtener el listado de Titular de la base de datos
@@ -137,9 +133,9 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 
 	return (
 	<Grid container spacing={2} paddingTop="3%">
-	<Grid item xs={12} display="flex" >
+	<Grid item xs={12} md ={12}  display={{ xs: 'flow', md: 'flex' }} >
 
-	<Grid item xs={6} >
+	<Grid item xs={12} md ={6} >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -159,9 +155,9 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	</Box>
 	</Grid>
 
-	<Grid item xs={4}  ></Grid>
+	<Grid item xs={0} md ={4} ></Grid>
 
-	<Grid item xs={2}  >
+	<Grid item xs={12} md ={2} >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -182,8 +178,8 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	</Grid>
 	</Grid>
 
-	<Grid item xs={12} display="flex">
-	<Grid item xs={2}  >
+	<Grid item xs={12} md ={12} display={{ xs: 'flow', md: 'flex' }}>
+	<Grid item xs={12} md ={2}  >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -203,7 +199,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	</Box>
 	</Grid>
 
-	<Grid item xs={10}  >
+	<Grid item xs={12} md ={10}  >
 	<Box
 		sx={{
 			'& > :not(style)': { m: 1.3, width: '100%' },   }}
@@ -233,8 +229,8 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	</Grid> 
 	</Grid>
 
-	<Grid item xs={12} display="flex">
-	<Grid item xs={12}>
+	<Grid item xs={12} md ={12} display="flex">
+	<Grid item xs={12} md ={12} >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -255,8 +251,8 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	</Grid>
 	</Grid>
 
-	<Grid item xs={12} display="flex">
-	<Grid item xs={6}  >
+	<Grid item xs={12} md ={12}  display={{ xs: 'flow', md: 'flex' }}>
+	<Grid item xs={12} md ={6}  >
 		<Box
 		sx={{
 			'& > :not(style)': { m: 1.3, width: '100%' },   }}
@@ -285,7 +281,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		</FormControl>
 		</Box>
 	</Grid>
-	<Grid item xs={6}  >
+	<Grid item xs={12} md ={6}  >
 		<Box
 		sx={{
 			'& > :not(style)': { m: 1.3, width: '100%' },   }}
@@ -316,14 +312,14 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	</Grid>
 	</Grid>
   
-	<Grid item xs={12} display="flow">
+	<Grid item xs={12} md ={12} display="flow">
 	<Box>
 	<Divider/>
 	</Box>
 	</Grid>
 
-	<Grid item xs={12} display="flex">
-	<Grid item xs={4}  >
+	<Grid item xs={12} md ={12} display={{ xs: 'flow', md: 'flex' }}>
+	<Grid item xs={12} md ={4}  >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -342,7 +338,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	/>
 	</Box>
 	</Grid>
-	<Grid item xs={4}  >
+	<Grid item xs={12} md ={4}  >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -361,7 +357,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	/>
 	</Box>
 	</Grid>
-	<Grid item xs={4}  >
+	<Grid item xs={12} md ={4}   >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -382,8 +378,8 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	</Grid>
 	</Grid>
 
-	<Grid item xs={12} display="flex">
-	<Grid item xs={4}  >
+	<Grid item xs={12}  md ={12} display={{ xs: 'flow', md: 'flex' }}>
+	<Grid item xs={12}  md ={4}  >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -402,7 +398,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	/>
 	</Box>
 	</Grid>
-	<Grid item xs={4}  >
+	<Grid item xs={12}   md ={4} >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}

@@ -99,9 +99,9 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
 
 	return (
 	<Grid container spacing={2} paddingTop="3%">
-	<Grid item xs={12} display="flex" >
+	<Grid item xs={12}  md ={12}  display={{ xs: 'flow', md: 'flex' }}>
 
-	<Grid item xs={3} >
+	<Grid item xs={12}   md ={3} >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -122,7 +122,7 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
 	</Grid>
 
 
-	<Grid item xs={3}  >
+	<Grid item xs={12}   md ={3}  >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -142,7 +142,7 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
 	</Box>
 	</Grid>
 
-	<Grid item xs={3}  >
+	<Grid item xs={12}   md ={3}  >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -162,7 +162,7 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
 	</Box>
 	</Grid>
 
-	<Grid item xs={3}  >
+	<Grid item xs={12}   md ={3}  >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -184,8 +184,8 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
 
 	</Grid>
 
-	<Grid item xs={12} display="flex">
-	<Grid item xs={8}  >
+	<Grid item xs={12}  md ={12}  display={{ xs: 'flow', md: 'flex' }}>
+	<Grid item xs={12} md ={8}  >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -205,7 +205,7 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
 	</Box>
 	</Grid>
  
-	<Grid item xs={4}  >
+	<Grid item xs={12} md ={4}  >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -229,14 +229,15 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
  
 	</Grid>
 
-	<Grid item xs={12} display="flex">
-	<Grid item xs={8} >
+	<Grid item xs={12}  md ={12}  display={{ xs: 'flow', md: 'flex' }}  >
+	<Grid item xs={12} md ={8} paddingBottom={3} >
 	<Box
+
 	component="form"
 	sx={{"& > :not(style)": {width: "100%", marginTop:"1%", },}}
 	noValidate
 	autoComplete="off"
-	display="flex"
+	display={{ xs: 'flow', md: 'flex' }} 
 	>
 		 
 		<Typography 
@@ -261,6 +262,7 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
 	   <Button
           variant="contained"
           component="span" 
+		sx={{ paddingTop:"2%", marginRight:"2%" }}
         >
 			<Typography
 			sx={{
@@ -274,8 +276,8 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
 		</label>
 	</Box>
 	</Grid>
-	<Grid item xs={2}  ></Grid>
-	<Grid item xs={4}  >
+	<Grid item xs={0} md ={2} ></Grid>
+	<Grid item xs={12} md ={4} >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
