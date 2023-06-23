@@ -9,6 +9,21 @@ import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
 import {catalogoSave,catalogoDelete,catalogoUpdate,} from "../../../services/CatalogoServices";
 
+// componente de sweetalert2 para el uso de los mensajes de alertas
+const Toast = Swal.mixin({
+  toast: true,
+  position: "center",
+  showConfirmButton: false,
+  timer: 4000,
+  timerProgressBar: false,
+  //background: '#2e7d32',
+  //color: '#fff',  
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
+
 export interface EntFederativasInterface {
   uuid: string;
   Cve: string;
@@ -212,7 +227,7 @@ export default function EntFederativas() {
           <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
             Configuración
           </Link>
           <Link underline="hover"color="inherit" href="/Configuracion/Catalogos/Catalogos">
@@ -232,11 +247,11 @@ export default function EntFederativas() {
               <Box display="flex" justifyContent="flex-end">
                 <Grid
                   sx={{
-                    display: "flex",
-                    alignItems: "right",
+                    display       : "flex",
+                    alignItems    : "right",
                     justifyContent: "right",
-                    paddingBottom: "2%",
-                    paddingRight: "1%",
+                    paddingBottom : "2%",
+                    paddingRight  : "1%",
                   }}
                 >
                   <Button
