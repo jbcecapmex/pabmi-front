@@ -8,14 +8,81 @@ import StepLabel from "@mui/material/StepLabel";
 import StepUno from "./PasosAltas/StepUno";
 import StepDos from "./PasosAltas/StepDos";
 import StepTres from "./PasosAltas/StepTres";
+import axios from 'axios';
+import Swal from "sweetalert2";
+import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
 
 const steps = ["Paso1", "Paso2", "Paso3"];
 
+// Mnesajes de exito o error
+const Toast = Swal.mixin({
+	toast: true,
+	position: "center",
+	showConfirmButton: false,
+	timer: 4000,
+	timerProgressBar: false,
+	didOpen: (toast:any) => {
+	toast.addEventListener("mouseenter", Swal.stopTimer);
+	toast.addEventListener("mouseleave", Swal.resumeTimer);
+	},
+	});
+	
+
 export default function DatosAltas() {
+
+	const [datosAlta, setDatosAlta] = React.useState({
+ 
+		uuidTipoAdquisicion : "c72b6fb8-1062-11ee-be56-0242ac120002",
+
+		NoInventario: "",
+        Cantidad: "",
+		NoActivo : "", 
+		uuidTipoActivoFijo: "",
+		Descripcion: "", 
+		uuidTipoBien: "", 
+		uuidArea: "",
+		CostoSinIva: "",
+		CostoConIva: "",
+		DepreciacionAcumulada: "",
+		FechaEntrada: "",
+		FechaUltimaActualizacion: "",
+
+		// Paso2
+		Placas: "",
+		Series: "", 
+		uuidMarca: "",
+		Anio: "",
+		VidaUtil: "",
+		// PorcentajeDepreciacion:"", 
+		uuidPersonalResguardo: "",
+		Personal: "", 
+		uuidConductor: "",
+		Linea: "",
+		DescripcionLinea: "",
+
+		// Paso3
+
+		CodigoContable: "",
+		FechaDeUso: "",
+		ClaveInterior: "",
+		Cog: "",
+		DescripcionDetalle: "",
+
+		// CvaArea: "",
+		// Factura: "",
+		
+		"uuidModelo": "9975797a-ae87-48d4-be98-224e73a59c6c",
+		"CvePersonal": "1234",
+		"CveLinea": "1233",
+		"DescripcionTipoActivoFijo": "dfdfdf",
+    })
+
+
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen(true); 
 
 	const navigate = useNavigate();
+
 
 	// CONST DE LOS PASOS
 	const [activeStep, setActiveStep] = React.useState(0);
@@ -30,15 +97,33 @@ export default function DatosAltas() {
 	};
 
 	const handleNext = () => {
-		let newSkipped = skipped;
-		if (isStepSkipped(activeStep)) {
-			newSkipped = new Set(newSkipped.values());
-			newSkipped.delete(activeStep);
-		}
+		if (activeStep === steps.length - 1){
+			submitData();
+		}else {
+			let newSkipped = skipped;
+			if (isStepSkipped(activeStep)){
+				newSkipped = new Set(newSkipped.values());
+				newSkipped.delete(activeStep);				
+			}
 
-		setActiveStep((prevActiveStep) => prevActiveStep + 1);
-		setSkipped(newSkipped);
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            setSkipped(newSkipped);
+		}
+		
 	};
+
+
+	
+ 
+	
+	const submitData = () => {
+		const url = "/gastocorriente/guardagastocorriente";
+		console.log(datosAlta);
+		catalogoSave(datosAlta,url).then((response) =>{
+			console.log("datosAlta", datosAlta);
+		})
+
+    };
 
 	const handleBack = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -64,6 +149,8 @@ export default function DatosAltas() {
 	};
 
 	//nuevo
+
+
 
 	return (
 		<Grid container spacing={1}>
@@ -124,9 +211,9 @@ export default function DatosAltas() {
 						<React.Fragment>
 							{
 								{
-									0:  <StepUno/> ,
-									1:  <StepDos/> ,
-									2:  <StepTres/>  ,
+									0:  <StepUno datosAlta={datosAlta} setDatosAlta={setDatosAlta} /> ,
+									1:  <StepDos datosAlta={datosAlta} setDatosAlta={setDatosAlta} /> ,
+									2:  <StepTres datosAlta={datosAlta} setDatosAlta={setDatosAlta} />  ,
 								}[activeStep]
 							}
 							<Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>

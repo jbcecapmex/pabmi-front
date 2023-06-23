@@ -53,15 +53,10 @@ export interface MarcasInterface {
 	ApellidoMaterno: string;
   }
 
-export default function StepDos(){  
+export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, setDatosAlta: any} ){  
 
 	const navigate                  = useNavigate();
-	const [Marcas, setMarcas]       = useState('');
-	const [Modelos, setModelos]     = useState('');
-	const [EstatusResguardos, setEstatusResguardos]  = useState('');
-	const [Empleados, setEmpleados]  = useState('');
-
-	
+ 
 	const [rowsMarcas, setRowsMarcas] = useState<Array<MarcasInterface>>([]);
 	// aqui es el consumo del endpoint para obtener el listado de Titular de la base de datos
 	const getAllMarcas= () => {
@@ -189,10 +184,10 @@ export default function StepDos(){
 		label     ="Placas"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.Placas} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, Placas: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="text"
 	/>
 	</Box>
 	</Grid>
@@ -209,10 +204,10 @@ export default function StepDos(){
 		label     ="Series"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.Series} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, Series: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="text"
 	/>
 	</Box>
 	</Grid>
@@ -229,11 +224,11 @@ export default function StepDos(){
 		</InputLabel>
 		<Select
 		id=" Marca "
-		value={Marcas}
+		value={datosAlta.uuidMarca}
 		label="Marca "
 		size="small"
 		displayEmpty
-		onChange = {(v) => { setMarcas(v.target.value)} }
+		onChange  ={(v) => {setDatosAlta({...datosAlta, uuidMarca: v.target.value}); }}
 		>
 			 <MenuItem value=""></MenuItem>
              {rowsMarcas.map((Marcas, index) => (
@@ -261,10 +256,10 @@ export default function StepDos(){
 		label     ="Año"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.Anio} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, Anio: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
@@ -281,10 +276,10 @@ export default function StepDos(){
 		label     ="Vida Útil"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.VidaUtil}
+		onChange  ={(v) => {setDatosAlta({...datosAlta, VidaUtil: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
@@ -302,10 +297,10 @@ export default function StepDos(){
 		label     ="%Depreciación"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		// value     ={datosAlta.PorcentajeDepreciacion} 
+		// onChange  ={(v) => {setDatosAlta({...datosAlta, PorcentajeDepreciacion: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
@@ -313,7 +308,7 @@ export default function StepDos(){
 
 	<Grid item xs={12} display="flex">
 	
-	<Grid item xs={4}  >
+	<Grid item xs={4}  > 
 		<Box
 		sx={{
 			'& > :not(style)': { m: 1.3, width: '100%' },   }}
@@ -325,11 +320,11 @@ export default function StepDos(){
 		</InputLabel>
 		<Select
 		id=" Modelo "
-		value={Modelos}
+		value={datosAlta.uuidModelo}
 		label="Modelo"
 		size="small"
 		displayEmpty
-		onChange = {(v) => { setModelos(v.target.value)} }
+		onChange  ={(v) => {setDatosAlta({...datosAlta, uuidModelo: v.target.value}); }}
 		>
 		    <MenuItem value=""></MenuItem>
              {rowsModelos.map((Modelos, index) => (
@@ -363,16 +358,16 @@ export default function StepDos(){
 		</InputLabel>
 		<Select
 		id="Personal De Resguardo"
-		value={EstatusResguardos}
+		value={datosAlta.uuidPersonalResguardo}
 		label="Personal De Resguardo"
 		size="small"
 		displayEmpty
-		onChange = {(v) => { setEstatusResguardos(v.target.value); }}
+		onChange  ={(v) => {setDatosAlta({...datosAlta,  uuidPersonalResguardo: v.target.value}); }}
 		>
 		      <MenuItem value=""></MenuItem>
-             {rowsEstatusResguardos.map((EstatusResguardos, index) => (
-             <MenuItem value={EstatusResguardos.uuid}>
-             {EstatusResguardos.Nombre}
+			  {rowsEmpleados.map((Empleados, index) => (
+             <MenuItem value={Empleados.uuid}>
+             {Empleados.Nombre} {Empleados.ApellidoPaterno} {Empleados.ApellidoMaterno}
              </MenuItem>
              ))}
 
@@ -394,10 +389,10 @@ export default function StepDos(){
 		label     ="Clave Del Personal "
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.Personal} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, Personal: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
@@ -417,11 +412,11 @@ export default function StepDos(){
 		</InputLabel>
 		<Select
 		id="Conductor"
-		value={Empleados}
+		value={datosAlta.uuidConductor}
 		label="Conductor"
 		size="small"
 		displayEmpty
-		onChange = {(v) => { setEmpleados(v.target.value)} }
+		onChange  ={(v) => {setDatosAlta({...datosAlta, uuidConductor: v.target.value}); }}
 		> 
 		     <MenuItem value=""></MenuItem>
              {rowsEmpleados.map((Empleados, index) => (
@@ -456,10 +451,10 @@ export default function StepDos(){
 		label     =" CVE. LÍNEA"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.Linea} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, Linea: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
@@ -475,10 +470,10 @@ export default function StepDos(){
 		label     ="Descripción De Línea"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.DescripcionLinea} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, DescripcionLinea: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="text"
 	/>
 	</Box>
 	</Grid>

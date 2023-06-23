@@ -31,10 +31,19 @@ const Toast = Swal.mixin({
    
 
 
-export default function StepTres(){
+export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, setDatosAlta: any} ){
 
-	const navigate                  = useNavigate();
-	const [TipoActivoFijo, setTipoActivoFijo]  = useState('');
+	const navigate          									         = useNavigate();
+	const [TipoActivoFijo, setTipoActivoFijo]						     = useState('');
+
+	const [uuid, setuuid] 												 = useState("");
+	const [uuidArea, setuuidArea]										 = useState("");
+	const [CodigoContable, setCodigoContable] 	     		   		     = useState("");
+	const [FechaDeUso, setFechaDeUso]         							 = useState("");
+	const [ClaveInterior, setClaveInterior]         					 = useState("");
+	const [DescripcionDetalle, setDescripcionDetalle]       			 = useState("");
+	 
+	
 
 	const [rowsTipoActivoFijo, setRowsTipoActivoFijo] = useState<Array<TipoActivoFijoInterface>>([]);
   // aqui es el consumo del endpoint para obtener el listado de Titular de la base de datos
@@ -104,10 +113,10 @@ export default function StepTres(){
 		label     ="Código Contable "
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.CodigoContable} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, CodigoContable: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
@@ -122,13 +131,13 @@ export default function StepTres(){
 	display="flex"
 	>
 	<TextField
-		label     ="FECHA DE USO"
+		label     ="Fecha de uso"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.FechaDeUso} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, FechaDeUso: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="date"
 	/>
 	</Box>
 	</Grid>
@@ -145,10 +154,10 @@ export default function StepTres(){
 		label     ="Clave Int."
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.ClaveInterior} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, ClaveInterior: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
@@ -165,10 +174,10 @@ export default function StepTres(){
 		label     ="Cog."
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.Cog} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, Cog: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
@@ -188,14 +197,14 @@ export default function StepTres(){
 		label     ="DESCRIPCIÓN"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.DescripcionDetalle} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, DescripcionDetalle: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="text"
 	/>
 	</Box>
 	</Grid>
-
+ 
 	<Grid item xs={4}  >
 	<Box
 	component="form"
@@ -208,10 +217,10 @@ export default function StepTres(){
 		label     ="Cva. Área"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		// value     ={datosAlta.uuidArea} 
+		// onChange  ={(v) => {setDatosAlta({...datosAlta, uuidArea: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
@@ -278,10 +287,10 @@ export default function StepTres(){
 		label     ="No. Factura"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		// value     ={datosAlta.Factura} 
+		// onChange  ={(v) => {setDatosAlta({...datosAlta, Factura: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>

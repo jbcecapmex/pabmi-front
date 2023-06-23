@@ -43,13 +43,14 @@ export interface TipoBienInterface {
   }
 
   
-export default function StepUno(){
+export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, setDatosAlta: any} ) {
 
-	const navigate                  = useNavigate();
-	const [TipoActivoFijo, setTipoActivoFijo]  = useState('');
-	const [TipoBien, setTipoBien]  = useState('');
-	const [Area, setArea]  = useState('');
+	const navigate                				  			  = useNavigate();
+	const [TipoActivoFijo, setTipoActivoFijo]				  = useState('');
+	const [TipoBien, setTipoBien] 							  = useState('');
+	const [Area, setArea]									  = useState('');
 
+  
 	const [rowsTipoActivoFijo, setRowsTipoActivoFijo] = useState<Array<TipoActivoFijoInterface>>([]);
   // aqui es el consumo del endpoint para obtener el listado de Titular de la base de datos
   const getAllTipoActivoFijo= () => {
@@ -64,7 +65,7 @@ export default function StepUno(){
       // aqui se recibe lo del endpoint en response
       .then(({ data }) => {
         const rowsTipoActivoFijo = data;
-        setRowsTipoActivoFijo(rowsTipoActivoFijo);
+        setRowsTipoActivoFijo(rowsTipoActivoFijo); 
       })
       .catch(function (error) {
         Swal.fire({ 
@@ -150,10 +151,10 @@ export default function StepUno(){
 		label     ="No. Inventario"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.NoInventario} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, NoInventario: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
@@ -172,10 +173,10 @@ export default function StepUno(){
 		label     ="Cantidad"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.Cantidad}
+		onChange  ={(v) => {setDatosAlta({...datosAlta, Cantidad: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
@@ -194,10 +195,10 @@ export default function StepUno(){
 		label     ="No. Activo"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.NoActivo} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, NoActivo: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
@@ -214,11 +215,11 @@ export default function StepUno(){
 		</InputLabel>
 		<Select
 		id="Tipo Act. Fijo "
-		value={TipoActivoFijo}
+		value={datosAlta.uuidTipoActivoFijo}
 		label="Tipo Act. Fijo"
 		size="small"
 		displayEmpty
-		onChange = {(v) => { setTipoActivoFijo(v.target.value)} }
+		onChange  ={(v) => {setDatosAlta({...datosAlta, uuidTipoActivoFijo: v.target.value}); }}
 		>
 		         <MenuItem value=""></MenuItem>
                  {rowsTipoActivoFijo.map((TipoActivoFijo, index) => (
@@ -245,10 +246,10 @@ export default function StepUno(){
 		label     ="Descripción"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.Descripcion} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, Descripcion: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="text"
 	/>
 	</Box>
 	</Grid>
@@ -267,11 +268,11 @@ export default function StepUno(){
 		</InputLabel> 
 		<Select
 		id="Tipo Bien"
-		value={TipoBien}
+		value={datosAlta.uuidTipoBien}
 		label="Tipo Bien"
 		size="small"
 		displayEmpty
-		onChange = {(v) => { setTipoBien(v.target.value); }}
+		onChange  ={(v) => {setDatosAlta({...datosAlta, uuidTipoBien: v.target.value}); }}
 		>
 		        <MenuItem value=""></MenuItem>
                  {rowsTipoBien.map((TipoBien, index) => (
@@ -296,11 +297,11 @@ export default function StepUno(){
 		</InputLabel>
 		<Select
 		id="AreaFisica"
-		value={Area}
+		value={datosAlta.uuidArea}
 		label="AreaFisica"
 		size="small"
 		displayEmpty
-		onChange = {(v) => { setArea(v.target.value)} }
+		onChange  ={(v) => {setDatosAlta({...datosAlta, uuidArea: v.target.value}); }}
 		>
 		  <MenuItem value=""></MenuItem>
             {rowsArea.map((Area, index) => (
@@ -334,10 +335,10 @@ export default function StepUno(){
 		label     ="Costo Sin Iva"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.CostoSinIva} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, CostoSinIva: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
@@ -353,10 +354,10 @@ export default function StepUno(){
 		label     ="Costo Con Iva"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.CostoConIva} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, CostoConIva: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
@@ -372,10 +373,10 @@ export default function StepUno(){
 		label     ="Depreciación Acumulada"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.DepreciacionAcumulada} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, DepreciacionAcumulada: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
@@ -394,10 +395,10 @@ export default function StepUno(){
 		label     ="Fecha De Entrada "
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.FechaEntrada} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, FechaEntrada: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="date"
 	/>
 	</Box>
 	</Grid>
@@ -413,10 +414,10 @@ export default function StepUno(){
 		label     ="Fecha Última Actualización"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.FechaUltimaActualizacion} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, FechaUltimaActualizacion: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="date"
 	/>
 	</Box>
 	</Grid>
