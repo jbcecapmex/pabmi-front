@@ -54,6 +54,7 @@ export default function DatosAltas() {
 		Anio: "",
 		VidaUtil: "",
 		// PorcentajeDepreciacion:"", 
+		uuidModelo: " ",
 		uuidPersonalResguardo: "",
 		Personal: "", 
 		uuidConductor: "",
@@ -71,7 +72,7 @@ export default function DatosAltas() {
 		// CvaArea: "",
 		// Factura: "",
 		
-		"uuidModelo": "9975797a-ae87-48d4-be98-224e73a59c6c",
+		
 		"CvePersonal": "1234",
 		"CveLinea": "1233",
 		"DescripcionTipoActivoFijo": "dfdfdf",
