@@ -260,6 +260,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, Anio: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="number"
+		helperText="*Ejemplo 2023"
 	/>
 	</Box>
 	</Grid>

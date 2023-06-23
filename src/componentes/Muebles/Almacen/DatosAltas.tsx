@@ -78,8 +78,7 @@ export default function DatosAltas() {
 		"CveLinea": "1233",
 		"DescripcionTipoActivoFijo": "dfdfdf",
     })
-
-
+  
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen(true); 
 
@@ -113,11 +112,7 @@ export default function DatosAltas() {
 		}
 		
 	};
-
-
-	
  
-	
 	const submitData = () => {
 		const url = "/gastocorriente/guardagastocorriente";
 		console.log(datosAlta);
@@ -129,21 +124,6 @@ export default function DatosAltas() {
 
 	const handleBack = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep - 1);
-	};
-
-	const handleSkip = () => {
-		if (!isStepOptional(activeStep)) {
-			// You probably want to guard against something like this,
-			// it should never occur unless someone's actively trying to break something.
-			throw new Error("No puedes saltarte un paso");
-		}
-
-		setActiveStep((prevActiveStep) => prevActiveStep + 1);
-		setSkipped((prevSkipped) => {
-			const newSkipped = new Set(prevSkipped.values());
-			newSkipped.add(activeStep);
-			return newSkipped;
-		});
 	};
 
 	const handleReset = () => {

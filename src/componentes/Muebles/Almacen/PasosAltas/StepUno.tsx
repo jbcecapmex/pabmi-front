@@ -46,6 +46,7 @@ export interface TipoBienInterface {
 export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, setDatosAlta: any} ) {
 
 	const navigate                				  			  = useNavigate();
+
   
 	const [rowsTipoActivoFijo, setRowsTipoActivoFijo] = useState<Array<TipoActivoFijoInterface>>([]);
   // aqui es el consumo del endpoint para obtener el listado de Titular de la base de datos
@@ -150,6 +151,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		value     ={datosAlta.NoInventario} 
 		onChange  ={(v) => {setDatosAlta({...datosAlta, NoInventario: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		helperText="*Campo requerido"
 		type="number"
 	/>
 	</Box>
@@ -372,7 +374,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		value     ={datosAlta.DepreciacionAcumulada} 
 		onChange  ={(v) => {setDatosAlta({...datosAlta, DepreciacionAcumulada: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
-		type="number"
+		
 	/>
 	</Box>
 	</Grid>
