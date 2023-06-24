@@ -61,7 +61,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
     })
       // aqui se recibe lo del endpoint en response
       .then(({ data }) => {
-        const rowsTipoActivoFijo = data;
+        const rowsTipoActivoFijo = data; 
         setRowsTipoActivoFijo(rowsTipoActivoFijo); 
       })
       .catch(function (error) {
@@ -151,8 +151,9 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		value     ={datosAlta.NoInventario} 
 		onChange  ={(v) => {setDatosAlta({...datosAlta, NoInventario: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
-		helperText="*Campo requerido"
+		// helperText="*Campo requerido"
 		type="number"
+		
 	/>
 	</Box>
 	</Grid>
@@ -390,13 +391,15 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	display="flex"
 	>
 	<TextField
-		label     ="Fecha De Entrada "
+		
+		label     ="Fecha De Entrada" 
 		size      ="small"
 		variant   ="outlined"
 		value     ={datosAlta.FechaEntrada} 
 		onChange  ={(v) => {setDatosAlta({...datosAlta, FechaEntrada: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
-		type="date"
+		InputLabelProps={{shrink: true,}}
+		type="date" 
 	/>
 	</Box>
 	</Grid>
@@ -409,12 +412,14 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	display="flex"
 	>
 	<TextField
-		label     ="Fecha Última Actualización"
+	 
+	 	label     ="Fecha Última Actualización" 	 
 		size      ="small"
 		variant   ="outlined"
 		value     ={datosAlta.FechaUltimaActualizacion} 
 		onChange  ={(v) => {setDatosAlta({...datosAlta, FechaUltimaActualizacion: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		InputLabelProps={{shrink: true,}}
 		type="date"
 	/>
 	</Box>

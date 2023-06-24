@@ -130,13 +130,14 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
 	autoComplete="off"
 	display="flex"
 	>
-	<TextField
+	<TextField 
 		label     ="Fecha de uso"
 		size      ="small"
 		variant   ="outlined"
 		value     ={datosAlta.FechaDeUso} 
 		onChange  ={(v) => {setDatosAlta({...datosAlta, FechaDeUso: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		InputLabelProps={{shrink: true,}}
 		type="date"
 	/>
 	</Box>
