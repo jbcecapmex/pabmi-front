@@ -117,6 +117,7 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
 		onChange  ={(v) => {setDatosAlta({...datosAlta, CodigoContable: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="number"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -138,6 +139,8 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
 		onChange  ={(v) => {setDatosAlta({...datosAlta, FechaDeUso: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="date"
+		InputLabelProps={{ shrink: true, }}
+		required
 	/>
 	</Box>
 	</Grid>
@@ -158,6 +161,7 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
 		onChange  ={(v) => {setDatosAlta({...datosAlta, ClaveInterior: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="number"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -178,6 +182,7 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
 		onChange  ={(v) => {setDatosAlta({...datosAlta, Cog: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="number"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -201,6 +206,7 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
 		onChange  ={(v) => {setDatosAlta({...datosAlta, DescripcionDetalle: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="text"
+		required
 	/>
 	</Box>
 	</Grid>

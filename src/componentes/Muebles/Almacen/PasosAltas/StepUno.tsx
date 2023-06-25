@@ -151,7 +151,8 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		value     ={datosAlta.NoInventario} 
 		onChange  ={(v) => {setDatosAlta({...datosAlta, NoInventario: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
-		helperText="*Campo requerido"
+		required
+		// helperText="*Campo requerido"
 		type="number"
 	/>
 	</Box>
@@ -174,6 +175,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		value     ={datosAlta.Cantidad}
 		onChange  ={(v) => {setDatosAlta({...datosAlta, Cantidad: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		required
 		type="number"
 	/>
 	</Box>
@@ -196,6 +198,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		value     ={datosAlta.NoActivo} 
 		onChange  ={(v) => {setDatosAlta({...datosAlta, NoActivo: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		required
 		type="number"
 	/>
 	</Box>
@@ -244,6 +247,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		label     ="Descripción"
 		size      ="small"
 		variant   ="outlined"
+		required
 		value     ={datosAlta.Descripcion} 
 		onChange  ={(v) => {setDatosAlta({...datosAlta, Descripcion: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
@@ -337,6 +341,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, CostoSinIva: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="number"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -353,6 +358,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		size      ="small"
 		variant   ="outlined"
 		value     ={datosAlta.CostoConIva} 
+		required
 		onChange  ={(v) => {setDatosAlta({...datosAlta, CostoConIva: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="number"
@@ -371,6 +377,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		label     ="Depreciación Acumulada"
 		size      ="small"
 		variant   ="outlined"
+		required
 		value     ={datosAlta.DepreciacionAcumulada} 
 		onChange  ={(v) => {setDatosAlta({...datosAlta, DepreciacionAcumulada: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
@@ -392,10 +399,12 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	<TextField
 		label     ="Fecha De Entrada "
 		size      ="small"
+		required
 		variant   ="outlined"
 		value     ={datosAlta.FechaEntrada} 
 		onChange  ={(v) => {setDatosAlta({...datosAlta, FechaEntrada: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		InputLabelProps={{ shrink: true, }}
 		type="date"
 	/>
 	</Box>
@@ -416,6 +425,8 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, FechaUltimaActualizacion: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="date"
+		InputLabelProps={{ shrink: true, }}
+		required
 	/>
 	</Box>
 	</Grid>
