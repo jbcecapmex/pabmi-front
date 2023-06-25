@@ -170,9 +170,9 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 
 	return (
 	<Grid container spacing={2} paddingTop="3%">
-	<Grid item xs={12} display="flex" >
+	<Grid item xs={12} md ={12}  display={{ xs: 'flow', md: 'flex' }}>
 
-	<Grid item xs={4} >
+	<Grid item xs={12} md ={4} >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -192,7 +192,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	</Box>
 	</Grid>
 
-	<Grid item xs={4}  >
+	<Grid item xs={12} md ={4} >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -212,7 +212,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	</Box>
 	</Grid>
 
-	<Grid item xs={4}  >
+	<Grid item xs={12} md ={4} >
 		<Box
 		sx={{
 			'& > :not(style)': { m: 1.3, width: '100%' },   }}
@@ -243,8 +243,8 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
  
 	</Grid>
 
-	<Grid item xs={12} display="flex">
-	<Grid item xs={4}  >
+	<Grid item xs={12}  md ={12}  display={{ xs: 'flow', md: 'flex' }}>
+	<Grid item xs={12} md ={4} >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -260,11 +260,12 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, Anio: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="number"
+		helperText="*Ejemplo 2023"
 	/>
 	</Box>
 	</Grid>
 
-	<Grid item xs={4}  >
+	<Grid item xs={12}  md ={4}>
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -285,7 +286,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	</Grid>
 	
 
-	<Grid item xs={4}  >
+	<Grid item xs={12} md ={4}  >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -306,9 +307,9 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	</Grid>
 	</Grid>
 
-	<Grid item xs={12} display="flex">
+	<Grid item xs={12}  md ={12}  display={{ xs: 'flow', md: 'flex' }}>
 	
-	<Grid item xs={4}  > 
+	<Grid item xs={12} md ={4}   > 
 		<Box
 		sx={{
 			'& > :not(style)': { m: 1.3, width: '100%' },   }}
@@ -338,15 +339,15 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	</Grid>  
 	</Grid>
 
-	<Grid item xs={12} display="flow">
+	<Grid item xs={12}   md ={12} >
 	<Box>
 	<Divider/>
 	</Box>
 	</Grid>
 	
-	<Grid item xs={12} display="flex">
+	<Grid item xs={12}   md ={12}  display={{ xs: 'flow', md: 'flex' }}>
 
-	<Grid item xs={8}  >
+	<Grid item xs={12} md ={8}   >
 		<Box
 		sx={{
 			'& > :not(style)': { m: 1.3, width: '100%' },   }}
@@ -377,7 +378,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	</Grid>  
 
  
-	<Grid item xs={4}  >
+	<Grid item xs={12}  md ={12} >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -398,9 +399,9 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	</Grid>
 	</Grid>
 
-	<Grid item xs={12} display="flex">
+	<Grid item xs={12}  md ={12}  display={{ xs: 'flow', md: 'flex' }}>
 	
-	<Grid item xs={8}  >
+	<Grid item xs={12} md ={8}  >
 		<Box
 		sx={{
 			'& > :not(style)': { m: 1.3, width: '100%' },   }}
@@ -432,14 +433,14 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
  
 	</Grid>
 
-	<Grid item xs={12} display="flow">
+	<Grid item xs={12}  md ={12} >
 	<Box>
 	<Divider/>
 	</Box>
 	</Grid>
 	
-	<Grid item xs={12} display="flex">
-	<Grid item xs={2}  >
+	<Grid item xs={12}   md ={12}  display={{ xs: 'flow', md: 'flex' }}>
+	<Grid item xs={12}  md ={2}  >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -458,7 +459,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	/>
 	</Box>
 	</Grid>
-	<Grid item xs={10}  >
+	<Grid item xs={12}  md ={10}  >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
