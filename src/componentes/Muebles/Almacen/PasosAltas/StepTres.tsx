@@ -1,8 +1,75 @@
 import React,  { useState }  from "react";
+import {Edit as EditIcon, Delete as DeleteIcon,} from "@mui/icons-material";
 import { Grid, Typography, TextField, Box, Button, FormControl, Select, MenuItem, InputLabel } from "@mui/material"
-import { Divider } from "@mui/material"; 
+import { Divider } from "@mui/material";   
+import { useEffect } from "react";
+import Swal from "sweetalert2";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";  
 
-export default function StepTres(){
+
+const Toast = Swal.mixin({
+	toast: true,
+	position: "center",
+	showConfirmButton: false,
+	timer: 4000,
+	timerProgressBar: false,
+	//background: '#2e7d32',
+	//color: '#fff',     
+	didOpen: (toast) => {
+	  toast.addEventListener("mouseenter", Swal.stopTimer);
+	  toast.addEventListener("mouseleave", Swal.resumeTimer);
+	},
+  });
+
+  export interface TipoActivoFijoInterface {
+	uuid: string;
+	Cve: string;
+	Nombre: string;
+	Descripcion: string;   
+  }
+   
+
+
+export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, setDatosAlta: any} ){
+
+	const navigate          									         = useNavigate();
+	const [TipoActivoFijo, setTipoActivoFijo]						     = useState('');
+
+	const [uuid, setuuid] 												 = useState("");
+	const [uuidArea, setuuidArea]										 = useState("");
+	const [CodigoContable, setCodigoContable] 	     		   		     = useState("");
+	const [FechaDeUso, setFechaDeUso]         							 = useState("");
+	const [ClaveInterior, setClaveInterior]         					 = useState("");
+	const [DescripcionDetalle, setDescripcionDetalle]       			 = useState("");
+	 
+	
+
+	const [rowsTipoActivoFijo, setRowsTipoActivoFijo] = useState<Array<TipoActivoFijoInterface>>([]);
+  // aqui es el consumo del endpoint para obtener el listado de Titular de la base de datos
+  const getAllTipoActivoFijo= () => {
+    axios({
+      method    : "get",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienetipoactivofijo",
+      headers   : {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.getItem("jwtToken") || "",
+      },
+    })
+      // aqui se recibe lo del endpoint en response
+      .then(({ data }) => {
+        const rowsTipoActivoFijo = data;
+        setRowsTipoActivoFijo(rowsTipoActivoFijo);
+      })
+      .catch(function (error) {
+        Swal.fire({ 
+			icon  : "error",
+			title : "Mensaje",
+          text  : "("+error.response.status+") "+error.response.data.message,
+        }).then((r) => navigate("/Muebles/Almacen/Altas"));
+      });
+  };
+
 
 	const [selectedFile, setSelectedFile] = useState(null);
 
@@ -26,11 +93,15 @@ export default function StepTres(){
 	const [rfc, setRfc] = useState("");
 	const [disableValidar, setDisableValidar] = useState(false);
 
+	useEffect(() => {
+		getAllTipoActivoFijo();
+	  }, []);
+
 	return (
 	<Grid container spacing={2} paddingTop="3%">
-	<Grid item xs={12} display="flex" >
+	<Grid item xs={12}  md ={12}  display={{ xs: 'flow', md: 'flex' }}>
 
-	<Grid item xs={3} >
+	<Grid item xs={12}   md ={3} >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -42,16 +113,16 @@ export default function StepTres(){
 		label     ="Código Contable "
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.CodigoContable} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, CodigoContable: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
 
 
-	<Grid item xs={3}  >
+	<Grid item xs={12}   md ={3}  >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -59,19 +130,20 @@ export default function StepTres(){
 	autoComplete="off"
 	display="flex"
 	>
-	<TextField
-		label     ="FECHA DE USO"
+	<TextField 
+		label     ="Fecha de uso"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.FechaDeUso} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, FechaDeUso: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		InputLabelProps={{shrink: true,}}
+		type="date"
 	/>
 	</Box>
 	</Grid>
 
-	<Grid item xs={3}  >
+	<Grid item xs={12}   md ={3}  >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -83,15 +155,15 @@ export default function StepTres(){
 		label     ="Clave Int."
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.ClaveInterior} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, ClaveInterior: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
 
-	<Grid item xs={3}  >
+	<Grid item xs={12}   md ={3}  >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -103,18 +175,18 @@ export default function StepTres(){
 		label     ="Cog."
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.Cog} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, Cog: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
 
 	</Grid>
 
-	<Grid item xs={12} display="flex">
-	<Grid item xs={8}  >
+	<Grid item xs={12}  md ={12}  display={{ xs: 'flow', md: 'flex' }}>
+	<Grid item xs={12} md ={8}  >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -126,66 +198,15 @@ export default function StepTres(){
 		label     ="DESCRIPCIÓN"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		value     ={datosAlta.DescripcionDetalle} 
+		onChange  ={(v) => {setDatosAlta({...datosAlta, DescripcionDetalle: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="text"
 	/>
 	</Box>
 	</Grid>
-
-	<Grid item xs={4}  >
-		<Box
-		sx={{
-			'& > :not(style)': { m: 1.3, width: '100%' },   }}
-				display="flex"
-		>
-		<FormControl fullWidth sx={{bgColor:"#fff"}}>
-		<InputLabel  sx={{ marginTop:"-4px"}}>
-		Cve. Área
-		</InputLabel>
-		<Select
-		id=" Cve. Área "
-		// value={TipoDependencia}
-		label=" Cve. Área "
-		size="small"
-		displayEmpty
-		// onChange = {(v) => { setTipoBien(v.target.value)} }
-		>
-		        <MenuItem value=""> 1 </MenuItem>  
-		</Select>
-		</FormControl>
-		</Box>
-	</Grid> 
-	</Grid>
-
-	<Grid item xs={12} display="flex">
-	
-	<Grid item xs={4}  >
-		<Box
-		sx={{
-			'& > :not(style)': { m: 1.3, width: '100%' },   }}
-				display="flex"
-		>
-		<FormControl fullWidth sx={{bgColor:"#fff"}}>
-		<InputLabel  sx={{ marginTop:"-4px"}}>
-		Tipo Act. Fijo
-		</InputLabel>
-		<Select
-		id="Tipo Act. Fijo "
-		// value={TipoDependencia}
-		label="Tipo Act. Fijo"
-		size="small"
-		displayEmpty
-		// onChange = {(v) => { setTipoBien(v.target.value)} }
-		>
-		        <MenuItem value=""> 1 </MenuItem>  
-		</Select>
-		</FormControl>
-		</Box>
-	</Grid> 
  
-	<Grid item xs={8}>
+	<Grid item xs={12} md ={4}  >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -194,27 +215,30 @@ export default function StepTres(){
 	display="flex"
 	>
 	<TextField
-		label     ="Descripción De Tipo Act. Fijo"
+		label     ="Cva. Área"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		// value     ={datosAlta.uuidArea} 
+		// onChange  ={(v) => {setDatosAlta({...datosAlta, uuidArea: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>
-
+ 
+	 
+ 
 	</Grid>
 
-	<Grid item xs={12} display="flex">
-	<Grid item xs={8} >
+	<Grid item xs={12}  md ={12}  display={{ xs: 'flow', md: 'flex' }}  >
+	<Grid item xs={12} md ={8} paddingBottom={3} >
 	<Box
+
 	component="form"
 	sx={{"& > :not(style)": {width: "100%", marginTop:"1%", },}}
 	noValidate
 	autoComplete="off"
-	display="flex"
+	display={{ xs: 'flow', md: 'flex' }} 
 	>
 		 
 		<Typography 
@@ -239,6 +263,7 @@ export default function StepTres(){
 	   <Button
           variant="contained"
           component="span" 
+		sx={{ paddingTop:"2%", marginRight:"2%" }}
         >
 			<Typography
 			sx={{
@@ -252,8 +277,8 @@ export default function StepTres(){
 		</label>
 	</Box>
 	</Grid>
-	<Grid item xs={2}  ></Grid>
-	<Grid item xs={4}  >
+	<Grid item xs={0} md ={2} ></Grid>
+	<Grid item xs={12} md ={4} >
 	<Box
 	component="form"
 	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
@@ -265,10 +290,10 @@ export default function StepTres(){
 		label     ="No. Factura"
 		size      ="small"
 		variant   ="outlined"
-		// value     ={cve}
-		// disabled  = {uuid!=="" ? true:false}
-		// onChange  ={(v) => {setCve(v.target.value); }}
+		// value     ={datosAlta.Factura} 
+		// onChange  ={(v) => {setDatosAlta({...datosAlta, Factura: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		type="number"
 	/>
 	</Box>
 	</Grid>

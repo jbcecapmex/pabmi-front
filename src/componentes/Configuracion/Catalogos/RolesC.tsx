@@ -1,7 +1,7 @@
 import React from "react";
 import {Edit as EditIcon, Delete as DeleteIcon,} from "@mui/icons-material";import { useEffect, useState } from "react";
 import axios from "axios";
-import {Box,Breadcrumbs,Button,Card,CardContent,Grid,IconButton,Link,TextField,Tooltip,Typography,} from "@mui/material";
+import {Box,Breadcrumbs,Button,Card,CardContent,CardHeader ,Grid,IconButton,Link,TextField,Tooltip,Typography,} from "@mui/material";
 import MUIXDataGrid from "../../Grid/MUIXDataGrid";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -307,7 +307,7 @@ const handleClose = ()  => setOpen(false);
           <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
             Usuarios
           </Link>
-          <Typography color="text.primary">Catálogo de Rol</Typography>
+          <Typography color="text.primary">Catálogo de Roles</Typography>
         </Breadcrumbs>
       </Grid>
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
@@ -315,6 +315,8 @@ const handleClose = ()  => setOpen(false);
         <Grid item xs={12} md={12} mt={2}>
           {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
           <Card sx={{ p: 0, boxShadow: 8 }}>
+          <CardHeader sx={{ position: "absolute", fontFamily: "MontserratSemiBold"}} />
+      <Typography  variant="h5" sx={{ paddingTop:"1%", paddingLeft:"1%" }}>  Catálogo de Roles </Typography>  
             <CardContent sx={{ fontFamily: "MontserratBold", bgcolor: "" }}>
               {/* aqui es el cardcontent que es el contenido del card,y ponemos primero un box y estamos dibujando el boton para agregar un nuevo registro */}
               <Box display="flex" justifyContent="flex-end">
