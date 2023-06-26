@@ -70,9 +70,9 @@ const handleClose = ()  => setOpen(false);
   // Handle delete
   const handleDelete = (event: any, cellValues: any) => {
     const data = cellValues.row.uuid;
-    const descripcion = cellValues.row.Descripcion;   
+    const cve = cellValues.row.Nombre;   
     const url = "/catalogos/eliminamunicipios";
-    catalogoDelete(data,url,descripcion).then((response) =>{
+    catalogoDelete(data,url,cve).then((response) =>{
       setOpen(false);
       getAllMunicipios();
     })    

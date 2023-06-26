@@ -1,22 +1,21 @@
 import * as React from "react";
-import { Typography, Box, Divider, Link } from "@mui/material";
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { useDemoData } from '@mui/x-data-grid-generator';
+import {Box,Breadcrumbs,Button,Card,CardContent,Grid,IconButton,Link,TextField,Tooltip,Typography,Divider} from "@mui/material";
 import { Block, Padding } from "@mui/icons-material";
 import { Icons } from "../../../layout/Icons";
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import InputBase from '@mui/material/InputBase';
-import Grid from '@mui/material/Grid';
 
+import { useEffect, useState } from "react";
 import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Modal from '@mui/material/Modal';
-
+import axios from 'axios';
+import Swal from "sweetalert2";
+import { queries } from "../../../queries";
 const style = {
   position: 'absolute',
   top: '50%',
@@ -28,35 +27,59 @@ const style = {
   p: 2,
 };
 
+// Mnesajes de exito o error
+const Toast = Swal.mixin({
+  toast: true,
+  position: "center",
+  showConfirmButton: false,
+  timer: 4000,
+  timerProgressBar: false,
+  didOpen: (toast:any) => {
+  toast.addEventListener("mouseenter", Swal.stopTimer);
+  toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+  });
+
+
+export interface AltaMueblesInterface {
+  uuid:                string;
+  Cve:                 string;            
+  Nombre:              string;
+  Descripcion:         string;  
+}
+
+
 export default function Principal() {
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
 
-
+// Aqui hay que definir quien es el que esta logeado y mostrar la información
+// Aahorita se realizara la prueba para la dependencia
+// con el enlace, y tambien analizar para la coordinación
 
 
 
 
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'factura', headerName: 'Factura', width: 70,
+
+  { field: 'NoInventario', headerName: 'Factura', width: 90, headerAlign: 'center',
   renderCell: (value: any ) => {
     return (
-      <a href={value.formattedValue.link} onClick={value.formattedValue.func}>
-         {Icons(value.formattedValue.icono)}
+      <a href={value.formattedValue.link} onClick={value.formattedValue.NoInventario}>
+         {Icons("Description")}
       </a>
     )
   }
 
   },
-  { field: 'activo', headerName: 'No. Activo', width: 100, type:'number' },
-  { field: 'tipoAdquisicion', headerName: 'Tipo Adquisición', width: 140 },
-  { field: 'descripcion', headerName: 'Descripción', width: 220 },
-  { field: 'tipo', headerName: 'Tipo', width: 200 },
-  { field: 'areaFisica', headerName: 'Área FÍsica', width: 200 },
-  { field: 'fecha', headerName: 'Fecha', width: 110 },
-  { field: 'acciones', headerName: 'Acciones', width: 280,
+  { field: 'NoActivo', headerName: 'No. Activo', width: 130, type:'number', headerAlign: 'center' },
+  { field: 'TipoAdquisicion', headerName: 'Tipo Adquisición', width: 180, headerAlign: 'center' },
+  { field: 'Descripcion', headerName: 'Descripción', width: 350 ,  headerAlign: 'center' },
+  { field: 'TipoActivoFijoNombre', headerName: 'Tipo', width: 200 ,  headerAlign: 'center'},
+  { field: 'AreaFisica', headerName: 'Área FÍsica', width: 230,  headerAlign: 'center'},
+  { field: 'created_at', headerName: 'Fecha', width: 200,  headerAlign: 'center' },
+  { field: 'acciones', headerName: 'Acciones', width: 380, headerAlign: 'center',
    renderCell: (value) => {
      return (
       <Box
@@ -67,11 +90,11 @@ const columns: GridColDef[] = [
           justifyContent: "center",
         }}>
          <Box sx={{width:'90px',marginLeft:'5px', marginRight:'5px'}}>
-            <Button sx={{fontSize:10,backgroundColor:'#000'}} variant="contained" size="small">{value.formattedValue.boton}</Button>
+            <Button sx={{fontSize:10,backgroundColor:'#000'}} variant="contained" size="small">Confirmar</Button>
          </Box>
-         <Box sx={{width:'50px',marginLeft:'5px', marginRight:'5px',}} >{Icons(value.formattedValue.icono)}</Box>  
+         <Box sx={{width:'50px',marginLeft:'5px', marginRight:'5px',}} >{Icons("QueryStats")}</Box>  
          <Box sx={{fill: '#0072ea'}}>
-           {Icons(value.formattedValue.estatus)}
+           {Icons("CheckCircle")}
          </Box>
         </Box>
      
@@ -83,29 +106,41 @@ const columns: GridColDef[] = [
   }
 ];
 
-const rows = [
-  { id: 1, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:3800, tipoAdquisicion: 'Jon', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Refrigeración', areaFisica:'Oficina del Secretario', fecha: '13/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 2, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:1345, tipoAdquisicion: 'Cersei', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Camiones', areaFisica:'Almacén de Bienes Muebles', fecha: '09/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 3, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:7652, tipoAdquisicion: 'Jaime', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Computo', areaFisica:'Dirección del Archivo', fecha: '08/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 4, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:1276, tipoAdquisicion: 'Arya', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Vehículos Menores', areaFisica:'Dirección de Infraestructura', fecha: '07/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 5, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:1334, tipoAdquisicion: 'Daenerys', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Camiones', areaFisica:'Almacén de Bienes Muebles', fecha: '05/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 6, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:1039, tipoAdquisicion: 'Cersei', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Refrigeración', areaFisica:'Dirección del Archivo', fecha: '03/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"DoDisturbOn"} },
-  { id: 7, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:6545, tipoAdquisicion: 'Ferrara', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Computo', areaFisica:'Oficina del Secretario', fecha: '02/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"DoDisturbOn"} },
-  { id: 8, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:7845, tipoAdquisicion: 'Rossini', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Computo', areaFisica:'Dirección de Infraestructura', fecha: '01/04/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 9, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:8985, tipoAdquisicion: 'Harvey', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Vehículos Menores', areaFisica:'Almacén de Bienes Muebles', fecha: '10/02/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 10, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:8345, tipoAdquisicion: 'Flores', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Refrigeración', areaFisica:'Oficina del Secretario', fecha: '09/03/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"Error"} },
-  { id: 11, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:1305, tipoAdquisicion: 'Flores', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Camiones', areaFisica:'Dirección de Infraestructura', fecha: '08/03/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 12, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:1735, tipoAdquisicion: 'Flores', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Computo', areaFisica:'Dirección del Archivo', fecha: '07/03/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 13, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:2475, tipoAdquisicion: 'Flores', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Refrigeración', areaFisica:'Oficina del Secretario', fecha: '06/03/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"Error"} },
-  { id: 14, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:9876, tipoAdquisicion: 'Flores', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Vehículos Menores', areaFisica:'Almacén de Bienes Muebles', fecha: '05/03/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"CheckCircle"} },
-  { id: 15, factura: {icono: "Description", link: "#", "func": handleOpen}, activo:1270, tipoAdquisicion: 'Flores', descripcion: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', tipo:'Equipo de Computo', areaFisica:'Dirección del Archivo', fecha: '04/03/2023', acciones:{icono: "QueryStats", boton: "Confirmar", estatus:"DoDisturbOn"} },
-];
+// aquí devemos porner el axios para consultar la tabla de AltasMuebles
+// y mapear los resultados en la constante Row
+const [rowsAltas, setRowsAltas] = useState<Array<AltaMueblesInterface>>([]);
+const getAllMueblesGastoCorriente = () => {
+  const data = { uuidTipoAdquisicion: "996d3134-605f-4674-8134-5a9bca5c019e" };
 
+axios({
+  method    : "post",
+  url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/gastocorriente/obtienegastocorriente",
+  headers   : {
+                "Content-Type": "application/json",
+                Authorization: localStorage.getItem("jwtToken") || "",
+  },
+  data    : data,
+})
+  .then(({ data }) => {
+    if (data) {
+      console.log('data',data)
+      setRowsAltas(data);
+    } else {
+      setRowsAltas([])
+    }
+  })
+  .catch(function (error) {
+    Swal.fire({
+      icon  : "error",
+      title : "Mensaje",
+      text  : "("+error.response.status+") "+error.response.data.message,
+    });
+  });
+};
+  const fechaActual = dayjs()
+  const fechaMenosUnMes = fechaActual.add(-1, 'month')
+  const [valueDesde, setValueDesde] = React.useState(dayjs(fechaMenosUnMes));
 
-
-
-  
-  const [valueDesde, setValueDesde] = React.useState(dayjs(new Date()));
   const handleChangeDesde = (newValue:any) => {
     setValueDesde(newValue);
   };
@@ -116,154 +151,301 @@ const rows = [
   };
 
 
+
+  useEffect(()=>{
+    getAllMueblesGastoCorriente()
+  },[])
+
   const handleClose = () => setOpen(false);
-  return (
-    <Grid container spacing={1}>
-    <Grid item xs={12}>
-    <Typography
-        variant="h5"
-        component="div"
-        sx={{
-          flexGrow: 1,
-          fontWeight: "bold",
-          display: "flex",
-          justifyContent: "left"
-        }}
-      >
-        Listado de altas para Almacen
-      </Typography>
-      <Box sx={{height:'30px',width:'100%',display:'block'}}></Box>
-    </Grid>
-    <Grid item xs={6}  >
-    <InputBase placeholder="Buscar" sx={{width: '60%',height:'45px',border:1,borderRadius:3,borderColor:"#cdcdcd",paddingLeft:'3%', marginLeft:"3%"}}
-            id="filled-adornment-weight" 
-            startAdornment={<InputAdornment position="start">{Icons("Search")}</InputAdornment>}
-            aria-describedby="filled-weight-helper-text"
-            inputProps={{
-              'aria-label': 'weight',
-            }}
-          />
-    </Grid>
-    <Grid item xs={6}  >
+
+
+  const getAllBuscadorMuebles = () => {
+    const data = { parametroBusqueda: inputValueBuscador };
+  axios({
+    method    : "post",
+    url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/gastocorriente/buscadorMuebles",
+    headers   : {
+                  "Content-Type": "application/json",
+                  Authorization: localStorage.getItem("jwtToken") || "",
+    },
+    data    : data,
+  })
+    .then(({ data }) => {
+      if (data) {
+        console.log('data',data)
+        setRowsAltas(data);
+      } else {
+        setRowsAltas([])
+      }
+    })
+    .catch(function (error) {
+      Swal.fire({
+        icon  : "error",
+        title : "Mensaje",
+        text  : "("+error.response.status+") "+error.response.data.message,
+      });
+    });
+  };
+
+  const [inputValueBuscador, setInputValueBuscador] = React.useState('');
+
+  const handleChangeBuscador = (event: any) => {
+    setInputValueBuscador(event.target.value);
+    if(event.target.value===''){
+      getAllMueblesGastoCorriente()
+    }
+  };
+
+  const handleKeyDownBuscador = (event:any) => {
+    if (event.key === 'Enter') {
+      setInputValueBuscador(event.target.value);
+      getAllBuscadorMuebles();
+    }
+  };
+
+  const buscarPorFechas = () => {
+    // obtener las fechas y ponerla en formato date para enviarlas formateadas
+    const tDesde:any = valueDesde;
+    var nDesde       = new Date(tDesde);
+    const diaDesde   = nDesde.getDate();
+    let   mesDesde   = nDesde.getMonth()+1;
+    const anoDesde   = nDesde.getFullYear();
+    let mesCompletoDesde;
+
+    if(mesDesde <= 9){
+      mesCompletoDesde = '0' + mesDesde;
+    }else{
+      mesCompletoDesde = mesDesde;
+    }
     
-          <Typography
-        variant="subtitle1"
-        component="div"
-        sx={{
-          fontWeight: "normal",
-          display: "flex",
-          justifyContent: "left"
-        }}
-      >
-        Busqueda por rango de fechas
-      </Typography>
-      
-        <Box sx={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+    const fechaDesdeFormateada = anoDesde + '-' + mesCompletoDesde + '-'+ diaDesde;
+
+    const tHasta:any = valueHasta;
+    var nHasta       = new Date(tHasta);
+    const diaHasta   = nHasta.getDate();
+    let   mesHasta   = nHasta.getMonth()+1;
+    const anoHasta   = nHasta.getFullYear();
+    let mesCompletoHasta;
+
+    if(mesHasta <= 9){
+      mesCompletoHasta = '0' + mesHasta;
+    }else{
+      mesCompletoHasta = mesHasta;
+    }
+    
+
+
+
+    const fechaHastaFormateada = anoHasta + '-' + mesCompletoHasta + '-'+ diaHasta;
+    const data = { fechaDesde: fechaDesdeFormateada, fechaHasta: fechaHastaFormateada };
+    //alert('Fecha desde:' + fechaDesdeFormateada + ' Hasta: ' + fechaHastaFormateada);
+    // obtener las fecha y setearlas en paramnetros para enviarlos al backend
+    axios({
+      method    : "post",
+      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/gastocorriente/buscadorMuebles",
+      headers   : {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.getItem("jwtToken") || "",
+      },
+      data    : data,
+    })
+      .then(({ data }) => {
+        if (data) {
+          console.log('datos ok',data)
+          setRowsAltas(data);
+        } else {
+          setRowsAltas([])
+          console.log('datos nok',data)
+        }
+      })
+      .catch(function (error) {
+        console.log('Error')
+        Swal.fire({
+          icon  : "error",
+          title : "Mensaje",
+          text  : "("+error.response.status+") "+error.response.data.message,
+        });
+      });
+  }
+
+  const limpiarFechas = () => {
+    const fechaActual = dayjs()
+    const fechaMenosUnMes = fechaActual.add(-1, 'month')
+    setValueDesde(dayjs(fechaMenosUnMes));
+
+    setValueHasta(dayjs(new Date()));
+    getAllMueblesGastoCorriente();
+    setInputValueBuscador('');
+  }
+
+  return (
+    <Grid container sx={{}}>
+      <Grid sx={{}} item xs={12}>
+        <Breadcrumbs aria-label="breadcrumb">
+        <Link underline="hover" color="inherit" href="/Inicio">
+          Inicio
+        </Link>
+        <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          Muebles
+        </Link>
+        <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          Almacen
+        </Link>
+          <Typography color="text.primary">Altas de Bienes Muebles</Typography>
+        </Breadcrumbs>
+      </Grid>
+      <Grid container xs={12} >
+      <Grid item xs={12} md={12} mt={2}>
         <Typography
-        variant="subtitle1"
-        component="div"
-        sx={{
-          fontWeight: "normal",
-          justifyContent: "center"
-        }}
-      >
-        Desde
+          variant="h5"
+          component="div"
+          sx={{
+            flexGrow: 1,
+            fontWeight: "bold",
+            display: "flex",
+            justifyContent: "left"
+          }}
+        >
+          Listado de altas por Gasto Corriente
         </Typography>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DesktopDatePicker
-              label=""
-              inputFormat="DD/MM/YYYY"
-              value={valueDesde}
-              onChange={handleChangeDesde}
-              renderInput={(params) => <TextField
-              sx={{"& .MuiInputBase-input": {height: "10px"},marginLeft:'10px',marginRight:'10px'}} {...params}
-               />}
-            />
-            </LocalizationProvider>
-            <Typography
-        variant="subtitle1"
-        component="div"
-        sx={{
-          fontWeight: "normal",
-          justifyContent: "center",
-          marginLeft:"10px"
-        }}
-      >
-            Hasta
-            </Typography>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DesktopDatePicker 
-              label=""
-              inputFormat="DD/MM/YYYY"
-              value={valueHasta}
-              onChange={handleChangeHasta}
-              renderInput={(params) => <TextField sx={{"& .MuiInputBase-input": {height: "10px"},marginLeft:'10px'}}{...params} />}
-            />
-            </LocalizationProvider>
-        </Box>
-    </Grid>
-    <Grid item sx={{height:'auto'}}xs={12}>
-    <Typography
-        variant="body1"
-        component="div"
-        sx={{
-          flexGrow: 1,
-          fontWeight: "normal",
-          display: "flex",
-          justifyContent: "justify",
-          marginBottom: "20px",
-          marginTop:"10px",
-          paddingLeft:"20px",
-          paddingRight:"20px"
+        <Box sx={{height:'30px',width:'100%',display:'block'}}></Box>
+      </Grid>
+      </Grid>
 
-        }}
-      >
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-      </Typography>
-    </Grid>
 
-    <Grid item xs={4}>
-   
-   </Grid>
-    <Grid item xs={12}>
-      <Link underline="hover" href="/Muebles/Almacen/Altas/DatosAltas">
-      <Box sx={{display:'flex',justifyContent: 'right',width:'100%',height:'auto', alignItems:'left'}}>
-      {Icons("AddBox")}     
-      <Typography
-        variant="body1"
-        component="div"
-        
-        sx={{
-          fontWeight: "bold",
-          display: "inline",
-          justifyContent: "center",
-          marginBottom: "5px",
-          marginTop:"5px",
-          paddingLeft:"10px",
-          paddingRight:"10px"
+
+
+
+
+
+      {/* Input del buscador */}
+      <Grid container xs={12}>
+      {/*<Box sx={{display:'flex',justifyContent:'center',alignItems:'center'}}>*/}
+        <Grid item xs={12} md={12} lg={4} mt={2}>
+        <InputBase placeholder="Buscar" sx={queries.inputBuscador}
+          id="filled-adornment-weight" 
+          value={inputValueBuscador}
+          onChange={handleChangeBuscador}
+          onKeyDown={handleKeyDownBuscador}
+          startAdornment={<InputAdornment position="start">{Icons("Search")}</InputAdornment>}
+          aria-describedby="filled-weight-helper-text"
+          inputProps={{
+          'aria-label': 'weight',
+          }}
+        />
+        </Grid>
+
+
+        <Grid item sx={queries.calendario_botones} xs={12} md={12} lg={6} mt={2} >
+          <Typography
+          variant="subtitle1"
+          component="div"
+          sx={{
+
+          fontWeight: "normal"
         }}
         >
-          NUEVO
+          Desde
+        </Typography>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DesktopDatePicker
+          label=""
+          inputFormat="DD/MM/YYYY"
+          value={valueDesde}
+          onChange={handleChangeDesde}
+          renderInput={(params) => <TextField
+          sx={{"& .MuiInputBase-input": {height: "10px"},marginLeft:'10px',marginRight:'10px'}} {...params}
+         />}
+        />
+      </LocalizationProvider>
+      <Typography
+        variant="subtitle1"
+        component="div"
+        sx={{
+          fontWeight: "normal",
+ 
+        }}
+      >
+        Hasta
       </Typography>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DesktopDatePicker 
+        label=""
+        inputFormat="DD/MM/YYYY"
+        value={valueHasta}
+        onChange={handleChangeHasta}
+        renderInput={(params) => <TextField sx={{"& .MuiInputBase-input": {height: "10px"},marginLeft:'10px'}}{...params} />}
+      />
+      </LocalizationProvider>
+      
+      </Grid>
+
+    <Grid item xs={12} md={12} lg={2} mt={2}>
+      <Button  onClick={buscarPorFechas} sx={{marginLeft:"5px"}} variant="contained" size="small">
+        Buscar 
+      </Button>
+      <Button  onClick={limpiarFechas} sx={{marginLeft:"5px"}} variant="contained" size="small">
+        Limpiar 
+      </Button>
+    </Grid>
+    {/*</Box>*/}
+  
+
+
+
+
+
+
+
+
+
+
+
+
+      {/* Este es el boton de Nuevo para agregar un nuevo registro por Gasto corriente */}
+
+    <Grid sx={{justifyContent:'center',paddingTop:'10px', height:'50px'}} item xs={12} md={12} mt={2}>
+      <Box sx={{display:'flex',justifyContent: 'right',width:'100%',height:'auto', alignItems:'left'}}>
+        <Link underline="hover" href="/Muebles/Almacen/Altas/DatosAltas">
+        {Icons("AddBox")}     
+        </Link>
+        <Typography
+          variant="body1"
+          component="div"
+          sx={{
+            fontWeight: "bold",
+            display: "inline",
+            justifyContent: "center",
+            marginBottom: "5px",
+            marginTop:"5px",
+            paddingLeft:"10px",
+            paddingRight:"10px"
+          }}
+        >
+          NUEVO
+        </Typography>
       </Box>
-      </Link>
     </Grid>
     
 
+    {/** Este es el grid que contiene el Datagrid del listado de registros que se obtienen de la base de datos */}
     <Grid item xs={12}>
-    <div style={{ height: 700, width: '100%' }}>
-    <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-      />
-    </div>
+      <div style={{ height: 700, width: '100%' }}>
+      <DataGrid
+          sx={{type:"number",
+          align:"left" }}
+          rows={rowsAltas}
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[5]}
+          checkboxSelection
+          getRowId={(row: any) =>  row.uuid}
+        />
+      </div>
     </Grid>
 
 
-
+    {/* Este Grid es el del modal para poder ver la Factura */}
     <Grid>
     <Modal
         open={open}
@@ -277,37 +459,25 @@ const rows = [
             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
             when an unknown printer took a galley of type and scrambled it to make a type specimen book.
           </Typography>
-
-            
-            
       <iframe 
       src="http://localhost:3008/facturas/Heuristic_Summary1-compressed.pdf" 
       style={{top: 0,left: 0,width: "100%",height: "600px" }} 
       title="Factura">         
-    </iframe>
-
-
+      </iframe>
           <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
-         
             <Button  
               onClick={handleClose}
               variant="contained" 
               color="secondary"
               sx={{margin:"1%"}}>  Cerrar </Button>
           </Box>
-
           </Box>
-
       </Modal>
     </Grid>
 
 
-
     </Grid>
-
-
-
-
+    </Grid>
 
   );
 }

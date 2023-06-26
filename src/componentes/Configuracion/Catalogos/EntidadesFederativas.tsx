@@ -1,11 +1,13 @@
 import React from "react";
-import {Edit as EditIcon, Delete as DeleteIcon,} from "@mui/icons-material";import { useEffect, useState } from "react";
+import { Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import {Box,Breadcrumbs,Button,Card,CardContent,Grid,IconButton,Link,TextField,Tooltip,Typography,} from "@mui/material";
 import MUIXDataGrid from "../../Grid/MUIXDataGrid";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
+import {catalogoSave,catalogoDelete,catalogoUpdate,} from "../../../services/CatalogoServices";
 
 // componente de sweetalert2 para el uso de los mensajes de alertas
 const Toast = Swal.mixin({
@@ -26,7 +28,6 @@ export interface EntFederativasInterface {
   uuid: string;
   Cve: string;
   Nombre: string;
- 
 }
 
 const style = {
@@ -41,148 +42,78 @@ const style = {
 };
 
 export default function EntFederativas() {
-// definicio de variables de estado
-const navigate                          = useNavigate();
-const [uuid, setuuid]                   = useState("");
-const [cve, setCve]                     = useState("");
-const [nombre, setNombre]               = useState("");
-const [creadopor, setCreadoPor]         = useState("");
-const [modificadopor, setModificadoPor] = useState("");
-const [eliminadopor, setEliminadoPor]   = useState("");
+  // definicio de variables de estado
+  const navigate = useNavigate();
+  const [uuid, setuuid] = useState("");
+  const [cve, setCve] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [creadopor, setCreadoPor] = useState("");
+  const [modificadopor, setModificadoPor] = useState("");
+  const [eliminadopor, setEliminadoPor] = useState("");
 
- 
-
-// Abrir modal
-const [open, setOpen]               = React.useState(false);
-const handleOpen = ()   => setOpen(true);
-const handleClose = ()  => setOpen(false);
-
+  // Abrir modal
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   // Handle save
   const handleSave = () => {
-    if (cve === "" || nombre === ""  ){
+    if (cve === "" || nombre === "") {
       Swal.fire({
-        icon  : "error",
-        title : "Mensaje",
-        text  : "Completa todos los campos para continuar",
+        icon: "error",
+        title: "Mensaje",
+        text: "Completa todos los campos para continuar",
       });
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
       const data = {
-        cve           : cve,
-        nombre        : nombre,
-        creadopor     : localStorage.getItem("IdUsuario"),
-        eliminadopor  : eliminadopor,
+        cve: cve,
+        nombre: nombre,
+        creadopor: localStorage.getItem("IdUsuario"),
+        eliminadopor: eliminadopor,
       };
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardaentfederativas",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
-      })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : " Creado Exitosamente",
-          });
-          getAllEntFederativas();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,});
-        });
+      const url = "/catalogos/guardaentfederativas";
+      catalogoSave(data, url).then((response) => {
+        setOpen(false);
+        getAllEntFederativas();
+      });
     }
   };
   // Handle delete
   const handleDelete = (event: any, cellValues: any) => {
-    Swal.fire({
-      title               : "Estas Seguro(a)?",
-      text                : `Estas a punto de eliminar un registro`,
-      icon                : "question",
-      showCancelButton    : true,
-      confirmButtonText   : "Eliminar",
-      confirmButtonColor  : "#dc3545",
-      cancelButtonColor   : "#0d6efd",
-      cancelButtonText    : "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const data = { uuid: cellValues.row.uuid };
-        axios({
-          method    : "post",
-          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminaentfederativas",
-          headers   : {
-                        "Content-Type": "application/json",
-                        Authorization: localStorage.getItem("jwtToken") || "",
-          },
-          data      : data,
-        })
-          .then(function (response) {
-            Toast.fire({
-              icon  : "success",
-              title : " Eliminado Exitosamente",
-            });
-            getAllEntFederativas();
-          })
-          .catch(function (error) {
-            Swal.fire({
-              icon  : "error",
-              title : "Mensaje",
-              text  : "(" + error.response.status + ") " + error.response.data.msg,});
-          });
-      }
+    const data = cellValues.row.uuid;
+    const cve = cellValues.row.Cve;
+    const url = "/catalogos/eliminaentfederativas";
+    catalogoDelete(data, url, cve).then((response) => {
+      setOpen(false);
+      getAllEntFederativas();
     });
   };
-
-// Handle update
+  // Handle update
   const handleUpdate = () => {
-    if (cve === "" || nombre === "" ){
+    if (cve === "" || nombre === "") {
       Swal.fire({
-        icon  : "error",
-        title : "Mensaje",
-        text  : "Completa todos los campos para continuar",
+        icon: "error",
+        title: "Mensaje",
+        text: "Completa todos los campos para continuar",
       });
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
       const data = {
-        uuid                  : uuid,
-        cve                   : cve,
-        nombre                : nombre, 
-        creadopor             : creadopor,
-        modificadopor         : localStorage.getItem("IdUsuario"),
-        eliminadopor          : eliminadopor,
+        uuid: uuid,
+        cve: cve,
+        nombre: nombre,
+        creadopor: creadopor,
+        modificadopor: localStorage.getItem("IdUsuario"),
+        eliminadopor: eliminadopor,
       };
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizaentfederativas",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
-      })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : "  Actualizado Exitosamente",
-          });
-          getAllEntFederativas();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,
-          });
-        });
+      const url = "/catalogos/actualizaentfederativas";
+      catalogoUpdate(data, url).then((response) => {
+        setOpen(false);
+        getAllEntFederativas();
+      });
     }
-  }; 
+  };
 
   const columns = [
     {
@@ -194,26 +125,30 @@ const handleClose = ()  => setOpen(false);
       renderCell: (cellValues: any) => {
         return (
           <Box>
-           <Tooltip title={"Editar " + cellValues.row.Nombre}>
-           <IconButton color="primary" 
-              // al darle editar se llenan los campos con los valores seleccionados del renglon
-              onClick={(event) => {     
-                setuuid(cellValues.row.uuid);
-                setCve(cellValues.row.Cve);
-                setNombre(cellValues.row.Nombre);
-                setCreadoPor(cellValues.row.CreadoPor);   
-                setModificadoPor(cellValues.row.ModificadoPor);
-                setEliminadoPor(cellValues.row.EliminadoPor); 
-                handleOpen();
-              }}
-           >
+            <Tooltip title={"Editar " + cellValues.row.Nombre}>
+              <IconButton
+                color="primary"
+                // al darle editar se llenan los campos con los valores seleccionados del renglon
+                onClick={(event) => {
+                  setuuid(cellValues.row.uuid);
+                  setCve(cellValues.row.Cve);
+                  setNombre(cellValues.row.Nombre);
+                  setCreadoPor(cellValues.row.CreadoPor);
+                  setModificadoPor(cellValues.row.ModificadoPor);
+                  setEliminadoPor(cellValues.row.EliminadoPor);
+                  handleOpen();
+                }}
+              >
                 <EditIcon />
               </IconButton>
-           </Tooltip>
-           <Tooltip title={"Eliminar" + cellValues.row.Nombre}>
-              <IconButton color="error"
-                onClick={(event) => {handleDelete(event, cellValues);}}
-               >
+            </Tooltip>
+            <Tooltip title={"Eliminar" + cellValues.row.Nombre}>
+              <IconButton
+                color="error"
+                onClick={(event) => {
+                  handleDelete(event, cellValues);
+                }}
+              >
                 <DeleteIcon />
               </IconButton>
             </Tooltip>
@@ -221,8 +156,8 @@ const handleClose = ()  => setOpen(false);
         );
       },
     },
-     // segunda columna donde se mostrara el nombre
-     {
+    // segunda columna donde se mostrara el nombre
+    {
       field: "Cve",
       headerName: "Cve",
       width: 100,
@@ -233,35 +168,39 @@ const handleClose = ()  => setOpen(false);
     {
       field: "Nombre",
       headerName: "Nombre",
-      width: 150,
+      width: 1200,
       hideable: false,
       headerAlign: "left",
-    }, 
+    },
   ];
- 
+
   // declaracion de la variable de estado "hook" que recibira la informacion del endpoint
   const [rows, setRows] = useState([]);
   // aqui es el consumo del endpoint para obtener el listado de la base de datos
   const getAllEntFederativas = () => {
     axios({
-      method    : "get",
-      url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtieneentfederativas",
-      headers   : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
+      method: "get",
+      url: process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtieneentfederativas",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("jwtToken") || "",
       },
     })
-      // aqui se recibe lo del endpoint en response
       .then(({ data }) => {
-        const rows = data;
-        setRows(rows);
+        console.log(data);
+        if (data) {
+          setRows(data);
+        } else {
+          setRows([]);
+        }
       })
       .catch(function (error) {
         Swal.fire({
-          icon  : "error",
-          title : "Mensaje",
-          text  : "("+error.response.status+") "+error.response.data.message,
-        }).then((r) => navigate("/Configuracion/Catalogos/EntidadesFederativas"));
+          icon: "error",
+          title: "Mensaje",
+          text:"(" + error.response.status + ") " + error.response.data.message,
+        }).then((r) => navigate("/Configuracion/Catalogos/EntidadesFederativas")
+        );
       });
   };
 
@@ -273,33 +212,32 @@ const handleClose = ()  => setOpen(false);
   // esto es para que se ejecuten todo los get de los listados solo cuando se abra la modal,
   // y que limpie las variables cuando se salga de la modal
   useEffect(() => {
-    if (open===false) {
+    if (open === false) {
       setuuid("");
       setCve("");
-      setNombre(""); 
+      setNombre("");
     }
-  }, [open]);  
- 
+  }, [open]);
+
   return (
     // contenedor principal
-    <Grid container sx={{ }}>
+    <Grid container sx={{}}>
       <Grid sx={{}} item xs={12}>
-        {/* este componente es para armar la ruta que se muestra arriba y poder navegar hacia atras */}
-        {/* ejemplo inicio/configuracion/catalogos/marca */}
         <Breadcrumbs aria-label="breadcrumb">
-        <Link underline="hover" color="inherit" href="/Inicio">
+          <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
           </Link>
           <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
-          Catálogos
+          <Link underline="hover"color="inherit" href="/Configuracion/Catalogos/Catalogos">
+            Catálogos
           </Link>
-          <Typography color="text.primary"> Catálogo de Entidades Federativas </Typography>
+          <Typography color="text.primary">
+            Catálogo de Entidades Federativas{" "}
+          </Typography>
         </Breadcrumbs>
       </Grid>
-      {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
       <Grid container xs={12} justifyContent={"center"}>
         <Grid item xs={12} md={12} mt={2}>
           {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
@@ -323,118 +261,146 @@ const handleClose = ()  => setOpen(false);
                   >
                     <Typography
                       sx={{
-                        color     : "#FFFFFF","&:hover": { color: "#15212f" },
+                        color: "#FFFFFF",
+                        "&:hover": { color: "#15212f" },
                         fontFamily: "MontserratRegular, sans-serif",
-                        fontSize: "100%",}}>
-                        Cancelar
-                      </Typography>
-                    </Button>
-                  </Grid>
-      </Box>
-
-      <MUIXDataGrid id={Math.random} columns={columns} rows={rows} 
-      /> 
-      
-        <Modal
-          open={open}
-          onClose={handleClose}
-         aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-
-
-          <Box sx={style} display="flow">
-          <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <Box> 
-                <Typography  variant="h5" sx={{ padding:"2%"}}> Catálogo de Entidades Federativas</Typography>  
+                        fontSize: "100%",
+                      }}
+                    >
+                      Agregar
+                    </Typography>
+                  </Button>
+                  <Button
+                    onClick={() => navigate(-1)}
+                    color="secondary"
+                    sx={{ margin: "1%" }}
+                    variant="contained"
+                  >
+                    <Typography
+                      sx={{
+                        color: "#ffffff",
+                        "&:hover": {
+                          color: "#15212f",
+                        },
+                        fontFamily: "MontserratRegular, sans-serif",
+                        fontSize: "100%",
+                      }}
+                    >
+                      Cancelar
+                    </Typography>
+                  </Button>
+                </Grid>
               </Box>
-		        </Grid>
+              {/* aqui se asigna un id unico que tiene que tener cada renglon, asi que asignamos un numero al azar*/}
+              <MUIXDataGrid id={Math.random} columns={columns} rows={rows} />
+              {/* AGREGAR---------------------------------------------------------------------------------------------------------------------------------------------- */}
+              {/* Inician los campos del formulario*/}
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style} display="flow">
+                  <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                      <Box>
+                        <Typography variant="h5" sx={{ padding: "2%" }}>
+                          Catálogo de Entidades Federativas
+                        </Typography>
+                      </Box>
+                    </Grid>
 
-            <Grid item xs={12}>
-            <Box    
-              component="form"
-              sx={{
-              '& > :not(style)': { m: 1.3, width: '25%' },   }}
-              noValidate
-              autoComplete="off"
-		          display="flex">
-
-                <TextField
-                id="cve" 
-                label="Cve"
-                size="small"
-                variant="outlined" />
-            </Box>
-            </Grid>
-
-            <Grid item xs={6}>
-            <Box    
-              component="form"
-              sx={{
-              '& > :not(style)': { m: 1.3, width: '80%' },   }}
-              noValidate
-              autoComplete="off"
-		          display="flex">
-                <TextField
-                id="nombreEntidad" 
-                label="Nombre de la Entidad"
-                size="small"
-                variant="outlined" />
+                    <Grid item xs={3}>
+                      <Box
+                        component="form"
+                        sx={{ "& > :not(style)": { m: 1.3, width: "100%" } }}
+                        noValidate
+                        autoComplete="off"
+                        display="flex"
+                      >
+                        <TextField
+                          label="Cve"
+                          size="small"
+                          variant="outlined"
+                          value={cve}
+                          disabled={uuid !== "" ? true : false}
+                          onChange={(v) => {
+                            setCve(v.target.value);
+                          }}
+                          inputProps={{ maxLength: 10 }}
+                        />
+                      </Box>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Box>{/* espacio en blanco */}</Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Box
+                        component="form"
+                        sx={{ "& > :not(style)": { m: 1.3, width: "100%" } }}
+                        noValidate
+                        autoComplete="off"
+                        display="flex"
+                      >
+                        <TextField
+                          label="Nombre"
+                          size="small"
+                          variant="outlined"
+                          value={nombre}
+                          onChange={(v) => {
+                            setNombre(v.target.value);
+                          }}
+                        />
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Box
+                        maxWidth="100%"
+                        paddingTop={2}
+                        paddingBottom={2}
+                        display="flex"
+                        justifyContent="end"
+                      >
+                        <Button
+                          onClick={() => {
+                            if (uuid === "") {
+                              handleSave();
+                            } else {
+                              handleUpdate();
+                            }
+                          }}
+                          variant="contained"
+                          sx={{
+                            margin: "1%",
+                            color: "white",
+                            "&:hover": { color: "#15212f" },
+                          }}
+                        >
+                          Guardar
+                        </Button>
+                        <Button
+                          onClick={handleClose}
+                          variant="contained"
+                          color="secondary"
+                          sx={{
+                            margin: "1%",
+                            color: "white",
+                            "&:hover": { color: "#15212f" },
+                          }}
+                        >
+                          Cancelar
+                        </Button>
+                      </Box>
+                    </Grid>
+                  </Grid>
                 </Box>
-            </Grid>
-
-            <Grid item xs={6}>
-            <Box    
-              component="form"
-              sx={{
-              '& > :not(style)': { m: 1.3, width: '80%' },   }}
-              noValidate
-              autoComplete="off"
-		          display="flex">
-                <TextField
-                id="descripcion" 
-                label="Descripción"
-                size="small"
-                variant="outlined" />
-                </Box>
-            </Grid>
-
-            <Grid item xs={12}>
-            <Box  maxWidth="100%"  paddingTop={2} paddingBottom={2} display="flex" justifyContent="end" >
-              <Button variant="contained" 
-              sx={{margin:"1%",
-              color:"white",
-              "&:hover":{
-                color:"#15212f",
-                },
-               }} 
-               > Guardar </Button>
-                  <Button  
-                  onClick={handleClose}
-                  variant="contained" 
-                  color="secondary"
-                  sx={{margin:"1%",
-                  color:"white",
-                  "&:hover":{
-                  color:"#15212f",
-                  },
-                  }}>  Cancelar </Button>
-            </Box>
-            </Grid>
-
-            </Grid>
-
-          </Box>
-        </Modal>
-      
-      {/* Termina la sección de los campos del formulario para registrar la nueva Secretaría */}
-
-
-
-      </CardContent>
-      </Card>
-      </Grid>
+              </Modal>
+              {/* Termina la sección de los campos del formulario*/}
+              {/* AGREGAR----------------------------------------------------------------------------------------------------------*/}
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
     </Grid>
   );
