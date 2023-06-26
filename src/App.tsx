@@ -90,7 +90,7 @@ import TipoActivoFijo from './componentes/Configuracion/Catalogos/TipoActivoFijo
 import Secretarias from './componentes/Configuracion/Catalogos/Secretarias';
 import Dependencias from './componentes/Configuracion/Catalogos/Dependencias';
 import TipoDependencias from './componentes/Configuracion/Catalogos/TipoDependencias';
-import EntFederativas from './componentes/Configuracion/Catalogos/EntidadesFederativas';
+import EntidadesFederativas from './componentes/Configuracion/Catalogos/EntidadesFederativas';
 import Municipios from './componentes/Configuracion/Catalogos/Municipios';
 import Puestos from './componentes/Configuracion/Catalogos/Puestos';
 import {getUserDetails} from './services/Validation';
@@ -199,7 +199,7 @@ function App() {
           <Route path="/Configuracion/Catalogos/Secretarias" element={<Secretarias/>} />
           <Route path="/Configuracion/Catalogos/Dependencias" element={<Dependencias/>} />
           <Route path="/Configuracion/Catalogos/TipoDependencias" element={<TipoDependencias/>} />
-          <Route path="/Configuracion/Catalogos/EntidadesFederativas" element={<EntFederativas/>} />
+          <Route path="/Configuracion/Catalogos/EntidadesFederativas" element={<EntidadesFederativas/>} />
           <Route path="/Configuracion/Catalogos/Municipios" element={<Municipios/>} />
           <Route path="/Configuracion/Catalogos/Puestos" element={<Puestos/>} />
           <Route path="/Configuracion/Catalogos/TipodeClasificacion" element={<TipoClasificacion/>} />

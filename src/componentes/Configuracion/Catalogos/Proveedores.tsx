@@ -156,7 +156,7 @@ export default function Proveedores() {
       },
     },
     {
-      field:       "cve",
+      field:       "Cve",
       headerName:  "Cve",
       width:       200,
       hideable:    false,
@@ -228,16 +228,20 @@ export default function Proveedores() {
       top       : "9vh",
       position  : "absolute",
       fontFamily: "MontserratSemiBold" }}>
-      <Grid item xs={12}  >
+      <Grid item xs={12}         sx={{
+          top       : "-9vh",
+          position  : "absolute",
+          fontFamily: "MontserratSemiBold",
+        }}>
 
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" href="/inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
             Catálogos
           </Link>
           <Typography color="text.primary"> Catálogo de Proveedores </Typography>
