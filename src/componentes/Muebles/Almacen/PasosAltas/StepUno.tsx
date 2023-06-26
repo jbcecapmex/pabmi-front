@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";  
 
-// componente de sweetalert2 para el uso de los mensajes de alertas
+// componente de sweetalert2 para el uso de los mensajes de alertas 
 const Toast = Swal.mixin({
 	toast: true,
 	position: "center",
@@ -24,7 +24,7 @@ const Toast = Swal.mixin({
 
   export interface TipoActivoFijoInterface {
 	uuid: string;
-	Cve: string;
+	Cve: string; 
 	Nombre: string;
 	Descripcion: string;   
   }
@@ -45,7 +45,7 @@ export interface TipoBienInterface {
   
 export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, setDatosAlta: any} ) {
 
-	const navigate                				  			  = useNavigate();
+	const navigate   = useNavigate(); 
 
   
 	const [rowsTipoActivoFijo, setRowsTipoActivoFijo] = useState<Array<TipoActivoFijoInterface>>([]);
