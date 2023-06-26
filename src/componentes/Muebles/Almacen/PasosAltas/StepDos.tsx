@@ -188,6 +188,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, Placas: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="text"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -208,6 +209,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, Series: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="text"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -261,6 +263,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		inputProps={{ maxLength: 10 }}
 		type="number"
 		helperText="*Ejemplo 2023"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -281,6 +284,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, VidaUtil: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="number"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -301,7 +305,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		// value     ={datosAlta.PorcentajeDepreciacion} 
 		// onChange  ={(v) => {setDatosAlta({...datosAlta, PorcentajeDepreciacion: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
-		type="number"
+		type="number" 
 	/>
 	</Box>
 	</Grid>
@@ -347,6 +351,36 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	
 	<Grid item xs={12}   md ={12}  display={{ xs: 'flow', md: 'flex' }}>
 
+	<Grid item xs={12} md ={4}   >
+		<Box
+		sx={{
+			'& > :not(style)': { m: 1.3, width: '100%' },   }}
+				display="flex"
+		>
+		<FormControl fullWidth sx={{bgColor:"#fff"}}>
+		<InputLabel  sx={{ marginTop:"-4px"}}>
+		Clave Del Personal 
+		</InputLabel>
+		<Select
+		id="Clave Del Personal"
+		value={datosAlta.uuidPersonalResguardo}
+		label="Clave Del Personal"
+		size="small"
+		displayEmpty
+		onChange  ={(v) => {setDatosAlta({...datosAlta,  uuidPersonalResguardo: v.target.value}); }}
+		>
+		      <MenuItem value=""></MenuItem>
+			  {rowsEmpleados.map((Empleados, index) => (
+             <MenuItem value={Empleados.uuid}>
+             {Empleados.Cve} 
+             </MenuItem>
+             ))}
+
+		</Select>
+		</FormControl>
+		</Box>
+	</Grid>  
+
 	<Grid item xs={12} md ={8}   >
 		<Box
 		sx={{
@@ -377,26 +411,9 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		</Box>
 	</Grid>  
 
+	
+	
  
-	<Grid item xs={12}  md ={12} >
-	<Box
-	component="form"
-	sx={{"& > :not(style)": { m: 1.3, width: "100%" },}}
-	noValidate
-	autoComplete="off"
-	display="flex"
-	>
-	<TextField
-		label     ="Clave Del Personal "
-		size      ="small"
-		variant   ="outlined"
-		value     ={datosAlta.Personal} 
-		onChange  ={(v) => {setDatosAlta({...datosAlta, Personal: v.target.value}); }}
-		inputProps={{ maxLength: 10 }}
-		type="number"
-	/>
-	</Box>
-	</Grid>
 	</Grid>
 
 	<Grid item xs={12}  md ={12}  display={{ xs: 'flow', md: 'flex' }}>
@@ -456,6 +473,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, Linea: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="number"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -475,6 +493,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, DescripcionLinea: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="text"
+		required
 	/>
 	</Box>
 	</Grid>

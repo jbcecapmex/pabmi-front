@@ -6,25 +6,16 @@ import MUIXDataGrid from "../../Grid/MUIXDataGrid";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
-
-// componente de sweetalert2 para el uso de los mensajes de alertas
-const Toast = Swal.mixin({
-  toast: true,
-  position: "center",
-  showConfirmButton: false,
-  timer: 4000,
-  timerProgressBar: false,
-  didOpen: (toast) => {
-    toast.addEventListener("mouseenter", Swal.stopTimer);
-    toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
-});
+import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
 
 export interface TiposAdquisicionInterface {
   uuid: string;
   Cve: string;
   Nombre: string;
   Descripcion: string;
+  creadopor:          string;
+  modificadopor:      string;
+  eliminadopor:       string;    
 }
 
 const style = {
@@ -70,80 +61,32 @@ const handleClose = ()  => setOpen(false);
         nombre                : nombre,
         descripcion           : descripcion,
         creadopor             : localStorage.getItem("IdUsuario"),
-        eliminadopor          : eliminadopor,
+      eliminadopor            : eliminadopor,
       };
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/guardatiposadquisicion",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
+      const url = "/catalogos/guardatiposadquisicion";
+      catalogoSave(data,url).then((response) =>{
+        setOpen(false);
+        getAllTiposAdquisicion();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : "Tipo Adquisicion Creado Exitosamente",
-          });
-          getAllTipoAdquisicion();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,});
-        });
     }
   };
   // Handle delete
   const handleDelete = (event: any, cellValues: any) => {
-    Swal.fire({
-      title               : "Estas Seguro(a)?",
-      text                : `Estas a punto de eliminar un registro (${cellValues.row.Descripcion})`,
-      icon                : "question",
-      showCancelButton    : true,
-      confirmButtonText   : "Eliminar",
-      confirmButtonColor  : "#dc3545",
-      cancelButtonColor   : "#0d6efd",
-      cancelButtonText    : "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const data = { uuid: cellValues.row.uuid };
-        axios({
-          method    : "post",
-          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/catalogos/eliminatiposadquisicion",
-          headers   : {
-                        "Content-Type": "application/json",
-                        Authorization: localStorage.getItem("jwtToken") || "",
-          },
-          data      : data,
-        })
-          .then(function (response) {
-            Toast.fire({
-              icon  : "success",
-              title : "Tipo Adquisicion Eliminado Exitosamente",
-            });
-            getAllTipoAdquisicion();
-          })
-          .catch(function (error) {
-            Swal.fire({
-              icon  : "error",
-              title : "Mensaje",
-              text  : "(" + error.response.status + ") " + error.response.data.msg,});
-          });
-      }
-    });
+    const data = cellValues.row.uuid;
+    const descripcion = cellValues.row.Descripcion;   
+    const url = "/catalogos/eliminatiposadquisicion";
+    catalogoDelete(data,url,descripcion).then((response) =>{
+      setOpen(false);
+      getAllTiposAdquisicion();
+    })
   };
-
 // Handle update
   const handleUpdate = () => {
     if (cve === "" || nombre === "" || descripcion === ""){
       Swal.fire({
         icon  : "error",
         title : "Mensaje",
-        text  : "Completa todos los campos para continuarrrrrrrr",
+        text  : "Completa todos los campos para continuar ",
       });
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
@@ -156,30 +99,11 @@ const handleClose = ()  => setOpen(false);
         modificadopor         : localStorage.getItem("IdUsuario"),
         eliminadopor          : eliminadopor,
       };
-      axios({
-        method  : "post",
-        url     : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/actualizatiposadquisicion",
-        headers : {
-                    "Content-Type": "application/json",
-                    Authorization: localStorage.getItem("jwtToken") || "",
-        },
-        data    : data,
+      const url = "/catalogos/actualizatiposadquisicion";
+      catalogoUpdate(data,url).then((response) =>{
+        setOpen(false);
+        getAllTiposAdquisicion();
       })
-        .then(function (response) {
-          setOpen(false);
-          Toast.fire({
-            icon  : "success",
-            title : "Tipo Adquisicion Actualizado Exitosamente",
-          });
-          getAllTipoAdquisicion();
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon  : "error",
-            title : "Mensaje",
-            text  : "(" + error.response.status + ") " + error.response.data.msg,
-          });
-        });
     }
   }; 
 
@@ -210,7 +134,7 @@ const handleClose = ()  => setOpen(false);
                 <EditIcon />
               </IconButton>
            </Tooltip>
-           <Tooltip title={"Eliminar " + cellValues.row.Nombre}>
+           <Tooltip title={"Eliminar" + cellValues.row.Nombre}>
               <IconButton color="error"
                 onClick={(event) => {handleDelete(event, cellValues);}}
                >
@@ -237,7 +161,7 @@ const handleClose = ()  => setOpen(false);
       hideable: false,
       headerAlign: "left",
     },
-    // cuarta columna donde se mostrara si esta activo o no
+    // cuarta columna donde se mostrara si esta Area o no
     {
       field: "Descripcion",
       headerName: "Descripcion",
@@ -249,8 +173,8 @@ const handleClose = ()  => setOpen(false);
  
   // declaracion de la variable de estado "hook" que recibira la informacion del endpoint
   const [rows, setRows] = useState([]);
-  // aqui es el consumo del endpoint para obtener el listado de Permiso de la base de datos
-  const getAllTipoAdquisicion = () => {
+  // aqui es el consumo del endpoint para obtener el listado de la base de datos
+  const getAllTiposAdquisicion = () => {
     axios({
       method    : "get",
       url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienetiposadquisicion",
@@ -260,9 +184,12 @@ const handleClose = ()  => setOpen(false);
       },
     })
       // aqui se recibe lo del endpoint en response
-      .then(({ data }) => {
-        const rows = data;
-        setRows(rows);
+      .then(({data}) => {
+        if (data) {
+          setRows(data);
+        } else {
+          setRows([])
+        }
       })
       .catch(function (error) {
         Swal.fire({
@@ -275,7 +202,7 @@ const handleClose = ()  => setOpen(false);
 
   // esto es solo para que se ejecute la rutina de obtiene cuando cargue la pagina
   useEffect(() => {
-    getAllTipoAdquisicion();
+    getAllTiposAdquisicion();
   }, []);
 
   // esto es para que se ejecuten todo los get de los listados solo cuando se abra la modal,
@@ -299,17 +226,18 @@ const handleClose = ()  => setOpen(false);
         <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/TiposAdquisicion">
+          <Link underline="hover" color="inherit" href="/Catalogos/Catalogos">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/TiposAdquisicion">
-            Catálogos
+          <Link underline="hover" color="inherit" href="/Catalogos/Catalogos">
+            Usuarios
           </Link>
-          <Typography color="text.primary">Catálogo de Tipo de Adquisicion</Typography>
+          <Typography color="text.primary">Catálogo de Tipos Adquisición</Typography>
         </Breadcrumbs>
       </Grid>
       {/* la verdad este grid aun no entiendo que es o que funcion tiene */}
       <Grid container xs={12} justifyContent={"center"}>
+        {/* este grid es del card del centro el que contiene los objetos */}
         <Grid item xs={12} md={12} mt={2}>
           {/* este componente es la card que se encuentra en el centro en donde vamos a meter todo lo de la pantalla */}
           <Card sx={{ p: 0, boxShadow: 8 }}>
@@ -372,7 +300,7 @@ const handleClose = ()  => setOpen(false);
                     <Grid item xs={12}>
                       <Box>
                         <Typography variant="h5" sx={{ padding: "1%" }}>
-                          Detalle de Tipo de Adquisición
+                          Detalle de Tipos Adquisición
                         </Typography>
                       </Box>
                     </Grid>
@@ -386,13 +314,13 @@ const handleClose = ()  => setOpen(false);
                         display="flex"
                       >
                         <TextField
-                          inputProps={{ maxLength: 10 }}
                           label     ="Cve"
                           size      ="small"
                           variant   ="outlined"
                           value     ={cve}
                           disabled  = {uuid!=="" ? true:false}
                           onChange  ={(v) => {setCve(v.target.value); }}
+                          inputProps={{ maxLength: 10 }}
                         />
                       </Box>
                     </Grid>

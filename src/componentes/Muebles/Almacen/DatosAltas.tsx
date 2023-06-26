@@ -11,7 +11,7 @@ import StepTres from "./PasosAltas/StepTres";
 import axios from 'axios';
 import Swal from "sweetalert2";
 import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
- 
+
 
 const steps = ["Paso1", "Paso2", "Paso3"];
 
@@ -96,7 +96,7 @@ export default function DatosAltas() {
 	const isStepSkipped = (step: number) => {
 		return skipped.has(step);
 	};
-
+ 
 	const handleNext = () => {
 		if (activeStep === steps.length - 1){
 			submitData();
@@ -121,6 +121,8 @@ export default function DatosAltas() {
 		})
 
     };
+
+ 
 
 	const handleBack = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep - 1);

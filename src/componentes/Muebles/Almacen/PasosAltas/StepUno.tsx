@@ -153,6 +153,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		inputProps={{ maxLength: 10 }}
 		// helperText="*Campo requerido"
 		type="number"
+		required
 		
 	/>
 	</Box>
@@ -176,6 +177,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, Cantidad: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="number"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -198,6 +200,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, NoActivo: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="number"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -249,6 +252,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, Descripcion: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="text"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -338,6 +342,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, CostoSinIva: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="number"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -357,6 +362,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, CostoConIva: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="number"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -375,6 +381,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		value     ={datosAlta.DepreciacionAcumulada} 
 		onChange  ={(v) => {setDatosAlta({...datosAlta, DepreciacionAcumulada: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		required
 		
 	/>
 	</Box>

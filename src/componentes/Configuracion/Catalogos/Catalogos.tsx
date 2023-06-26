@@ -1,4 +1,4 @@
-/* pantalla principal donde se enlistan los catalogos */
+/* pantalla principal donde se enlistan los catalogos */  
 import { useState } from "react";
 import {
   Box,
@@ -327,7 +327,18 @@ const Catalogos = () => {
                         >
                           AREA
                         </Button>
-                      </Grid>                      
+                      </Grid>  
+
+                          <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          onClick={()=> navigate("/Configuracion/Catalogos/TiposAdquisicion")}
+                        >
+                           Tipo de Adquisición
+                        </Button>
+                      </Grid>                       
 
 
                     </Grid>
