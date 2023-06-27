@@ -87,7 +87,7 @@ export default function DatosAltas() {
 		
 		"CvePersonal": "012340",
 		"CveLinea": "012330",
-		"DescripcionTipoActivoFijo": "OdfdfdfO",
+		"DescripcionTipoActivoFijo": "Odfdfdf",
 
     })
   
@@ -170,7 +170,7 @@ export default function DatosAltas() {
 	const validate = async () => {
 		
 		if(activeStep===0){
-			if(datosAlta.Cantidad==="") {await setMensajeError("Falta Cantidad"); return false;}
+			// if(datosAlta.Cantidad==="") {await setMensajeError("Falta Cantidad"); return false;}
 		}
 		return true;
 	}
