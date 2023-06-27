@@ -85,9 +85,9 @@ export default function DatosAltas() {
 		// Factura: "",
 		
 		
-		"CvePersonal": "1234",
-		"CveLinea": "1233",
-		"DescripcionTipoActivoFijo": "dfdfdf",
+		"CvePersonal": "012340",
+		"CveLinea": "012330",
+		"DescripcionTipoActivoFijo": "OdfdfdfO",
 
     })
   
@@ -116,7 +116,7 @@ export default function DatosAltas() {
 		 .catch(function (error) {
 		   Swal.fire({
 			 icon  : "error",
-			 title : "Mensaje",
+			 title : "Existen campos pendientes de completar.",
 			 text  : "("+error.response.status+") "+error.response.data.message,
 		   });
 		 });
@@ -174,6 +174,7 @@ export default function DatosAltas() {
 		}
 		return true;
 	}
+	
 	const submitData = () => {
 		const url = "/gastocorriente/guardagastocorriente";
 		console.log(datosAlta);
