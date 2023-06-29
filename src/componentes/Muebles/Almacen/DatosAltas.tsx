@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Typography, Box, Button,FormControl,InputLabel, Select, MenuItem} from "@mui/material";    
+import { Typography, Box, Button,FormControl,InputLabel, Select, MenuItem} from "@mui/material";   
+import { useEffect, useState } from "react"; 
 import { useNavigate } from "react-router-dom";    
 import Grid from "@mui/material/Grid";
 import Stepper from "@mui/material/Stepper";
@@ -11,7 +12,17 @@ import StepTres from "./PasosAltas/StepTres";
 import axios from 'axios';
 import Swal from "sweetalert2";
 import {catalogoSave, catalogoDelete, catalogoUpdate} from "../../../services/CatalogoServices";
- 
+
+
+export interface TiposAdquisicionInterface {
+	uuid: string;
+	Cve: string;
+	Nombre: string;
+	Descripcion: string;
+	creadopor:          string;
+	modificadopor:      string;
+	eliminadopor:       string;    
+  }
 
 const steps = ["Paso1", "Paso2", "Paso3"];
 
@@ -33,7 +44,7 @@ export default function DatosAltas() {
 
 	const [datosAlta, setDatosAlta] = React.useState({
  
-		uuidTipoAdquisicion : "c72b6fb8-1062-11ee-be56-0242ac120002",
+		uuidTipoAdquisicion : "",
 
 		NoInventario: "",
         Cantidad: "",
@@ -74,20 +85,52 @@ export default function DatosAltas() {
 		// Factura: "",
 		
 		
-		"CvePersonal": "1234",
-		"CveLinea": "1233",
-		"DescripcionTipoActivoFijo": "dfdfdf",
+		"CvePersonal": "012340",
+		"CveLinea": "012330",
+		"DescripcionTipoActivoFijo": "Odfdfdf",
+
     })
   
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen(true); 
 
 	const navigate = useNavigate();
+	const [TiposAdquisicion, setTiposAdquisicion]               = useState("");
+
+	 // declaracion de la variable de estado "hook" que recibira la informacion del endpoint    
+	 const [rowsTiposAdquisicion, setRowsTiposAdquisicion] = useState<Array<TiposAdquisicionInterface>>([]);
+	 // aqui es el consumo del endpoint para obtener el listado de tipos de tickets de la base de datos
+	 const getAllTiposAdquisicion = () => {
+	   axios({
+		 method    : "get",
+		 url       : process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienetiposadquisicion",
+		 headers   : {
+					   "Content-Type": "application/json",
+					   Authorization: localStorage.getItem("jwtToken") || "",
+		 },
+	   })
+		 .then(({ data }) => {
+		   const rowsTiposAdquisicion = data.data.data;
+		   setRowsTiposAdquisicion(rowsTiposAdquisicion);
+		 })
+		 .catch(function (error) {
+		   Swal.fire({
+			 icon  : "error",
+			 title : "Existen campos pendientes de completar.",
+			 text  : "("+error.response.status+") "+error.response.data.message,
+		   });
+		 });
+	 };
+
+	 useEffect(() => {
+		getAllTiposAdquisicion();
+	  }, []);
 
 
 	// CONST DE LOS PASOS
 	const [activeStep, setActiveStep] = React.useState(0);
 	const [skipped, setSkipped] = React.useState(new Set<number>());
+	const [mensajeError, setMensajeError] = React.useState("Error");
 
 	const isStepOptional = (step: number) => {
 		return step === 1;
@@ -96,12 +139,14 @@ export default function DatosAltas() {
 	const isStepSkipped = (step: number) => {
 		return skipped.has(step);
 	};
-
+ 
 	const handleNext = () => {
 		if (activeStep === steps.length - 1){
 			submitData();
 		}else {
-			let newSkipped = skipped;
+			validate().then((res) =>{
+				if(res){
+					let newSkipped = skipped;
 			if (isStepSkipped(activeStep)){
 				newSkipped = new Set(newSkipped.values());
 				newSkipped.delete(activeStep);				
@@ -109,10 +154,27 @@ export default function DatosAltas() {
 
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
             setSkipped(newSkipped);
+				} else {
+					Swal.fire({
+						icon  : "error",
+						title : "Existen campos pendientes de completar.",
+						text  : mensajeError,
+					  })
+				}
+			})
+			
 		}
 		
 	};
- 
+
+	const validate = async () => {
+		
+		if(activeStep===0){
+			// if(datosAlta.Cantidad==="") {await setMensajeError("Falta Cantidad"); return false;}
+		}
+		return true;
+	}
+	
 	const submitData = () => {
 		const url = "/gastocorriente/guardagastocorriente";
 		console.log(datosAlta);
@@ -121,6 +183,8 @@ export default function DatosAltas() {
 		})
 
     };
+
+ 
 
 	const handleBack = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -163,20 +227,20 @@ export default function DatosAltas() {
 			</InputLabel>
 			<Select
 			id="Tipo Adquisición"
-			// value={datosAlta.uuidTipoActivoFijo}
+			// value={TiposAdquisicion}
 			label="Tipo Adquisición"
 			size="small"
 			displayEmpty
-			// onChange  ={(v) => {setDatosAlta({...datosAlta, uuidTipoActivoFijo: v.target.value}); }}
+			value     ={datosAlta.uuidTipoAdquisicion} 
+			onChange  ={(v) => {setDatosAlta({...datosAlta, uuidTipoAdquisicion: v.target.value}); console.log(datosAlta)}}
 			>
-				<MenuItem value="">1</MenuItem>
-				<MenuItem value="">2</MenuItem>
-				 {/* <MenuItem value=""></MenuItem>
-				 {rowsTipoActivoFijo.map((TipoActivoFijo, index) => (
-                 <MenuItem value={TipoActivoFijo.uuid}>
-                 {TipoActivoFijo.Cve} - {TipoActivoFijo.Nombre}
-                  </MenuItem>
-                 ))} */}
+
+            <MenuItem value=""></MenuItem>
+            {rowsTiposAdquisicion.map((TiposAdquisicion, idex) => (
+            <MenuItem value={TiposAdquisicion.uuid}>
+            {TiposAdquisicion.Cve}
+             </MenuItem>
+              ))}
 
 			</Select> 
 			</FormControl>

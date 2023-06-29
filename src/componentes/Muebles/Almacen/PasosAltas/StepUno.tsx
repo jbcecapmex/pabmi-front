@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";  
 
-// componente de sweetalert2 para el uso de los mensajes de alertas
+// componente de sweetalert2 para el uso de los mensajes de alertas 
 const Toast = Swal.mixin({
 	toast: true,
 	position: "center",
@@ -24,7 +24,7 @@ const Toast = Swal.mixin({
 
   export interface TipoActivoFijoInterface {
 	uuid: string;
-	Cve: string;
+	Cve: string; 
 	Nombre: string;
 	Descripcion: string;   
   }
@@ -45,7 +45,7 @@ export interface TipoBienInterface {
   
 export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, setDatosAlta: any} ) {
 
-	const navigate                				  			  = useNavigate();
+	const navigate   = useNavigate(); 
 
   
 	const [rowsTipoActivoFijo, setRowsTipoActivoFijo] = useState<Array<TipoActivoFijoInterface>>([]);
@@ -61,7 +61,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
     })
       // aqui se recibe lo del endpoint en response
       .then(({ data }) => {
-        const rowsTipoActivoFijo = data;
+        const rowsTipoActivoFijo = data; 
         setRowsTipoActivoFijo(rowsTipoActivoFijo); 
       })
       .catch(function (error) {
@@ -154,6 +154,8 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		required
 		// helperText="*Campo requerido"
 		type="number"
+		required
+		
 	/>
 	</Box>
 	</Grid>
@@ -177,6 +179,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		inputProps={{ maxLength: 10 }}
 		required
 		type="number"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -200,6 +203,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		inputProps={{ maxLength: 10 }}
 		required
 		type="number"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -252,6 +256,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, Descripcion: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="text"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -362,6 +367,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, CostoConIva: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="number"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -381,6 +387,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		value     ={datosAlta.DepreciacionAcumulada} 
 		onChange  ={(v) => {setDatosAlta({...datosAlta, DepreciacionAcumulada: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		required
 		
 	/>
 	</Box>
@@ -397,14 +404,14 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	display="flex"
 	>
 	<TextField
-		label     ="Fecha De Entrada "
+		
+		label     ="Fecha De Entrada" 
 		size      ="small"
 		required
 		variant   ="outlined"
 		value     ={datosAlta.FechaEntrada} 
 		onChange  ={(v) => {setDatosAlta({...datosAlta, FechaEntrada: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
-		InputLabelProps={{ shrink: true, }}
 		type="date"
 	/>
 	</Box>
@@ -418,12 +425,14 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 	display="flex"
 	>
 	<TextField
-		label     ="Fecha Última Actualización"
+	 
+	 	label     ="Fecha Última Actualización" 	 
 		size      ="small"
 		variant   ="outlined"
 		value     ={datosAlta.FechaUltimaActualizacion} 
 		onChange  ={(v) => {setDatosAlta({...datosAlta, FechaUltimaActualizacion: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		InputLabelProps={{shrink: true,}}
 		type="date"
 		InputLabelProps={{ shrink: true, }}
 		required

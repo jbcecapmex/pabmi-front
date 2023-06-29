@@ -70,9 +70,9 @@ const handleClose = ()  => setOpen(false);
   // Handle delete
   const handleDelete = (event: any, cellValues: any) => {
     const data = cellValues.row.uuid;
-    const descripcion = cellValues.row.Descripcion;   
+    const cve = cellValues.row.Nombre;   
     const url = "/catalogos/eliminamunicipios";
-    catalogoDelete(data,url,descripcion).then((response) =>{
+    catalogoDelete(data,url,cve).then((response) =>{
       setOpen(false);
       getAllMunicipios();
     })    
@@ -83,7 +83,7 @@ const handleClose = ()  => setOpen(false);
       Swal.fire({
         icon  : "error",
         title : "Mensaje",
-        text  : "Completa todos los campos para continuar",
+        text  : "Completa todos los campos para continuarrrrrrrr",
       });
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
@@ -212,11 +212,11 @@ const handleClose = ()  => setOpen(false);
         <Link underline="hover" color="inherit" href="/Inicio">
             Inicio
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
+          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
             Configuración
           </Link>
-          <Link underline="hover" color="inherit" href="/Configuracion/Catalogos/Catalogos">
-          Catálogos
+          <Link underline="hover" color="inherit" href="/Configuracion/Usuarios/Usuarios">
+            Usuarios
           </Link>
           <Typography color="text.primary">Catálogo de Municipios</Typography>
         </Breadcrumbs>

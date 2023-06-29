@@ -118,6 +118,7 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
 		inputProps={{ maxLength: 10 }}
 		type="number"
 		required
+		required
 	/>
 	</Box>
 	</Grid>
@@ -131,7 +132,7 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
 	autoComplete="off"
 	display="flex"
 	>
-	<TextField
+	<TextField 
 		label     ="Fecha de uso"
 		size      ="small"
 		variant   ="outlined"
@@ -139,8 +140,6 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
 		onChange  ={(v) => {setDatosAlta({...datosAlta, FechaDeUso: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="date"
-		InputLabelProps={{ shrink: true, }}
-		required
 	/>
 	</Box>
 	</Grid>
