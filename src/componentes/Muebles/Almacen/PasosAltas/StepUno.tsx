@@ -154,7 +154,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		required
 		// helperText="*Campo requerido"
 		type="number"
-		required
+		 
 		
 	/>
 	</Box>
