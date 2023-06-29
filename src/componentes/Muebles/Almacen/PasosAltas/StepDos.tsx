@@ -189,7 +189,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		inputProps={{ maxLength: 10 }}
 		type="text"
 		required
-		required
+	
 	/>
 	</Box>
 	</Grid>

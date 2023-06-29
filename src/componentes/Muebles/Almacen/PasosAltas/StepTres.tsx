@@ -118,7 +118,7 @@ export default function StepTres( {datosAlta, setDatosAlta}: {datosAlta: any, se
 		inputProps={{ maxLength: 10 }}
 		type="number"
 		required
-		required
+	
 	/>
 	</Box>
 	</Grid>
