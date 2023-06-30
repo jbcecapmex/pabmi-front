@@ -49,65 +49,112 @@ export interface AltaMueblesInterface {
 }
 
 
+
+
+
 export default function Principal() {
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-
-// Aqui hay que definir quien es el que esta logeado y mostrar la información
-// Aahorita se realizara la prueba para la dependencia
-// con el enlace, y tambien analizar para la coordinación
-
-
-
+  const [ruta, setRuta]= React.useState();
+// Esta pantalla muestra todos los registros de altas de bienes muebles por gasto corriente y adquisición
+// Validar el usuario qué esta conectado para ver que listado se debe de mostrar
+// La vista puede ser del enlace de la depndencia que solicito el alta de un bien mueble por gasto corriente, de los registros solicitados del ultimo mes.
+// La vista de la coordinación de bienes muebles, donde podra confirmar si la factura tiene bien los datos
+// La vista de la coordinador
+// La vista del enlace de la dependencia
+// La vista del analista juridico
+// Vista de el jefe de almacén
+  const confirmar = (id:any) => {
+    
+    Swal.fire({
+      title               : "Estas Seguro(a)?",
+      text                : `Estas a punto de confirmar la factura del registro seleccionado)`,
+      icon                : "question",
+      showCancelButton    : true,
+      confirmButtonText   : "Confirmar",
+      confirmButtonColor  : "#0d6efd",
+      cancelButtonColor   : "#dc3545",
+      cancelButtonText    : "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const data = { uuid: id };
+        axios({
+          method    : "post",
+          url       : process.env.REACT_APP_APPLICATION_ENDPOINT +"/gastocorriente/confirmaFactura",
+          headers   : {
+                        "Content-Type": "application/json",
+                        Authorization: localStorage.getItem("jwtToken") || "",
+          },
+          data      : data,
+        })
+          .then(function (response) {
+            console.log('Actualizando el rollo ' + response)
+            Toast.fire({
+              icon  : "success",
+              title : "Se confirmo que la factura tiene los datos correctamente",
+            });
+            getAllMueblesGastoCorriente();
+          })
+          .catch(function (error) {
+            console.log('Error en el rollo ')
+            Swal.fire({
+              icon  : "error",
+              title : "Mensaje",
+              text  : "(" + error.response.status + ") " + error.response.data.msg,});
+          });
+      }
+    });
+  }
 
 const columns: GridColDef[] = [
 
-  { field: 'NoInventario', headerName: 'Factura', width: 90, headerAlign: 'center',
+  { field: 'RutaFactura', headerName: 'Factura', width: 90, headerAlign: 'center',
   renderCell: (value: any ) => {
     return (
-      <a href={value.formattedValue.link} onClick={value.formattedValue.NoInventario}>
+      <a href={"#"} onClick={()=>{setRuta(value.formattedValue); handleOpen();}} >
          {Icons("Description")}
       </a>
     )
   }
 
   },
-  { field: 'NoActivo', headerName: 'No. Activo', width: 130, type:'number', headerAlign: 'center' },
+  { field: 'NoActivo', headerName: 'No. Activo', width: 130, headerAlign: 'center' },
   { field: 'TipoAdquisicion', headerName: 'Tipo Adquisición', width: 180, headerAlign: 'center' },
   { field: 'Descripcion', headerName: 'Descripción', width: 350 ,  headerAlign: 'center' },
   { field: 'TipoActivoFijoNombre', headerName: 'Tipo', width: 200 ,  headerAlign: 'center'},
   { field: 'AreaFisica', headerName: 'Área FÍsica', width: 230,  headerAlign: 'center'},
-  { field: 'created_at', headerName: 'Fecha', width: 200,  headerAlign: 'center' },
-  { field: 'acciones', headerName: 'Acciones', width: 380, headerAlign: 'center',
+  { field: 'FechaCreacion', headerName: 'Fecha', width: 140,  headerAlign: 'center' },
+  { field: 'ConfirmacionCoordinacionBM', headerName: 'Acciones', width: 380, headerAlign: 'center',
    renderCell: (value) => {
      return (
       <Box
         sx={{
           flexGrow: 1,
-          fontWeight: "bold",
+          fontWeight: "normal",
           display: "flex",
           justifyContent: "center",
         }}>
-         <Box sx={{width:'90px',marginLeft:'5px', marginRight:'5px'}}>
-            <Button sx={{fontSize:10,backgroundColor:'#000'}} variant="contained" size="small">Confirmar</Button>
+         <Box sx={{width:'100px',marginLeft:'25px', marginRight:'30px'}}>
+
+
+         {value.formattedValue === null ? (
+        <Button onClick={()=>{confirmar(value.id); console.log('ok' + value.formattedValue);}} sx={{fontSize:10,backgroundColor:'#000'}} variant="contained" size="small">Confirmar</Button>
+        ) : 'Factura confirmada'}
+            
+            
          </Box>
-         <Box sx={{width:'50px',marginLeft:'5px', marginRight:'5px',}} >{Icons("QueryStats")}</Box>  
-         <Box sx={{fill: '#0072ea'}}>
+         <Box sx={{width:'100px',marginLeft:'15px',}} >{Icons("QueryStats")}</Box>  
+         <Box sx={{width:'80px',fill: '#0072ea'}}>
            {Icons("CheckCircle")}
          </Box>
         </Box>
-     
-       
-
-
      )
    }
   }
 ];
 
-// aquí devemos porner el axios para consultar la tabla de AltasMuebles
-// y mapear los resultados en la constante Row
+
 const [rowsAltas, setRowsAltas] = useState<Array<AltaMueblesInterface>>([]);
 const getAllMueblesGastoCorriente = () => {
   const data = { uuidTipoAdquisicion: "996d3134-605f-4674-8134-5a9bca5c019e" };
@@ -267,6 +314,7 @@ axios({
         });
       });
   }
+
 
   const limpiarFechas = () => {
     const fechaActual = dayjs()
@@ -456,11 +504,10 @@ axios({
           <Box sx={style}>
             <Typography>
             What is Lorem Ipsum?
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
           </Typography>
       <iframe 
-      src="http://localhost:3008/facturas/Heuristic_Summary1-compressed.pdf" 
+      src={ruta} 
       style={{top: 0,left: 0,width: "100%",height: "600px" }} 
       title="Factura">         
       </iframe>
