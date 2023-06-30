@@ -188,6 +188,8 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, Placas: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="text"
+		required
+	
 	/>
 	</Box>
 	</Grid>
@@ -208,6 +210,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, Series: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="text"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -261,6 +264,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		inputProps={{ maxLength: 10 }}
 		type="number"
 		helperText="*Ejemplo 2023"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -281,6 +285,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, VidaUtil: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="number"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -456,6 +461,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, Linea: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="number"
+		required
 	/>
 	</Box>
 	</Grid>
@@ -475,6 +481,7 @@ export default function StepDos( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		onChange  ={(v) => {setDatosAlta({...datosAlta, DescripcionLinea: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
 		type="text"
+		required
 	/>
 	</Box>
 	</Grid>

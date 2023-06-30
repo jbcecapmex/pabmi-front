@@ -1,4 +1,4 @@
-/* pantalla principal donde se enlistan los catalogos */
+/* pantalla principal donde se enlistan los catalogos */  
 import { useState } from "react";
 import {Box,Breadcrumbs,Button,Card,CardContent,CardHeader,Grid,Link,Tab,Tabs,Typography,} from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -266,8 +266,21 @@ const Catalogos = () => {
                       TRANSACCIONES
                     </Button>
                   </Grid>
+
+                  <Grid item xs={12} md={6} lg={4}>
+                        <Button
+                          sx={ButtonSX}
+                          variant="text"
+                          fullWidth
+                          onClick={()=> navigate("/Configuracion/Catalogos/TiposAdquisicion")}
+                        >
+                           Tipo de Adquisición
+                        </Button>
+                      </Grid>    
                 </Grid>
               </TabPanel>
+
+    
 
               {/* panel de muebles */}
               <TabPanel value={panelValue} index={1}>
