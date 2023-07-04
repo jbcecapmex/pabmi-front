@@ -249,7 +249,7 @@ export default function DatosAltas() {
 			</Grid>
 			
 			<Grid item xs={12} md ={12} padding={2} >
-				<Box sx={{ width: "95%", padding: "2%" }}>
+				<Box sx={{ width: "100%", padding: "2%" }}>
 					<Stepper activeStep={activeStep}>
 						{steps.map((label, index) => {
 							const stepProps: { completed?: boolean } = {};
@@ -276,7 +276,7 @@ export default function DatosAltas() {
 							</Typography>
 							<Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
 								<Box sx={{ flex: "1 1 auto" }} />
-								<Button  variant="contained" sx={{ margin: "1%", color: "#FFFFFF" }} onClick={handleReset}>
+								{/* <Button  variant="contained" sx={{ margin: "1%", color: "#FFFFFF" }} onClick={handleReset}>
 									<Typography 
 									sx={{
 										color     : "#FFFFFF","&:hover": { color: "#15212f" },
@@ -284,7 +284,7 @@ export default function DatosAltas() {
 										fontSize  : "100%",
 									}}
 									> Reiniciar </Typography>	
-								</Button>
+								</Button> */}
 							</Box>
 						</React.Fragment>
 					) : (
@@ -296,8 +296,26 @@ export default function DatosAltas() {
 									2:  <StepTres datosAlta={datosAlta} setDatosAlta={setDatosAlta} />  ,
 								}[activeStep]
 							}
-							<Box  display={{ xs: 'flow', md: 'flex' }} flexDirection={{  xs:"column", md:"row"}}>
-								<Button
+							<Grid xs={12} md ={12} padding={2}>
+							<Box   
+
+							display={{ xs: 'flow', md: 'flex' }} 
+							flexDirection={{  xs:"column", md:"row"}}>
+							<Button
+									onClick={() => navigate(-1)}
+									variant="contained"  
+									color="secondary"
+									
+									sx={{margin:"1%",
+									color:"white",
+									"&:hover":{
+									color:"#15212f",
+									},
+									}}>  Cancelar </Button>
+								 
+								<Box sx={{ flex: "1 1 auto" }}  />
+							 
+									<Button
 									color="secondary"
 									variant="contained"
 									disabled={activeStep === 0}
@@ -310,20 +328,10 @@ export default function DatosAltas() {
 								  color:"#15212f",
 								  },
 								fontFamily: "MontserratRegular, sans-serif",
-								fontSize: "100%",}}
+								fontSize: "100%",
+								margin: "1%", }}
 								> Atrás </Typography>
 								</Button>
-								<Box sx={{ flex: "1 1 auto" }} />
-								<Button
-									 onClick={() => navigate(-1)}
-									variant="contained" 
-									color="secondary"
-									sx={{margin:"1%",
-									color:"white",
-									"&:hover":{
-									color:"#15212f",
-									},
-									}}>  Cancelar </Button>
 								
 								<Button variant="contained" sx={{ margin: "1%", color: "#FFFFFF" }} onClick={handleNext}>
 								<Typography
@@ -339,6 +347,7 @@ export default function DatosAltas() {
 								</Typography>
 								</Button>
 							</Box>
+							</Grid>
 						</React.Fragment>
 					)}
 				</Box>

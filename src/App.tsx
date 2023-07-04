@@ -104,6 +104,8 @@ import Proveedores from './componentes/Configuracion/Catalogos/Proveedores';
 
 import Mensajes from './componentes/Mensajes/Mensajes';
 
+import Calendario from './componentes/Configuracion/Catalogos/Calendario';
+
 function App() {
 
   // const navigate = useNavigate();
@@ -145,6 +147,7 @@ function App() {
           <Route index path="/" element={<Inicio />} />
 
           <Route path="/Muebles/Almacen/Altas" element={<MueblesAlmacen />} />
+          <Route path="/Configuracion/Catalogos/Calendario" element={<Calendario />} />
 
           <Route path="/Muebles/Almacen/Altas/DatosAltas" element={<DatosAltas/>} />
 

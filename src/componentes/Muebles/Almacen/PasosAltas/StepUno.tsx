@@ -412,6 +412,7 @@ export default function StepUno( {datosAlta, setDatosAlta}: {datosAlta: any, set
 		value     ={datosAlta.FechaEntrada} 
 		onChange  ={(v) => {setDatosAlta({...datosAlta, FechaEntrada: v.target.value}); }}
 		inputProps={{ maxLength: 10 }}
+		InputLabelProps={{shrink: true,}}
 		type="date"
 	/>
 	</Box>
