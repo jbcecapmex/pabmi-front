@@ -1,48 +1,63 @@
-import React from 'react';
-import { Card, CardHeader , Grid, Breadcrumbs, Tooltip, Link, IconButton, Typography, Box, TextField, CardContent, Button, TextFieldProps } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import axios from 'axios';
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import MUIXDataGrid from '../../Grid/MUIXDataGrid';
-import Modal from '@mui/material/Modal';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { StaticDatePicker } from '@mui/x-date-pickers';
- 
- 
-export default function Calendario() { 
- 
-  return (
-    <Grid container sx={{ fontFamily: "MontserratSemiBold" }}>
-      <Grid item xs={12} paddingLeft={3}>
-      <Breadcrumbs aria-label="breadcrumb">
-          <Link underline="hover" color="inherit" href="/inicio">
-            Inicio
-          </Link>
-          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
-            Configuración
-          </Link>
-          <Link underline="hover" color="inherit" href="/configuracion/catalogos">
-            Catálogos
-          </Link>
-          <Link underline="hover" color="inherit">
-          Domicilios
-          </Link>
-          <Typography color="text.primary"> Calendario </Typography>
-        </Breadcrumbs>
-      </Grid> 
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <StaticDatePicker orientation="landscape" onChange={function (value: unknown, keyboardInputValue?: string | undefined): void {
-          throw new Error('Function not implemented.');
-        } } value={undefined} renderInput={function (props: TextFieldProps): React.ReactElement<any, string | React.JSXElementConstructor<any>> {
-          throw new Error('Function not implemented.');
-        } } />
-    </LocalizationProvider>
- 
+import React from 'react'
+import DemoApp from './Dialogs/CalendarComponente'
+import Grid from '@mui/material/Grid/Grid'
+import { Box, Button, FormControlLabel, Typography } from '@mui/material'
+import FormGroup from '@mui/material/FormGroup';
+import Checkbox from '@mui/material/Checkbox';
 
+
+export default function Calendario() {
+  return (
+    <Grid md={12} sx={{ display: "flex", justifyContent: 'center' }}>
+      <Grid md={2} sx={{ display: "flex"}}>
+      <Box 
+       boxShadow={3}
+       width="100%"
+       sx={{  padding:"6%"}}>
+        <Box>
+
+        <Typography variant='h5'  paddingBottom="5%">
+          AGENDA
+        </Typography>
+        <Typography variant='h6'>
+        Filtro
+        </Typography>
+ 
+        </Box>
+
+        <Box paddingBottom={5}>
+          <FormGroup> 
+            <FormControlLabel control={<Checkbox defaultChecked />} label="Ver Todo" />
+            <FormControlLabel control={<Checkbox defaultChecked />} label="Próximas" />
+            <FormControlLabel control={<Checkbox defaultChecked />} label="En Curso" />
+            <FormControlLabel control={<Checkbox defaultChecked />} label="Finalizadas" />
+          </FormGroup>
+        </Box>
+
+        <Box>
+
+          <Box display={'flex'}>
+          <Box sx={{ bgcolor:"green", height:"20px", width:"20px", marginBottom:"5%"}}/>
+          <Box sx={{ paddingLeft:"6%" }}> <Typography variant="subtitle2"> Finalizado </Typography> </Box>
+          </Box>
+
+          <Box display={'flex'}>
+          <Box sx={{ bgcolor:"yellow", height:"20px", width:"20px", marginBottom:"5%" }}/>
+          <Box sx={{ paddingLeft:"6%" }} > <Typography variant="subtitle2"> Pendiente </Typography> </Box>
+          </Box>
+
+          <Box display={'flex'}>
+          <Box sx={{ bgcolor:"red", height:"20px", width:"20px", marginBottom:"5%" }}/>
+          <Box sx={{ paddingLeft:"6%" }} > <Typography variant="subtitle2"> No Realizadas </Typography> </Box>
+          </Box>
+
+        </Box>
+
+        </Box>
+      </Grid>
+      <Grid sx={{ display: "flex" }} md={10}>
+      <DemoApp/>
+      </Grid >
     </Grid>
-  );
+  )
 }
