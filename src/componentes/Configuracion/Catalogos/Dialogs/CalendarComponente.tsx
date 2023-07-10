@@ -2,8 +2,8 @@ import React from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin! 
 import interactionPlugin from '@fullcalendar/interaction'; 
-import { Calendar } from '@fullcalendar/core';
-import '@fullcalendar/core/locales/es';
+import timeGridPlugin from '@fullcalendar/timegrid'; 
+import '@fullcalendar/core/locales/es'; 
  
 
 
@@ -46,13 +46,7 @@ export default class DemoApp extends React.Component {
 			);
 		  },
 	  };
-
-    // Formato personalizado para los días de la semana
-    const dayHeaderContent = (arg: any) => {
-		const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
-		return days[arg.date.getDay()];
-	  };
-
+ 
 	  const events = [
 		{ title: 'Evento', date: '2023-08-01' },
 		{ title: 'event 2', date: '2023-09-02' },
@@ -63,10 +57,14 @@ export default class DemoApp extends React.Component {
 		<div style={{ width: '95%', margin: '0 auto' }}>
 
 		<FullCalendar
-        plugins={[ dayGridPlugin, interactionPlugin ]} 
-        initialView="dayGridMonth"
-		events={events}
-		dayHeaderContent={dayHeaderContent} 
+        plugins={[ dayGridPlugin, timeGridPlugin, interactionPlugin ]} 
+        // initialView="dayGridMonth"
+		headerToolbar={{ 
+			start:"today prev,next",
+			center:"title",
+			end:"dayGridMonth,timeGridWeek,timeGridDay",
+		 }}
+		events={events} 
 		selectable={true}
 		select={this.handleDateSelect}
 		{...options} 
