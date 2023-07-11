@@ -4,23 +4,48 @@ import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import interactionPlugin from '@fullcalendar/interaction'; 
 import timeGridPlugin from '@fullcalendar/timegrid'; 
 import '@fullcalendar/core/locales/es'; 
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography, Box } from '@mui/material';
  
-
 
 
 export default class DemoApp extends React.Component {
 
+	state = {
+		openModal: false,
+		selectedEvent: null,
+	  };
+	  
+
+
+	  handleEventClick = (arg:any) => {
+		this.setState({
+		  openModal: true,
+		  selectedEvent: arg.event,
+		});
+	  };
+
+	  handleModalClose = () => {
+		this.setState({
+		  openModal: false,
+		  selectedEvent: null,
+		});
+	  };
+
 	handleDateSelect = (arg:any) => {
 		// Handle the date selection here
-		console.log(arg.start, arg.end); 
+		console.log(arg.start, arg.end,  arg.allDay , arg.resourceId ); 
 	  };
 
 	  capitalizeFirstLetter = (string:any) => {
 		return string.charAt(0).toUpperCase() + string.slice(1);
-	  };
+	  };   
 
 
   render() {
+
+	const { openModal, selectedEvent } = this.state;
+
+
     // Opciones de idioma personalizadas
 	const options = {
 		locale: 'es',
@@ -46,19 +71,21 @@ export default class DemoApp extends React.Component {
 			);
 		  },
 	  };
+
+	  
  
 	  const events = [
 		{ title: 'Evento', date: '2023-08-01' },
-		{ title: 'event 2', date: '2023-09-02' },
+		{ title: 'Evento 2', date: '2023-09-02' },
 	  ];
  
 
     return ( 
-		<div style={{ width: '95%', margin: '0 auto' }}>
+		<div style={{ width: '90%', margin: '0 auto' }}>
 
 		<FullCalendar
         plugins={[ dayGridPlugin, timeGridPlugin, interactionPlugin ]} 
-        // initialView="dayGridMonth"
+        initialView="dayGridMonth"
 		headerToolbar={{ 
 			start:"today prev,next",
 			center:"title",
@@ -66,11 +93,44 @@ export default class DemoApp extends React.Component {
 		 }}
 		events={events} 
 		selectable={true}
+		height={"90vh"}
 		select={this.handleDateSelect}
 		{...options} 
+		eventClick={this.handleEventClick}
     	/>
+
+		<Dialog maxWidth={'md'}  open={openModal} onClose={this.handleModalClose}>
+			<DialogTitle sx={{ width:600 }}>  Eventos  </DialogTitle>
+			<DialogContent>
+				<Box display={'flex'}>
+				<Typography variant='h6' paddingRight={2}>Asunto: </Typography>
+				<Typography variant='h6'>  Asunto </Typography>
+				</Box>
+				<Box display={'flex'}  >
+				<Typography variant='h6' paddingRight={2}>Dependencia: </Typography>
+				<Typography variant='h6'>  Asunto </Typography>
+				</Box>
+				<Box display={'flex'} >
+				<Typography variant='h6'  paddingRight={2} >Numero de Resguardante:</Typography>
+				<Typography variant='h6'>  Asunto </Typography>
+				</Box>
+				<Box display={'flex'} >
+				<Typography variant='h6'  paddingRight={2}>Nombre del Resguardante: </Typography>
+				<Typography variant='h6'>  Asunto </Typography>
+				</Box>
+				<Box display={'flex'}  >
+				<Typography variant='h6' paddingRight={2} >Descripción: </Typography>
+				<Typography variant='h6'>  Asunto </Typography>
+				</Box>
+				
+			</DialogContent>
+			<DialogActions>
+			<Button color="primary"> Reagendar </Button>
+				<Button onClick={this.handleModalClose} color="secondary"> Cerrar </Button>
+			</DialogActions>
+		</Dialog>
 	  
 	  </div>
     )
   }
-}
+}   
