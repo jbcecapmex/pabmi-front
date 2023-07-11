@@ -1,19 +1,5 @@
 import React from "react";
-import {
-  Card,
-  CardHeader,
-  Grid,
-  Breadcrumbs,
-  Tooltip,
-  Link,
-  IconButton,
-  Typography,
-  Box,
-  TextField,
-  CardContent,
-  Button,
-  Input,
-} from "@mui/material";
+import {Card,CardHeader,Grid,Breadcrumbs,Tooltip,Link,IconButton,Typography,Box,TextField,CardContent,Button,Input,} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -27,11 +13,16 @@ import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Swal from "sweetalert2";
-import {
-  catalogoSave,
-  catalogoDelete,
-  catalogoUpdate,
-} from "../../../services/CatalogoServices";
+import {catalogoSave,catalogoDelete,catalogoUpdate,} from "../../../services/CatalogoServices";
+
+export interface ProcesoStepsInterface {
+  uuid: string;
+  uuidProceso: string;
+  Cve: string;
+  Nombre: string;
+  Descripcion: string;
+  Ordenamiento: number;
+}
 
 export interface ProcesosInterface {
   uuid: string;
@@ -39,18 +30,8 @@ export interface ProcesosInterface {
   Nombre: string;
   Descripcion: string;
   uuidRango: string;
-  creadopor: string;
-  modificadopor: string;
-  eliminadopor: string;
 }
 
-export interface RangosInterface {
-  uuid: string;
-  Tipo: string;
-  Verde: number;
-  Amarillo: number;
-  Rojo: number;
-}
 // Estilos para la ventana Modal
 const style = {
   position: "absolute",
@@ -70,11 +51,12 @@ export default function Procesos() {
   const [Cve, setCve] = useState("");
   const [Nombre, setNombre] = useState("");
   const [Descripcion, setDescripcion] = useState("");
+  const [Ordenamiento, setOrdenamiento] = useState("");
   const [creadopor, setCreadoPor] = useState("");
   const [modificadopor, setModificadoPor] = useState("");
   const [eliminadopor, setEliminadoPor] = useState("");
 
-  const [Tipo, setTipo] = useState("");
+  const [Proceso, setProceso] = useState("");
 
   // Abrir modal
   const [open, setOpen] = React.useState(false);
@@ -92,18 +74,19 @@ export default function Procesos() {
     } else {
       //aqui se arma el body que se va a enviar al endpoint los campos se deben llamar exactamente igual a como se envian al endpoint en insomia (minusculas)
       const data = {
+        uuidproceso: Proceso,
         cve: Cve,
         nombre: Nombre,
         descripcion: Descripcion,
-        uuidrango: Tipo,
+        ordenamiento: Ordenamiento,
         creadopor: localStorage.getItem("IdUsuario"),
         modificadopor: modificadopor,
         eliminadopor: eliminadopor,
       };
-      const url = "/catalogos/guardaprocesos";
+      const url = "/catalogos/guardaprocesosteps";
       catalogoSave(data, url).then((response) => {
         setOpen(false);
-        getAllProcesos();
+        getAllProcesoSteps();
       });
     }
   };
@@ -111,10 +94,10 @@ export default function Procesos() {
   const handleDelete = (event: any, cellValues: any) => {
     const data = cellValues.row.uuid;
     const descripcion = cellValues.row.Descripcion;
-    const url = "/catalogos/eliminaprocesos";
+    const url = "/catalogos/eliminaprocesosteps";
     catalogoDelete(data, url, descripcion).then((response) => {
       setOpen(false);
-      getAllProcesos();
+      getAllProcesoSteps();
     });
   };
   // Handle update
@@ -127,19 +110,19 @@ export default function Procesos() {
       });
     } else {
       const data = {
-        uuid: uuid,
+        uuidproceso: Proceso,
         cve: Cve,
         nombre: Nombre,
         descripcion: Descripcion,
-        uuidrango: Tipo,
+        ordenamiento: Ordenamiento,
         creadopor: creadopor,
         modificadopor: localStorage.getItem("IdUsuario"),
         eliminadopor: eliminadopor,
       };
-      const url = "/catalogos/actualizaprocesos";
+      const url = "/catalogos/actualizaprocesosteps";
       catalogoUpdate(data, url).then((response) => {
         setOpen(false);
-        getAllProcesos();
+        getAllProcesoSteps();
       });
     }
   };
@@ -163,6 +146,8 @@ export default function Procesos() {
                   setCve(cellValues.row.Cve);
                   setNombre(cellValues.row.Nombre);
                   setDescripcion(cellValues.row.Descripcion);
+                  setProceso(cellValues.row.uuidProceso);
+                  setOrdenamiento(cellValues.row.Ordenamiento);
                   setCreadoPor(cellValues.row.CreadoPor);
                   setModificadoPor(cellValues.row.ModificadoPor);
                   setEliminadoPor(cellValues.row.EliminadoPor);
@@ -187,16 +172,23 @@ export default function Procesos() {
       },
     },
     {
+      field: "CveProceso",
+      headerName: "Proceso",
+      width: 200,
+      hideable: false,
+      headerAlign: "left",
+    },
+    {
       field: "Cve",
       headerName: "Cve",
-      width: 200,
+      width: 80,
       hideable: false,
       headerAlign: "left",
     },
     {
       field: "Nombre",
       headerName: "Nombre",
-      width: 300,
+      width: 200,
       hideable: false,
       headerAlign: "left",
     },
@@ -207,15 +199,23 @@ export default function Procesos() {
       hideable: false,
       headerAlign: "left",
     },
+    {
+      field: "Ordenamiento",
+      headerName: "Ordenamiento",
+      width: 160,
+      hideable: false,
+      headerAlign: "left",
+    },
   ];
+  const camposCsv = ["CveProceso","Cve","Nombre","Descripcion","Ordenamiento"];
 
-  const [rows, setRows] = useState<Array<ProcesosInterface>>([]);
-  const getAllProcesos = () => {
+  const [rows, setRows] = useState<Array<ProcesoStepsInterface>>([]);
+  const getAllProcesoSteps = () => {
     axios({
       method: "get",
       url:
         process.env.REACT_APP_APPLICATION_ENDPOINT +
-        "/catalogos/obtieneprocesos",
+        "/catalogos/obtieneprocesosteps",
       headers: {
         "Content-Type": "application/json",
         Authorization: localStorage.getItem("jwtToken") || "",
@@ -235,16 +235,16 @@ export default function Procesos() {
           title: "Mensaje",
           text:
             "(" + error.response.status + ") " + error.response.data.message,
-        }).then((r) => navigate("/Configuracion/Catalogos/Procesos"));
+        }).then((r) => navigate("-1"));
       });
   };
-
-  const [rowsrangos, setRowsRangos] = useState<Array<RangosInterface>>([]);
-  const getAllRangos = () => {
+  const [rowsprocesos, setRowsProcesos] = useState<Array<ProcesosInterface>>([]);
+  const getAllProcesos = () => {
     axios({
       method: "get",
       url:
-        process.env.REACT_APP_APPLICATION_ENDPOINT + "/catalogos/obtienerango",
+        process.env.REACT_APP_APPLICATION_ENDPOINT +
+        "/catalogos/obtieneprocesos",
       headers: {
         "Content-Type": "application/json",
         Authorization: localStorage.getItem("jwtToken") || "",
@@ -252,9 +252,9 @@ export default function Procesos() {
     })
       .then(({ data }) => {
         if (data) {
-          setRowsRangos(data);
+          setRowsProcesos(data);
         } else {
-          setRowsRangos([]);
+          setRowsProcesos([]);
         }
       })
       .catch(function (error) {
@@ -267,22 +267,22 @@ export default function Procesos() {
       });
   };
 
-  // const [rowsProcesos, setRowsProcesos] = useState<Array<ProcesosInterface>>([]);
-
   useEffect(() => {
-    getAllProcesos();
+    getAllProcesoSteps();
+    document.title = 'Catálogo de Proceso Steps';
   }, []);
 
   // esto es para que se ejecuten todo los get de los listados solo cuando se abra la modal,
   // y que limpie las variables cuando se salga de la modal
   useEffect(() => {
     if (open === false) {
-      getAllRangos();
+      getAllProcesos();
+      setProceso("");
       setuuid("");
       setCve("");
       setNombre("");
       setDescripcion("");
-      setTipo("");
+      setOrdenamiento("");
     }
   }, [open]);
 
@@ -290,24 +290,10 @@ export default function Procesos() {
     <Grid container sx={{}}>
       <Grid sx={{}} item xs={12}>
         <Breadcrumbs aria-label="breadcrumb">
-          <Link underline="hover" color="inherit" href="/inicio">
-            Inicio
-          </Link>
-          <Link
-            underline="hover"
-            color="inherit"
-            href="/configuracion/catalogos"
-          >
-            Configuración
-          </Link>
-          <Link
-            underline="hover"
-            color="inherit"
-            href="/configuracion/catalogos"
-          >
-            Catálogos
-          </Link>
-          <Typography color="text.primary"> Catálogo de Procesos </Typography>
+          <Link underline="hover" color="inherit" href="/inicio">Inicio</Link>
+          <Link underline="hover" color="inherit" href="/configuracion/catalogos">Configuración</Link>
+          <Link underline="hover" color="inherit" href="/configuracion/catalogos">Catálogos</Link>
+          <Typography color="text.primary"> Procesos Steps </Typography>
         </Breadcrumbs>
       </Grid>
       <Grid container xs={12} justifyContent={"center"}>
@@ -366,13 +352,7 @@ export default function Procesos() {
                   </Button>
                 </Grid>
               </Box>
-
-              <MUIXDataGrid
-                id={(row: any) => row.uuid}
-                columns={columns}
-                rows={rows}
-              />
-
+              <MUIXDataGrid id={(row: any) => row.uuid} columns={columns} rows={rows} camposCsv={camposCsv}/>
               {/* Inician los campos del formulario para registrar la nueva Dependencia */}
               <Modal
                 open={open}
@@ -386,11 +366,42 @@ export default function Procesos() {
                       <Box>
                         <Typography variant="h5" sx={{ padding: "2%" }}>
                           {" "}
-                          Catálogo de Procesos{" "}
+                          Procesos Steps{" "}
                         </Typography>
                       </Box>
                     </Grid>
-
+                    <Grid item xs={6}>
+                      <Box
+                        component="form"
+                        sx={{ "& > :not(style)": { m: 1.3, width: "100%" } }}
+                        noValidate
+                        autoComplete="off"
+                        display="flex"
+                      >
+                        <FormControl fullWidth sx={{ bgColor: "#fff" }}>
+                          <InputLabel sx={{ marginTop: "-4px" }}>
+                            Proceso
+                          </InputLabel>
+                          <Select
+                            id="procesos"
+                            value={Proceso}
+                            size="small"
+                            displayEmpty
+                            onChange={(v) => {
+                              setProceso(v.target.value);
+                            }}
+                          >
+                            <MenuItem value=""></MenuItem>
+                            {rowsprocesos.length > 0 &&
+                              rowsprocesos?.map((Proceso, index) => (
+                                <MenuItem value={Proceso.uuid}>
+                                  {Proceso.Nombre}
+                                </MenuItem>
+                              ))}
+                          </Select>
+                        </FormControl>
+                      </Box>
+                    </Grid>
                     <Grid item xs={6}>
                       <Box
                         sx={{
@@ -450,7 +461,6 @@ export default function Procesos() {
                         />
                       </Box>
                     </Grid>
-
                     <Grid item xs={6}>
                       <Box
                         component="form"
@@ -459,28 +469,16 @@ export default function Procesos() {
                         autoComplete="off"
                         display="flex"
                       >
-                        <FormControl fullWidth sx={{ bgColor: "#fff" }}>
-                          <InputLabel sx={{ marginTop: "-4px" }}>
-                            Tipo
-                          </InputLabel>
-                          <Select
-                            id="rangos"
-                            value={Tipo}
-                            size="small"
-                            displayEmpty
-                            onChange={(v) => {
-                              setTipo(v.target.value);
-                            }}
-                          >
-                            <MenuItem value=""></MenuItem>
-                            {rowsrangos.length > 0 &&
-                              rowsrangos?.map((Tipo, index) => (
-                                <MenuItem value={Tipo.uuid}>
-                                  {Tipo.Tipo}
-                                </MenuItem>
-                              ))}
-                          </Select>
-                        </FormControl>
+                        <TextField
+                          type="number"
+                          label="Ordenamiento"
+                          size="small"
+                          variant="outlined"
+                          value={Ordenamiento}
+                          onChange={(v) => {
+                            setOrdenamiento(v.target.value);
+                          }}
+                        />
                       </Box>
                     </Grid>
 

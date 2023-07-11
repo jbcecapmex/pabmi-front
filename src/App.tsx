@@ -101,6 +101,8 @@ import Notificaciones from './componentes/Configuracion/Catalogos/Notificaciones
 import Procesos from './componentes/Configuracion/Catalogos/Procesos';
 import Proveedores from './componentes/Configuracion/Catalogos/Proveedores';
 
+import Rangos from './componentes/Configuracion/Catalogos/Rangos';
+import ProcesoSteps from './componentes/Configuracion/Catalogos/ProcesoSteps';
 
 import Mensajes from './componentes/Mensajes/Mensajes';
 
@@ -234,6 +236,9 @@ function App() {
           <Route path="/Configuracion/Catalogos/TipoActivoFijo" element={<TipoActivoFijo/>} />
 
           <Route path="/Adquisiciones/Altas" element={<AdquisicionesAltas />}/>
+
+          <Route path="/Configuracion/Catalogos/Rangos" element={<Rangos/>} />
+          <Route path="/Configuracion/Catalogos/ProcesoSteps" element={<ProcesoSteps/>} />
 
           <Route path="/Mensajes" element={<Mensajes />}/>
           
