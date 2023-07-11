@@ -211,6 +211,16 @@ const Catalogos = () => {
                       sx={ButtonSX}
                       variant="text"
                       fullWidth
+                      onClick={()=> navigate("/Configuracion/Catalogos/Rangos")}
+                    >
+                      RANGOS
+                    </Button>
+                  </Grid>                  
+                  <Grid item xs={12} md={6} lg={4}>
+                    <Button
+                      sx={ButtonSX}
+                      variant="text"
+                      fullWidth
                       onClick={()=> navigate("/Configuracion/Catalogos/ReportesC")}
                     >
                       REPORTES
@@ -342,6 +352,16 @@ const Catalogos = () => {
                       PRESENTACIÓN MUEBLES
                     </Button>
                   </Grid>
+                  <Grid item xs={12} md={6} lg={4}>
+                    <Button
+                      sx={ButtonSX}
+                      variant="text"
+                      fullWidth
+                      onClick={()=> navigate("/Configuracion/Catalogos/ProcesoSteps")}
+                    >
+                      Procesos Steps
+                    </Button>
+                  </Grid>                  
                   <Grid item xs={12} md={6} lg={4}>
                     <Button
                       sx={ButtonSX}

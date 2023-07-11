@@ -1,6 +1,7 @@
 import axios from "axios";
-import moment from 'moment';
+// import moment from 'moment';
 import Swal from "sweetalert2";
+
 
 // componente de sweetalert2 para el uso de los mensajes de alertas
 export const Toast = Swal.mixin({

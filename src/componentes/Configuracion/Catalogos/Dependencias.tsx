@@ -252,9 +252,7 @@ export default function Dependencias() {
     },
   ];
 
-  const [rowsTiposDependencias, setRowsTiposDependencias] = useState<
-    Array<TiposDependenciasInterface>
-  >([]);
+  const [rowsTiposDependencias, setRowsTiposDependencias] = useState<Array<TiposDependenciasInterface>>([]);
   const getAllTipoDependencias = () => {
     axios({
       method: "get",
@@ -611,13 +609,10 @@ export default function Dependencias() {
                             }}
                           >
                             <MenuItem value=""></MenuItem>
-                            {rowsTiposDependencias.length > 0 &&
-                              rowsTiposDependencias?.map(
+                            {rowsTiposDependencias.length > 0 && rowsTiposDependencias?.map(
                                 (TipoDependencia, index) => (
                                   <MenuItem value={TipoDependencia.uuid}>
-                                    {TipoDependencia.Cve +
-                                      "-" +
-                                      TipoDependencia.Nombre}
+                                    {TipoDependencia.Cve + "-" + TipoDependencia.Nombre}
                                   </MenuItem>
                                 )
                               )}
